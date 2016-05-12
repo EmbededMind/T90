@@ -19,6 +19,7 @@
 #include "T90.h"
 #include "snap.h"
 
+
 //#ifndef test_test
 //	#define test_test
 //#endif
@@ -289,11 +290,13 @@ void _Play_Task(void* p_arg)
 //				{
             thisBulyBerth  = BULY_fetchNextPlayBerth();
             if(thisBulyBerth){
+							
+							pSnapLink = thisBulyBerth->pBoatLink;
+							
 //#ifdef __INFO_ENABLE            
 //               BULY_dump();
 //#endif               
-               if( (thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){                   //ÓæÕþ´¬
-                  pSnapLink = thisBulyBerth->pBoatLink; 
+               if( (thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //ÓæÕþ´¬
                   switch(thisBulyBerth->pBoatLink->Boat.category & 0xf0){
                   case NATION_CTB:
                        MUSIC_ADD(SND_ID_CTB);
@@ -349,7 +352,6 @@ void _Play_Task(void* p_arg)
                   MUSIC_ADD(SND_ID_HSB);
                   MUSIC_ADD(SND_ID_DST);
                   
-                  pSnapLink = thisBulyBerth->pBoatLink;
                   SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
                   if(Nums[0]){
                      MUSIC_ADD(Nums[0]);
@@ -388,7 +390,7 @@ void _Play_Task(void* p_arg)
 						}
 						MUSIC_ADD(SND_ID_NM);
 					}
-					playList  = 1;
+//					playList  = 1;
 				}
 
          if(musicCursor){
@@ -414,7 +416,7 @@ void _Play_Task(void* p_arg)
          } /// End. execute play 
       } /// End . if(monitorState == FALSE)
       
-      OSTimeDlyHMSM(0, 0, 5, 0);
+      OSTimeDlyHMSM(0, 0, 3, 0);
    } /// 'End'. while(1).In fact this will not happen
       
 }

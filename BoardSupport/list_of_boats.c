@@ -9,6 +9,7 @@
 #include "invader.h"
 #include "str.h"
 #include "bully.h"
+#include "detect.h"
 // find if id exist in aux_boat, yes return 1, otherwise 0, size exclusive
 
 /*----------------------- Macro defination -----------------------*/
@@ -205,6 +206,7 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
       pBerth->Boat.category  = nation | TYPE_BULLY;
 INFO("find high speed boat :0x%x", pBerth->Boat.category);      
       BULY_add(pBerth);
+		  llToxy(pBerth);
    }
 #endif
    
@@ -327,7 +329,7 @@ INFO("Err!");
          
          /// pBerth in middle of link list
  /*              ____________________________
-  *             /                            \ 
+  *             /                            \
   *   NODE   |NODE|   NODE   NODE   NODE   @here   NODE   NODE
   *                                                 tmp
   */  
@@ -383,7 +385,8 @@ INFO("alloc berth failed!");
       unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
       buf->Boat.category  = nation |  TYPE_BULLY;
 INFO("find high speed boat :0x%x", buf->Boat.category);   
-      BULY_add(buf);   
+      BULY_add(buf); 
+			llToxy(buf);
    }
 #endif   
 
@@ -562,6 +565,7 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
          {
             pBerth->Boat.category  = nation | TYPE_BULLY;              
             BULY_add(pBerth);
+					  llToxy(pBerth);
 INFO("find bully :%09ld--0x%0x",pBerth->Boat.user_id,pBerth->Boat.category);            
          }
          else
@@ -614,6 +618,7 @@ INFO("alloc berth failed!");
          {
             buf->Boat.category  = nation | TYPE_BULLY;
             BULY_add(buf);
+					  llToxy(buf);
 INFO("find bully: %09ld--0x%0x", buf->Boat.user_id, buf->Boat.category);            
          }
          else
