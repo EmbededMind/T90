@@ -17,7 +17,7 @@
 #include "bully.h"
 #include "xt_isd.h"
 #include "T90.h"
-
+#include "snap.h"
 
 //#ifndef test_test
 //	#define test_test
@@ -292,7 +292,8 @@ void _Play_Task(void* p_arg)
 //#ifdef __INFO_ENABLE            
 //               BULY_dump();
 //#endif               
-               if( (thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //ÓæÕþ´¬
+               if( (thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){                   //ÓæÕþ´¬
+                  pSnapLink = thisBulyBerth->pBoatLink; 
                   switch(thisBulyBerth->pBoatLink->Boat.category & 0xf0){
                   case NATION_CTB:
                        MUSIC_ADD(SND_ID_CTB);
@@ -348,6 +349,7 @@ void _Play_Task(void* p_arg)
                   MUSIC_ADD(SND_ID_HSB);
                   MUSIC_ADD(SND_ID_DST);
                   
+                  pSnapLink = thisBulyBerth->pBoatLink;
                   SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
                   if(Nums[0]){
                      MUSIC_ADD(Nums[0]);
