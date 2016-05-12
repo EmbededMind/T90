@@ -84,7 +84,7 @@ int insert_18(struct message_18 * p_msg)
           if(   NOT_ALMOST(p_msg->longitude,Berthes[i].Boat.longitude)  
              || NOT_ALMOST(p_msg->latitude,Berthes[i].Boat.latitude)    ) 
           {
-               
+                                                                                                                                                   
                if(update_18(&(Berthes[i]), p_msg))
                {
                   return 1;               
