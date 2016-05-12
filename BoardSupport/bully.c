@@ -204,6 +204,16 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
             pIterator  = pIterator->pNext;
          }
       }
+			pIterator = pBulyHeader;
+			while(pIterator != pPlayBerth->pNext)
+			{
+				if(pIterator->pBoatLink->mntState == MNTState_Triggered)
+        {
+          pPlayBerth  = pIterator;
+          return pPlayBerth;
+        }
+				pIterator = pIterator->pNext;
+			}
       pPlayBerth  = NULL;
       return NULL;
    }

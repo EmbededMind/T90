@@ -116,18 +116,18 @@ void SNAP_searchNearestObj(short Dir_x, short Dir_y)
      {
         /// Previous link is berth
         case 1:
-             refMMSI  = ((BERTH*)pSnapLink)->Boat.user_id;
-             if(refMMSI == checkMMSI)
-             {
+             refMMSI  = pSnapLink->Boat.user_id;
+//             if(refMMSI == checkMMSI)
+//             {
                 ref_x  = ((BERTH*)pSnapLink)->x_to_cross;
                 ref_y  = ((BERTH*)pSnapLink)->y_to_cross;
-             }
-             else
-             {
-                ref_x  = 0;
-                ref_y  = 0;
-                refMMSI = 0;
-             }
+//             }
+//             else
+//             {
+//                ref_x  = 0;
+//                ref_y  = 0;
+//                refMMSI = 0;
+//             }
              break;
              
        default:

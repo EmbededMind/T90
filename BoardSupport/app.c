@@ -17,6 +17,7 @@
 #include "bully.h"
 #include "xt_isd.h"
 #include "T90.h"
+#include "snap.h"
 
 
 //#ifndef test_test
@@ -289,6 +290,9 @@ void _Play_Task(void* p_arg)
 //				{
             thisBulyBerth  = BULY_fetchNextPlayBerth();
             if(thisBulyBerth){
+							
+							pSnapLink = thisBulyBerth->pBoatLink;
+							
 //#ifdef __INFO_ENABLE            
 //               BULY_dump();
 //#endif               
@@ -386,7 +390,7 @@ void _Play_Task(void* p_arg)
 						}
 						MUSIC_ADD(SND_ID_NM);
 					}
-					playList  = 1;
+//					playList  = 1;
 				}
 
          if(musicCursor){
@@ -412,7 +416,7 @@ void _Play_Task(void* p_arg)
          } /// End. execute play 
       } /// End . if(monitorState == FALSE)
       
-      OSTimeDlyHMSM(0, 0, 5, 0);
+      OSTimeDlyHMSM(0, 0, 3, 0);
    } /// 'End'. while(1).In fact this will not happen
       
 }

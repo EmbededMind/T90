@@ -40,7 +40,7 @@
  *
  *               timer counter config
  */
-#define TIMESTAMP           10//60
+#define TIMESTAMP           60
 
 #define MAP_REFRESH_SLOT    500
 #define CURSOR_HIDE_CNT     200  

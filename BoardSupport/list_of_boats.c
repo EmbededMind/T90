@@ -327,7 +327,7 @@ INFO("Err!");
          
          /// pBerth in middle of link list
  /*              ____________________________
-  *             /                            \ 
+  *             /                            \
   *   NODE   |NODE|   NODE   NODE   NODE   @here   NODE   NODE
   *                                                 tmp
   */  
