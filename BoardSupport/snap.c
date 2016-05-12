@@ -158,8 +158,8 @@ void SNAP_searchNearestObj(short Dir_x, short Dir_y)
            }
         }
         
-				if(monitorState == ON)
-				{
+//				if(monitorState == ON)
+//				{
 					 if(BULY_getValidNumber() > 0)
 					 {
 							pBuly  = pBulyHeader;
@@ -180,7 +180,7 @@ void SNAP_searchNearestObj(short Dir_x, short Dir_y)
 								 pBuly  = pBuly->pNext;
 							}
 					 }
-				 }
+//				 }
      
         if(potentialSnapLink)
         {
@@ -219,8 +219,8 @@ void SNAP_searchNearestObj(short Dir_x, short Dir_y)
            }
         }
 
-				if(monitorState == ON)
-				{
+//				if(monitorState == ON)
+//				{
 					 if(BULY_getValidNumber() > 0)
 					 {
 							pBuly  = pBulyHeader;
@@ -241,7 +241,7 @@ void SNAP_searchNearestObj(short Dir_x, short Dir_y)
 								 pBuly  = pBuly->pNext;
 							}
 					 }
-				 }
+//				 }
         
         if(potentialSnapLink)
         {
@@ -280,8 +280,8 @@ void SNAP_searchNearestObj(short Dir_x, short Dir_y)
            }
         }
 
-				if(monitorState == ON)
-				{
+//				if(monitorState == ON)
+//				{
 					 if(BULY_getValidNumber() > 0)
 					 {
 							pBuly  = pBulyHeader;
@@ -302,7 +302,7 @@ void SNAP_searchNearestObj(short Dir_x, short Dir_y)
 								 pBuly  = pBuly->pNext;
 							}
 					 }
-				 }
+//				 }
          
         if(potentialSnapLink)
         {
@@ -342,8 +342,8 @@ void SNAP_searchNearestObj(short Dir_x, short Dir_y)
            }
         }
 
-				if(monitorState == ON)
-				{
+//				if(monitorState == ON)
+//				{
 					 if(BULY_getValidNumber() > 0)
 					 {
 							pBuly  = pBulyHeader;
@@ -364,7 +364,7 @@ void SNAP_searchNearestObj(short Dir_x, short Dir_y)
 								 pBuly  = pBuly->pNext;
 							}
 					 }
-				 }
+//				 }
         
         if(potentialSnapLink)
         {

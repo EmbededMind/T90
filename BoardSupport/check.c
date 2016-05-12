@@ -141,7 +141,6 @@ void CHECK_DelHighSpeed()
     
     while(pBerth)
     {
-        llToxy(pBerth->pBoatLink);
         if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.SOG < HIGH_SPEED)
         {
             BULY_delete(pBerth->pBoatLink);

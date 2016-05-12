@@ -228,8 +228,8 @@ void DrawAlarmShip(void) {
 				if(SimpBerthes[i].pBerth->isInvader) 
 				Draw_things(SimpBerthes[i].pBerth->x_to_cross,SimpBerthes[i].pBerth->y_to_cross);
 		 }
-	 if(monitorState == ON)
-	 {
+//	 if(monitorState == ON)
+//	 {
      while(thisbully)
      {
           thisbully->pBoatLink->x_to_cross=(int)(cos(mothership.COG*3.14/1800)*(thisbully->pBoatLink->Boat.longitude - mothership.longitude)
@@ -259,7 +259,7 @@ void DrawAlarmShip(void) {
           }     
           thisbully = thisbully->pNext;
      }
-	 }
+//	 }
 	 
 	 
   for(i = 0; i < N_boat; i++)
