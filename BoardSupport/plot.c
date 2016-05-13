@@ -207,8 +207,8 @@ static void FigureScale(int flag)
 				}
 			}
 		}
-		if(monitorState == ON)
-		{
+//		if(monitorState == ON)
+//		{
 			while(pBully)
 			{
 				if(pBully->pBoatLink->x_to_cross < x_min)
@@ -229,7 +229,7 @@ static void FigureScale(int flag)
 				}
 				pBully = pBully->pNext;
 			}
-		}
+//		}
 		scale = (y_max-y_min)*100/320;
 		if(scale < (x_max-x_min)*100/700)
 		{
@@ -271,8 +271,8 @@ void DrawAllOtherShips()
 	}
 	
 	GUI_SetColor(GUI_GREEN);
-	if(monitorState == ON)
-	{
+//	if(monitorState == ON)
+//	{
 		while(pBully)
 		{
 			point.x = pBully->pBoatLink->x_to_cross;
@@ -280,7 +280,7 @@ void DrawAllOtherShips()
 			DrawOtherShip(GetItemPixel(point), pBully->pBoatLink->Boat.COG/10);
 			pBully = pBully->pNext;
 		}
-	}
+//	}
 }
 
 
