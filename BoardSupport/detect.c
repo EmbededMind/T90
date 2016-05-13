@@ -93,10 +93,10 @@ void isInvader(BERTH  *pBerth)
 	{
 		pBerth->mntState = MNTState_Triggered;
 	}
-	else if(pBerth->isInvader == 0)
-	{
-		pBerth->mntState = MNTState_None;
-	}
+//	else if(pBerth->isInvader == 0)
+//	{
+//		pBerth->mntState = MNTState_None;
+//	}
 }
 
 

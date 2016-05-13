@@ -81,6 +81,7 @@ void check()
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
 INFO("highspeed num:%d",validCnt);
+	BULY_dump();
 }
 
 int CHECK_GetAlarmState(void)
