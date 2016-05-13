@@ -6,7 +6,7 @@ extern boat mothership;
 extern int N_boat;
 extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 
-BERTH *  pSnapLink  = (BERTH*)(&mothership);
+BERTH *  pSnapLink  = NULL;
 //char   snapType   = 0;
 
 
@@ -17,6 +17,11 @@ long SNAP_getSnapObjMMSI(void)
    return checkMMSI;
 }
 
+void SNAP_SetSnapLink(BERTH *pBerth)
+{
+	pSnapLink = pBerth;
+	checkMMSI = pBerth->Boat.user_id;
+}
 
 void SNAP_reset(void)
 {
@@ -24,21 +29,21 @@ void SNAP_reset(void)
 	 pSnapLink->x_to_cross = 0;
 	 pSnapLink->y_to_cross = 0;
 //   snapType   = 0;
-//   checkMMSI  = 0;
+   checkMMSI  = mothership.user_id;
 }
 
 void SNAP_Refresh(void)
 {
-	if(pSnapLink == NULL)
+	if(pSnapLink == NULL || pSnapLink->Boat.user_id != checkMMSI)
 	{
 		SNAP_reset();
-		return;
+//		return;
 	}
 
-	if(!BULY_getValidNumber() && pSnapLink->Boat.user_id == 0)
-	{
-		SNAP_reset();
-	}
+//	if(!BULY_getValidNumber() && pSnapLink->Boat.user_id != checkMMSI)
+//	{
+//		SNAP_reset();
+//	}
 }
 
 void SNAP_searchNearestObj(int Dir_x, int Dir_y)

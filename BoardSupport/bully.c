@@ -194,7 +194,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered )
          {
             pPlayBerth  = pIterator;
-					  pSnapLink = pPlayBerth->pBoatLink;
+					  SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
          else
@@ -214,7 +214,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered)
          {
             pPlayBerth  = pIterator;
-					  pSnapLink = pPlayBerth->pBoatLink;
+					  SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
          else
@@ -228,7 +228,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
 				if(pIterator->pBoatLink->mntState == MNTState_Triggered)
         {
           pPlayBerth  = pIterator;
-					pSnapLink = pPlayBerth->pBoatLink;
+					SNAP_SetSnapLink(pPlayBerth->pBoatLink);
           return pPlayBerth;
         }
 				pIterator = pIterator->pNext;

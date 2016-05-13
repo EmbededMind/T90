@@ -134,7 +134,7 @@
 *
 *               High speed value.
 */
- #define HIGH_SPEED  80
+ #define HIGH_SPEED  120
 
 #endif
 

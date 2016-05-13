@@ -19,13 +19,13 @@ void DrawStubs(int flag)
 	int alarmLineZoom;
 	StubRefresh();
 	FigureScale(flag);
-	DrawShipFamily();
+	DrawShipFamily(flag);
 
 	alarmLineZoom = flag? 1: 2000/scale;
 	DrawAlarmLine(alarmLineZoom);
 }
 
-void DrawShipFamily()
+void DrawShipFamily(int flag)
 {
 	int i;
 	Point pixelTmp[STUB_NUM];
@@ -50,8 +50,11 @@ void DrawShipFamily()
 			GUI_DrawLine(pixelTmp[i].x-(5-scale/500), pixelTmp[i].y+(5-scale/500), pixelTmp[i].x,               pixelTmp[i].y-(5-scale/500));  //三角标
 			GUI_DrawLine(pixelTmp[i].x,               pixelTmp[i].y-(5-scale/500), pixelTmp[i].x+(5-scale/500), pixelTmp[i].y+(5-scale/500));
 			GUI_DrawLine(pixelTmp[i].x+(5-scale/500), pixelTmp[i].y+(5-scale/500), pixelTmp[i].x-(5-scale/500), pixelTmp[i].y+(5-scale/500));
-			sprintf(pStrBuf, "%02d", i);
-			GUI_DispStringAt(pStrBuf, pixelTmp[i].x - 6, pixelTmp[i].y + 5);
+			if(!flag)
+			{
+				sprintf(pStrBuf, "%02d", i);
+				GUI_DispStringAt(pStrBuf, pixelTmp[i].x - 6, pixelTmp[i].y + 5);
+			}
 		}
 	}
 	
@@ -91,36 +94,42 @@ void DrawAlarmLine(int zoom)   //zoom：缩放比例
 
 void DrawCursor(Point pixel, int flag)
 {
-	GUI_DrawPoint(pixel.x, pixel.y);
-	GUI_DrawHLine(pixel.y, pixel.x - 10, pixel.x - 2);
-	GUI_DrawHLine(pixel.y, pixel.x + 2,  pixel.x + 10);
-	GUI_DrawVLine(pixel.x, pixel.y - 10, pixel.y - 2);
-	GUI_DrawVLine(pixel.x, pixel.y + 2,  pixel.y + 10);
+	int start_x, start_y;
+	start_x = pixel.x + 10;
+	start_y = pixel.y + 10;
+//	GUI_DrawPoint(pixel.x, pixel.y);
+//	GUI_DrawHLine(pixel.y, pixel.x - 10, pixel.x - 2);
+//	GUI_DrawHLine(pixel.y, pixel.x + 2,  pixel.x + 10);
+//	GUI_DrawVLine(pixel.x, pixel.y - 10, pixel.y - 2);
+//	GUI_DrawVLine(pixel.x, pixel.y + 2,  pixel.y + 10);
+	
 	if(flag)
 	{
 		GUI_SetFont(GUI_FONT_13_1);
 		sprintf(pStrBuf,"name:%s",pSnapLink->Boat.name);
-		GUI_DispStringAt(pStrBuf, pixel.x + 10, pixel.y + 10);
+		GUI_DispStringAt(pStrBuf, start_x, start_y);
 		
-		GUI_DispStringAt("N", pixel.x + 10, pixel.y + 10 + GUI_GetFontSizeY());
+		GUI_DispStringAt("N", start_x, start_y+GUI_GetFontSizeY());
 		lltostr(pSnapLink->Boat.latitude, pStrBuf);
-		GUI_DispStringAt(pStrBuf, pixel.x + 23, pixel.y+10+GUI_GetFontSizeY());
+		GUI_DispStringAt(pStrBuf, start_x+13, start_y+GUI_GetFontSizeY());
 		
-		GUI_DispStringAt("E", pixel.x + 10, pixel.y + 10+GUI_GetFontSizeY()*2);
+		GUI_DispStringAt("E", start_x, start_y+GUI_GetFontSizeY()*2);
 		lltostr(pSnapLink->Boat.longitude, pStrBuf);
-		GUI_DispStringAt(pStrBuf, pixel.x + 23, pixel.y+10+GUI_GetFontSizeY()*2);
+		GUI_DispStringAt(pStrBuf, start_x+13, start_y+GUI_GetFontSizeY()*2);
 
-		GUI_DispStringAt("SOG:", pixel.x + 10, pixel.y +10+ GUI_GetFontSizeY()*3);
+		GUI_DispStringAt("SOG:", start_x, start_y+GUI_GetFontSizeY()*3);
 		sprintf(pStrBuf, "%2d.%d", pSnapLink->Boat.SOG/10, pSnapLink->Boat.SOG%10);
-		GUI_DispStringAt(pStrBuf, pixel.x + 45, pixel.y +10+ GUI_GetFontSizeY()*3);
+		GUI_DispStringAt(pStrBuf, start_x+35, start_y+ GUI_GetFontSizeY()*3);
 		
-		GUI_DispStringAt("COG:", pixel.x + 10, pixel.y + 10+GUI_GetFontSizeY()*4);
+		GUI_DispStringAt("COG:", start_x, start_y+GUI_GetFontSizeY()*4);
 		sprintf(pStrBuf, "%3d", pSnapLink->Boat.COG/10);
 		pStrBuf[3]  = 194;
 		pStrBuf[4]  = 176;
 		pStrBuf[5]  = '\0';
-		GUI_DispStringAt(pStrBuf, pixel.x + 45, pixel.y + 10+GUI_GetFontSizeY()*4);
+		GUI_DispStringAt(pStrBuf, pixel.x + 45, start_y+GUI_GetFontSizeY()*4);
 	}
+	
+	GUI_CURSOR_SetPosition(pixel.x, pixel.y);
 }
 
 Point GetItemPixel(Point itemPoint)
@@ -248,9 +257,13 @@ void DrawOtherShip(Point pixel, int course)  //course:航向（角度制）
 	
 	GUI_SetLineStyle(GUI_LS_SOLID);
      
-	GUI_DrawLine(pixel.x-7*_cos-10*_sin, pixel.y-7*_sin+10*_cos, pixel.x+10*_sin       , pixel.y-10*_cos);
-	GUI_DrawLine(pixel.x+10*_sin,        pixel.y-10*_cos,        pixel.x+7*_cos-10*_sin, pixel.y+7*_sin+10*_cos);
-	GUI_DrawLine(pixel.x+7*_cos-10*_sin, pixel.y+7*_sin+10*_cos, pixel.x-7*_cos-10*_sin, pixel.y-7*_sin+10*_cos );
+//	GUI_DrawLine(pixel.x-7*_cos-10*_sin, pixel.y-7*_sin+10*_cos, pixel.x+10*_sin       , pixel.y-10*_cos);
+//	GUI_DrawLine(pixel.x+10*_sin,        pixel.y-10*_cos,        pixel.x+7*_cos-10*_sin, pixel.y+7*_sin+10*_cos);
+//	GUI_DrawLine(pixel.x+7*_cos-10*_sin, pixel.y+7*_sin+10*_cos, pixel.x-7*_cos-10*_sin, pixel.y-7*_sin+10*_cos );
+	
+	GUI_DrawLine(pixel.x-7*_cos-7*_sin, pixel.y-7*_sin+7*_cos, pixel.x+13*_sin       , pixel.y-13*_cos);
+	GUI_DrawLine(pixel.x+13*_sin,        pixel.y-13*_cos,        pixel.x+7*_cos-7*_sin, pixel.y+7*_sin+7*_cos);
+	GUI_DrawLine(pixel.x+7*_cos-7*_sin, pixel.y+7*_sin+7*_cos, pixel.x-7*_cos-7*_sin, pixel.y-7*_sin+7*_cos );
 }
 
 void DrawAllOtherShips()

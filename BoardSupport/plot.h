@@ -11,7 +11,7 @@ extern int scale;
 
 
 void DrawStubs(int flag);
-void DrawShipFamily(void);
+void DrawShipFamily(int);
 void DrawAlarmLine(int zoom);
 void DrawCursor(Point pixel, int flag);
 Point GetItemPixel(Point itemPoint);

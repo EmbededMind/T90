@@ -278,7 +278,8 @@ void _Play_Task(void* p_arg)
 //            }   
 //            MUSIC_RESET;
 //}   
-   ISD_Play(SND_ID_WLCM);
+
+//   ISD_Play(SND_ID_WLCM);
    ISD_PWRDn();   
    
    

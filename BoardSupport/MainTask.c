@@ -44,6 +44,9 @@ INFO("MainTask Start");
 	 GUI_SetColor(GUI_BLACK);
 	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
 	 GUI_FillRect(0, SCREEN_HEIGHT, 799, 479);
+	 
+	 GUI_CURSOR_Select(&GUI_CursorCrossS);
+	 GUI_CURSOR_Hide();
 	
 	 
 //DLG_testDimensinCreate();
