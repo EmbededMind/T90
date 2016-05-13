@@ -45,7 +45,7 @@ void SNAP_Refresh(void)
 	}
 }
 
-void SNAP_getPara(int *x, int *y)
+void SNAP_getPara(int *x, int *y)   
 {
    switch(snapType)
    {
