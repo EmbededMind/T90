@@ -1,7 +1,7 @@
 #include "T90.h"
 #include "bully.h"
 #include "string.h"
-
+#include "snap.h"
 
 
 #define MAP_SIZE
@@ -55,7 +55,20 @@ Bool BULY_add(BERTH* pBoatLink)
    BULY_BERTH * pBuf;
    BULY_BERTH * pIterator;
    
-   pBuf  = BULY_alloc();
+//   pBuf  = BULY_alloc();
+
+/// Modified by SealedGhost at 5/12/2016   
+   int i  = 0;
+   for(i=0; i<BULY_NUM_MAX; i++){
+      if(BULY_Berth[i].pBoatLink == pBoatLink){
+         pBuf  = &BULY_Berth[i];
+         break;
+      }
+   }
+   
+   if(i>=BULY_NUM_MAX)
+      pBuf  = BULY_alloc();
+/// Modified at 5/12/2016 end.
 
    if(pBuf)
    {
@@ -84,8 +97,8 @@ Bool BULY_add(BERTH* pBoatLink)
 INFO("alloc bully berth failed!");  
       return FALSE; 
    }
-}
 
+}
 
 
 
@@ -101,10 +114,10 @@ void BULY_delete(BERTH* addr)
 		 {
 				pBulyHeader  = pBulyHeader->pNext;
 
-	//      if(pBC->pBoatLink->mntState == MNTState_Triggered)
-	//      {
+	      if(pBC->pBoatLink->mntState == MNTState_Triggered)
+	      {
 					 validCnt--;
-	//      }
+	      }
 				memset(pBC, 0, sizeof(BULY_BERTH));
 	INFO("bully delete done");	
 				return;
@@ -118,10 +131,10 @@ void BULY_delete(BERTH* addr)
 					 {
 							pBC->pNext  = pCursor->pNext;
 						 
-	//            if(pCursor->pBoatLink->mntState == MNTState_Triggered)
-	//            {
+	            if(pCursor->pBoatLink->mntState == MNTState_Triggered)
+	            {
 								 validCnt--;
-	//            }
+	            }
 							memset(pCursor, 0, sizeof(BULY_BERTH));
 	INFO("bully delete done");					 
 							return ;
@@ -178,6 +191,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered )
          {
             pPlayBerth  = pIterator;
+            pSnapLink = pPlayBerth->pBoatLink;
             return pPlayBerth;
          }
          else
@@ -197,6 +211,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered)
          {
             pPlayBerth  = pIterator;
+            pSnapLink = pPlayBerth->pBoatLink;
             return pPlayBerth;
          }
          else
@@ -208,10 +223,11 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
 			while(pIterator != pPlayBerth->pNext)
 			{
 				if(pIterator->pBoatLink->mntState == MNTState_Triggered)
-        {
-          pPlayBerth  = pIterator;
-          return pPlayBerth;
-        }
+                    {
+                        pPlayBerth  = pIterator;
+                        pSnapLink = pPlayBerth->pBoatLink;
+                        return pPlayBerth;
+                    }
 				pIterator = pIterator->pNext;
 			}
       pPlayBerth  = NULL;

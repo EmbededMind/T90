@@ -289,10 +289,8 @@ void _Play_Task(void* p_arg)
 //        if(playList  == 1)
 //				{
             thisBulyBerth  = BULY_fetchNextPlayBerth();
-            if(thisBulyBerth){
-							
-							pSnapLink = thisBulyBerth->pBoatLink;
-							
+            if(thisBulyBerth){							
+										
 //#ifdef __INFO_ENABLE            
 //               BULY_dump();
 //#endif               

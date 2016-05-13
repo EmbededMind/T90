@@ -284,9 +284,7 @@ INFO("find high speed boat :0x%x", pBerth->Boat.category);
       }
 INFO("Err!");      
       return -1;
-   }
-   
-   
+   }  
    else 
    {
       if(pBerth->pNext == NULL)
@@ -386,7 +384,7 @@ INFO("alloc berth failed!");
       buf->Boat.category  = nation |  TYPE_BULLY;
 INFO("find high speed boat :0x%x", buf->Boat.category);   
       BULY_add(buf); 
-			llToxy(buf);
+	  llToxy(buf);
    }
 #endif   
 
