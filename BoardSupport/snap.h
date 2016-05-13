@@ -6,7 +6,7 @@
 #include "lpc_types.h"
 #include "T90.h"
 
-
+                                         
 extern BERTH *  pSnapLink;
 
 long SNAP_getSnapObjMMSI(void);
