@@ -45,7 +45,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 						WM_BringToTop(singleShipWin);
 						WM_SetFocus(singleShipWin);
 					}
-//					SNAP_Refresh();
+					SNAP_Refresh();
 					timeCnt++;
 					WM_Paint(alarmMonitorWin);					
 					WM_RestartTimer(timer, 500);
@@ -56,7 +56,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
            break;     
 			
 			case WM_SET_FOCUS:	
-//					 mntLabelTimeCnt = MNT_LABEL_TIME;
 					 SNAP_Refresh();
 					 if(pMsg->Data.v)
 					 {					 

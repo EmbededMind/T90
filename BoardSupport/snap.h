@@ -12,10 +12,10 @@ extern BERTH *  pSnapLink;
 long SNAP_getSnapObjMMSI(void);
 void SNAP_reset(void);
 void SNAP_getPara(int *x, int *y);
-void SNAP_searchNearestObj(short Dir_x, short Dir_y);
+void SNAP_searchNearestObj(int Dir_x, int Dir_y);
 
 void SNAP_Refresh(void);
-void SNAP_SearchTriggeredBully(void);
+
 #endif
 
 
