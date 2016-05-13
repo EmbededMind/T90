@@ -29,17 +29,18 @@ void SNAP_reset(void)
 
 void SNAP_Refresh(void)
 {
-//	if(pSnapLink == NULL)
-//	{
-//		SNAP_reset();
-//	}
-//	SNAP_SearchTriggeredBully();
-	if(BULY_getValidNumber())
+	if(pSnapLink == NULL)
 	{
-		SNAP_SearchTriggeredBully();
+		SNAP_reset();
+		return;
 	}
-	else
+//	SNAP_SearchTriggeredBully();
+	if(!BULY_getValidNumber())
 	{
+//		SNAP_SearchTriggeredBully();
+//	}
+//	else
+//	{
 		SNAP_reset();
 	}
 }
