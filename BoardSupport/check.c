@@ -10,6 +10,7 @@
 #include "detect.h"
 #include "bully.h"
 #include "snap.h"
+#include "transform.h"
 
 /*----------------- Macro      defines --------------------------*/
 #define MYABS(x)   ((x)>0?(x):(-(x)))
@@ -23,7 +24,7 @@ extern FunctionalState isMntEnable;
 
 /// Defined in app.c.If key pressed , isKeyTrigged will be TRUE. Your apps must set iskeyTrigged FALSe after using it.
 extern int isKeyTrigged;
- 
+
 
 static int hasAlarm = 0;
 
@@ -114,6 +115,8 @@ void CHECK_isInvader(void)
   }
 }
 
+
+
 void CHECK_MS_Speed()
 {
 	MS_isSpeeding = 0;   //clear
@@ -121,17 +124,44 @@ void CHECK_MS_Speed()
 	MS_isMin_SOG = 0;
 	
 	if(mothership.SOG > t90_set.alarm.danger_sog)
+	{		
+		if(MS_isSpeeding != MNTState_Masked)
+		{
+			MS_isSpeeding = MNTState_Triggered;
+		}
+	}
+	else
 	{
-		MS_isSpeeding = 1;
+		MS_isSpeeding = 0;
 	}
 	if(mothership.SOG > t90_set.alarm.max_sog)
 	{
-		MS_isMax_SOG = 1;
+		if(MS_isMax_SOG != MNTState_Masked)
+		{
+			MS_isMax_SOG = MNTState_Triggered;
+		}
 	}
 	else if(mothership.SOG < t90_set.alarm.min_sog)
 	{
-		MS_isMin_SOG = 1;
+		if(MS_isMin_SOG != MNTState_Masked)
+		{
+			MS_isMin_SOG = MNTState_Triggered;
+		}
 	}
+	else
+	{
+		MS_isMax_SOG = MS_isMin_SOG = 0;
+	}
+}
+
+static void CHECK_MS_Speed_masked()
+{
+	if(MS_isSpeeding ==MNTState_Triggered)
+		MS_isSpeeding = MNTState_Masked;
+	if(MS_isMax_SOG ==MNTState_Triggered)
+		MS_isMax_SOG = MNTState_Masked;
+	if(MS_isMin_SOG ==MNTState_Triggered)
+		MS_isMin_SOG = MNTState_Masked;
 }
 
 void CHECK_DelHighSpeed()
@@ -156,6 +186,7 @@ void check()
 	{
 		isKeyTrigged = 0;
 		CHECK_MaskAllBerth();
+		CHECK_MS_Speed_masked();
 	}
 	
 	detect();	
@@ -163,7 +194,7 @@ void check()
 //	SNAP_Refresh();
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
-INFO("highspeed num:%d",validCnt);
+//INFO("highspeed num:%d",validCnt);
 	BULY_dump();
 }
 

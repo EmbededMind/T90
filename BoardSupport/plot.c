@@ -53,12 +53,14 @@ void DrawShipFamily(int flag)
 			if(!flag)
 			{
 				sprintf(pStrBuf, "%02d", i);
-				GUI_DispStringAt(pStrBuf, pixelTmp[i].x - 6, pixelTmp[i].y + 5);
-				
-				GUI_DrawVLine(motherShipPixel.x-50, motherShipPixel.y, -t90_set.dst.dst3*TO_PIXEL + motherShipPixel.y);
-				
+				GUI_DispStringAt(pStrBuf, pixelTmp[i].x - 6, pixelTmp[i].y + 5);			
 			}
 		}
+	}
+	
+	if(!flag)
+	{
+		GUI_DrawVLine(motherShipPixel.x-50, motherShipPixel.y, t90_set.dst.dst3*M_TO_MILLINM*TO_PIXEL + motherShipPixel.y);
 	}
 	
 	GUI_SetLineStyle(GUI_LS_DOT);
@@ -97,7 +99,8 @@ void DrawAlarmLine(int zoom)   //zoom£ºËõ·Å±ÈÀý
 
 void DrawCursor(Point pixel, int flag)
 {
-	int start_x, start_y;
+	int start_x, start_y;	
+	Point point;
 	start_x = pixel.x + 10;
 	start_y = pixel.y + 10;
 //	GUI_DrawPoint(pixel.x, pixel.y);
@@ -107,7 +110,7 @@ void DrawCursor(Point pixel, int flag)
 //	GUI_DrawVLine(pixel.x, pixel.y + 2,  pixel.y + 10);
 	
 	if(flag)
-	{
+	{	
 		GUI_SetFont(GUI_FONT_13_1);
 		sprintf(pStrBuf,"name:%s",pSnapLink->Boat.name);
 		GUI_DispStringAt(pStrBuf, start_x, start_y);
@@ -130,6 +133,11 @@ void DrawCursor(Point pixel, int flag)
 		pStrBuf[4]  = 176;
 		pStrBuf[5]  = '\0';
 		GUI_DispStringAt(pStrBuf, pixel.x + 45, start_y+GUI_GetFontSizeY()*4);
+		
+		GUI_SetColor(GUI_LIGHTBLUE);
+		point.x = pSnapLink->x_to_cross;
+		point.y = pSnapLink->y_to_cross;
+		DrawOtherShip(GetItemPixel(point), (pSnapLink->Boat.COG - mothership.COG)/10);
 	}
 	
 	GUI_CURSOR_SetPosition(pixel.x, pixel.y);
@@ -282,7 +290,7 @@ void DrawAllOtherShips()
 		{
 			point.x = SimpBerthes[i].pBerth->x_to_cross;
 			point.y = SimpBerthes[i].pBerth->y_to_cross;
-			DrawOtherShip(GetItemPixel(point), SimpBerthes[i].pBerth->Boat.COG/10);
+			DrawOtherShip(GetItemPixel(point), (SimpBerthes[i].pBerth->Boat.COG - mothership.COG)/10);
 		}
 	}
 	
@@ -293,7 +301,7 @@ void DrawAllOtherShips()
 		{
 			point.x = pBully->pBoatLink->x_to_cross;
 			point.y = pBully->pBoatLink->y_to_cross;
-			DrawOtherShip(GetItemPixel(point), pBully->pBoatLink->Boat.COG/10);
+			DrawOtherShip(GetItemPixel(point), (pBully->pBoatLink->Boat.COG - mothership.COG)/10);
 			pBully = pBully->pNext;
 		}
 //	}

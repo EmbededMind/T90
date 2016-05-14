@@ -7,8 +7,6 @@
 void detect(void);
 void detectInit(void);
 
-void llToxy(BERTH *pBerth);
-
 
 
 #endif

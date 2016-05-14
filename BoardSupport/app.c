@@ -18,6 +18,7 @@
 #include "xt_isd.h"
 #include "T90.h"
 #include "snap.h"
+#include "transform.h"
 
 
 //#ifndef test_test
@@ -221,6 +222,9 @@ void _Play_Task(void* p_arg)
    uint8_t  musicCursor  = 0;
  
    uint8_t  Nums[3];
+	 uint8_t  aNums[5];
+	
+	int angle;
    
    uint8_t playList  = 1;  
    BULY_BERTH* thisBulyBerth  = NULL;
@@ -279,7 +283,7 @@ void _Play_Task(void* p_arg)
 //            MUSIC_RESET;
 //}   
 
-//   ISD_Play(SND_ID_WLCM);
+   ISD_Play(SND_ID_WLCM);
    ISD_PWRDn();   
    
    
@@ -317,6 +321,35 @@ void _Play_Task(void* p_arg)
                        break;
                   }
                   
+									angle = getAngleOfShip(thisBulyBerth->pBoatLink);
+                  if(angle>=0 && angle<360)
+                  {
+                    SND_ParseNum(angle/10*10000,aNums);
+                    MUSIC_ADD(SND_ID_ANG);
+                    
+                    if(aNums[0])
+                      {
+                        MUSIC_ADD(aNums[0]);
+                      }
+                      if(aNums[1])
+                      {
+                        MUSIC_ADD(aNums[1]);
+                      }
+                      if(aNums[2])
+                      {
+                        MUSIC_ADD(aNums[2]);
+                      }
+                      if(aNums[3])
+                      {
+                        MUSIC_ADD(aNums[3]);
+                      }
+                      if(aNums[4])
+                      {
+                        MUSIC_ADD(aNums[4]);
+                      }
+                      MUSIC_ADD(SND_ID_DEG);
+                  } 
+									
                   if(thisBulyBerth->pBoatLink->Boat.dist < 99999){
                      SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
                      MUSIC_ADD(SND_ID_DST);
@@ -349,6 +382,38 @@ void _Play_Task(void* p_arg)
                }
                else{                                      // ¸ßËÙ´¬
                   MUSIC_ADD(SND_ID_HSB);
+								  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
+INFO("highspeed-x=%d",thisBulyBerth->pBoatLink->x_to_cross);                   
+INFO("highspeed-y=%d",thisBulyBerth->pBoatLink->y_to_cross);                                      
+INFO("highspeed=%d",angle);
+								   if(angle>=0 && angle<360)
+                  {
+                    SND_ParseNum(angle,aNums);
+                    MUSIC_ADD(SND_ID_ANG);
+                    
+                    if(aNums[0])
+                      {
+                        MUSIC_ADD(aNums[0]);
+                      }
+                      if(aNums[1])
+                      {
+                        MUSIC_ADD(aNums[1]);
+                      }
+                      if(aNums[2])
+                      {
+                        MUSIC_ADD(aNums[2]);
+                      }
+                      if(aNums[3])
+                      {
+                        MUSIC_ADD(aNums[3]);
+                      }
+                      if(aNums[4])
+                      {
+                        MUSIC_ADD(aNums[4]);
+                      }
+                      MUSIC_ADD(SND_ID_DEG);
+                  }
+									
                   MUSIC_ADD(SND_ID_DST);
                   
                   SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
@@ -369,10 +434,47 @@ void _Play_Task(void* p_arg)
 				
 				else //if(playList == 2)
 				{
+					if(playList == 1)
+					{
+					
 					thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
 					if(thisinvdBerth)
 					{
-						MUSIC_ADD(SND_ID_BGL);
+						MUSIC_ADD(SND_ID_INVD);
+						
+						      angle = getAngleOfShip(thisinvdBerth);                   
+INFO("invader-x=%d",thisinvdBerth->x_to_cross);
+INFO("invader-y=%d",thisinvdBerth->y_to_cross);
+                        
+INFO("invader= %d",angle);                                             
+                  if(angle>=0 && angle<360)
+                  {
+                    SND_ParseNum(angle,aNums);
+                    MUSIC_ADD(SND_ID_ANG);
+                    
+                    if(aNums[0])
+                      {
+                        MUSIC_ADD(aNums[0]);
+                      }
+                      if(aNums[1])
+                      {
+                        MUSIC_ADD(aNums[1]);
+                      }
+                      if(aNums[2])
+                      {
+                        MUSIC_ADD(aNums[2]);
+                      }
+                      if(aNums[3])
+                      {
+                        MUSIC_ADD(aNums[3]);
+                      }
+                      if(aNums[4])
+                      {
+                        MUSIC_ADD(aNums[4]);
+                      }
+                      MUSIC_ADD(SND_ID_DEG);
+                  }    
+						
 						MUSIC_ADD(SND_ID_DST);
 						SND_ParseDist(thisinvdBerth->Boat.dist, Nums);
             if(Nums[0])
@@ -389,8 +491,107 @@ void _Play_Task(void* p_arg)
 						}
 						MUSIC_ADD(SND_ID_NM);
 					}
-//					playList  = 1;
+					playList  = 2;
+					OSTimeDlyHMSM(0, 0, 2, 0);
 				}
+				else if(playList == 2)
+				{
+					if(MS_isSpeeding == MNTState_Triggered)
+					{
+						
+						
+            SND_ParseNum(t90_set.alarm.danger_sog*100,aNums);
+            MUSIC_ADD(SND_ID_MHS);
+                    
+            if(aNums[0])
+						{
+							 MUSIC_ADD(aNums[0]);
+						}
+						if(aNums[1])
+						{
+							MUSIC_ADD(aNums[1]);
+						}
+						if(aNums[2])
+						{
+							MUSIC_ADD(aNums[2]);
+						}
+						if(aNums[3])
+						{
+							MUSIC_ADD(aNums[3]);
+						}
+						if(aNums[4])
+						{
+							MUSIC_ADD(aNums[4]);
+						}
+						MUSIC_ADD(SND_ID_KT);
+			
+                  
+					}
+					else
+					{
+						if(MS_isMax_SOG == MNTState_Triggered)
+						{
+							SND_ParseNum(mothership.SOG*100,aNums);
+							MUSIC_ADD(SND_ID_SN);
+                    
+							if(aNums[0])
+							{
+								 MUSIC_ADD(aNums[0]);
+							}
+							if(aNums[1])
+							{
+								MUSIC_ADD(aNums[1]);
+							}
+							if(aNums[2])
+							{
+								MUSIC_ADD(aNums[2]);
+							}
+							if(aNums[3])
+							{
+								MUSIC_ADD(aNums[3]);
+							}
+							if(aNums[4])
+							{
+								MUSIC_ADD(aNums[4]);
+							}
+							MUSIC_ADD(SND_ID_KT);
+							MUSIC_ADD(SND_ID_HIGH);
+							MUSIC_ADD(SND_ID_SNOR);
+						}
+						else if(MS_isMin_SOG == MNTState_Triggered)
+						{
+							SND_ParseNum(mothership.SOG*100,aNums);
+							MUSIC_ADD(SND_ID_SN);
+                    
+							if(aNums[0])
+							{
+								 MUSIC_ADD(aNums[0]);
+							}
+							if(aNums[1])
+							{
+								MUSIC_ADD(aNums[1]);
+							}
+							if(aNums[2])
+							{
+								MUSIC_ADD(aNums[2]);
+							}
+							if(aNums[3])
+							{
+								MUSIC_ADD(aNums[3]);
+							}
+							if(aNums[4])
+							{
+								MUSIC_ADD(aNums[4]);
+							}
+							MUSIC_ADD(SND_ID_KT);
+							MUSIC_ADD(SND_ID_LOW);
+							MUSIC_ADD(SND_ID_SNOR);
+						
+						}
+					}
+				playList = 1;
+				}
+			}
 
          if(musicCursor){
             int i  = 0;
@@ -583,15 +784,15 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
       shiftReg   = text[14];
       shiftReg   = (shiftReg << 8) | text[15];
 //      mothership.SOG  = shiftReg;
-			mothership.SOG = 90;
+			mothership.SOG = 10;
    
 //    tempgprmc = text[16]; mothership.COG = mothership.COG + (tempgprmc << 8);
 //    mothership.COG = mothership.COG + text[17];
 
       shiftReg   = text[16];
       shiftReg   = (shiftReg << 8) | text[17];
-      mothership.COG  = shiftReg;
-//			mothership.COG = 200;
+//      mothership.COG  = shiftReg;
+			mothership.COG = 3350;
 
 //    tempgprmc = text[18]; SYS_Date = tempgprmc << 24;
 //    tempgprmc = text[19]; SYS_Date = SYS_Date + (tempgprmc << 16);

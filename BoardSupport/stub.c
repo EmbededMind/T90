@@ -2,6 +2,7 @@
 #include "math.h"
 #include "T90.h"
 #include "detect.h"
+#include "transform.h"
 
 
 Stub stubs[STUB_NUM];
