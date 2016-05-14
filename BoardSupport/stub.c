@@ -81,6 +81,22 @@ static void FillStubInfo(void)
 	}
 }
 
+Point STUB_GetYMin(void)
+{
+	int i;
+	Point point;
+	for(i = 0; i < STUB_NUM; i++)
+	{
+		if(stubs[i].basePoint.y < point.y)
+		{
+			point.y = stubs[i].basePoint.y;
+			point.x = stubs[i].basePoint.x;
+		}
+	}
+	return point;
+}
+		
+
 
 
 

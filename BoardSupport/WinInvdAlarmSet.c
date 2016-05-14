@@ -106,7 +106,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
          WM_SetCallback(button, &myButtonCallback); 
 				 HSD_BUTTON_SetTxFont(button, &GUI_Font24_ASCII);
-				 sprintf(pStrBuf,"%01d.%01d",t90_set.alarm.invd_dst/1000, (t90_set.alarm.invd_dst%1000)/100);
+				 if(t90_set.sys.unit == NM)
+				 {
+						sprintf(pStrBuf,"%01d.%01d",t90_set.alarm.invd_dst/1000, (t90_set.alarm.invd_dst%1000)/100);
+				 }
+				 else
+				 {
+					  sprintf(pStrBuf,"%01d.%01d",t90_set.alarm.invd_dst*20/37000, ((t90_set.alarm.invd_dst*20/37)%1000)/100);
+				 }
          HSD_BUTTON_SetText(button, pStrBuf);
 		
          HSD_BUTTON_SetBkColor(button, pColors->bkColor);
@@ -176,7 +183,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 
 					 GUI_SetFont(&GUI_Font24_ASCII);
 					 GUI_DispStringAt("range:", orgX+ALARM_RADIUS+20, 145);
-					 GUI_DispStringAt("nm", drawArea.x1-55, 145);
+					 if(t90_set.sys.unit == NM)
+					 {
+							GUI_DispStringAt("nm", drawArea.x1-55, 145);
+					 }
+					 else
+					 {
+						 GUI_DispStringAt("km", drawArea.x1-55, 145);
+					 }
 					 
 				 }
          break;

@@ -54,6 +54,9 @@ void DrawShipFamily(int flag)
 			{
 				sprintf(pStrBuf, "%02d", i);
 				GUI_DispStringAt(pStrBuf, pixelTmp[i].x - 6, pixelTmp[i].y + 5);
+				
+				GUI_DrawVLine(motherShipPixel.x-50, motherShipPixel.y, -t90_set.dst.dst3*TO_PIXEL + motherShipPixel.y);
+				
 			}
 		}
 	}
