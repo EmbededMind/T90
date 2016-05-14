@@ -129,11 +129,11 @@ void SND_Play(uint8_t id)
 
 
 void SND_ParseDist(int dist, uint8_t* pNums)
-{
-   if(dist < 99999)
+{ 
+    
+    if(dist < 99999)
    {
-//printf("dist:%d  %d.%d\n\r",dist ,dist/1000, dist%1000/100);
-      /// Dist >= 20 nm
+
       if(dist > 19999)
       {
          if(dist > 21000) /// Dist >= 21 nm

@@ -18,7 +18,7 @@
 #include "xt_isd.h"
 #include "T90.h"
 #include "snap.h"
-
+#include "detect.h"
 
 //#ifndef test_test
 //	#define test_test
@@ -221,8 +221,10 @@ void _Play_Task(void* p_arg)
    uint8_t  musicCursor  = 0;
  
    uint8_t  Nums[3];
+   uint8_t  aNums[5];
    
-   uint8_t playList  = 1;  
+   int  angle;
+//   uint8_t playList  = 1;  
    BULY_BERTH* thisBulyBerth  = NULL;
 	 BERTH * thisinvdBerth = NULL;
  
@@ -315,8 +317,35 @@ void _Play_Task(void* p_arg)
                        MUSIC_ADD(SND_ID_VIE);
                        break;
                   }
-                  
-                  if(thisBulyBerth->pBoatLink->Boat.dist < 99999){
+                  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
+                  if(angle>=0 && angle<360)
+                  {
+                    SND_ParseNum(angle/10*10000,aNums);
+                    MUSIC_ADD(SND_ID_ANG);
+                    
+                    if(aNums[0])
+                      {
+                        MUSIC_ADD(aNums[0]);
+                      }
+                      if(aNums[1])
+                      {
+                        MUSIC_ADD(aNums[1]);
+                      }
+                      if(aNums[2])
+                      {
+                        MUSIC_ADD(aNums[2]);
+                      }
+                      if(aNums[3])
+                      {
+                        MUSIC_ADD(aNums[3]);
+                      }
+                      if(aNums[4])
+                      {
+                        MUSIC_ADD(aNums[4]);
+                      }
+                      MUSIC_ADD(SND_ID_DEG);
+                  }     
+                  if(thisBulyBerth->pBoatLink->Boat.dist < 99999){                      
                      SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
                      MUSIC_ADD(SND_ID_DST);
                      
@@ -348,7 +377,42 @@ void _Play_Task(void* p_arg)
                }
                else{                                      // ¸ßËÙ´¬
                   MUSIC_ADD(SND_ID_HSB);
-                  MUSIC_ADD(SND_ID_DST);
+                  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
+
+INFO("highspeed-x=%d",thisBulyBerth->pBoatLink->x_to_cross);                   
+INFO("highspeed-y=%d",thisBulyBerth->pBoatLink->y_to_cross);                                      
+INFO("highspeed=%d",angle);
+                   if(angle>=0 && angle<360)
+                  {
+                    SND_ParseNum(angle/10*10000,aNums);
+                    MUSIC_ADD(SND_ID_ANG);
+                    
+                    if(aNums[0])
+                      {
+                        MUSIC_ADD(aNums[0]);
+                      }
+                      if(aNums[1])
+                      {
+                        MUSIC_ADD(aNums[1]);
+                      }
+                      if(aNums[2])
+                      {
+                        MUSIC_ADD(aNums[2]);
+                      }
+                      if(aNums[3])
+                      {
+                        MUSIC_ADD(aNums[3]);
+                      }
+                      if(aNums[4])
+                      {
+                        MUSIC_ADD(aNums[4]);
+                      }
+                      MUSIC_ADD(SND_ID_DEG);
+                  }
+                   
+                   
+                   
+                   MUSIC_ADD(SND_ID_DST);
                   
                   SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
                   if(Nums[0]){
@@ -363,18 +427,62 @@ void _Play_Task(void* p_arg)
                   MUSIC_ADD(SND_ID_NM);
                }
             }
-//            playList  = 2;
+//            playList      = 2;
 //        }
 				
 				else //if(playList == 2)
 				{
-					thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
-					if(thisinvdBerth)
+					thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();              
+                    if(thisinvdBerth)
 					{
-						MUSIC_ADD(SND_ID_BGL);
+						MUSIC_ADD(SND_ID_INVD);
+                        if(thisinvdBerth->y_to_cross > -250)
+                        {
+                             MUSIC_ADD(SND_ID_MS);                       
+                        }
+                        else
+                        {
+                            MUSIC_ADD(SND_ID_NET);
+                        }
+                        
+                        
+                       angle = getAngleOfShip(thisinvdBerth);
+INFO("invader-x=%d",thisinvdBerth->x_to_cross);
+INFO("invader-y=%d",thisinvdBerth->y_to_cross);
+                        
+INFO("invader= %d",angle);                       
+                      
+                        
+                      if(angle>=0 && angle<360)
+                  {
+                    SND_ParseNum(angle/10*10000,aNums);
+                    MUSIC_ADD(SND_ID_ANG);
+                    
+                    if(aNums[0])
+                      {
+                        MUSIC_ADD(aNums[0]);
+                      }
+                      if(aNums[1])
+                      {
+                        MUSIC_ADD(aNums[1]);
+                      }
+                      if(aNums[2])
+                      {
+                        MUSIC_ADD(aNums[2]);
+                      }
+                      if(aNums[3])
+                      {
+                        MUSIC_ADD(aNums[3]);
+                      }
+                      if(aNums[4])
+                      {
+                        MUSIC_ADD(aNums[4]);
+                      }
+                      MUSIC_ADD(SND_ID_DEG);
+                  }                 
 						MUSIC_ADD(SND_ID_DST);
 						SND_ParseDist(thisinvdBerth->Boat.dist, Nums);
-            if(Nums[0])
+                        if(Nums[0])
 						{
 							 MUSIC_ADD(Nums[0]);
 						}
@@ -590,7 +698,7 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
       shiftReg   = text[16];
       shiftReg   = (shiftReg << 8) | text[17];
       mothership.COG  = shiftReg;
-//			mothership.COG = 200;
+			mothership.COG = 0;
 
 //    tempgprmc = text[18]; SYS_Date = tempgprmc << 24;
 //    tempgprmc = text[19]; SYS_Date = SYS_Date + (tempgprmc << 16);

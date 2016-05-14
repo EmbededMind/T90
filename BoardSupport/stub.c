@@ -19,8 +19,8 @@ void StubRefresh()
 	stubs[1].basePoint.y = -t90_set.dst.dst1*M_TO_MILLINM;
 	stubs[2].basePoint.x = 0;
 	stubs[2].basePoint.y = -t90_set.dst.dst3*M_TO_MILLINM;
-	stubs[3].basePoint.x =  t90_set.dst.dst4*M_TO_MILLINM;
-	stubs[3].basePoint.y = -t90_set.dst.dst5*M_TO_MILLINM;
+//	stubs[3].basePoint.x =  t90_set.dst.dst4*M_TO_MILLINM;
+//	stubs[3].basePoint.y = -t90_set.dst.dst5*M_TO_MILLINM;
 	FillStubInfo();
 	detectInit();
 //	PrintStubInfo();

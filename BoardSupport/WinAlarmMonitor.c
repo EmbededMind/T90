@@ -137,11 +137,11 @@ WM_HWIN WIN_AlarmMonitorCreate(void){
 static void _onPaint(void)
 {	
 	Point point;
-   GUI_RECT r;
-   GUI_SetBkColor(pColor->bkColor);
-   WM_GetClientRect(&r);
-   GUI_ClearRectEx(&r);
-	 GUI_SetTextMode(GUI_TM_TRANS);
+    GUI_RECT r;
+    GUI_SetBkColor(pColor->bkColor);
+    WM_GetClientRect(&r);
+    GUI_ClearRectEx(&r);
+	GUI_SetTextMode(GUI_TM_TRANS);
    
 //   DrawAlarmShip(); 
 	GUI_SetColor(pColor->textColor);
@@ -156,7 +156,7 @@ static void _onPaint(void)
 	
 	GUI_DrawGradientV(0, 0, SCREEN_WIDTH-1, 45-1, pColor->bbsTopColor, pColor->bbsBottomColor);
 	GUI_SetColor(pColor->textColor);                             
-  GUI_SetFont(GUI_FONT_24B_1);
+    GUI_SetFont(GUI_FONT_24B_1);
 	GUI_DispCharAt('N', 15, 10);
 	GUI_DispCharAt('E', 165, 10);
 	GUI_DispStringAt("SOG:", 335, 10);

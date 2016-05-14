@@ -3,7 +3,7 @@
 
 #include "layout.h"
 
-#define STUB_NUM         4
+#define STUB_NUM         3
 
 #define PI               3.1416
 #define RAD_TO_ANGLE     180/PI
