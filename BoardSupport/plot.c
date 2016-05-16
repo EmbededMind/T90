@@ -159,7 +159,7 @@ void DrawCursor(Point pixel, int flag)
 		GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY());
 		
 		
-		GUI_SetColor(GUI_LIGHTBLUE);
+		GUI_SetColor(homeColors[t90_set.sys.nightmode].numColor);
 		point.x = pSnapLink->x_to_cross;
 		point.y = pSnapLink->y_to_cross;
 		DrawOtherShip(GetItemPixel(point), (pSnapLink->Boat.COG - mothership.COG)/10);

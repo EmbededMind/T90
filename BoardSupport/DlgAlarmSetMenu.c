@@ -24,12 +24,10 @@ static WM_HWIN buttons[4];
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
    {WINDOW_CreateIndirect,    "clientWin",    ID_WINDOW,      0, 0,                                             SUB_MENU_WIDTH,      SUB_MENU_HEIGHT,      0, 0, 0},
-
-	 {TEXT_CreateIndirect,       "alarmSet",    GUI_ID_TEXT0,   0, SUB_MENU_ITEM_MARGIN,                          SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
    
    {HSD_BUTTON_CreateIndirect, "invade",      GUI_ID_BUTTON0, 0, SUB_MENU_ITEM_HEIGHT+  SUB_MENU_ITEM_MARGIN*2, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
    {HSD_BUTTON_CreateIndirect, "speeding",    GUI_ID_BUTTON1, 0, SUB_MENU_ITEM_HEIGHT*2+SUB_MENU_ITEM_MARGIN*3, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
-   {HSD_BUTTON_CreateIndirect, "speed range", GUI_ID_BUTTON2, 0, SUB_MENU_ITEM_HEIGHT*3+SUB_MENU_ITEM_MARGIN*4, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
+   {HSD_BUTTON_CreateIndirect, "sog range", GUI_ID_BUTTON2, 0, SUB_MENU_ITEM_HEIGHT*3+SUB_MENU_ITEM_MARGIN*4, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
 	 {HSD_BUTTON_CreateIndirect, "special",     GUI_ID_BUTTON3, 0, SUB_MENU_ITEM_HEIGHT*4+SUB_MENU_ITEM_MARGIN*5, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0}
 };
 
@@ -134,7 +132,6 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 
 static void myDialogCallback(WM_MESSAGE* pMsg)
 {
-  WM_HWIN handle;
   switch(pMsg->MsgId){
 	 case USER_MSG_SKIN:
 						pColors = &(subMenuColors[pMsg->Data.v]);	
@@ -162,11 +159,6 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 		 
 				pColors = &(subMenuColors[t90_set.sys.nightmode]);
         WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);
-	 
-				handle = WM_GetDialogItem(pMsg->hWin,GUI_ID_TEXT0);
-				TEXT_SetTextAlign(handle, TEXT_CF_HCENTER|TEXT_CF_VCENTER);
-				TEXT_SetBkColor(handle,pColors->headBkColor);
-        TEXT_SetTextColor(handle, pColors->headTextColor);
         
         buttons[0]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
         WM_SetCallback(buttons[0], &myButtonCallback);
@@ -206,6 +198,14 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         break;
 	 					
 	 case WM_PAINT:
+		 
+				GUI_DrawGradientV( 0, SUB_MENU_ITEM_MARGIN,
+													 SUB_MENU_ITEM_WIDTH-1, SUB_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
+													 pColors->headTopColor, pColors->headBottomColor);
+				GUI_SetFont(GUI_FONT_24_ASCII);
+				GUI_SetTextMode(GUI_TM_TRANS);
+				GUI_SetColor(pColors->headTextColor);
+				GUI_DispStringAt("alarmSet", 80, 15);
 				GUI_SetColor(pColors->btBkColor);
 				GUI_FillRect(0, SUB_MENU_ITEM_HEIGHT*5+SUB_MENU_ITEM_MARGIN*6, SUB_MENU_WIDTH-1, SUB_MENU_HEIGHT-SUB_MENU_ITEM_MARGIN-1);
 				break;				

@@ -14,7 +14,6 @@
 
 WM_HWIN mainMenuDlg;
 
-static WM_HWIN text;
 static WM_HWIN buttons[3];
 
 
@@ -23,8 +22,6 @@ static const MenuColor *pColors = mainMenuColors;
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
    {WINDOW_CreateIndirect,   "clientWin", ID_WINDOW,      0,                     0,                                               MAIN_MENU_WIDTH,    MAIN_MENU_HEIGHT,           0, 0, 0},
-   
-   {TEXT_CreateIndirect,          "Menu", GUI_ID_TEXT0,   MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_MARGIN,                           MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
    
    {HSD_BUTTON_CreateIndirect,  "dstSet", GUI_ID_BUTTON0, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2,   MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
    {HSD_BUTTON_CreateIndirect,  "almSet", GUI_ID_BUTTON1, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT*2+MAIN_MENU_ITEM_MARGIN*3, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
@@ -151,14 +148,10 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 						HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
 						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
 						break;
+			 
        case WM_INIT_DIALOG:
 						pColors = &mainMenuColors[t90_set.sys.nightmode];
             WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);           
-            
-						text = WM_GetDialogItem(pMsg->hWin, GUI_ID_TEXT0);
-            TEXT_SetTextAlign(text, TEXT_CF_HCENTER|TEXT_CF_VCENTER);
-						TEXT_SetBkColor(text, pColors->headBkColor);
-            TEXT_SetTextColor(text, pColors->headTextColor);
             
 						buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
             HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font24B_ASCII);
@@ -182,14 +175,19 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
             
             break; 
-			 case WM_PAINT:			
+						
+			 case WM_PAINT:
+						
+						GUI_DrawGradientV( MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_MARGIN,
+															 MAIN_MENU_WIDTH-MAIN_MENU_ITEM_MARGIN-1, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
+															 pColors->headTopColor, pColors->headBottomColor);
+						GUI_SetFont(GUI_FONT_24_ASCII);
+						GUI_SetTextMode(GUI_TM_TRANS);
+						GUI_SetColor(pColors->headTextColor);
+						GUI_DispStringAt("Menu", 40, 15);
 					  GUI_SetColor(pColors->btBkColor);
 						GUI_FillRect(MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT*4+MAIN_MENU_ITEM_MARGIN*5, MAIN_MENU_ITEM_WIDTH+MAIN_MENU_ITEM_MARGIN-1, MAIN_MENU_HEIGHT-MAIN_MENU_ITEM_MARGIN-1);
 						break;
-			 
-//			 case WM_SET_FOCUS:
-//						WM_DefaultProc(pMsg);
-//						break;
             
        default:
             WM_DefaultProc(pMsg);

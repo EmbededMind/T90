@@ -3,6 +3,8 @@
 
 #include "T90.h"
 
+#define   FOCUS_COLOR_DAY      0x009c6f00
+#define   FOCUS_COLOR_NIGHT    0x00005dff
 
 
 typedef struct HomeColor
@@ -19,7 +21,8 @@ typedef struct HomeColor
 typedef struct MenuColor
 {
 	GUI_COLOR bkColor;
-	GUI_COLOR headBkColor;
+	GUI_COLOR headTopColor;
+	GUI_COLOR headBottomColor;
 	GUI_COLOR headTextColor;
 	GUI_COLOR btBkColor;
 	GUI_COLOR btTextColor;
