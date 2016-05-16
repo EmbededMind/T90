@@ -133,8 +133,13 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			case WM_SET_FOCUS:
 					 if(pMsg->Data.v)
 					 {
+						 	GUI_CURSOR_Show();
 						 cursorOnStub = 0;
 						 timer  = WM_CreateTimer(pMsg->hWin, 0, 500, 0);
+					 }
+					 else
+					 {
+						 GUI_CURSOR_Hide();
 					 }
 					 WM_DefaultProc(pMsg);
 					 break;

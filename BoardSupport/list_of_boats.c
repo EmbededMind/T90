@@ -10,6 +10,7 @@
 #include "str.h"
 #include "bully.h"
 #include "detect.h"
+#include "transform.h"
 // find if id exist in aux_boat, yes return 1, otherwise 0, size exclusive
 
 /*----------------------- Macro defination -----------------------*/
@@ -752,7 +753,7 @@ int getSphereDist(long lt_1,long lg_1, long lt_2, long lg_2)
     return 999999;
  }
  
- if( (lt_1>lt_2?lt_1-lt_2:lt_2-lt_1) <500  &&  (lg_1>lg_2?lg_1-lg_2:lg_2-lg_1) < 500 )
+ if( (lt_1>lt_2?lt_1-lt_2:lt_2-lt_1) <5000  &&  (lg_1>lg_2?lg_1-lg_2:lg_2-lg_1) < 5000 )
  {
     dist  = sqrt( (lt_1-lt_2)*(lt_1-lt_2) + (lg_1-lg_2)*(lg_1-lg_2));
     return (int)(dist);

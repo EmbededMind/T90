@@ -45,7 +45,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 						WM_BringToTop(singleShipWin);
 						WM_SetFocus(singleShipWin);
 					}
-//					SNAP_Refresh();
+					
 					timeCnt++;
 					WM_Paint(alarmMonitorWin);					
 					WM_RestartTimer(timer, 500);
@@ -56,11 +56,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
            break;     
 			
 			case WM_SET_FOCUS:	
-//					 mntLabelTimeCnt = MNT_LABEL_TIME;
 					 SNAP_Refresh();
 					 if(pMsg->Data.v)
 					 {					 
+						 	GUI_CURSOR_Show();
 						 timer = WM_CreateTimer(pMsg->hWin, 0, 500, 0);
+					 }
+					 else
+					 {
+						 GUI_CURSOR_Hide();
 					 }
 					 WM_DefaultProc(pMsg);
 					 break;
@@ -149,11 +153,20 @@ static void _onPaint(void)
 	GUI_SetColor(GUI_RED);
 	DrawAllOtherShips();
 	
+	SNAP_Refresh();
+	
 	point.x = pSnapLink->x_to_cross;
 	point.y = pSnapLink->y_to_cross;
 	GUI_SetColor(pColor->textColor);
-	DrawCursor(GetItemPixel(point), 1);
-	
+	if(point.x == 0 && point.y == 0)
+	{
+		DrawCursor(GetItemPixel(point), 0);
+	}
+	else
+	{
+		DrawCursor(GetItemPixel(point), 1);
+	}
+
 	GUI_DrawGradientV(0, 0, SCREEN_WIDTH-1, 45-1, pColor->bbsTopColor, pColor->bbsBottomColor);
 	GUI_SetColor(pColor->textColor);                             
     GUI_SetFont(GUI_FONT_24B_1);

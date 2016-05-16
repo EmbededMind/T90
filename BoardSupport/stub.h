@@ -42,7 +42,7 @@ void StubRefresh(void);
 Point GetRelativePoint(Point, Point);
 int GetDistance(Point, Point);
 
-
+Point STUB_GetYMin(void);
 
 
 

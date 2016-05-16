@@ -2,6 +2,7 @@
 #include "math.h"
 #include "T90.h"
 #include "detect.h"
+#include "transform.h"
 
 
 Stub stubs[STUB_NUM];
@@ -80,6 +81,22 @@ static void FillStubInfo(void)
 																 stubs[j].tang2.point.x - stubs[j].basePoint.x)*RAD_TO_ANGLE;
 	}
 }
+
+Point STUB_GetYMin(void)
+{
+	int i;
+	Point point;
+	for(i = 0; i < STUB_NUM; i++)
+	{
+		if(stubs[i].basePoint.y < point.y)
+		{
+			point.y = stubs[i].basePoint.y;
+			point.x = stubs[i].basePoint.x;
+		}
+	}
+	return point;
+}
+		
 
 
 

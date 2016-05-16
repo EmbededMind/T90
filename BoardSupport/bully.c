@@ -2,6 +2,10 @@
 #include "bully.h"
 #include "string.h"
 #include "snap.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 
 
 #define MAP_SIZE
@@ -55,7 +59,11 @@ Bool BULY_add(BERTH* pBoatLink)
    BULY_BERTH * pBuf;
    BULY_BERTH * pIterator;
    
+<<<<<<< HEAD
 //   pBuf  = BULY_alloc();
+=======
+   //   pBuf  = BULY_alloc();
+>>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 
 /// Modified by SealedGhost at 5/12/2016   
    int i  = 0;
@@ -83,12 +91,14 @@ Bool BULY_add(BERTH* pBoatLink)
          }
          pIterator->pNext  = pBuf;
          validCnt++;
+INFO("add success, MMSI:%09ld - mntstate:%d", pBuf->pBoatLink->Boat.user_id, pBuf->pBoatLink->mntState);				 
          return TRUE;
       }
       else 
       {
          pBulyHeader  = pBuf;
          validCnt++;
+INFO("add success, MMSI:%09ld - mntstate:%d", pBuf->pBoatLink->Boat.user_id, pBuf->pBoatLink->mntState);				 				
          return TRUE;
       }
    }
@@ -191,7 +201,11 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered )
          {
             pPlayBerth  = pIterator;
+<<<<<<< HEAD
             pSnapLink = pPlayBerth->pBoatLink;
+=======
+					  SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+>>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
             return pPlayBerth;
          }
          else
@@ -211,7 +225,11 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered)
          {
             pPlayBerth  = pIterator;
+<<<<<<< HEAD
             pSnapLink = pPlayBerth->pBoatLink;
+=======
+					  SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+>>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
             return pPlayBerth;
          }
          else
@@ -223,11 +241,19 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
 			while(pIterator != pPlayBerth->pNext)
 			{
 				if(pIterator->pBoatLink->mntState == MNTState_Triggered)
+<<<<<<< HEAD
                     {
                         pPlayBerth  = pIterator;
                         pSnapLink = pPlayBerth->pBoatLink;
                         return pPlayBerth;
                     }
+=======
+        {
+          pPlayBerth  = pIterator;
+					SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+          return pPlayBerth;
+        }
+>>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 				pIterator = pIterator->pNext;
 			}
       pPlayBerth  = NULL;
@@ -242,7 +268,7 @@ unsigned char BULY_parseNation(long id)
 #ifdef P_AM128A
    int i  = 0;
    int tmp  = id /1000000;
-INFO("parseMMSI:%09ld--%d", id,tmp);  
+//INFO("parseMMSI:%09ld--%d", id,tmp);  
 
    if(tmp < NationMap[0].orgCode  ||  tmp >= NationMap[NATION_NUM-1].orgCode+NationMap[NATION_NUM-1].expCnt)
    {
@@ -252,7 +278,7 @@ INFO("parseMMSI:%09ld--%d", id,tmp);
    for(; i<NATION_NUM; i++){
       if( tmp >= NationMap[i].orgCode  &&  tmp <= (NationMap[i].orgCode+NationMap[i].expCnt) ) 
       {
-INFO("NationMap[%d].nation:0x%x",i, NationMap[i].nation);
+//INFO("NationMap[%d].nation:0x%x",i, NationMap[i].nation);
          if( (0x01<<i) &t90_set.alarm.nation){
             return NationMap[i].nation;
          }
@@ -271,8 +297,9 @@ void BULY_dump(void)
    BULY_BERTH* pIterator  = pBulyHeader;
    while(pIterator)
    {
-      printf("mmsi:%09ld--sog:%d--dist:%d--category:0x%x\n", pIterator->pBoatLink->Boat.user_id, pIterator->pBoatLink->Boat.SOG, pIterator->pBoatLink->Boat.dist, pIterator->pBoatLink->Boat.category);
-      pIterator  = pIterator->pNext;
+//      printf("mmsi:%09ld--sog:%d--dist:%d--category:0x%x\n", pIterator->pBoatLink->Boat.user_id, pIterator->pBoatLink->Boat.SOG, pIterator->pBoatLink->Boat.dist, pIterator->pBoatLink->Boat.category);
+     printf("mmsi:%09ld - mntstate:%d\r\n", pIterator->pBoatLink->Boat.user_id, pIterator->pBoatLink->mntState); 
+		 pIterator  = pIterator->pNext;
    }
 }
 

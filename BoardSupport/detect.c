@@ -3,6 +3,7 @@
 #include "T90.h"
 #include "math.h"
 #include "detect.h"
+#include "transform.h"
 
 #define SQUARE(X) ((X)*(X))
 /**
@@ -104,6 +105,11 @@ void detect()
 {
     int i = 0;
   
+	  for(i = 0; i < N_boat; i++)          //clear
+	  {
+		    SimpBerthes[i].pBerth->isInvader = 0;
+	  }
+	
     for(i = 0;i < N_boat;i++)
     {
         if(SimpBerthes[i].Dist < (t90_set.alarm.invd_dst+500)*5/4){
