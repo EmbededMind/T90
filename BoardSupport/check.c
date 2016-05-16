@@ -119,9 +119,9 @@ void CHECK_isInvader(void)
 
 void CHECK_MS_Speed()
 {
-	MS_isSpeeding = 0;   //clear
-	MS_isMax_SOG = 0;
-	MS_isMin_SOG = 0;
+//	MS_isSpeeding = 0;   //clear
+//	MS_isMax_SOG = 0;
+//	MS_isMin_SOG = 0;
 	
 	if(mothership.SOG > t90_set.alarm.danger_sog)
 	{		
