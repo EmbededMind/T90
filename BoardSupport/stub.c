@@ -97,7 +97,18 @@ Point STUB_GetYMin(void)
 	return point;
 }
 		
-
+int FetchMidStub()
+{
+    int i = 0;
+    int maxpoint_y = 0;
+    for(i = 1; i < STUB_NUM; i++)
+    {
+        if(stubs[i].basePoint.y > maxpoint_y)
+            maxpoint_y  = stubs [i].basePoint.y;        
+    }
+    
+    return maxpoint_y/2;
+}
 
 
 
