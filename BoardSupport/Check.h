@@ -23,6 +23,9 @@
 void check(void);
 int CHECK_GetAlarmState(void);
 BERTH* SIMP_BERTH_fetchNextPlayBerth(void);
+
+void CHECK_STRefresh();
+int FetchSTime();
 //void CHECK_checkNickName(MNT_BERTH* pMntBerth);
 
 //int INVD_add(long MMSI,long targetMMSI);
