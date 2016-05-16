@@ -519,7 +519,10 @@ INFO("invader= %d",angle);
             }
             ISD_PWRDn();            
             MUSIC_RESET;                // œ¬±Í÷√0         
-         } /// End. execute play 
+         } /// End. execute play
+         
+
+         
       } /// End . if(monitorState == FALSE)
       
       OSTimeDlyHMSM(0, 0, 3, 0);

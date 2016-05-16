@@ -30,7 +30,6 @@ static int hasAlarm = 0;
 static void CHECK_HasAlarm(void);
 static void CHECK_MaskAllBerth(void);
 
-
 void CHECK_MS_Speed()
 {
 	MS_isSpeeding = 0;   //clear
@@ -66,6 +65,8 @@ void CHECK_DelHighSpeed()
     }    
     
 }
+
+
 
 void check()
 {
