@@ -25,7 +25,7 @@ extern FunctionalState isMntEnable;
 /// Defined in app.c.If key pressed , isKeyTrigged will be TRUE. Your apps must set iskeyTrigged FALSe after using it.
 extern int isKeyTrigged;
 
-
+static int STime = 60;
 static int hasAlarm = 0;
 
 static void CHECK_HasAlarm(void);
@@ -96,6 +96,24 @@ void CHECK_DelHighSpeed()
     
 }
 
+void CHECK_STRefresh()
+{
+    if(mothership.SOG < 10)
+    {
+        STime--;
+    }
+    else
+    {
+        STime = 60;
+    }
+}
+
+int FetchSTime()
+{
+   return STime;
+}
+ 
+
 void check()
 {
 	if(isKeyTrigged)
@@ -110,6 +128,7 @@ void check()
 //	SNAP_Refresh();
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
+    CHECK_STRefresh;
 //INFO("highspeed num:%d",validCnt);
 	BULY_dump();
 }

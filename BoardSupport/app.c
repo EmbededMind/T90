@@ -291,313 +291,315 @@ void _Play_Task(void* p_arg)
    {
       if(monitorState == ON) // 监控
 			{   
-//        if(playList  == 1)
-//				{
-            thisBulyBerth  = BULY_fetchNextPlayBerth();
-            if(thisBulyBerth){
-							
-//#ifdef __INFO_ENABLE            
-//               BULY_dump();
-//#endif               
-               if( (thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //渔政船
-                  switch(thisBulyBerth->pBoatLink->Boat.category & 0xf0){
-                  case NATION_CTB:
-                       MUSIC_ADD(SND_ID_CTB);
-                       break;
-                  case NATION_JPN:
-                       MUSIC_ADD(SND_ID_JPN);
-                       break;
-                  case NATION_KOR:
-                       MUSIC_ADD(SND_ID_KOR);                  
-                       break;
-                  case NATION_PRK:
-                       MUSIC_ADD(SND_ID_PRK);
-                       break;
-                  case NATION_INA:
-                       MUSIC_ADD(SND_ID_INA);
-                       break;
-                  case NATION_VIE:
-                       MUSIC_ADD(SND_ID_VIE);
-                       break;
-                  }
-                  
-									angle = getAngleOfShip(thisBulyBerth->pBoatLink);
-                  if(angle>=0 && angle<360)
-                  {
-                    SND_ParseNum(angle/10*10000,aNums);
-                    MUSIC_ADD(SND_ID_ANG);
-                    
-                    if(aNums[0])
-                      {
-                        MUSIC_ADD(aNums[0]);
-                      }
-                      if(aNums[1])
-                      {
-                        MUSIC_ADD(aNums[1]);
-                      }
-                      if(aNums[2])
-                      {
-                        MUSIC_ADD(aNums[2]);
-                      }
-                      if(aNums[3])
-                      {
-                        MUSIC_ADD(aNums[3]);
-                      }
-                      if(aNums[4])
-                      {
-                        MUSIC_ADD(aNums[4]);
-                      }
-                      MUSIC_ADD(SND_ID_DEG);
-                  } 
-									
-                  if(thisBulyBerth->pBoatLink->Boat.dist < 99999){
-                     SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
-                     MUSIC_ADD(SND_ID_DST);
-                     
-                     if(Nums[0]){
-                        MUSIC_ADD(Nums[0]);
-                     }
-                     if(Nums[1]){
-                        MUSIC_ADD(Nums[1]);
-                     }
-                     if(Nums[2]){
-                        MUSIC_ADD(Nums[2]);
-                     }
-                     
-                     MUSIC_ADD(SND_ID_NM);
-                     MUSIC_ADD(SND_ID_SIS);
-                     
-                     SND_ParseDist(thisBulyBerth->pBoatLink->Boat.SOG *100, Nums);
-                     if(Nums[0]){
-                        MUSIC_ADD(Nums[0]);
-                     }
-                     if(Nums[1]){
-                        MUSIC_ADD(Nums[1]);
-                     }
-                     if(Nums[2]){
-                        MUSIC_ADD(Nums[2]);
-                     }
-                     MUSIC_ADD(SND_ID_KT);
-                  }
+               if(FetchSTime == 0)
+               {
+                    MUSIC_ADD(SND_ID_STOF);
                }
-               else{                                      // 高速船
-                  MUSIC_ADD(SND_ID_HSB);
-								  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
-INFO("highspeed-x=%d",thisBulyBerth->pBoatLink->x_to_cross);                   
-INFO("highspeed-y=%d",thisBulyBerth->pBoatLink->y_to_cross);                                      
-INFO("highspeed=%d",angle);
-								   if(angle>=0 && angle<360)
-                  {
-                    SND_ParseNum(angle,aNums);
-                    MUSIC_ADD(SND_ID_ANG);
-                    
-                    if(aNums[0])
-                      {
-                        MUSIC_ADD(aNums[0]);
-                      }
-                      if(aNums[1])
-                      {
-                        MUSIC_ADD(aNums[1]);
-                      }
-                      if(aNums[2])
-                      {
-                        MUSIC_ADD(aNums[2]);
-                      }
-                      if(aNums[3])
-                      {
-                        MUSIC_ADD(aNums[3]);
-                      }
-                      if(aNums[4])
-                      {
-                        MUSIC_ADD(aNums[4]);
-                      }
-                      MUSIC_ADD(SND_ID_DEG);
-                  }
-									
-                  MUSIC_ADD(SND_ID_DST);
-                  
-                  SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
-                  if(Nums[0]){
-                     MUSIC_ADD(Nums[0]);
-                  }
-                  if(Nums[1]){
-                     MUSIC_ADD(Nums[1]);
-                  }
-                  if(Nums[2]){
-                     MUSIC_ADD(Nums[2]);
-                  }
-                  MUSIC_ADD(SND_ID_NM);
-               }
-            }
-//            playList  = 2;
-//        }
-				
-				else //if(playList == 2)
-				{
-					if(playList == 1)
-					{
-					
-					thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
-					if(thisinvdBerth)
-					{
-						MUSIC_ADD(SND_ID_INVD);
-                        if(thisinvdBerth->y_to_cross > FetchMidStub())
-                        {
-                            MUSIC_ADD(SND_ID_MS);
-                        }
-                        else
-                        {
-                            MUSIC_ADD(SND_ID_NET);
-                        }
-                        
-                        
-                        angle = getAngleOfShip(thisinvdBerth);                                           
-                          if(angle>=0 && angle<360)
-                          {
-                            SND_ParseNum(angle,aNums);
-                            MUSIC_ADD(SND_ID_ANG);
-                            
+               else
+               {
+                            thisBulyBerth  = BULY_fetchNextPlayBerth();
+                            if(thisBulyBerth){
+                                            
+                              
+                               if( (thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //渔政船
+                                  switch(thisBulyBerth->pBoatLink->Boat.category & 0xf0){
+                                  case NATION_CTB:
+                                       MUSIC_ADD(SND_ID_CTB);
+                                       break;
+                                  case NATION_JPN:
+                                       MUSIC_ADD(SND_ID_JPN);
+                                       break;
+                                  case NATION_KOR:
+                                       MUSIC_ADD(SND_ID_KOR);                  
+                                       break;
+                                  case NATION_PRK:
+                                       MUSIC_ADD(SND_ID_PRK);
+                                       break;
+                                  case NATION_INA:
+                                       MUSIC_ADD(SND_ID_INA);
+                                       break;
+                                  case NATION_VIE:
+                                       MUSIC_ADD(SND_ID_VIE);
+                                       break;
+                                  }
+                                  
+                                                    angle = getAngleOfShip(thisBulyBerth->pBoatLink);
+                                  if(angle>=0 && angle<360)
+                                  {
+                                    SND_ParseNum(angle/10*10000,aNums);
+                                    MUSIC_ADD(SND_ID_ANG);
+                                    
+                                    if(aNums[0])
+                                      {
+                                        MUSIC_ADD(aNums[0]);
+                                      }
+                                      if(aNums[1])
+                                      {
+                                        MUSIC_ADD(aNums[1]);
+                                      }
+                                      if(aNums[2])
+                                      {
+                                        MUSIC_ADD(aNums[2]);
+                                      }
+                                      if(aNums[3])
+                                      {
+                                        MUSIC_ADD(aNums[3]);
+                                      }
+                                      if(aNums[4])
+                                      {
+                                        MUSIC_ADD(aNums[4]);
+                                      }
+                                      MUSIC_ADD(SND_ID_DEG);
+                                  } 
+                                                    
+                                  if(thisBulyBerth->pBoatLink->Boat.dist < 99999){
+                                     SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
+                                     MUSIC_ADD(SND_ID_DST);
+                                     
+                                     if(Nums[0]){
+                                        MUSIC_ADD(Nums[0]);
+                                     }
+                                     if(Nums[1]){
+                                        MUSIC_ADD(Nums[1]);
+                                     }
+                                     if(Nums[2]){
+                                        MUSIC_ADD(Nums[2]);
+                                     }
+                                     
+                                     MUSIC_ADD(SND_ID_NM);
+                                     MUSIC_ADD(SND_ID_SIS);
+                                     
+                                     SND_ParseDist(thisBulyBerth->pBoatLink->Boat.SOG *100, Nums);
+                                     if(Nums[0]){
+                                        MUSIC_ADD(Nums[0]);
+                                     }
+                                     if(Nums[1]){
+                                        MUSIC_ADD(Nums[1]);
+                                     }
+                                     if(Nums[2]){
+                                        MUSIC_ADD(Nums[2]);
+                                     }
+                                     MUSIC_ADD(SND_ID_KT);
+                                  }
+                               }
+                               else{                                      // 高速船
+                                  MUSIC_ADD(SND_ID_HSB);
+                                                  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
+                    INFO("highspeed-x=%d",thisBulyBerth->pBoatLink->x_to_cross);                   
+                    INFO("highspeed-y=%d",thisBulyBerth->pBoatLink->y_to_cross);                                      
+                    INFO("highspeed=%d",angle);
+                                                   if(angle>=0 && angle<360)
+                                  {
+                                    SND_ParseNum(angle,aNums);
+                                    MUSIC_ADD(SND_ID_ANG);
+                                    
+                                    if(aNums[0])
+                                      {
+                                        MUSIC_ADD(aNums[0]);
+                                      }
+                                      if(aNums[1])
+                                      {
+                                        MUSIC_ADD(aNums[1]);
+                                      }
+                                      if(aNums[2])
+                                      {
+                                        MUSIC_ADD(aNums[2]);
+                                      }
+                                      if(aNums[3])
+                                      {
+                                        MUSIC_ADD(aNums[3]);
+                                      }
+                                      if(aNums[4])
+                                      {
+                                        MUSIC_ADD(aNums[4]);
+                                      }
+                                      MUSIC_ADD(SND_ID_DEG);
+                                  }
+                                                    
+                                  MUSIC_ADD(SND_ID_DST);
+                                  
+                                  SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
+                                  if(Nums[0]){
+                                     MUSIC_ADD(Nums[0]);
+                                  }
+                                  if(Nums[1]){
+                                     MUSIC_ADD(Nums[1]);
+                                  }
+                                  if(Nums[2]){
+                                     MUSIC_ADD(Nums[2]);
+                                  }
+                                  MUSIC_ADD(SND_ID_NM);
+                               }
+                            }
+                    //            playList  = 2;
+                    //        }
+                                
+                                else //if(playList == 2)
+                                {
+                                    if(playList == 1)
+                                    {
+                                    
+                                    thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
+                                    if(thisinvdBerth)
+                                    {
+                                        MUSIC_ADD(SND_ID_INVD);
+                                            if(thisinvdBerth->y_to_cross > FetchMidStub())
+                                        {
+                                            MUSIC_ADD(SND_ID_MS);
+                                        }
+                                        else
+                                        {
+                                            MUSIC_ADD(SND_ID_NET);
+                                        }
+                                        
+                                        
+                                        angle = getAngleOfShip(thisinvdBerth);                                           
+                                          if(angle>=0 && angle<360)
+                                          {
+                                            SND_ParseNum(angle,aNums);
+                                            MUSIC_ADD(SND_ID_ANG);
+                                            
+                                            if(aNums[0])
+                                              {
+                                                MUSIC_ADD(aNums[0]);
+                                              }
+                                              if(aNums[1])
+                                              {
+                                                MUSIC_ADD(aNums[1]);
+                                              }
+                                              if(aNums[2])
+                                              {
+                                                MUSIC_ADD(aNums[2]);
+                                              }
+                                              if(aNums[3])
+                                              {
+                                                MUSIC_ADD(aNums[3]);
+                                              }
+                                              if(aNums[4])
+                                              {
+                                                MUSIC_ADD(aNums[4]);
+                                              }
+                                              MUSIC_ADD(SND_ID_DEG);
+                                              }    
+                                        
+                                        MUSIC_ADD(SND_ID_DST);
+                                        SND_ParseDist(thisinvdBerth->Boat.dist, Nums);
+                                        if(Nums[0])
+                                        {
+                                             MUSIC_ADD(Nums[0]);
+                                        }
+                                        if(Nums[1])
+                                        {
+                                             MUSIC_ADD(Nums[1]);
+                                        }
+                                        if(Nums[2])
+                                        {
+                                             MUSIC_ADD(Nums[2]);
+                                        }
+                                        MUSIC_ADD(SND_ID_NM);
+                                    }
+                                    playList  = 2;
+                                    OSTimeDlyHMSM(0, 0, 2, 0);
+                                }
+                                else if(playList == 2)
+                                {
+                                    if(MS_isSpeeding == MNTState_Triggered)
+                                    {
+                                        
+                                        
+                            SND_ParseNum(t90_set.alarm.danger_sog*100,aNums);
+                            MUSIC_ADD(SND_ID_MHS);
+                                    
                             if(aNums[0])
-                              {
-                                MUSIC_ADD(aNums[0]);
-                              }
-                              if(aNums[1])
-                              {
-                                MUSIC_ADD(aNums[1]);
-                              }
-                              if(aNums[2])
-                              {
-                                MUSIC_ADD(aNums[2]);
-                              }
-                              if(aNums[3])
-                              {
-                                MUSIC_ADD(aNums[3]);
-                              }
-                              if(aNums[4])
-                              {
-                                MUSIC_ADD(aNums[4]);
-                              }
-                              MUSIC_ADD(SND_ID_DEG);
-                              }    
-						
-						MUSIC_ADD(SND_ID_DST);
-						SND_ParseDist(thisinvdBerth->Boat.dist, Nums);
-                        if(Nums[0])
-						{
-							 MUSIC_ADD(Nums[0]);
-						}
-						if(Nums[1])
-						{
-							 MUSIC_ADD(Nums[1]);
-						}
-						if(Nums[2])
-						{
-							 MUSIC_ADD(Nums[2]);
-						}
-						MUSIC_ADD(SND_ID_NM);
-					}
-					playList  = 2;
-					OSTimeDlyHMSM(0, 0, 2, 0);
-				}
-				else if(playList == 2)
-				{
-					if(MS_isSpeeding == MNTState_Triggered)
-					{
-						
-						
-            SND_ParseNum(t90_set.alarm.danger_sog*100,aNums);
-            MUSIC_ADD(SND_ID_MHS);
-                    
-            if(aNums[0])
-						{
-							 MUSIC_ADD(aNums[0]);
-						}
-						if(aNums[1])
-						{
-							MUSIC_ADD(aNums[1]);
-						}
-						if(aNums[2])
-						{
-							MUSIC_ADD(aNums[2]);
-						}
-						if(aNums[3])
-						{
-							MUSIC_ADD(aNums[3]);
-						}
-						if(aNums[4])
-						{
-							MUSIC_ADD(aNums[4]);
-						}
-						MUSIC_ADD(SND_ID_KT);
-			
-                  
-					}
-					else
-					{
-						if(MS_isMax_SOG == MNTState_Triggered)
-						{
-							SND_ParseNum(mothership.SOG*100,aNums);
-							MUSIC_ADD(SND_ID_SN);
-                    
-							if(aNums[0])
-							{
-								 MUSIC_ADD(aNums[0]);
-							}
-							if(aNums[1])
-							{
-								MUSIC_ADD(aNums[1]);
-							}
-							if(aNums[2])
-							{
-								MUSIC_ADD(aNums[2]);
-							}
-							if(aNums[3])
-							{
-								MUSIC_ADD(aNums[3]);
-							}
-							if(aNums[4])
-							{
-								MUSIC_ADD(aNums[4]);
-							}
-							MUSIC_ADD(SND_ID_KT);
-							MUSIC_ADD(SND_ID_HIGH);
-							MUSIC_ADD(SND_ID_SNOR);
-						}
-						else if(MS_isMin_SOG == MNTState_Triggered)
-						{
-							SND_ParseNum(mothership.SOG*100,aNums);
-							MUSIC_ADD(SND_ID_SN);
-                    
-							if(aNums[0])
-							{
-								 MUSIC_ADD(aNums[0]);
-							}
-							if(aNums[1])
-							{
-								MUSIC_ADD(aNums[1]);
-							}
-							if(aNums[2])
-							{
-								MUSIC_ADD(aNums[2]);
-							}
-							if(aNums[3])
-							{
-								MUSIC_ADD(aNums[3]);
-							}
-							if(aNums[4])
-							{
-								MUSIC_ADD(aNums[4]);
-							}
-							MUSIC_ADD(SND_ID_KT);
-							MUSIC_ADD(SND_ID_LOW);
-							MUSIC_ADD(SND_ID_SNOR);
-						
-						}
-					}
-				playList = 1;
-				}
-			}
-
+                                        {
+                                             MUSIC_ADD(aNums[0]);
+                                        }
+                                        if(aNums[1])
+                                        {
+                                            MUSIC_ADD(aNums[1]);
+                                        }
+                                        if(aNums[2])
+                                        {
+                                            MUSIC_ADD(aNums[2]);
+                                        }
+                                        if(aNums[3])
+                                        {
+                                            MUSIC_ADD(aNums[3]);
+                                        }
+                                        if(aNums[4])
+                                        {
+                                            MUSIC_ADD(aNums[4]);
+                                        }
+                                        MUSIC_ADD(SND_ID_KT);
+                            
+                                  
+                                    }
+                                    else
+                                    {
+                                        if(MS_isMax_SOG == MNTState_Triggered)
+                                        {
+                                            SND_ParseNum(mothership.SOG*100,aNums);
+                                            MUSIC_ADD(SND_ID_SN);
+                                    
+                                            if(aNums[0])
+                                            {
+                                                 MUSIC_ADD(aNums[0]);
+                                            }
+                                            if(aNums[1])
+                                            {
+                                                MUSIC_ADD(aNums[1]);
+                                            }
+                                            if(aNums[2])
+                                            {
+                                                MUSIC_ADD(aNums[2]);
+                                            }
+                                            if(aNums[3])
+                                            {
+                                                MUSIC_ADD(aNums[3]);
+                                            }
+                                            if(aNums[4])
+                                            {
+                                                MUSIC_ADD(aNums[4]);
+                                            }
+                                            MUSIC_ADD(SND_ID_KT);
+                                            MUSIC_ADD(SND_ID_HIGH);
+                                            MUSIC_ADD(SND_ID_SNOR);
+                                        }
+                                        else if(MS_isMin_SOG == MNTState_Triggered)
+                                        {
+                                            SND_ParseNum(mothership.SOG*100,aNums);
+                                            MUSIC_ADD(SND_ID_SN);
+                                    
+                                            if(aNums[0])
+                                            {
+                                                 MUSIC_ADD(aNums[0]);
+                                            }
+                                            if(aNums[1])
+                                            {
+                                                MUSIC_ADD(aNums[1]);
+                                            }
+                                            if(aNums[2])
+                                            {
+                                                MUSIC_ADD(aNums[2]);
+                                            }
+                                            if(aNums[3])
+                                            {
+                                                MUSIC_ADD(aNums[3]);
+                                            }
+                                            if(aNums[4])
+                                            {
+                                                MUSIC_ADD(aNums[4]);
+                                            }
+                                            MUSIC_ADD(SND_ID_KT);
+                                            MUSIC_ADD(SND_ID_LOW);
+                                            MUSIC_ADD(SND_ID_SNOR);
+                                        
+                                        }
+                                    }
+                                playList = 1;
+                                }
+                            }
+                        }
          if(musicCursor){
             int i  = 0;
             
