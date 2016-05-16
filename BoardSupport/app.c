@@ -19,7 +19,7 @@
 #include "T90.h"
 #include "snap.h"
 #include "transform.h"
-
+#include "stub.h"
 
 //#ifndef test_test
 //	#define test_test
@@ -441,43 +441,48 @@ INFO("highspeed=%d",angle);
 					if(thisinvdBerth)
 					{
 						MUSIC_ADD(SND_ID_INVD);
-						
-						      angle = getAngleOfShip(thisinvdBerth);                   
-INFO("invader-x=%d",thisinvdBerth->x_to_cross);
-INFO("invader-y=%d",thisinvdBerth->y_to_cross);
+                        if(thisinvdBerth->y_to_cross > FetchMidStub())
+                        {
+                            MUSIC_ADD(SND_ID_MS);
+                        }
+                        else
+                        {
+                            MUSIC_ADD(SND_ID_NET);
+                        }
                         
-INFO("invader= %d",angle);                                             
-                  if(angle>=0 && angle<360)
-                  {
-                    SND_ParseNum(angle,aNums);
-                    MUSIC_ADD(SND_ID_ANG);
-                    
-                    if(aNums[0])
-                      {
-                        MUSIC_ADD(aNums[0]);
-                      }
-                      if(aNums[1])
-                      {
-                        MUSIC_ADD(aNums[1]);
-                      }
-                      if(aNums[2])
-                      {
-                        MUSIC_ADD(aNums[2]);
-                      }
-                      if(aNums[3])
-                      {
-                        MUSIC_ADD(aNums[3]);
-                      }
-                      if(aNums[4])
-                      {
-                        MUSIC_ADD(aNums[4]);
-                      }
-                      MUSIC_ADD(SND_ID_DEG);
-                  }    
+                        
+                        angle = getAngleOfShip(thisinvdBerth);                                           
+                          if(angle>=0 && angle<360)
+                          {
+                            SND_ParseNum(angle,aNums);
+                            MUSIC_ADD(SND_ID_ANG);
+                            
+                            if(aNums[0])
+                              {
+                                MUSIC_ADD(aNums[0]);
+                              }
+                              if(aNums[1])
+                              {
+                                MUSIC_ADD(aNums[1]);
+                              }
+                              if(aNums[2])
+                              {
+                                MUSIC_ADD(aNums[2]);
+                              }
+                              if(aNums[3])
+                              {
+                                MUSIC_ADD(aNums[3]);
+                              }
+                              if(aNums[4])
+                              {
+                                MUSIC_ADD(aNums[4]);
+                              }
+                              MUSIC_ADD(SND_ID_DEG);
+                              }    
 						
 						MUSIC_ADD(SND_ID_DST);
 						SND_ParseDist(thisinvdBerth->Boat.dist, Nums);
-            if(Nums[0])
+                        if(Nums[0])
 						{
 							 MUSIC_ADD(Nums[0]);
 						}
