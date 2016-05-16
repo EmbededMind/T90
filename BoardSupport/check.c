@@ -12,6 +12,8 @@
 #include "snap.h"
 #include "transform.h"
 
+#define STIME 5
+
 /*----------------- Macro      defines --------------------------*/
 #define MYABS(x)   ((x)>0?(x):(-(x)))
 
@@ -25,7 +27,7 @@ extern FunctionalState isMntEnable;
 /// Defined in app.c.If key pressed , isKeyTrigged will be TRUE. Your apps must set iskeyTrigged FALSe after using it.
 extern int isKeyTrigged;
 
-static int STime = 60;
+static int STime = STIME;
 static int hasAlarm = 0;
 
 static void CHECK_HasAlarm(void);
@@ -100,11 +102,11 @@ void CHECK_STRefresh()
 {
     if(mothership.SOG < 20)
     {
-        STime--;
+				if(STime)   STime--;     
     }
     else
     {
-        STime = 60;
+        STime = STIME;
     }
 }
 
@@ -128,7 +130,7 @@ void check()
 //	SNAP_Refresh();
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
-    CHECK_STRefresh;
+  CHECK_STRefresh();
 //INFO("highspeed num:%d",validCnt);
 	BULY_dump();
 }

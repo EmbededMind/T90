@@ -28,16 +28,21 @@ void DrawStubs(int flag)
 void DrawShipFamily(int flag)
 {
 	int i;
+	int ms_zoom = scale/500;
+	int net_zoom = scale/300;
 	Point pixelTmp[STUB_NUM];
+	
+	ms_zoom = ms_zoom>5 ? 5 : ms_zoom;
+	net_zoom = net_zoom>5 ? 5 : net_zoom;
 	
 	GUI_SetLineStyle(GUI_LS_SOLID);
 	
 	//mothership
-	GUI_DrawLine(motherShipPixel.x-(7-scale/500), motherShipPixel.y,                motherShipPixel.x,               motherShipPixel.y-(10-scale/500));  
-	GUI_DrawLine(motherShipPixel.x,               motherShipPixel.y-(10-scale/500), motherShipPixel.x+(7-scale/500), motherShipPixel.y );
-	GUI_DrawLine(motherShipPixel.x+(7-scale/500), motherShipPixel.y,                motherShipPixel.x+(5-scale/500), motherShipPixel.y+(20-scale/500));
-	GUI_DrawLine(motherShipPixel.x+(5-scale/500), motherShipPixel.y+(20-scale/500), motherShipPixel.x-(5-scale/500), motherShipPixel.y+(20-scale/500));
-	GUI_DrawLine(motherShipPixel.x-(5-scale/500), motherShipPixel.y+(20-scale/500), motherShipPixel.x-(7-scale/500), motherShipPixel.y);
+	GUI_DrawLine(motherShipPixel.x-(7-ms_zoom), motherShipPixel.y,                motherShipPixel.x,               motherShipPixel.y-(10-ms_zoom));  
+	GUI_DrawLine(motherShipPixel.x,               motherShipPixel.y-(10-ms_zoom), motherShipPixel.x+(7-ms_zoom), motherShipPixel.y );
+	GUI_DrawLine(motherShipPixel.x+(7-ms_zoom), motherShipPixel.y,                motherShipPixel.x+(5-ms_zoom), motherShipPixel.y+(20-ms_zoom));
+	GUI_DrawLine(motherShipPixel.x+(5-ms_zoom), motherShipPixel.y+(20-ms_zoom), motherShipPixel.x-(5-ms_zoom), motherShipPixel.y+(20-ms_zoom));
+	GUI_DrawLine(motherShipPixel.x-(5-ms_zoom), motherShipPixel.y+(20-ms_zoom), motherShipPixel.x-(7-ms_zoom), motherShipPixel.y);
 	
 	GUI_SetFont(GUI_FONT_13B_ASCII);
 	
@@ -47,9 +52,9 @@ void DrawShipFamily(int flag)
 		
 		if(i)
 		{
-			GUI_DrawLine(pixelTmp[i].x-(5-scale/500), pixelTmp[i].y+(5-scale/500), pixelTmp[i].x,               pixelTmp[i].y-(5-scale/500));  //三角标
-			GUI_DrawLine(pixelTmp[i].x,               pixelTmp[i].y-(5-scale/500), pixelTmp[i].x+(5-scale/500), pixelTmp[i].y+(5-scale/500));
-			GUI_DrawLine(pixelTmp[i].x+(5-scale/500), pixelTmp[i].y+(5-scale/500), pixelTmp[i].x-(5-scale/500), pixelTmp[i].y+(5-scale/500));
+			GUI_DrawLine(pixelTmp[i].x-(5-net_zoom), pixelTmp[i].y+(5-net_zoom), pixelTmp[i].x,               pixelTmp[i].y-(5-net_zoom));  //三角标
+			GUI_DrawLine(pixelTmp[i].x,               pixelTmp[i].y-(5-net_zoom), pixelTmp[i].x+(5-net_zoom), pixelTmp[i].y+(5-net_zoom));
+			GUI_DrawLine(pixelTmp[i].x+(5-net_zoom), pixelTmp[i].y+(5-net_zoom), pixelTmp[i].x-(5-net_zoom), pixelTmp[i].y+(5-net_zoom));
 			if(!flag)
 			{
 				sprintf(pStrBuf, "%02d", i);
@@ -60,7 +65,7 @@ void DrawShipFamily(int flag)
 	
 	if(!flag)
 	{
-		GUI_SetFont(GUI_FONT_24_ASCII);
+		GUI_SetFont(GUI_FONT_24_ASCII);         //标注
 		GUI_DrawHLine(motherShipPixel.y, 34, 46);
 		GUI_DrawHLine(t90_set.dst.dst3*M_TO_MILLINM*TO_PIXEL + motherShipPixel.y, 34, 46);
 		GUI_DrawVLine(40, motherShipPixel.y, t90_set.dst.dst3*M_TO_MILLINM*TO_PIXEL/2 - 20 + motherShipPixel.y);
@@ -115,13 +120,13 @@ void DrawCursor(Point pixel, int flag)
 	
 	if(flag)
 	{	
-		GUI_SetFont(GUI_FONT_13_1);
+		GUI_SetFont(GUI_FONT_24_1);
 		GUI_SetTextMode(GUI_TM_NORMAL);
 		
 		lltostr(pSnapLink->Boat.longitude, strTmp);
 		sprintf(pStrBuf, "E  %s", strTmp);
 		infoWidth = GUI_GetStringDistX(pStrBuf);
-		infoHeight = GUI_GetFontSizeY()*4;
+		infoHeight = strlen(pSnapLink->Boat.name) ? GUI_GetFontSizeY()*4 : GUI_GetFontSizeY()*3;
 		if(start_x+infoWidth > SCREEN_WIDTH)
 		{
 			start_x = pixel.x - infoWidth -10;
@@ -131,6 +136,7 @@ void DrawCursor(Point pixel, int flag)
 			start_y = pixel.y - infoHeight -10;
 		}
 		
+		start_y -= GUI_GetFontSizeY();
 		if(strlen(pSnapLink->Boat.name))
 		{
 			sprintf(pStrBuf," %s",pSnapLink->Boat.name);
@@ -143,14 +149,14 @@ void DrawCursor(Point pixel, int flag)
 		
 		lltostr(pSnapLink->Boat.longitude, strTmp);
 		sprintf(pStrBuf, " E  %s", strTmp);
-		GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY()*2);
+		GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY());
 		
 		sprintf(strTmp, "%3d", pSnapLink->Boat.COG/10);
 		strTmp[3]  = 194;
 		strTmp[4]  = 176;
 		strTmp[5]  = '\0';
 		sprintf(pStrBuf, " %2d.%d    %s", pSnapLink->Boat.SOG/10, pSnapLink->Boat.SOG%10, strTmp);
-		GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY()*3);
+		GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY());
 		
 		
 		GUI_SetColor(GUI_LIGHTBLUE);

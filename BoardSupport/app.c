@@ -291,7 +291,7 @@ void _Play_Task(void* p_arg)
    {
       if(monitorState == ON) // ¼à¿Ø
 			{   
-               if(FetchSTime == 0)
+               if(FetchSTime() == 0)
                {
                     MUSIC_ADD(SND_ID_STOF);
                }
@@ -799,7 +799,7 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
       shiftReg   = text[16];
       shiftReg   = (shiftReg << 8) | text[17];
 //      mothership.COG  = shiftReg;
-			mothership.COG = 600;
+			mothership.COG = 0;
 
 //    tempgprmc = text[18]; SYS_Date = tempgprmc << 24;
 //    tempgprmc = text[19]; SYS_Date = SYS_Date + (tempgprmc << 16);
