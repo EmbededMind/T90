@@ -60,7 +60,13 @@ void DrawShipFamily(int flag)
 	
 	if(!flag)
 	{
-		GUI_DrawVLine(motherShipPixel.x-50, motherShipPixel.y, t90_set.dst.dst3*M_TO_MILLINM*TO_PIXEL + motherShipPixel.y);
+		GUI_SetFont(GUI_FONT_24_ASCII);
+		GUI_DrawHLine(motherShipPixel.y, 34, 46);
+		GUI_DrawHLine(t90_set.dst.dst3*M_TO_MILLINM*TO_PIXEL + motherShipPixel.y, 34, 46);
+		GUI_DrawVLine(40, motherShipPixel.y, t90_set.dst.dst3*M_TO_MILLINM*TO_PIXEL/2 - 20 + motherShipPixel.y);
+		GUI_DrawVLine(40, t90_set.dst.dst3*M_TO_MILLINM*TO_PIXEL/2 + 20 + motherShipPixel.y, t90_set.dst.dst3*M_TO_MILLINM*TO_PIXEL + motherShipPixel.y);
+		sprintf(pStrBuf,"%dm",t90_set.dst.dst3);	
+		GUI_DispStringAt(pStrBuf, 40 - GUI_GetStringDistX(pStrBuf)/2 + 3, t90_set.dst.dst3*M_TO_MILLINM*TO_PIXEL/2 - 20 + motherShipPixel.y);
 	}
 	
 	GUI_SetLineStyle(GUI_LS_DOT);
@@ -157,7 +163,7 @@ static void FigureMotherShipPixel(Point center, int flag)
 	Point screenCenter;
 	if(!flag)
 	{
-		screenCenter.x = 200;
+		screenCenter.x = 215;
 		screenCenter.y = SCREEN_VCENTER;
 	}
 	else
