@@ -2,11 +2,7 @@
 #include "boat_struct.h"
 #include "T90.h"
 #include "math.h"
-<<<<<<< HEAD
-#include "detect.h"
-=======
 #include "transform.h"
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 #include "sound.h"
 
 #define  MYABS(X)    ((X)<0 ? -(X) : (X))  
@@ -26,13 +22,8 @@ void llToxy(BERTH *pBerth)
 
 int getAngleOfShip(BERTH *pBerth)
 {
-<<<<<<< HEAD
-    int flag;
-    int angle;
-=======
 //    int flag;
 //    int angle;
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
     if(pBerth->x_to_cross > 0)
     {
         if(pBerth->y_to_cross >= 0)
@@ -72,10 +63,7 @@ int getAngleOfShip(BERTH *pBerth)
 
 int SND_ParseNum(int num, uint8_t *pNum)
 {
-<<<<<<< HEAD
-=======
 	  memset(pNum,0,sizeof(uint8_t)*5);
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
     pNum[0] = num/100000;
     if(pNum[0])//百位不为零
     {
@@ -108,11 +96,6 @@ int SND_ParseNum(int num, uint8_t *pNum)
                 }
                 else
                 {
-<<<<<<< HEAD
-                    pNum[2] = SND_ID_DOT;   
-                    pNum[3] = SND_ID_ZRO;
-                    pNum[4] = num%100/10;       
-=======
 										pNum[4] = num%100/10;
 									  if(pNum[4])
 									  {
@@ -120,7 +103,6 @@ int SND_ParseNum(int num, uint8_t *pNum)
 											pNum[3] = SND_ID_ZRO;
 										}
 									 
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
                 }
             }
         }
@@ -130,11 +112,8 @@ int SND_ParseNum(int num, uint8_t *pNum)
         pNum[0] = num/10000;
         if(pNum[0])
         {
-<<<<<<< HEAD
-=======
 						if(pNum[0]==1)
 							pNum[0] = 0;
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
             pNum[1] = SND_ID_TEN;
             pNum[2] = num%10000/1000;
             if(pNum[2])
@@ -181,10 +160,7 @@ int SND_ParseNum(int num, uint8_t *pNum)
             }
         
         }
-<<<<<<< HEAD
-=======
 				
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
         else            
         {
             pNum[0] = num/1000;
@@ -313,10 +289,7 @@ int SND_ParseNum(int num, uint8_t *pNum)
         }
     
     }
-<<<<<<< HEAD
-=======
 		return NULL;
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 }
 
 

@@ -2,10 +2,7 @@
 #include "bully.h"
 #include "string.h"
 #include "snap.h"
-<<<<<<< HEAD
-=======
 
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 
 
 #define MAP_SIZE
@@ -59,11 +56,7 @@ Bool BULY_add(BERTH* pBoatLink)
    BULY_BERTH * pBuf;
    BULY_BERTH * pIterator;
    
-<<<<<<< HEAD
-//   pBuf  = BULY_alloc();
-=======
    //   pBuf  = BULY_alloc();
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 
 /// Modified by SealedGhost at 5/12/2016   
    int i  = 0;
@@ -107,8 +100,8 @@ INFO("add success, MMSI:%09ld - mntstate:%d", pBuf->pBoatLink->Boat.user_id, pBu
 INFO("alloc bully berth failed!");  
       return FALSE; 
    }
-
 }
+
 
 
 
@@ -124,10 +117,10 @@ void BULY_delete(BERTH* addr)
 		 {
 				pBulyHeader  = pBulyHeader->pNext;
 
-	      if(pBC->pBoatLink->mntState == MNTState_Triggered)
-	      {
+	//      if(pBC->pBoatLink->mntState == MNTState_Triggered)
+	//      {
 					 validCnt--;
-	      }
+	//      }
 				memset(pBC, 0, sizeof(BULY_BERTH));
 	INFO("bully delete done");	
 				return;
@@ -141,10 +134,10 @@ void BULY_delete(BERTH* addr)
 					 {
 							pBC->pNext  = pCursor->pNext;
 						 
-	            if(pCursor->pBoatLink->mntState == MNTState_Triggered)
-	            {
+	//            if(pCursor->pBoatLink->mntState == MNTState_Triggered)
+	//            {
 								 validCnt--;
-	            }
+	//            }
 							memset(pCursor, 0, sizeof(BULY_BERTH));
 	INFO("bully delete done");					 
 							return ;
@@ -201,11 +194,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered )
          {
             pPlayBerth  = pIterator;
-<<<<<<< HEAD
-            pSnapLink = pPlayBerth->pBoatLink;
-=======
 					  SNAP_SetSnapLink(pPlayBerth->pBoatLink);
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
             return pPlayBerth;
          }
          else
@@ -225,11 +214,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered)
          {
             pPlayBerth  = pIterator;
-<<<<<<< HEAD
-            pSnapLink = pPlayBerth->pBoatLink;
-=======
 					  SNAP_SetSnapLink(pPlayBerth->pBoatLink);
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
             return pPlayBerth;
          }
          else
@@ -241,19 +226,11 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
 			while(pIterator != pPlayBerth->pNext)
 			{
 				if(pIterator->pBoatLink->mntState == MNTState_Triggered)
-<<<<<<< HEAD
-                    {
-                        pPlayBerth  = pIterator;
-                        pSnapLink = pPlayBerth->pBoatLink;
-                        return pPlayBerth;
-                    }
-=======
         {
           pPlayBerth  = pIterator;
 					SNAP_SetSnapLink(pPlayBerth->pBoatLink);
           return pPlayBerth;
         }
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 				pIterator = pIterator->pNext;
 			}
       pPlayBerth  = NULL;

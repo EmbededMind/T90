@@ -15,9 +15,6 @@
 #define SND_VOL_MAX   6
 #define SND_VOL_MIN   1
 
-//#define SND_debug
-
-
 
 
 #define SND_ID_ZRO   10
@@ -26,11 +23,7 @@
 #define SND_ID_HAND  13
 #define SND_ID_WLCM  14   
 #define SND_ID_INVD  15   //invader
-<<<<<<< HEAD
-#define SND_ID_MHS   16
-=======
 #define SND_ID_MHS   16		//watch out ,speeding
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 #define SND_ID_STOF  17    //stop off
 #define SND_ID_DST   18
 #define SND_ID_NM    19
@@ -70,12 +63,8 @@ void SND_SetVol(uint8_t SndVol);
 void SND_Stop(void);
 void SND_Play(uint8_t id);
 void SND_ParseDist(int dist, uint8_t* pNums);
-<<<<<<< HEAD
-void SND_ParseAngle(int angle, uint8_t* pNums);
-=======
 
 void SND_ParseAngle(int angle, uint8_t* pNums);
 
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 #endif
 

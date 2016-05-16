@@ -39,33 +39,6 @@ void SNAP_Refresh(void)
 		SNAP_reset();
 //		return;
 	}
-<<<<<<< HEAD
-}
-
-void SNAP_getPara(int *x, int *y)   
-{
-   switch(snapType)
-   {
-      case 1:
-           if( ((BERTH*)pSnapLink)->Boat.user_id == checkMMSI)
-           {
-              *x = ((BERTH*)pSnapLink)->x_to_cross;
-              *y = ((BERTH*)pSnapLink)->y_to_cross;
-           }
-           else
-           {
-              *x  = 0;
-              *y  = 0;
-           }
-           break;
-     default:
-           *x  = 0;
-           *y  = 0;
-           break;
-   }
-}
-=======
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 
 //	if(!BULY_getValidNumber() && pSnapLink->Boat.user_id != checkMMSI)
 //	{

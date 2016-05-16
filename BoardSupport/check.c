@@ -31,8 +31,6 @@ static int hasAlarm = 0;
 static void CHECK_HasAlarm(void);
 static void CHECK_MaskAllBerth(void);
 
-<<<<<<< HEAD
-=======
 
 void CHECK_isInvader(void)
 {
@@ -119,7 +117,6 @@ void CHECK_isInvader(void)
 
 
 
->>>>>>> dbea55b0602f76c55db45af16018aece8eb77247
 void CHECK_MS_Speed()
 {
 	MS_isSpeeding = 0;   //clear
@@ -182,8 +179,6 @@ void CHECK_DelHighSpeed()
     }    
     
 }
-
-
 
 void check()
 {

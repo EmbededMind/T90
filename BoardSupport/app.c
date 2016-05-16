@@ -18,7 +18,6 @@
 #include "xt_isd.h"
 #include "T90.h"
 #include "snap.h"
-
 #include "transform.h"
 
 
@@ -223,14 +222,11 @@ void _Play_Task(void* p_arg)
    uint8_t  musicCursor  = 0;
  
    uint8_t  Nums[3];
-
-   uint8_t  aNums[5];
+	 uint8_t  aNums[5];
 	
-   int angle;
-
+	int angle;
    
-   int  angle;
-//   uint8_t playList  = 1;  
+   uint8_t playList  = 1;  
    BULY_BERTH* thisBulyBerth  = NULL;
 	 BERTH * thisinvdBerth = NULL;
  
@@ -298,8 +294,6 @@ void _Play_Task(void* p_arg)
 //        if(playList  == 1)
 //				{
             thisBulyBerth  = BULY_fetchNextPlayBerth();
-							
-
             if(thisBulyBerth){
 							
 //#ifdef __INFO_ENABLE            
@@ -326,9 +320,8 @@ void _Play_Task(void* p_arg)
                        MUSIC_ADD(SND_ID_VIE);
                        break;
                   }
-
-                  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
-
+                  
+									angle = getAngleOfShip(thisBulyBerth->pBoatLink);
                   if(angle>=0 && angle<360)
                   {
                     SND_ParseNum(angle/10*10000,aNums);
@@ -355,10 +348,9 @@ void _Play_Task(void* p_arg)
                         MUSIC_ADD(aNums[4]);
                       }
                       MUSIC_ADD(SND_ID_DEG);
-
-                  }     
-                  if(thisBulyBerth->pBoatLink->Boat.dist < 99999){                      
-
+                  } 
+									
+                  if(thisBulyBerth->pBoatLink->Boat.dist < 99999){
                      SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
                      MUSIC_ADD(SND_ID_DST);
                      
@@ -390,16 +382,13 @@ void _Play_Task(void* p_arg)
                }
                else{                                      // 高速船
                   MUSIC_ADD(SND_ID_HSB);
-
-                  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
-
+								  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
 INFO("highspeed-x=%d",thisBulyBerth->pBoatLink->x_to_cross);                   
 INFO("highspeed-y=%d",thisBulyBerth->pBoatLink->y_to_cross);                                      
 INFO("highspeed=%d",angle);
-                   if(angle>=0 && angle<360)
+								   if(angle>=0 && angle<360)
                   {
-                    SND_ParseNum(angle/10*10000,aNums);
-
+                    SND_ParseNum(angle,aNums);
                     MUSIC_ADD(SND_ID_ANG);
                     
                     if(aNums[0])
@@ -424,9 +413,9 @@ INFO("highspeed=%d",angle);
                       }
                       MUSIC_ADD(SND_ID_DEG);
                   }
-              
-                   MUSIC_ADD(SND_ID_DST);
-               
+									
+                  MUSIC_ADD(SND_ID_DST);
+                  
                   SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
                   if(Nums[0]){
                      MUSIC_ADD(Nums[0]);
@@ -440,12 +429,11 @@ INFO("highspeed=%d",angle);
                   MUSIC_ADD(SND_ID_NM);
                }
             }
-//            playList      = 2;
+//            playList  = 2;
 //        }
 				
 				else //if(playList == 2)
 				{
-
 					if(playList == 1)
 					{
 					
@@ -485,12 +473,11 @@ INFO("invader= %d",angle);
                         MUSIC_ADD(aNums[4]);
                       }
                       MUSIC_ADD(SND_ID_DEG);
-
                   }    
 						
 						MUSIC_ADD(SND_ID_DST);
 						SND_ParseDist(thisinvdBerth->Boat.dist, Nums);
-                        if(Nums[0])
+            if(Nums[0])
 						{
 							 MUSIC_ADD(Nums[0]);
 						}
@@ -626,10 +613,7 @@ INFO("invader= %d",angle);
             }
             ISD_PWRDn();            
             MUSIC_RESET;                // 下标置0         
-         } /// End. execute play
-         
-
-         
+         } /// End. execute play 
       } /// End . if(monitorState == FALSE)
       
       OSTimeDlyHMSM(0, 0, 3, 0);
@@ -807,7 +791,6 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
 
       shiftReg   = text[16];
       shiftReg   = (shiftReg << 8) | text[17];
-
 //      mothership.COG  = shiftReg;
 			mothership.COG = 3350;
 
