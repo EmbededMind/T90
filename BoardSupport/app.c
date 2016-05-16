@@ -326,7 +326,7 @@ void _Play_Task(void* p_arg)
                                                     angle = getAngleOfShip(thisBulyBerth->pBoatLink);
                                   if(angle>=0 && angle<360)
                                   {
-                                    SND_ParseNum(angle/10*10000,aNums);
+                                    SND_ParseNum(angle*1000,aNums);
                                     MUSIC_ADD(SND_ID_ANG);
                                     
                                     if(aNums[0])
@@ -390,7 +390,7 @@ void _Play_Task(void* p_arg)
                     INFO("highspeed=%d",angle);
                                                    if(angle>=0 && angle<360)
                                   {
-                                    SND_ParseNum(angle,aNums);
+                                    SND_ParseNum(angle*1000,aNums);
                                     MUSIC_ADD(SND_ID_ANG);
                                     
                                     if(aNums[0])
@@ -456,7 +456,7 @@ void _Play_Task(void* p_arg)
                                         angle = getAngleOfShip(thisinvdBerth);                                           
                                           if(angle>=0 && angle<360)
                                           {
-                                            SND_ParseNum(angle,aNums);
+                                            SND_ParseNum(angle*1000,aNums);
                                             MUSIC_ADD(SND_ID_ANG);
                                             
                                             if(aNums[0])

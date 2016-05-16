@@ -96,12 +96,12 @@ int SND_ParseNum(int num, uint8_t *pNum)
                 }
                 else
                 {
-										pNum[4] = num%100/10;
-									  if(pNum[4])
-									  {
-											pNum[2] = SND_ID_DOT;   
-											pNum[3] = SND_ID_ZRO;
-										}
+                    pNum[4] = num%100/10;
+                    if(pNum[4])
+                    {
+                        pNum[2] = SND_ID_DOT;   
+                        pNum[3] = SND_ID_ZRO;
+                    }
 									 
                 }
             }
@@ -112,8 +112,8 @@ int SND_ParseNum(int num, uint8_t *pNum)
         pNum[0] = num/10000;
         if(pNum[0])
         {
-						if(pNum[0]==1)
-							pNum[0] = 0;
+            if(pNum[0]==1)
+            pNum[0] = 0;
             pNum[1] = SND_ID_TEN;
             pNum[2] = num%10000/1000;
             if(pNum[2])
@@ -152,8 +152,6 @@ int SND_ParseNum(int num, uint8_t *pNum)
                     else
                     {
                         pNum[2] = 0;            //点零零几 不够了
-                        pNum[3] = 0;
-                        pNum[4] = 0;
                     }
                 }
             
@@ -179,18 +177,13 @@ int SND_ParseNum(int num, uint8_t *pNum)
                     }
                     else
                     {
-                         pNum[3] = num%10;
-                            if(pNum[3])
-                            {
-                                pNum[3] = SND_ID_ZRO;
-                                pNum[4] = num%10;
-                                
-                            }
-                            else
-                            {
-                                pNum[4] = 0;
-                            }
-                    
+                        pNum[3] = num%10;
+                        if(pNum[3])
+                        {
+                            pNum[3] = SND_ID_ZRO;
+                            pNum[4] = num%10;
+                            
+                        }                    
                     }
                 }
                 else
@@ -252,7 +245,6 @@ int SND_ParseNum(int num, uint8_t *pNum)
                         else
                         {
                             pNum[3] = 0;
-                            pNum[4] = 0;
                         }
                     }
                 }
