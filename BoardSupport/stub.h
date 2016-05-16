@@ -44,7 +44,7 @@ int GetDistance(Point, Point);
 
 Point STUB_GetYMin(void);
 
-int FetchMidStub();
+int FetchMidStub(void);
 
 
 

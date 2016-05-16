@@ -100,7 +100,7 @@ Point STUB_GetYMin(void)
 int FetchMidStub()
 {
     int i = 0;
-    int maxpoint_y = 0;
+    int maxpoint_y = -99999;
     for(i = 1; i < STUB_NUM; i++)
     {
         if(stubs[i].basePoint.y > maxpoint_y)

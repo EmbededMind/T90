@@ -107,47 +107,64 @@ void DrawCursor(Point pixel, int flag)
 {
 	int start_x, start_y;	
 	Point point;
+	char strTmp[15];
+	int infoWidth, infoHeight;
 	start_x = pixel.x + 10;
 	start_y = pixel.y + 10;
-//	GUI_DrawPoint(pixel.x, pixel.y);
-//	GUI_DrawHLine(pixel.y, pixel.x - 10, pixel.x - 2);
-//	GUI_DrawHLine(pixel.y, pixel.x + 2,  pixel.x + 10);
-//	GUI_DrawVLine(pixel.x, pixel.y - 10, pixel.y - 2);
-//	GUI_DrawVLine(pixel.x, pixel.y + 2,  pixel.y + 10);
+
 	
 	if(flag)
 	{	
 		GUI_SetFont(GUI_FONT_13_1);
-		sprintf(pStrBuf,"name:%s",pSnapLink->Boat.name);
-		GUI_DispStringAt(pStrBuf, start_x, start_y);
+		GUI_SetTextMode(GUI_TM_NORMAL);
 		
-		GUI_DispStringAt("N", start_x, start_y+GUI_GetFontSizeY());
-		lltostr(pSnapLink->Boat.latitude, pStrBuf);
-		GUI_DispStringAt(pStrBuf, start_x+13, start_y+GUI_GetFontSizeY());
+		lltostr(pSnapLink->Boat.longitude, strTmp);
+		sprintf(pStrBuf, "E  %s", strTmp);
+		infoWidth = GUI_GetStringDistX(pStrBuf);
+		infoHeight = GUI_GetFontSizeY()*4;
+		if(start_x+infoWidth > SCREEN_WIDTH)
+		{
+			start_x = pixel.x - infoWidth -10;
+		}
+		if(start_y+infoHeight > SCREEN_HEIGHT)
+		{
+			start_y = pixel.y - infoHeight -10;
+		}
 		
-		GUI_DispStringAt("E", start_x, start_y+GUI_GetFontSizeY()*2);
-		lltostr(pSnapLink->Boat.longitude, pStrBuf);
-		GUI_DispStringAt(pStrBuf, start_x+13, start_y+GUI_GetFontSizeY()*2);
-
-		GUI_DispStringAt("SOG:", start_x, start_y+GUI_GetFontSizeY()*3);
-		sprintf(pStrBuf, "%2d.%d", pSnapLink->Boat.SOG/10, pSnapLink->Boat.SOG%10);
-		GUI_DispStringAt(pStrBuf, start_x+35, start_y+ GUI_GetFontSizeY()*3);
+		if(strlen(pSnapLink->Boat.name))
+		{
+			sprintf(pStrBuf," %s",pSnapLink->Boat.name);
+			GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY());
+		}
 		
-		GUI_DispStringAt("COG:", start_x, start_y+GUI_GetFontSizeY()*4);
-		sprintf(pStrBuf, "%3d", pSnapLink->Boat.COG/10);
-		pStrBuf[3]  = 194;
-		pStrBuf[4]  = 176;
-		pStrBuf[5]  = '\0';
-		GUI_DispStringAt(pStrBuf, pixel.x + 45, start_y+GUI_GetFontSizeY()*4);
+		lltostr(pSnapLink->Boat.latitude, strTmp);
+		sprintf(pStrBuf, " N  %s", strTmp);
+		GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY());
+		
+		lltostr(pSnapLink->Boat.longitude, strTmp);
+		sprintf(pStrBuf, " E  %s", strTmp);
+		GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY()*2);
+		
+		sprintf(strTmp, "%3d", pSnapLink->Boat.COG/10);
+		strTmp[3]  = 194;
+		strTmp[4]  = 176;
+		strTmp[5]  = '\0';
+		sprintf(pStrBuf, " %2d.%d    %s", pSnapLink->Boat.SOG/10, pSnapLink->Boat.SOG%10, strTmp);
+		GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY()*3);
+		
 		
 		GUI_SetColor(GUI_LIGHTBLUE);
 		point.x = pSnapLink->x_to_cross;
 		point.y = pSnapLink->y_to_cross;
 		DrawOtherShip(GetItemPixel(point), (pSnapLink->Boat.COG - mothership.COG)/10);
+		
+		GUI_SetTextMode(GUI_TM_TRANS);
 	}
 	
 	GUI_CURSOR_SetPosition(pixel.x, pixel.y);
 }
+
+
 
 Point GetItemPixel(Point itemPoint)
 {
