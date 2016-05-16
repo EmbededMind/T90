@@ -98,7 +98,7 @@ void CHECK_DelHighSpeed()
 
 void CHECK_STRefresh()
 {
-    if(mothership.SOG < 10)
+    if(mothership.SOG < 20)
     {
         STime--;
     }
