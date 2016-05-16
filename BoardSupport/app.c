@@ -297,14 +297,14 @@ void _Play_Task(void* p_arg)
                }
                else
                {
-                            thisBulyBerth  = BULY_fetchNextPlayBerth();
-                            if(thisBulyBerth){
-                                            
-                              
-                               if( (thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //ÓæÕþ´¬
-                                  switch(thisBulyBerth->pBoatLink->Boat.category & 0xf0){
-                                  case NATION_CTB:
-                                       MUSIC_ADD(SND_ID_CTB);
+                                    thisBulyBerth  = BULY_fetchNextPlayBerth();
+                                    if(thisBulyBerth){
+                                                    
+                                      
+                                       if( (thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //ÓæÕþ´¬
+                                          switch(thisBulyBerth->pBoatLink->Boat.category & 0xf0){
+                                          case NATION_CTB:
+                                               MUSIC_ADD(SND_ID_CTB);
                                        break;
                                   case NATION_JPN:
                                        MUSIC_ADD(SND_ID_JPN);
