@@ -329,7 +329,7 @@ void _Play_Task(void* p_arg)
                                     SND_ParseNum(angle*1000,aNums);
                                     MUSIC_ADD(SND_ID_ANG);
                                     
-                                    if(aNums[0])
+                                      if(aNums[0])
                                       {
                                         MUSIC_ADD(aNums[0]);
                                       }
