@@ -95,10 +95,10 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //									WM_Paint(singleShipWin);
 //									break;
 //						 
-//						 case GUI_KEY_CANCEL:
-//									monitorState = OFF;
-//									WM_Paint(singleShipWin);
-//									break;
+						 case GUI_KEY_CANCEL:
+									monitorState = monitorState == ON? OFF: ON;
+									WM_Paint(singleShipWin);
+									break;
 						 
 						 default:
 								  WM_DefaultProc(pMsg);
@@ -120,14 +120,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					   _onPaint1();
 					 }
 					
-//					 if(monitorState == OFF)
-//					 { 
-//						 GUI_SetColor(GUI_RED);
-//						 GUI_FillRoundedRect(20, 15, 109, 49, 6);
-//						 GUI_SetColor(pColor->bkColor);
-//						 GUI_SetFont(GUI_FONT_16B_ASCII);
-//						 GUI_DispStringAt("Monitor OFF", 27, 24);
-//					 }
+					 if(monitorState == OFF)
+					 { 
+						 GUI_SetColor(GUI_RED);
+						 GUI_FillRoundedRect(20, 15, 109, 49, 6);
+						 GUI_SetColor(pColor->bkColor);
+						 GUI_SetFont(GUI_FONT_16B_ASCII);
+						 GUI_DispStringAt("Monitor OFF", 27, 24);
+					 }
            break;
 			
 			case WM_SET_FOCUS:
