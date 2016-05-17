@@ -66,24 +66,24 @@ static OS_STK Play_Task_Statck[PLAY_TAST_STACK_SIZE];
 
 #define MUSIC_ADD_5NUMS if(aNums[0]) \
                         { \
-											      MUSIC_ADD(aNums[0]); \
-												} \
+							  MUSIC_ADD(aNums[0]); \
+						} \
                         if(aNums[1]) \
-												{ \
+						{ \
                             MUSIC_ADD(aNums[1]); \
-												} \
+						} \
                         if(aNums[2]) \
-												{ \
+						{ \
                             MUSIC_ADD(aNums[2]); \
-												} \
+						} \
                         if(aNums[3]) \
-												{ \
+						{ \
                             MUSIC_ADD(aNums[3]); \
-												} \
+						} \
                         if(aNums[4]) \
-												{ \
+						{ \
                             MUSIC_ADD(aNums[4]); \
-												} 													
+						} 													
 
 /*----------------- external function -------------------*/
 void mntSetting_init(void);
@@ -295,10 +295,17 @@ void _Play_Task(void* p_arg)
                              MUSIC_ADD(SND_ID_DEG);
                           }                                                    
                           if(thisBulyBerth->pBoatLink->Boat.dist < 99999){
-                               SND_ParseNum(thisBulyBerth->pBoatLink->Boat.dist, aNums);
+                              SND_ParseNum(thisBulyBerth->pBoatLink->Boat.dist * ((t90_set.sys.unit == NM)? 1:37/20), aNums);
                                MUSIC_ADD(SND_ID_DST);      
                                MUSIC_ADD_5NUMS;                                   
-                               MUSIC_ADD(SND_ID_NM);
+                               if(t90_set.sys.unit == NM)
+                               {   
+                                   MUSIC_ADD(SND_ID_NM);
+                               }
+                               else
+                               {
+                                   MUSIC_ADD(SND_ID_KM);
+                               }
                                MUSIC_ADD(SND_ID_SIS);                                  
                                SND_ParseNum(thisBulyBerth->pBoatLink->Boat.SOG *100, aNums);
                                MUSIC_ADD_5NUMS;
@@ -316,9 +323,16 @@ void _Play_Task(void* p_arg)
                                MUSIC_ADD(SND_ID_DEG);
                            }                                                 
                            MUSIC_ADD(SND_ID_DST);     
-                           SND_ParseNum(thisBulyBerth->pBoatLink->Boat.dist, aNums);
+                           SND_ParseNum(thisBulyBerth->pBoatLink->Boat.dist * ((t90_set.sys.unit == NM)? 1:37/20), aNums);
                            MUSIC_ADD_5NUMS;
-                           MUSIC_ADD(SND_ID_NM);
+                           if(t90_set.sys.unit == NM)
+                           {   
+                                MUSIC_ADD(SND_ID_NM);
+                           }
+                           else
+                           {
+                                MUSIC_ADD(SND_ID_KM);
+                           }
                            }
                         }
                 //            playList  = 2;
@@ -349,9 +363,16 @@ void _Play_Task(void* p_arg)
                                              MUSIC_ADD(SND_ID_DEG);
                                          }                                         
                                         MUSIC_ADD(SND_ID_DST);
-                                        SND_ParseNum(thisinvdBerth->Boat.dist, aNums);
+                                        SND_ParseNum(thisinvdBerth->Boat.dist * ((t90_set.sys.unit == NM)? 1:37/20), aNums);
                                         MUSIC_ADD_5NUMS;
-                                        MUSIC_ADD(SND_ID_NM);
+                                        if(t90_set.sys.unit == NM)
+                                        {   
+                                             MUSIC_ADD(SND_ID_NM);
+                                        }
+                                        else
+                                        {
+                                             MUSIC_ADD(SND_ID_KM);
+                                        }
                                     }
                                     playList  = 2;
                                     OSTimeDlyHMSM(0, 0, 2, 0);
