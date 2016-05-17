@@ -179,8 +179,14 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                   myMsg.Data.v  = agent_set.nightmode;
                   WM_BroadcastMessage(&myMsg);
                }
+							 if(t90_set.sys.unit != agent_set.unit)
+							 {
+								 myMsg.MsgId = USER_MSG_UNIT;
+								 myMsg.Data.v = agent_set.unit;
+								 myMsg.hWin = invdAlarmSetWin;
+								 WM_SendMessage(invdAlarmSetWin, &myMsg);
+							 }
                memcpy(&t90_set.sys, &agent_set, sizeof(t90_set.sys));
-							 t90_set.alarm.invd_dst = t90_set.alarm.invd_dst/100*100;  //舍掉十位和个位
                T90_Store();
             }
             else 

@@ -102,6 +102,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 	GUI_RECT clientRect;
   switch(pMsg->MsgId){
 		
+		case USER_MSG_UNIT:
+				 if(pMsg->Data.v == NM)
+				 {
+					 t90_set.alarm.invd_dst = t90_set.alarm.invd_dst/100*100;
+					 agent_set = t90_set.alarm.invd_dst;
+				 }
+				 break;
+		
 		case USER_MSG_SKIN:
 			   pColors = &(setWinColors[pMsg->Data.v]);	
 		
