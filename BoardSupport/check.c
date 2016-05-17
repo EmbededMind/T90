@@ -130,7 +130,7 @@ void check()
 //	SNAP_Refresh();
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
-    CHECK_STRefresh();
+  CHECK_STRefresh();
 //INFO("highspeed num:%d",validCnt);
 	BULY_dump();
 }
@@ -181,11 +181,11 @@ BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
 		{            
 			return SimpBerthes[i].pBerth;
 		}
-        else
-        {
-            if(i == N_boat-1)
-                i = 0;
-        }
+		else
+		{
+				if(i == N_boat-1)
+						i = 0;
+		}
 	}
 	return NULL;
 }

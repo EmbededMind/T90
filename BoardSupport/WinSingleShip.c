@@ -67,26 +67,33 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 									break;
 						 
 						 case GUI_KEY_UP:	 
-									WM_DeleteTimer(timer);
-									WM_BringToTop(alarmMonitorWin);
-									WM_SetFocus(alarmMonitorWin);
+//									WM_DeleteTimer(timer);
+//									WM_BringToTop(alarmMonitorWin);
+//									WM_SetFocus(alarmMonitorWin);
+									cursorOnStub = 0;
+									WM_Paint(singleShipWin);
+									break;
+						 
+						 case GUI_KEY_DOWN:
+									cursorOnStub = 2;
+									WM_Paint(singleShipWin);
 									break;
 						 
 						 case GUI_KEY_LEFT:
-									cursorOnStub--;
-									if(cursorOnStub < 0)
-									{
-										cursorOnStub = STUB_NUM-1;
-									}
+									cursorOnStub = 1;
+//									if(cursorOnStub < 0)
+//									{
+//										cursorOnStub = STUB_NUM-1;
+//									}
 									WM_Paint(singleShipWin);
 									break;
 												 
 						 case GUI_KEY_RIGHT:
-									cursorOnStub++;
-									if(cursorOnStub >= STUB_NUM)
-									{
-										cursorOnStub = 0;
-									}
+									cursorOnStub = 3;
+//									if(cursorOnStub >= STUB_NUM)
+//									{
+//										cursorOnStub = 0;
+//									}
 									WM_Paint(singleShipWin);
 									break;
 						 

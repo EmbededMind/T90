@@ -278,7 +278,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            
            GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);         //Ä¸´¬
            
-//           GUI_SetColor(GUI_BLACK);
            GUI_SetLineStyle(GUI_LS_DOT);
            
            GUI_DrawLine(drawArea.x0, orgY+60, orgX-17, orgY+60);
