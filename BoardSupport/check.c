@@ -197,13 +197,14 @@ BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
 //	return NULL;
 
     int i = 0;
+
     int flag = 0;
-    static BERTH *pBerth;
+    static BERTH *pBerth = 0;
     static long int user_id;
     if(pBerth)
     {
         for(i = 0; i < N_boat; i++)
-        {
+        {            
             if(flag)
             {
                  if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
