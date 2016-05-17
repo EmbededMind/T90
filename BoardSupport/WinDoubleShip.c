@@ -25,6 +25,7 @@ static void _onPaint(void);
 static void myWindowCallback(WM_MESSAGE* pMsg){
 
    switch(pMsg->MsgId){
+			
       case WM_CREATE:
            
            break;
@@ -36,6 +37,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 			
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
+						case GUI_KEY_PWM_INC:       
+								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+								 break;
 						 case GUI_KEY_UP:
 									break;
 						 

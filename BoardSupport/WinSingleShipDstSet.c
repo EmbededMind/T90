@@ -35,6 +35,9 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
    case WM_KEY:
         switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key)
 				{
+					case GUI_KEY_PWM_INC:       
+							 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+							 break;
 					 case GUI_KEY_UP:
 						    id  = WM_GetId(pMsg->hWin) - ID_DMS_0;
 
@@ -127,10 +130,10 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				{
 //					HSD_DIMENSION_SetValColor(hDimensions[pMsg->Data.v], HSD_DIMENSION_CI_UNFOCUS, pColors->focusArrowLineColor);
 //					HSD_DIMENSION_SetArrowLineColor(hDimensions[pMsg->Data.v], HSD_DIMENSION_CI_UNFOCUS, pColors->focusArrowLineColor);
-					HSD_STICKFIGURE_SetPenColor(hStickFigures[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusArrowLineColor); 
+					HSD_STICKFIGURE_SetPenColor(hStickFigures[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor); 
 			  }
 				break;
-		 
+
 	 case USER_MSG_SKIN:
 				pColors = &(setWinColors[pMsg->Data.v]);	
 				

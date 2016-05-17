@@ -34,7 +34,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 {
 	GUI_RECT r;
    switch(pMsg->MsgId){
-		 
+
 		  case USER_MSG_SKIN:
 					 pColor = &homeColors[pMsg->Data.v];
 					 break;
@@ -59,7 +59,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 	
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
-
+						case GUI_KEY_PWM_INC:       
+								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+								 break;
 						 case GUI_KEY_MENU:						 
 									WM_DeleteTimer(timer);					 
 									WM_BringToTop(mainMenuDlg);

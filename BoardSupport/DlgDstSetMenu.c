@@ -67,6 +67,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            
    case WM_KEY:
         switch( ((WM_KEY_INFO*)(pMsg->Data.p))->Key){
+				case GUI_KEY_PWM_INC:       
+						 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+						 break;
         case GUI_KEY_RIGHT:
 						 flag_prevfocus = 1;
 				     id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
@@ -124,6 +127,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 static void myDialogCallback(WM_MESSAGE* pMsg)
 {
    switch(pMsg->MsgId){
+
 		 case USER_MSG_SKIN:
 					pColors = &(subMenuColors[pMsg->Data.v]);	
 		 
@@ -174,15 +178,18 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 					HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
 					HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font24_ASCII);
 					HSD_BUTTON_SetText(buttons[2], "safety sign 2");
+					
+//					BUTTON_SetFocussable(buttons[1], 0);  //ÓÐÓÃ£¡£¡£¡£¡
 					break;  
 					
 		 case WM_SET_FOCUS:
-					WM_DisableWindow(buttons[0]);
+//					WM_DisableWindow(buttons[0]);
+//					BUTTON_SetFocussable(buttons[1], 0);
 					break;
 
 		 case WM_PAINT:
 			 
-					GUI_DrawGradientV( 0, SUB_MENU_ITEM_MARGIN,
+					GUI_DrawGradientV( 0, 0,
 														 SUB_MENU_ITEM_WIDTH-1, SUB_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
 														 pColors->headTopColor, pColors->headBottomColor);
 					GUI_SetFont(GUI_FONT_24_ASCII);
@@ -190,7 +197,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 					GUI_SetColor(pColors->headTextColor);
 					GUI_DispStringAt("dstSet", 92, 15);
 					GUI_SetColor(pColors->btBkColor);
-					GUI_FillRect(0, SUB_MENU_ITEM_HEIGHT*4+SUB_MENU_ITEM_MARGIN*5, SUB_MENU_WIDTH-1, SUB_MENU_HEIGHT-SUB_MENU_ITEM_MARGIN-1);
+					GUI_FillRect(0, SUB_MENU_ITEM_HEIGHT*4+SUB_MENU_ITEM_MARGIN*5, SUB_MENU_WIDTH-1, SUB_MENU_HEIGHT-1);
 					break;	
 				
 		 default:

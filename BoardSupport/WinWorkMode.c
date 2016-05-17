@@ -6,6 +6,7 @@
 #include "dlg.h"
 //#include "Config.h"
 #include "T90.h"
+#include "maintask.h"
 
 /** @brief 单拖模式、双拖模式按钮 */
 static WM_HWIN buttons[2];
@@ -32,6 +33,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
       
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
+							case GUI_KEY_PWM_INC:       
+									 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+									 break;
                case GUI_KEY_LEFT:
                     if(pMsg->hWin == buttons[1]){
                        WM_SetFocus(buttons[0]);
@@ -77,6 +81,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 static void myWindowCallback(WM_MESSAGE* pMsg){
 
   switch(pMsg->MsgId){
+
     case WM_CREATE:
          buttons[0]  = BUTTON_CreateEx(SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2,
                                        SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 

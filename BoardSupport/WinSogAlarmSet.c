@@ -45,6 +45,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key )
 					  {						
+							 case GUI_KEY_PWM_INC:       
+                   WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                   break;
                case GUI_KEY_BACKSPACE:
 										if(t90_set.alarm.max_sog == agent_max_sog && t90_set.alarm.min_sog == agent_min_sog)
 										{

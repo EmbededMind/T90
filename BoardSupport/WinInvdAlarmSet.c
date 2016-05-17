@@ -39,6 +39,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
       
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
+							case GUI_KEY_PWM_INC:       
+								   WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+								   break;
                case GUI_KEY_BACKSPACE:
 										if(t90_set.alarm.invd_dst == agent_set)
 										{
@@ -109,7 +112,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 agent_set = t90_set.alarm.invd_dst;
 				 }
 				 break;
-		
+
 		case USER_MSG_SKIN:
 			   pColors = &(setWinColors[pMsg->Data.v]);	
 		

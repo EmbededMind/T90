@@ -21,11 +21,11 @@ static const MenuColor *pColors = mainMenuColors;
 
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
-   {WINDOW_CreateIndirect,   "clientWin", ID_WINDOW,      0,                     0,                                               MAIN_MENU_WIDTH,    MAIN_MENU_HEIGHT,           0, 0, 0},
+   {WINDOW_CreateIndirect,   "clientWin", ID_WINDOW,      0, 0,                                               MAIN_MENU_WIDTH,    MAIN_MENU_HEIGHT,           0, 0, 0},
    
-   {HSD_BUTTON_CreateIndirect,  "dstSet", GUI_ID_BUTTON0, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2,   MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
-   {HSD_BUTTON_CreateIndirect,  "almSet", GUI_ID_BUTTON1, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT*2+MAIN_MENU_ITEM_MARGIN*3, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
-   {HSD_BUTTON_CreateIndirect,  "sysSet", GUI_ID_BUTTON2, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT*3+MAIN_MENU_ITEM_MARGIN*4, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
+   {HSD_BUTTON_CreateIndirect,  "dstSet", GUI_ID_BUTTON0, 0, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2,   MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
+   {HSD_BUTTON_CreateIndirect,  "almSet", GUI_ID_BUTTON1, 0, MAIN_MENU_ITEM_HEIGHT*2+MAIN_MENU_ITEM_MARGIN*3, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
+   {HSD_BUTTON_CreateIndirect,  "sysSet", GUI_ID_BUTTON2, 0, MAIN_MENU_ITEM_HEIGHT*3+MAIN_MENU_ITEM_MARGIN*4, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
 };
 
 
@@ -78,6 +78,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
            break;
       case WM_KEY:          
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
+						 case GUI_KEY_PWM_INC:       
+								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+								 break;
               case GUI_KEY_RIGHT:
                    id  = WM_GetId(pMsg->hWin)-GUI_ID_BUTTON0;
 									 flag_prevfocus = 1;
@@ -130,6 +133,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
  */
 static void myDialogCallBack(WM_MESSAGE* pMsg){
     switch(pMsg->MsgId){
+			 
 			 case USER_MSG_SKIN:
 						pColors = &(mainMenuColors[pMsg->Data.v]);	
 			 
@@ -178,7 +182,7 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 						
 			 case WM_PAINT:
 						
-						GUI_DrawGradientV( MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_MARGIN,
+						GUI_DrawGradientV( 0, 0,
 															 MAIN_MENU_WIDTH-MAIN_MENU_ITEM_MARGIN-1, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
 															 pColors->headTopColor, pColors->headBottomColor);
 						GUI_SetFont(GUI_FONT_24_ASCII);
@@ -186,7 +190,7 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 						GUI_SetColor(pColors->headTextColor);
 						GUI_DispStringAt("Menu", 40, 15);
 					  GUI_SetColor(pColors->btBkColor);
-						GUI_FillRect(MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT*4+MAIN_MENU_ITEM_MARGIN*5, MAIN_MENU_ITEM_WIDTH+MAIN_MENU_ITEM_MARGIN-1, MAIN_MENU_HEIGHT-MAIN_MENU_ITEM_MARGIN-1);
+						GUI_FillRect(0, MAIN_MENU_ITEM_HEIGHT*4+MAIN_MENU_ITEM_MARGIN*5, MAIN_MENU_ITEM_WIDTH-1, MAIN_MENU_HEIGHT-1);
 						break;
             
        default:
