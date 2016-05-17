@@ -64,11 +64,26 @@ static OS_STK Play_Task_Statck[PLAY_TAST_STACK_SIZE];
                       
 #define MUSIC_RESET   musicCursor  = 0
 
-#define MUSIC_ADD_5NUMS MUSIC_ADD(aNums[0]); \
-                        MUSIC_ADD(aNums[1]); \
-                        MUSIC_ADD(aNums[2]); \
-                        MUSIC_ADD(aNums[3]); \
-                        MUSIC_ADD(aNums[4]); 
+#define MUSIC_ADD_5NUMS if(aNums[0]) \
+                        { \
+											      MUSIC_ADD(aNums[0]); \
+												} \
+                        if(aNums[1]) \
+												{ \
+                            MUSIC_ADD(aNums[1]); \
+												} \
+                        if(aNums[2]) \
+												{ \
+                            MUSIC_ADD(aNums[2]); \
+												} \
+                        if(aNums[3]) \
+												{ \
+                            MUSIC_ADD(aNums[3]); \
+												} \
+                        if(aNums[4]) \
+												{ \
+                            MUSIC_ADD(aNums[4]); \
+												} 													
 
 /*----------------- external function -------------------*/
 void mntSetting_init(void);
