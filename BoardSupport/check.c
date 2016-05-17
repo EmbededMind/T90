@@ -215,7 +215,7 @@ BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
                      return SimpBerthes[i].pBerth;
                  } 
             }
-            if(pBerth == SimpBerthes[i].pBerth && user_id == SimpBerthes[i].pBerth->Boat.user_id) 
+            if(flag == 0 && pBerth == SimpBerthes[i].pBerth && user_id == SimpBerthes[i].pBerth->Boat.user_id) 
                 flag = 1;
         }
         for(i = 0; i < N_boat; i++)
