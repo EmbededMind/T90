@@ -302,13 +302,19 @@ void DrawInvdShip(Point pixel, int course)  //course:∫ΩœÚ£®Ω«∂»÷∆£©
 //	GUI_DrawLine(pixel.x+7*_cos-10*_sin, pixel.y+7*_sin+10*_cos, pixel.x-7*_cos-10*_sin, pixel.y-7*_sin+10*_cos );
 	
 	GUI_DrawLine(pixel.x-7*_cos-7*_sin, pixel.y-7*_sin+7*_cos, pixel.x+13*_sin       , pixel.y-13*_cos);
-	GUI_DrawLine(pixel.x+13*_sin,        pixel.y-13*_cos,        pixel.x+7*_cos-7*_sin, pixel.y+7*_sin+7*_cos);
+	GUI_DrawLine(pixel.x+13*_sin,        pixel.y-13*_cos,        pixel.x+13*_cos-7*_sin, pixel.y+7*_sin+7*_cos);
 	GUI_DrawLine(pixel.x+7*_cos-7*_sin, pixel.y+7*_sin+7*_cos, pixel.x-7*_cos-7*_sin, pixel.y-7*_sin+7*_cos );
 }
 
 void DrawBullyShip(Point pixel, int course)
 {
+	double _cos = cos(course*ANGLE_TO_RAD);
+	double _sin = sin(course*ANGLE_TO_RAD);
 	
+	GUI_SetLineStyle(GUI_LS_SOLID);
+    GUI_DrawLine(pixel.x-10.5*_cos-10.5*_sin, pixel.y-10.5*_sin+10.5*_cos, pixel.x+19.5*_sin       , pixel.y-19.5*_cos);
+	GUI_DrawLine(pixel.x+19.5*_sin,        pixel.y-19.5*_cos,        pixel.x+10.5*_cos-10.5*_sin, pixel.y+10.5*_sin+10.5*_cos);
+	GUI_DrawLine(pixel.x+10.5*_cos-10.5*_sin, pixel.y+10.5*_sin+10.5*_cos, pixel.x-10.5*_cos-10.5*_sin, pixel.y-10.5*_sin+10.5*_cos );
 }
 
 void DrawAllOtherShips()
@@ -317,7 +323,7 @@ void DrawAllOtherShips()
 	Point point;
 	BULY_BERTH *pBully = pBulyHeader;
 	
-	GUI_SetColor(GUI_RED);
+	GUI_SetColor(GUI_RED);          
 	for(i = 0; i < N_boat; i++)
 	{
 		if(SimpBerthes[i].pBerth->isInvader)

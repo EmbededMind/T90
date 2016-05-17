@@ -146,40 +146,7 @@ static void DrawForgBullyShip(int xOnBase,int yOnBase,double course)
 
 }
 
-static void DrawBodySingleShip(int Space,int L1,int L2,int L3)
-{
-     
-	int l1 = L1*Diff;  
-	int l2 = L2*Diff;
-	int l3 = L3*Diff;
-	int space = Space*Diff;
-     
-	int basex = screen_hcenter-half_x*Diff;      
-	int basey = screen_vcenter+(half_y+L1)*Diff;
 
-	GUI_Clear();
-	GUI_SetPenSize( 1 );
-	GUI_SetLineStyle(GUI_LS_SOLID);
-	GUI_SetTextMode(GUI_TM_TRANS);
-	GUI_SetFont(&GUI_FontComic18B_ASCII);
-	GUI_SetColor(pColor->textColor);
-	
-	GUI_DrawArc( basex,basey-l1,space,space,atan2(l2,l1)*180.0/3.1416,    180-atan2(l2,l1)*180/3.1416);
-	GUI_DrawArc( basex,basey+l3,space,space,180+atan2(l2,l3)*180.0/3.1416,360-atan2(l2,l3)*180/3.1416);
-	GUI_DrawArc( basex+l2,basey,space,space,360-atan2(l2,l3)*180.0/3.1416,360+atan2(l2,l1)*180.0/3.1416 );
-	GUI_DrawArc( basex-l2,basey,space,space,540-atan2(l2,l1)*180.0/3.1416,540+atan2(l2,l3)*180.0/3.1416 );
-
-     GUI_DrawLine(basex-cos(atan2(l2,l1))*space+(t90_set.alarm.invd_dst!=0),basey-l1-sin(atan2(l2,l1))*space,basex-l2-cos(atan2(l2,l1))*space+(t90_set.alarm.invd_dst!=0),basey-sin(atan2(l2,l1))*space);
-     GUI_DrawLine(basex-cos(atan2(l2,l3))*space+(t90_set.alarm.invd_dst!=0),basey+l3+sin(atan2(l2,l3))*space,basex-l2-cos(atan2(l2,l3))*space+(t90_set.alarm.invd_dst!=0),basey+sin(atan2(l2,l3))*space);
-     GUI_DrawLine(basex+cos(atan2(l2,l1))*space,basey-l1-sin(atan2(l2,l1))*space,basex+l2+cos(atan2(l2,l1))*space,basey-sin(atan2(l2,l1))*space);
-     GUI_DrawLine(basex+cos(atan2(l2,l3))*space,basey+l3+sin(atan2(l2,l3))*space,basex+l2+cos(atan2(l2,l3))*space,basey+sin(atan2(l2,l3))*space);
-
-	DrawmShip(basex,basey-l1,Diff*400);
-	DrawNet(basex,basey,l1,l2,l3,Diff*400);
-	GUI_SetPenSize( 1 );
-	GUI_SetLineStyle(GUI_LS_DOT);
-	DrawArrow(basex,basey,l1,l2,l3);
-}
 
 
 void Draw_things(int x,int y)
@@ -210,7 +177,6 @@ void DrawAlarmShip(void) {
 	thisbully = pBulyHeader;
   screen_hcenter=SCREEN_HCENTER;
 	screen_vcenter=(SCREEN_HEIGHT-45)/2+45; //-(L1+L2)/Diff
-  DrawBodySingleShip(Space,L1,L2,L3);
 //	DrawBullyShip(2000,1000,3.1416/2,GUI_YELLOW);
      /*************************************************************/
      GUI_DrawRect(screen_hcenter-100,screen_vcenter-50,screen_hcenter+100,screen_vcenter+50) ;
