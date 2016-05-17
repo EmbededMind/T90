@@ -295,7 +295,7 @@ void _Play_Task(void* p_arg)
                              MUSIC_ADD(SND_ID_DEG);
                           }                                                    
                           if(thisBulyBerth->pBoatLink->Boat.dist < 99999){
-                              SND_ParseNum(thisBulyBerth->pBoatLink->Boat.dist * ((t90_set.sys.unit == NM)? 1:37/20), aNums);
+                              SND_ParseNum((t90_set.sys.unit == NM)? thisBulyBerth->pBoatLink->Boat.dist : thisBulyBerth->pBoatLink->Boat.dist * 37/20, aNums);
                                MUSIC_ADD(SND_ID_DST);      
                                MUSIC_ADD_5NUMS;                                   
                                if(t90_set.sys.unit == NM)
@@ -323,7 +323,7 @@ void _Play_Task(void* p_arg)
                                MUSIC_ADD(SND_ID_DEG);
                            }                                                 
                            MUSIC_ADD(SND_ID_DST);     
-                           SND_ParseNum(thisBulyBerth->pBoatLink->Boat.dist * ((t90_set.sys.unit == NM)? 1:37/20), aNums);
+                           SND_ParseNum((t90_set.sys.unit == NM)? thisBulyBerth->pBoatLink->Boat.dist : thisBulyBerth->pBoatLink->Boat.dist * 37/20, aNums);
                            MUSIC_ADD_5NUMS;
                            if(t90_set.sys.unit == NM)
                            {   
@@ -342,7 +342,10 @@ void _Play_Task(void* p_arg)
                            {
                                if(playList == 1)
                                {    
-                                    thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
+ //                                   thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
+																 
+																    thisinvdBerth = pSnapLink;
+																 
                                     if(thisinvdBerth)
                                     {
                                          MUSIC_ADD(SND_ID_INVD);
@@ -363,7 +366,7 @@ void _Play_Task(void* p_arg)
                                              MUSIC_ADD(SND_ID_DEG);
                                          }                                         
                                         MUSIC_ADD(SND_ID_DST);
-                                        SND_ParseNum(thisinvdBerth->Boat.dist * ((t90_set.sys.unit == NM)? 1:37/20), aNums);
+                                        SND_ParseNum((t90_set.sys.unit == NM)? thisinvdBerth->Boat.dist : thisinvdBerth->Boat.dist * 37/20, aNums);																	 
                                         MUSIC_ADD_5NUMS;
                                         if(t90_set.sys.unit == NM)
                                         {   
@@ -608,7 +611,7 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
       shiftReg   = text[16];
       shiftReg   = (shiftReg << 8) | text[17];
       mothership.COG  = shiftReg;
-//			mothership.COG = 0;
+			mothership.COG = 1800;
 
 //    tempgprmc = text[18]; SYS_Date = tempgprmc << 24;
 //    tempgprmc = text[19]; SYS_Date = SYS_Date + (tempgprmc << 16);

@@ -69,7 +69,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 											if(agent_set > 5352) agent_set = 5352;
 										}
 										WM_Paint(invdAlarmSetWin);
-										WM_InvalidateWindow(button);
+//										WM_InvalidateWindow(button);
 										break;
 							 
 							 case GUI_KEY_DOWN:
@@ -220,8 +220,6 @@ INFO("paint");
 					}
 					else
 					{
-						sprintf(pStrBuf,"%01d.%01d",t90_set.alarm.invd_dst/1000, (t90_set.alarm.invd_dst%1000)/100);
-						HSD_BUTTON_SetText(button, pStrBuf);
 						agent_set = t90_set.alarm.invd_dst;
 					}
 					WM_SetFocus(alarmSetMenuDlg);
