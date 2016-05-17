@@ -16,8 +16,10 @@ void DrawAlarmLine(int zoom);
 void DrawCursor(Point pixel, int flag);
 Point GetItemPixel(Point itemPoint);
 
-void DrawOtherShip(Point pixel, int course);
+void DrawInvdShip(Point pixel, int course);
+void DrawBullyShip(Point pixel, int course);
 void DrawAllOtherShips(void);
+
 
 #endif
 
