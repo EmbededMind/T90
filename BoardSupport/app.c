@@ -64,6 +64,11 @@ static OS_STK Play_Task_Statck[PLAY_TAST_STACK_SIZE];
                       
 #define MUSIC_RESET   musicCursor  = 0
 
+#define MUSIC_ADD_5NUMS MUSIC_ADD(aNums[0]); \
+                        MUSIC_ADD(aNums[1]); \
+                        MUSIC_ADD(aNums[2]); \
+                        MUSIC_ADD(aNums[3]); \
+                        MUSIC_ADD(aNums[4]); 
 
 /*----------------- external function -------------------*/
 void mntSetting_init(void);
@@ -214,7 +219,8 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
    }
 }
 
-   
+
+  
  
 void _Play_Task(void* p_arg)
 {
@@ -270,53 +276,18 @@ void _Play_Task(void* p_arg)
                         {
                              SND_ParseNum(angle*1000,aNums);
                              MUSIC_ADD(SND_ID_ANG);                                   
-                              if(aNums[0])
-                              {
-                                  MUSIC_ADD(aNums[0]);
-                              }
-                              if(aNums[1])
-                              {
-                                MUSIC_ADD(aNums[1]);
-                              }
-                              if(aNums[2])
-                              {
-                                MUSIC_ADD(aNums[2]);
-                              }
-                              if(aNums[3])
-                              {
-                                MUSIC_ADD(aNums[3]);
-                              }
-                              if(aNums[4])
-                              {
-                                MUSIC_ADD(aNums[4]);
-                              }
-                              MUSIC_ADD(SND_ID_DEG);
+                             MUSIC_ADD_5NUMS;
+                             MUSIC_ADD(SND_ID_DEG);
                           }                                                    
                           if(thisBulyBerth->pBoatLink->Boat.dist < 99999){
-                               SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
+                               SND_ParseNum(thisBulyBerth->pBoatLink->Boat.dist, aNums);
                                MUSIC_ADD(SND_ID_DST);      
-                               if(Nums[0]){
-                                    MUSIC_ADD(Nums[0]);
-                               }
-                               if(Nums[1]){
-                                    MUSIC_ADD(Nums[1]);
-                               }
-                               if(Nums[2]){
-                                MUSIC_ADD(Nums[2]);
-                               }                                    
+                               MUSIC_ADD_5NUMS;                                   
                                MUSIC_ADD(SND_ID_NM);
                                MUSIC_ADD(SND_ID_SIS);                                  
-                               SND_ParseDist(thisBulyBerth->pBoatLink->Boat.SOG *100, Nums);
-                               if(Nums[0]){
-                                   MUSIC_ADD(Nums[0]);
-                               }
-                               if(Nums[1]){
-                                   MUSIC_ADD(Nums[1]);
-                               }
-                               if(Nums[2]){
-                                   MUSIC_ADD(Nums[2]);
-                               }
-                             MUSIC_ADD(SND_ID_KT);
+                               SND_ParseNum(thisBulyBerth->pBoatLink->Boat.SOG *100, aNums);
+                               MUSIC_ADD_5NUMS;
+                               MUSIC_ADD(SND_ID_KT);
                           }
                      }
                      else{                                      // 高速船
@@ -326,39 +297,12 @@ void _Play_Task(void* p_arg)
                           {
                                SND_ParseNum(angle*1000,aNums);
                                MUSIC_ADD(SND_ID_ANG);                              
-                               if(aNums[0])                             
-                               {
-                                   MUSIC_ADD(aNums[0]);
-                               }
-                               if(aNums[1])
-                               {
-                                  MUSIC_ADD(aNums[1]);
-                               }
-                               if(aNums[2])
-                               {
-                                  MUSIC_ADD(aNums[2]);
-                               }
-                               if(aNums[3])
-                               {
-                                  MUSIC_ADD(aNums[3]);
-                               }
-                               if(aNums[4])
-                               {
-                                  MUSIC_ADD(aNums[4]);
-                               }
+                               MUSIC_ADD_5NUMS;
                                MUSIC_ADD(SND_ID_DEG);
                            }                                                 
                            MUSIC_ADD(SND_ID_DST);     
-                           SND_ParseDist(thisBulyBerth->pBoatLink->Boat.dist, Nums);
-                           if(Nums[0]){
-                              MUSIC_ADD(Nums[0]);
-                           }
-                           if(Nums[1]){
-                              MUSIC_ADD(Nums[1]);
-                           }
-                           if(Nums[2]){
-                              MUSIC_ADD(Nums[2]);
-                           }
+                           SND_ParseNum(thisBulyBerth->pBoatLink->Boat.dist, aNums);
+                           MUSIC_ADD_5NUMS;
                            MUSIC_ADD(SND_ID_NM);
                            }
                         }
@@ -386,42 +330,12 @@ void _Play_Task(void* p_arg)
                                          {
                                              SND_ParseNum(angle*1000,aNums);
                                              MUSIC_ADD(SND_ID_ANG);                                        
-                                             if(aNums[0])
-                                             {
-                                                  MUSIC_ADD(aNums[0]);
-                                             }
-                                             if(aNums[1])
-                                             {
-                                                  MUSIC_ADD(aNums[1]);
-                                             }
-                                             if(aNums[2])
-                                             {
-                                                  MUSIC_ADD(aNums[2]);
-                                             }
-                                             if(aNums[3])
-                                             {
-                                                   MUSIC_ADD(aNums[3]);
-                                             }
-                                             if(aNums[4])
-                                             {
-                                                    MUSIC_ADD(aNums[4]);
-                                             }
+                                             MUSIC_ADD_5NUMS;
                                              MUSIC_ADD(SND_ID_DEG);
                                          }                                         
                                         MUSIC_ADD(SND_ID_DST);
-                                        SND_ParseDist(thisinvdBerth->Boat.dist, Nums);
-                                        if(Nums[0])
-                                        {
-                                             MUSIC_ADD(Nums[0]);
-                                        }
-                                        if(Nums[1])
-                                        {
-                                             MUSIC_ADD(Nums[1]);
-                                        }
-                                        if(Nums[2])
-                                        {
-                                             MUSIC_ADD(Nums[2]);
-                                        }
+                                        SND_ParseNum(thisinvdBerth->Boat.dist, aNums);
+                                        MUSIC_ADD_5NUMS;
                                         MUSIC_ADD(SND_ID_NM);
                                     }
                                     playList  = 2;
@@ -433,26 +347,7 @@ void _Play_Task(void* p_arg)
                                     {                                     
                                         SND_ParseNum(t90_set.alarm.danger_sog*100,aNums);
                                         MUSIC_ADD(SND_ID_MHS);
-                                        if(aNums[0])
-                                        {
-                                             MUSIC_ADD(aNums[0]);
-                                        }
-                                        if(aNums[1])
-                                        {
-                                            MUSIC_ADD(aNums[1]);
-                                        }
-                                        if(aNums[2])
-                                        {
-                                            MUSIC_ADD(aNums[2]);
-                                        }
-                                        if(aNums[3])
-                                        {
-                                            MUSIC_ADD(aNums[3]);
-                                        }
-                                        if(aNums[4])
-                                        {
-                                            MUSIC_ADD(aNums[4]);
-                                        }
+                                        MUSIC_ADD_5NUMS;
                                         MUSIC_ADD(SND_ID_KT);                 
                                     }
                                     else
@@ -460,28 +355,8 @@ void _Play_Task(void* p_arg)
                                         if(MS_isMax_SOG == MNTState_Triggered)
                                         {
                                             SND_ParseNum(mothership.SOG*100,aNums);
-                                            MUSIC_ADD(SND_ID_SN);
-                                    
-                                            if(aNums[0])
-                                            {
-                                                 MUSIC_ADD(aNums[0]);
-                                            }
-                                            if(aNums[1])
-                                            {
-                                                MUSIC_ADD(aNums[1]);
-                                            }
-                                            if(aNums[2])
-                                            {
-                                                MUSIC_ADD(aNums[2]);
-                                            }
-                                            if(aNums[3])
-                                            {
-                                                MUSIC_ADD(aNums[3]);
-                                            }
-                                            if(aNums[4])
-                                            {
-                                                MUSIC_ADD(aNums[4]);
-                                            }
+                                            MUSIC_ADD(SND_ID_SN);                                   
+                                            MUSIC_ADD_5NUMS;
                                             MUSIC_ADD(SND_ID_KT);
                                             MUSIC_ADD(SND_ID_HIGH);
                                             MUSIC_ADD(SND_ID_SNOR);
@@ -489,32 +364,11 @@ void _Play_Task(void* p_arg)
                                         else if(MS_isMin_SOG == MNTState_Triggered)
                                         {
                                             SND_ParseNum(mothership.SOG*100,aNums);
-                                            MUSIC_ADD(SND_ID_SN);
-                                    
-                                            if(aNums[0])
-                                            {
-                                                 MUSIC_ADD(aNums[0]);
-                                            }
-                                            if(aNums[1])
-                                            {
-                                                MUSIC_ADD(aNums[1]);
-                                            }
-                                            if(aNums[2])
-                                            {
-                                                MUSIC_ADD(aNums[2]);
-                                            }
-                                            if(aNums[3])
-                                            {
-                                                MUSIC_ADD(aNums[3]);
-                                            }
-                                            if(aNums[4])
-                                            {
-                                                MUSIC_ADD(aNums[4]);
-                                            }
+                                            MUSIC_ADD(SND_ID_SN);                                  
+                                            MUSIC_ADD_5NUMS;
                                             MUSIC_ADD(SND_ID_KT);
                                             MUSIC_ADD(SND_ID_LOW);
-                                            MUSIC_ADD(SND_ID_SNOR);
-                                        
+                                            MUSIC_ADD(SND_ID_SNOR);                                     
                                         }
                                    }
                                    playList = 1;
