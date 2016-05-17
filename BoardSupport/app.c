@@ -384,7 +384,7 @@ void _Play_Task(void* p_arg)
                                }
                                else{                                      // ¸ßËÙ´¬
                                   MUSIC_ADD(SND_ID_HSB);
-                                                  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
+                                  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
                     INFO("highspeed-x=%d",thisBulyBerth->pBoatLink->x_to_cross);                   
                     INFO("highspeed-y=%d",thisBulyBerth->pBoatLink->y_to_cross);                                      
                     INFO("highspeed=%d",angle);
