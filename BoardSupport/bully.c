@@ -115,6 +115,7 @@ void BULY_delete(BERTH* addr)
 		 pBC  = pBulyHeader;  
 		 if(pBulyHeader->pBoatLink == addr)
 		 {
+                pBulyHeader->pBoatLink->Boat.category = 0;
 				pBulyHeader  = pBulyHeader->pNext;
 
 	//      if(pBC->pBoatLink->mntState == MNTState_Triggered)
@@ -132,7 +133,8 @@ void BULY_delete(BERTH* addr)
 				{
 					 if(pCursor->pBoatLink == addr)
 					 {
-							pBC->pNext  = pCursor->pNext;
+                         pBulyHeader->pBoatLink->Boat.category = 0;
+                         pBC->pNext  = pCursor->pNext;
 						 
 	//            if(pCursor->pBoatLink->mntState == MNTState_Triggered)
 	//            {
