@@ -3,7 +3,8 @@
 
 #include "Config.h"
 #include "MainTask.h"
-#include "Setting.h"
+#include "boat_struct.h"
+//#include "Setting.h"
 
 //typedef struct _INVADER  INVADER;
 //struct _INVADER 

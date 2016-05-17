@@ -1,7 +1,7 @@
 #include "GUI.h"
 #include "sound.h"
 #include "Config.h"
-#include "Setting.h"
+//#include "Setting.h"
 #include "string.h"
 #include "lpc177x_8x_eeprom.h"
 #include "pwm.h"

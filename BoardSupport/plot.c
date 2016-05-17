@@ -111,7 +111,7 @@ void DrawAlarmLine(int zoom)   //zoom：缩放比例
 void DrawCursor(Point pixel, int flag)
 {
 	int start_x, start_y;	
-//	Point point;
+	Point point;
 	char strTmp[15];
 	int infoWidth, infoHeight;
 	start_x = pixel.x + 10;
@@ -159,10 +159,17 @@ void DrawCursor(Point pixel, int flag)
 		GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY());
 		
 		
-//		GUI_SetColor(homeColors[t90_set.sys.nightmode].numColor);
-//		point.x = pSnapLink->x_to_cross;
-//		point.y = pSnapLink->y_to_cross;
-//		DrawInvdShip(GetItemPixel(point), (pSnapLink->Boat.COG - mothership.COG)/10);
+		GUI_SetColor(homeColors[t90_set.sys.nightmode].numColor);
+		point.x = pSnapLink->x_to_cross;
+		point.y = pSnapLink->y_to_cross;
+		if((pSnapLink->Boat.category & 0x0f) == TYPE_BULLY)
+		{
+			DrawBullyShip(GetItemPixel(point), (pSnapLink->Boat.COG - mothership.COG)/10);
+		}
+		else
+		{
+			DrawInvdShip(GetItemPixel(point), (pSnapLink->Boat.COG - mothership.COG)/10);
+		}
 		
 		GUI_SetTextMode(GUI_TM_TRANS);
 	}
@@ -295,15 +302,16 @@ void DrawInvdShip(Point pixel, int course)  //course:航向（角度制）
 	double _cos = cos(course*ANGLE_TO_RAD);
 	double _sin = sin(course*ANGLE_TO_RAD);
 	
+	GUI_SetPenSize(2);
 	GUI_SetLineStyle(GUI_LS_SOLID);
      
 //	GUI_DrawLine(pixel.x-7*_cos-10*_sin, pixel.y-7*_sin+10*_cos, pixel.x+10*_sin       , pixel.y-10*_cos);
 //	GUI_DrawLine(pixel.x+10*_sin,        pixel.y-10*_cos,        pixel.x+7*_cos-10*_sin, pixel.y+7*_sin+10*_cos);
 //	GUI_DrawLine(pixel.x+7*_cos-10*_sin, pixel.y+7*_sin+10*_cos, pixel.x-7*_cos-10*_sin, pixel.y-7*_sin+10*_cos );
 	
-	GUI_DrawLine(pixel.x-7*_cos-7*_sin, pixel.y-7*_sin+7*_cos, pixel.x+13*_sin       , pixel.y-13*_cos);
-	GUI_DrawLine(pixel.x+13*_sin,        pixel.y-13*_cos,        pixel.x+13*_cos-7*_sin, pixel.y+7*_sin+7*_cos);
-	GUI_DrawLine(pixel.x+7*_cos-7*_sin, pixel.y+7*_sin+7*_cos, pixel.x-7*_cos-7*_sin, pixel.y-7*_sin+7*_cos );
+	GUI_DrawLine(pixel.x-7*_cos-9*_sin, pixel.y-7*_sin+9*_cos, pixel.x+16*_sin      , pixel.y-16*_cos);
+	GUI_DrawLine(pixel.x+16*_sin,       pixel.y-16*_cos,       pixel.x+7*_cos-9*_sin, pixel.y+7*_sin+9*_cos);
+	GUI_DrawLine(pixel.x+7*_cos-9*_sin, pixel.y+7*_sin+9*_cos, pixel.x-7*_cos-9*_sin, pixel.y-7*_sin+9*_cos );
 }
 
 void DrawBullyShip(Point pixel, int course)
@@ -311,10 +319,11 @@ void DrawBullyShip(Point pixel, int course)
 	double _cos = cos(course*ANGLE_TO_RAD);
 	double _sin = sin(course*ANGLE_TO_RAD);
 	
+	GUI_SetPenSize(3);
 	GUI_SetLineStyle(GUI_LS_SOLID);
-    GUI_DrawLine(pixel.x-10.5*_cos-10.5*_sin, pixel.y-10.5*_sin+10.5*_cos, pixel.x+19.5*_sin       , pixel.y-19.5*_cos);
-	GUI_DrawLine(pixel.x+19.5*_sin,        pixel.y-19.5*_cos,        pixel.x+10.5*_cos-10.5*_sin, pixel.y+10.5*_sin+10.5*_cos);
-	GUI_DrawLine(pixel.x+10.5*_cos-10.5*_sin, pixel.y+10.5*_sin+10.5*_cos, pixel.x-10.5*_cos-10.5*_sin, pixel.y-10.5*_sin+10.5*_cos );
+  GUI_DrawLine(pixel.x-14*_cos-18*_sin, pixel.y-14*_sin+18*_cos, pixel.x+32*_sin       , pixel.y-32*_cos);
+	GUI_DrawLine(pixel.x+32*_sin,        pixel.y-32*_cos,        pixel.x+14*_cos-18*_sin, pixel.y+14*_sin+18*_cos);
+	GUI_DrawLine(pixel.x+14*_cos-18*_sin, pixel.y+14*_sin+18*_cos, pixel.x-14*_cos-18*_sin, pixel.y-14*_sin+18*_cos );
 }
 
 void DrawAllOtherShips()
@@ -323,40 +332,27 @@ void DrawAllOtherShips()
 	Point point;
 	BULY_BERTH *pBully = pBulyHeader;
 	
-	GUI_SetColor(GUI_RED);          
+	GUI_SetColor(GUI_RED); 
 	for(i = 0; i < N_boat; i++)
 	{
 		if(SimpBerthes[i].pBerth->isInvader)
 		{
-			if(pSnapLink == SimpBerthes[i].pBerth)
+			point.x = SimpBerthes[i].pBerth->x_to_cross;
+			point.y = SimpBerthes[i].pBerth->y_to_cross;
+			if((SimpBerthes[i].pBerth->Boat.category & 0x0f) == TYPE_BULLY)
 			{
-				GUI_SetColor(homeColors[t90_set.sys.nightmode].numColor);
-				point.x = SimpBerthes[i].pBerth->x_to_cross;
-				point.y = SimpBerthes[i].pBerth->y_to_cross;
-				DrawInvdShip(GetItemPixel(point), (SimpBerthes[i].pBerth->Boat.COG - mothership.COG)/10);
-				GUI_SetColor(GUI_RED);
+				DrawBullyShip(GetItemPixel(point), (SimpBerthes[i].pBerth->Boat.COG - mothership.COG)/10);
 			}
 			else
-			{
-				point.x = SimpBerthes[i].pBerth->x_to_cross;
-				point.y = SimpBerthes[i].pBerth->y_to_cross;
 				DrawInvdShip(GetItemPixel(point), (SimpBerthes[i].pBerth->Boat.COG - mothership.COG)/10);
-			}
 		}
 	}
 	
 //	if(monitorState == ON)
 //	{
+	
 		while(pBully)
 		{
-			if(pSnapLink == pBully->pBoatLink)
-			{
-				GUI_SetColor(homeColors[t90_set.sys.nightmode].numColor);
-			}
-			else
-			{
-				GUI_SetColor(GUI_RED);
-			}
 			point.x = pBully->pBoatLink->x_to_cross;
 			point.y = pBully->pBoatLink->y_to_cross;
 			DrawBullyShip(GetItemPixel(point), (pBully->pBoatLink->Boat.COG - mothership.COG)/10);

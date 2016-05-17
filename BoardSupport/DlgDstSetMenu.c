@@ -177,7 +177,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 					break;  
 					
 		 case WM_SET_FOCUS:
-				
+					WM_DisableWindow(buttons[0]);
 					break;
 
 		 case WM_PAINT:

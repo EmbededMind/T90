@@ -5,7 +5,7 @@
 #include "string.h"
 #include <math.h>
 #include <stdlib.h>
-#include "Setting.h"
+//#include "Setting.h"
 #include "invader.h"
 #include "str.h"
 #include "bully.h"
@@ -30,7 +30,7 @@ extern _boat* boat_list_p[BOAT_NUM_MAX];
 extern boat mothership;
 extern BERTH Berthes[BOAT_NUM_MAX];
 extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
-extern MNT_BERTH * pMntHeader;
+//extern MNT_BERTH * pMntHeader;
 extern Bool INVD_deleteByMMSI(long MMSI);
 /*----------------------- external functions -----------------------*/
 

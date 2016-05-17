@@ -6,7 +6,7 @@
 #include "lpc177x_8x_uart.h"
 #include "lpc177x_8x_timer.h"
 #include "Config.h"
-#include "Setting.h"
+//#include "Setting.h"
 #include "DMA.h"
 #include "Check.h"
 #include "uart.h"
@@ -342,10 +342,7 @@ void _Play_Task(void* p_arg)
                            {
                                if(playList == 1)
                                {    
- //                                   thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
-																 
-																    thisinvdBerth = pSnapLink;
-																 
+                                    thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
                                     if(thisinvdBerth)
                                     {
                                          MUSIC_ADD(SND_ID_INVD);

@@ -1,7 +1,7 @@
 #include "DIALOG.h"
 #include "MainTask.h"
 #include "Config.h"
-#include "Setting.h"
+//#include "Setting.h"
 #include "dlg.h"
 #include "28.h"
 #include "T90.h"

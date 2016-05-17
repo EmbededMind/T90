@@ -2,7 +2,7 @@
 #include "DIALOG.h"
 #include "MainTask.h"
 #include "exfuns.h"
-#include "Setting.h"
+//#include "Setting.h"
 #include "logo.h"
 #include "120.h"
 #include "28.h"
