@@ -175,6 +175,10 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 					HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font24_ASCII);
 					HSD_BUTTON_SetText(buttons[2], "safety sign 2");
 					break;  
+					
+		 case WM_SET_FOCUS:
+				
+					break;
 
 		 case WM_PAINT:
 			 

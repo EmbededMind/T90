@@ -791,15 +791,15 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
       shiftReg   = text[14];
       shiftReg   = (shiftReg << 8) | text[15];
 //      mothership.SOG  = shiftReg;
-			mothership.SOG = 10;
+			mothership.SOG = 50;
    
 //    tempgprmc = text[16]; mothership.COG = mothership.COG + (tempgprmc << 8);
 //    mothership.COG = mothership.COG + text[17];
 
       shiftReg   = text[16];
       shiftReg   = (shiftReg << 8) | text[17];
-//      mothership.COG  = shiftReg;
-			mothership.COG = 0;
+      mothership.COG  = shiftReg;
+//			mothership.COG = 0;
 
 //    tempgprmc = text[18]; SYS_Date = tempgprmc << 24;
 //    tempgprmc = text[19]; SYS_Date = SYS_Date + (tempgprmc << 16);
