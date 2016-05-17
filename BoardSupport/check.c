@@ -175,7 +175,7 @@ static void CHECK_HasAlarm(void)
 BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
 {
     int i = 0;
-    Bool flag = 0;
+    int flag = 0;
     static BERTH *pBerth;
     for(i = 0; i < N_boat; i++)
     {        
