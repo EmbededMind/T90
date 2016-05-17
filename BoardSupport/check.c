@@ -174,28 +174,75 @@ static void CHECK_HasAlarm(void)
 
 BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
 {
+//    int i = 0;
+//    int flag = 1;
+//    static int dst = 0;
+//    for(i = 0; i < N_boat; i++)
+//    {            
+//        if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered && SimpBerthes[i].Dist > dst)
+//        {
+//            SNAP_SetSnapLink(SimpBerthes[i].pBerth);
+//            dst = SimpBerthes[i].Dist;
+//            return SimpBerthes[i].pBerth;
+//        }
+//        else
+//        {
+//            if(i == N_boat-1 && flag) 
+//            {
+//                flag = 0;
+//                i = 0;
+//            }
+//        }
+//    }      
+//	return NULL;
+
     int i = 0;
 
-    int flag = 1;
-    static int dst = 0;
-    for(i = 0; i < N_boat; i++)
-    {            
-        if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered && SimpBerthes[i].Dist > dst)
-        {
-            SNAP_SetSnapLink(SimpBerthes[i].pBerth);
-            dst = SimpBerthes[i].Dist;
-            return SimpBerthes[i].pBerth;
-        }
-        else
-        {
-            if(i == N_boat-1 && flag) 
+    int flag = 0;
+    static BERTH *pBerth = 0;
+    static long int user_id;
+    if(pBerth)
+    {
+        for(i = 0; i < N_boat; i++)
+        {            
+            if(flag)
             {
-                flag = 0;
-                i = 0;
+                 if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
+                 {
+                     SNAP_SetSnapLink(SimpBerthes[i].pBerth);
+                     pBerth =  SimpBerthes[i].pBerth;
+                     user_id = SimpBerthes[i].pBerth->Boat.user_id;
+                     return SimpBerthes[i].pBerth;
+                 } 
+            }
+						if(pBerth == SimpBerthes[i].pBerth && user_id == SimpBerthes[i].pBerth->Boat.user_id) 
+                flag = 1;
+        }
+        for(i = 0; i < N_boat; i++)
+        {            
+            if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
+            {
+                SNAP_SetSnapLink(SimpBerthes[i].pBerth);
+                pBerth =  SimpBerthes[i].pBerth;
+                user_id = SimpBerthes[i].pBerth->Boat.user_id;
+                return SimpBerthes[i].pBerth;
             }
         }
-    }      
-	return NULL;
+    }
+    else
+    {
+        for(i = 0; i < N_boat; i++)
+        {            
+            if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
+            {
+                SNAP_SetSnapLink(SimpBerthes[i].pBerth);
+                pBerth =  SimpBerthes[i].pBerth;
+                user_id = SimpBerthes[i].pBerth->Boat.user_id;
+                return SimpBerthes[i].pBerth;
+            }       
+        }
+    }
+    return NULL;     
 }
 
 
