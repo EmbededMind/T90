@@ -175,13 +175,9 @@ static void CHECK_HasAlarm(void)
 BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
 {
     int i = 0;
-<<<<<<< HEAD
-    int flag = 0;
-    static BERTH *pBerth;
-=======
+
     int flag = 1;
     static int dst = 0;
->>>>>>> 2462f3a63e61d0a5171fb8e4c1358819e438f7e4
     for(i = 0; i < N_boat; i++)
     {            
         if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered && SimpBerthes[i].Dist > dst)
