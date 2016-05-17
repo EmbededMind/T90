@@ -175,20 +175,29 @@ static void CHECK_HasAlarm(void)
 BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
 {
     int i = 0;
+<<<<<<< HEAD
     int flag = 0;
     static BERTH *pBerth;
+=======
+    int flag = 1;
+    static int dst = 0;
+>>>>>>> 2462f3a63e61d0a5171fb8e4c1358819e438f7e4
     for(i = 0; i < N_boat; i++)
-    {        
-        if(flag == 1)
+    {            
+        if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered && SimpBerthes[i].Dist > dst)
         {
-            if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
+            SNAP_SetSnapLink(SimpBerthes[i].pBerth);
+            dst = SimpBerthes[i].Dist;
+            return SimpBerthes[i].pBerth;
+        }
+        else
+        {
+            if(i == N_boat-1 && flag) 
             {
-                pBerth = SimpBerthes[i].pBerth;
-                SNAP_SetSnapLink(SimpBerthes[i].pBerth);
-                return SimpBerthes[i].pBerth;
+                flag = 0;
+                i = 0;
             }
         }
-        if(pBerth == SimpBerthes[i].pBerth) flag = 1;
     }      
 	return NULL;
 }
