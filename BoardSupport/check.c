@@ -204,8 +204,6 @@ BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
     {
         for(i = 0; i < N_boat; i++)
         {
-            if(pBerth == SimpBerthes[i].pBerth && user_id == SimpBerthes[i].pBerth->Boat.user_id) 
-                flag = 1;
             if(flag)
             {
                  if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
@@ -216,6 +214,8 @@ BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
                      return SimpBerthes[i].pBerth;
                  } 
             }
+            if(pBerth == SimpBerthes[i].pBerth && user_id == SimpBerthes[i].pBerth->Boat.user_id) 
+                flag = 1;
         }
         for(i = 0; i < N_boat; i++)
         {            
