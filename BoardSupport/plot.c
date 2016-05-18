@@ -321,9 +321,9 @@ void DrawBullyShip(Point pixel, int course)
 	
 	GUI_SetPenSize(3);
 	GUI_SetLineStyle(GUI_LS_SOLID);
-  GUI_DrawLine(pixel.x-14*_cos-18*_sin, pixel.y-14*_sin+18*_cos, pixel.x+32*_sin       , pixel.y-32*_cos);
-	GUI_DrawLine(pixel.x+32*_sin,        pixel.y-32*_cos,        pixel.x+14*_cos-18*_sin, pixel.y+14*_sin+18*_cos);
-	GUI_DrawLine(pixel.x+14*_cos-18*_sin, pixel.y+14*_sin+18*_cos, pixel.x-14*_cos-18*_sin, pixel.y-14*_sin+18*_cos );
+  GUI_DrawLine(pixel.x-10.5*_cos-13.5*_sin, pixel.y-10.5*_sin+13.5*_cos, pixel.x+24*_sin       , pixel.y-24*_cos);
+	GUI_DrawLine(pixel.x+24*_sin,        pixel.y-24*_cos,        pixel.x+10.5*_cos-13.5*_sin, pixel.y+10.5*_sin+13.5*_cos);
+	GUI_DrawLine(pixel.x+10.5*_cos-13.5*_sin, pixel.y+10.5*_sin+13.5*_cos, pixel.x-10.5*_cos-13.5*_sin, pixel.y-10.5*_sin+13.5*_cos );
 }
 
 void DrawAllOtherShips()
