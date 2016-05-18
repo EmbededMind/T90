@@ -22,11 +22,11 @@ static const MenuColor *pColors = mainMenuColors;
 
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
-   {WINDOW_CreateIndirect,   "clientWin", ID_WINDOW,      0, 0,                                               MAIN_MENU_WIDTH,    MAIN_MENU_HEIGHT,           0, 0, 0},
+   {WINDOW_CreateIndirect,   "clientWin", ID_WINDOW,        0, 0,                                               MAIN_MENU_WIDTH,    MAIN_MENU_HEIGHT,           0, 0, 0},
    
-   {HSD_BUTTON_CreateIndirect,  "¾àÀëÉèÖÃ", GUI_ID_BUTTON0, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2,   MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
-   {HSD_BUTTON_CreateIndirect,  "almSet", GUI_ID_BUTTON1, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT*2+MAIN_MENU_ITEM_MARGIN*3, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
-   {HSD_BUTTON_CreateIndirect,  "sysSet", GUI_ID_BUTTON2, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT*3+MAIN_MENU_ITEM_MARGIN*4, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
+   {HSD_BUTTON_CreateIndirect,  "0", GUI_ID_BUTTON0, 0, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2,   MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
+   {HSD_BUTTON_CreateIndirect,  "almSet", GUI_ID_BUTTON1,   0, MAIN_MENU_ITEM_HEIGHT*2+MAIN_MENU_ITEM_MARGIN*3, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
+   {HSD_BUTTON_CreateIndirect,  "sysSet", GUI_ID_BUTTON2,   0, MAIN_MENU_ITEM_HEIGHT*3+MAIN_MENU_ITEM_MARGIN*4, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
 };
 
 
@@ -128,9 +128,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 
 
 
-/**@brief Ö÷²Ëµ¥¶Ô»°¿òµÄ»Øµ÷º¯Êı
+/**@brief ä¸»èœå•å¯¹è¯æ¡†çš„å›è°ƒå‡½æ•°
  *
- *  @param [in] pMsg ÏûÏ¢Ö¸Õë
+ *  @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void myDialogCallBack(WM_MESSAGE* pMsg){
     switch(pMsg->MsgId){
@@ -162,21 +162,21 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
             HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_t90_30);
             HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
             WM_SetCallback(buttons[0], &myButtonCallback);
-						HSD_BUTTON_SetText(buttons[0], "dstSet");
+						HSD_BUTTON_SetText(buttons[0], "è·ç¦»è®¾ç½®");
 						HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
             
 						buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
-            HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font24B_ASCII);
+            HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_t90_30);
             HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
             WM_SetCallback(buttons[1],&myButtonCallback);
-						HSD_BUTTON_SetText(buttons[1], "almSet");
+						HSD_BUTTON_SetText(buttons[1], "æŠ¥è­¦è®¾ç½®");
 						HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
             
 						buttons[2] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
-            HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font24B_ASCII);
+            HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_t90_30);
             HSD_BUTTON_SetBkColor(buttons[2], pColors->btBkColor);
             WM_SetCallback(buttons[2],&myButtonCallback);
-						HSD_BUTTON_SetText(buttons[2], "sysSet");
+						HSD_BUTTON_SetText(buttons[2], "ç³»ç»Ÿè®¾ç½®");
 						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
             
             break; 
@@ -186,10 +186,10 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 						GUI_DrawGradientV( 0, 0,
 															 MAIN_MENU_WIDTH-MAIN_MENU_ITEM_MARGIN-1, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
 															 pColors->headTopColor, pColors->headBottomColor);
-						GUI_SetFont(GUI_FONT_24_ASCII);
+						GUI_SetFont(&GUI_Font_t90_30);
 						GUI_SetTextMode(GUI_TM_TRANS);
 						GUI_SetColor(pColors->headTextColor);
-						GUI_DispStringAt("Menu", 40, 15);
+						GUI_DispStringAt("ä¸»èœå•", 30, 9);
 					  GUI_SetColor(pColors->btBkColor);
 						GUI_FillRect(0, MAIN_MENU_ITEM_HEIGHT*4+MAIN_MENU_ITEM_MARGIN*5, MAIN_MENU_ITEM_WIDTH-1, MAIN_MENU_HEIGHT-1);
 						break;
@@ -202,9 +202,9 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 
 
 
-/**@brief ´´½¨Ö÷²Ëµ¥
+/**@brief åˆ›å»ºä¸»èœå•
  *
- *  @return Ëù´´½¨¶Ô»°¿òµÄ¾ä±ú
+ *  @return æ‰€åˆ›å»ºå¯¹è¯æ¡†çš„å¥æŸ„
  */
 WM_HWIN DLG_MainMenuCreate(void){
    WM_HWIN handle; 

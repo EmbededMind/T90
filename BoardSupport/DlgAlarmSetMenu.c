@@ -1,10 +1,11 @@
-#include "maintask.h"
+ï»¿#include "maintask.h"
 #include "GUI.h"
 #include "DIALOG.h"
 #include "HSD_BUTTON.h"
 #include "dlg.h"
 #include "T90.h"
 #include "Check.h"
+#include "t90font.h"
 
 #include "layout_sub_menu.h"
 
@@ -168,11 +169,11 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         buttons[0]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
         WM_SetCallback(buttons[0], &myButtonCallback);
         HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
-//        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);       //Õâ¾äºÃÏñ²¢Ã»ÓÐÆð×÷ÓÃ
-        HSD_BUTTON_SetTextColor(buttons[0], pColors->btTextColor);           //Ä¬ÈÏÖµ£ºBLACK£¬¿ÉÒÔÔÚbuttoncbÀïÃæ¸Ä±ä
-        HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);    //Ä¬ÈÏÖµ£ºBLACK£¬²»ÄÜÔÚbuttoncbÀïÃæ¸Ä±ä
-        HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font24_ASCII);
-        HSD_BUTTON_SetText(buttons[0], "invade");
+//        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);       //è¿™å¥å¥½åƒå¹¶æ²¡æœ‰èµ·ä½œç”¨
+        HSD_BUTTON_SetTextColor(buttons[0], pColors->btTextColor);           //é»˜è®¤å€¼ï¼šBLACKï¼Œå¯ä»¥åœ¨buttoncbé‡Œé¢æ”¹å˜
+        HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);    //é»˜è®¤å€¼ï¼šBLACKï¼Œä¸èƒ½åœ¨buttoncbé‡Œé¢æ”¹å˜
+        HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_t90_30);
+        HSD_BUTTON_SetText(buttons[0], "é—¯å…¥æŠ¥è­¦");
         
         buttons[1]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
         WM_SetCallback(buttons[1], &myButtonCallback);
@@ -180,8 +181,8 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 //      HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);
         HSD_BUTTON_SetTextColor(buttons[1], pColors->btTextColor);             
         HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
-        HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font24_ASCII);
-        HSD_BUTTON_SetText(buttons[1], "speeding");
+        HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_t90_30);
+        HSD_BUTTON_SetText(buttons[1], "è¶…é€ŸæŠ¥è­¦");
         
         buttons[2]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
         WM_SetCallback(buttons[2], &myButtonCallback);
@@ -189,8 +190,8 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 //        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);
         HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
         HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
-        HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font24_ASCII);
-        HSD_BUTTON_SetText(buttons[2], "sog range");
+        HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_t90_30);
+        HSD_BUTTON_SetText(buttons[2], "èˆªé€ŸæŠ¥è­¦");
 				
 				buttons[3]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON3);
         WM_SetCallback(buttons[3], &myButtonCallback);
@@ -198,8 +199,8 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 //        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);
         HSD_BUTTON_SetTextColor(buttons[3], pColors->btTextColor);
         HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
-        HSD_BUTTON_SetTxFont(buttons[3], &GUI_Font24_ASCII);
-        HSD_BUTTON_SetText(buttons[3], "special");
+        HSD_BUTTON_SetTxFont(buttons[3], &GUI_Font_t90_30);
+        HSD_BUTTON_SetText(buttons[3], "ç‰¹æ®ŠæŠ¥è­¦");
         break;
 	 					
 	 case WM_PAINT:
@@ -207,10 +208,10 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 				GUI_DrawGradientV( 0, 0,
 													 SUB_MENU_ITEM_WIDTH-1, SUB_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
 													 pColors->headTopColor, pColors->headBottomColor);
-				GUI_SetFont(GUI_FONT_24_ASCII);
+				GUI_SetFont(&GUI_Font_t90_30);
 				GUI_SetTextMode(GUI_TM_TRANS);
 				GUI_SetColor(pColors->headTextColor);
-				GUI_DispStringAt("alarmSet", 80, 15);
+				GUI_DispStringAt("æŠ¥è­¦è®¾ç½®", 80, 9);
 				GUI_SetColor(pColors->btBkColor);
 				GUI_FillRect(0, SUB_MENU_ITEM_HEIGHT*5+SUB_MENU_ITEM_MARGIN*6, SUB_MENU_WIDTH-1, SUB_MENU_HEIGHT-1);
 				break;				

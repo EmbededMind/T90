@@ -1,4 +1,4 @@
-#include "config.h"
+ï»¿#include "config.h"
 #include "maintask.h"
 #include "dlg.h"
 #include "HSD_SLIDER.h"
@@ -30,9 +30,9 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] =
 	{ HSD_SLIDER_CreateIndirect, "s5", GUI_ID_SLIDER5, SLIDER_ORG_X,    SLIDER_ORG_Y+(SLIDER_HEIGHT+SLIDER_MARGIN)*5, SLIDER_WIDTH,      SLIDER_HEIGHT,      0, 0, 0}
 };
 
-/**@brief ÌØÊâ±¨¾¯½çÃæ»¬ÌõµÄ»Øµ÷º¯Êı
+/**@brief ç‰¹æ®ŠæŠ¥è­¦ç•Œé¢æ»‘æ¡çš„å›è°ƒå‡½æ•°
  *
- * @param [in] pMsg ÏûÏ¢Ö¸Õë
+ * @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void mySliderCallback(WM_MESSAGE* pMsg)
 {
@@ -48,7 +48,7 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 				case GUI_KEY_BACKSPACE:
 					if(t90_set.alarm.nation == agent_set)
 					{
-					WM_SetFocus(slider[0]);                  //ÍË³öÖ®Ç°°Ñ½¹µã¸øµÚÒ»¸ö³ÉÔ±
+					WM_SetFocus(slider[0]);                  //é€€å‡ºä¹‹å‰æŠŠç„¦ç‚¹ç»™ç¬¬ä¸€ä¸ªæˆå‘˜
 					WM_SetFocus(alarmSetMenuDlg);
 					}
 					else
@@ -73,9 +73,9 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 	}
 }
 
-/**@brief ÌØÊâ±¨¾¯½çÃæ´°¿ÚµÄ»Øµ÷º¯Êı
+/**@brief ç‰¹æ®ŠæŠ¥è­¦ç•Œé¢çª—å£çš„å›è°ƒå‡½æ•°
  *
- * @param [in] pMsg ÏûÏ¢Ö¸Õë
+ * @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void myDialogCallback(WM_MESSAGE*pMsg)
 {
@@ -172,9 +172,9 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 	}
 }
 
-/**@brief ÌØÊâ±¨¾¯½çÃæ´°¿ÚµÄ´´½¨
+/**@brief ç‰¹æ®ŠæŠ¥è­¦ç•Œé¢çª—å£çš„åˆ›å»º
  *
- * @param [out] WM_HWIN ´°¿Ú¾ä±ú
+ * @param [out] WM_HWIN çª—å£å¥æŸ„
  */
 WM_HWIN DLG_SpecialAlarmSetCreate(void)
 {

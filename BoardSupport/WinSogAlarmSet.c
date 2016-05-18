@@ -1,4 +1,4 @@
-#include "Config.h"
+ï»¿#include "Config.h"
 #include "WM.h"
 #include "MainTask.h"
 #include "dlg.h"
@@ -19,9 +19,9 @@ static int agent_min_sog;
 static const SetWinColor *pColors = setWinColors;
 
 
-/**@brief º½ËÙ±¨¾¯½çÃæ°´Å¥µÄ»Øµ÷º¯Êı
+/**@brief èˆªé€ŸæŠ¥è­¦ç•Œé¢æŒ‰é’®çš„å›è°ƒå‡½æ•°
  *  
- *   @param [in] pMsg ÏûÏ¢Ö¸Õë
+ *   @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void myButtonCallback(WM_MESSAGE* pMsg)
 { 
@@ -33,7 +33,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            if(pMsg->Data.v){
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->focusBkColor);
 //						  BUTTON_SetTextColor(pMsg->hWin,BUTTON_CI_UNPRESSED,GUI_LIGHTGRAY);
-//ÉÏ±ßÕâ¾ä»°Ã»ÓÃ£¿						 
+//ä¸Šè¾¹è¿™å¥è¯æ²¡ç”¨ï¼Ÿ						 
            }
            else{
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->bkColor);
@@ -124,9 +124,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 }
 
 
-/**@brief º½ËÙ±¨¾¯½çÃæ´°¿ÚµÄ»Øµ÷º¯Êı
+/**@brief èˆªé€ŸæŠ¥è­¦ç•Œé¢çª—å£çš„å›è°ƒå‡½æ•°
  *  
- *   @param [in] pMsg ÏûÏ¢Ö¸Õë
+ *   @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void myWindowCallback(WM_MESSAGE* pMsg)
 {
@@ -273,9 +273,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
   }
 }
 
-/** @brief ´´½¨µ¥Ë«ÍÏÄ£Ê½Ñ¡Ôñ´°¿Ú
+/** @brief åˆ›å»ºå•åŒæ‹–æ¨¡å¼é€‰æ‹©çª—å£
  *
- *    @param [out] Ëù´´½¨´°¿ÚµÄ¾ä±ú
+ *    @param [out] æ‰€åˆ›å»ºçª—å£çš„å¥æŸ„
  */
 WM_HWIN WIN_SogAlarmSetCreate(void){
    WM_HWIN handle;  

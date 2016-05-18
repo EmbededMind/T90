@@ -1,4 +1,4 @@
-#include "Config.h"
+﻿#include "Config.h"
 #include "WM.h"
 #include "MainTask.h"
 #include "dlg.h"
@@ -279,7 +279,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            GUI_DrawHLine(orgY+60, orgX-15, orgX+15);
            GUI_DrawVLine(orgX-16, orgY+17, orgY+60);         
            
-           GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);         //ĸ��
+           GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);         //母船
            
            GUI_SetLineStyle(GUI_LS_DOT);
            

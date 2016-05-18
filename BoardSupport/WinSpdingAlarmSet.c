@@ -1,4 +1,4 @@
-#include "Config.h"
+ï»¿#include "Config.h"
 #include "WM.h"
 #include "MainTask.h"
 #include "dlg.h"
@@ -18,9 +18,9 @@ static int agent_set;
 static const SetWinColor *pColors = setWinColors;
 
 
-/**@brief ³¬ËÙ±¨¾¯½çÃæ°´Å¥µÄ»Øµ÷º¯Êı
+/**@brief è¶…é€ŸæŠ¥è­¦ç•Œé¢æŒ‰é’®çš„å›è°ƒå‡½æ•°
  *  
- *   @param [in] pMsg ÏûÏ¢Ö¸Õë
+ *   @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void myButtonCallback(WM_MESSAGE* pMsg)
 {
@@ -96,9 +96,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 }
 
 
-/**@brief ³¬ËÙ±¨¾¯½çÃæ´°¿ÚµÄ»Øµ÷º¯Êı
+/**@brief è¶…é€ŸæŠ¥è­¦ç•Œé¢çª—å£çš„å›è°ƒå‡½æ•°
  *  
- *   @param [in] pMsg ÏûÏ¢Ö¸Õë
+ *   @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void myWindowCallback(WM_MESSAGE* pMsg)
 {
@@ -205,9 +205,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
   }
 }
 
-/** @brief ´´½¨µ¥Ë«ÍÏÄ£Ê½Ñ¡Ôñ´°¿Ú
+/** @brief åˆ›å»ºå•åŒæ‹–æ¨¡å¼é€‰æ‹©çª—å£
  *
- *    @param [out] Ëù´´½¨´°¿ÚµÄ¾ä±ú
+ *    @param [out] æ‰€åˆ›å»ºçª—å£çš„å¥æŸ„
  */
 WM_HWIN WIN_SpdingAlarmSetCreate(void){
    WM_HWIN handle;  

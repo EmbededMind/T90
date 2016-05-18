@@ -1,4 +1,4 @@
-#include "WM.h"
+ï»¿#include "WM.h"
 #include "GUI.h"
 #include "BUTTON.h"
 #include "layout.h"
@@ -8,15 +8,15 @@
 #include "T90.h"
 #include "maintask.h"
 
-/** @brief µ¥ÍÏÄ£Ê½¡¢Ë«ÍÏÄ£Ê½°´Å¥ */
+/** @brief å•æ‹–æ¨¡å¼ã€åŒæ‹–æ¨¡å¼æŒ‰é’® */
 static WM_HWIN buttons[2];
 
-/** @brief Ä£Ê½Ñ¡Ôñ´°¿ÚµÄ¾ä±ú */
+/** @brief æ¨¡å¼é€‰æ‹©çª—å£çš„å¥æŸ„ */
 WM_HWIN workModeWin;
 
-/**@brief Ä£Ê½Ñ¡Ôñ½çÃæ°´Å¥µÄ»Øµ÷º¯Êı
+/**@brief æ¨¡å¼é€‰æ‹©ç•Œé¢æŒ‰é’®çš„å›è°ƒå‡½æ•°
  *  
- *   @param [in] pMsg ÏûÏ¢Ö¸Õë
+ *   @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void myButtonCallback(WM_MESSAGE* pMsg){
 
@@ -74,9 +74,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 }
 
 
-/** @brief ¹¤×÷Ä£Ê½Ñ¡Ôñ´°¿ÚµÄ»Øµ÷º¯Êı
+/** @brief å·¥ä½œæ¨¡å¼é€‰æ‹©çª—å£çš„å›è°ƒå‡½æ•°
  *
- *    @param [in] pMsg  ÏûÏ¢Ö¸Õë
+ *    @param [in] pMsg  æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void myWindowCallback(WM_MESSAGE* pMsg){
 
@@ -128,9 +128,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 
 
 
-/** @brief ´´½¨µ¥Ë«ÍÏÄ£Ê½Ñ¡Ôñ´°¿Ú
+/** @brief åˆ›å»ºå•åŒæ‹–æ¨¡å¼é€‰æ‹©çª—å£
  *
- *    @param [out] Ëù´´½¨´°¿ÚµÄ¾ä±ú
+ *    @param [out] æ‰€åˆ›å»ºçª—å£çš„å¥æŸ„
  */
 WM_HWIN WIN_WorkModeCreate(void){
    WM_HWIN handle;  

@@ -1,4 +1,4 @@
-#include "Config.h"
+ï»¿#include "Config.h"
 #include "WM.h"
 #include "MainTask.h"
 #include "dlg.h"
@@ -18,9 +18,9 @@ static int agent_set;
 static const SetWinColor *pColors = setWinColors;
 
 
-/**@brief ´³Èë±¨¾¯½çÃæ°´Å¥µÄ»Øµ÷º¯Êı
+/**@brief é—¯å…¥æŠ¥è­¦ç•Œé¢æŒ‰é’®çš„å›è°ƒå‡½æ•°
  *  
- *   @param [in] pMsg ÏûÏ¢Ö¸Õë
+ *   @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ
  */
 static void myButtonCallback(WM_MESSAGE* pMsg)
 { 
@@ -157,46 +157,46 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		
 				 {
 					 int orgX = (drawArea.x0 + drawArea.x1) / 2 - ALARM_RADIUS;
-					 int orgY = (drawArea.y0 + ALARM_RADIUS-16);                   //Ä¸´¬Í·×ø±ê
+					 int orgY = (drawArea.y0 + ALARM_RADIUS-16);                   //æ¯èˆ¹å¤´åæ ‡
 					 
 					 int subX = orgX;
-					 int subY = drawArea.y1 - ALARM_RADIUS - 13;                   //ÍÏÍøÍ·×ø±ê
+					 int subY = drawArea.y1 - ALARM_RADIUS - 13;                   //æ‹–ç½‘å¤´åæ ‡
 					 
-					 GUI_DrawLine(orgX, orgY, orgX+16, orgY+16);         //»­Ä¸´¬
+					 GUI_DrawLine(orgX, orgY, orgX+16, orgY+16);         //ç”»æ¯èˆ¹
            GUI_DrawVLine(orgX+16, orgY+17, orgY+60);
            GUI_DrawHLine(orgY+60, orgX-15, orgX+15);
            GUI_DrawVLine(orgX-16, orgY+17, orgY+60);          
            GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);
 										 
 					 GUI_SetColor(pColors->lineColor);
-					 GUI_DrawArc(orgX, drawArea.y0 + ALARM_RADIUS, ALARM_RADIUS, ALARM_RADIUS, 0, 180);            //»­±¨¾¯±ß¿ò
+					 GUI_DrawArc(orgX, drawArea.y0 + ALARM_RADIUS, ALARM_RADIUS, ALARM_RADIUS, 0, 180);            //ç”»æŠ¥è­¦è¾¹æ¡†
 					 GUI_DrawArc(orgX, drawArea.y1 - ALARM_RADIUS, ALARM_RADIUS, ALARM_RADIUS, 180, 360);
 					 GUI_DrawVLine(orgX-ALARM_RADIUS, drawArea.y0 + ALARM_RADIUS, drawArea.y1-ALARM_RADIUS);
 					 GUI_DrawVLine(orgX+ALARM_RADIUS, drawArea.y0 + ALARM_RADIUS, drawArea.y1-ALARM_RADIUS);
 					 
 					 GUI_SetColor(pColors->textColor);
 					
-					 GUI_DrawLine(subX, subY,subX - 12, subY + 26);                                                  //»­ÍÏÍøÈı½ÇĞÎ±êÖ¾
+					 GUI_DrawLine(subX, subY,subX - 12, subY + 26);                                                  //ç”»æ‹–ç½‘ä¸‰è§’å½¢æ ‡å¿—
 					 GUI_DrawLine(subX, subY,subX + 12, subY + 26);
 					 GUI_DrawLine(subX + 12, subY + 26,subX - 12, subY + 26);
 					 
-					 GUI_DrawLine(orgX, (orgY+40+subY)/2, orgX+ALARM_RADIUS, (orgY+40+subY)/2);                       //´ø¼ıÍ·ºáÏß
+					 GUI_DrawLine(orgX, (orgY+40+subY)/2, orgX+ALARM_RADIUS, (orgY+40+subY)/2);                       //å¸¦ç®­å¤´æ¨ªçº¿
 					 GUI_DrawLine(orgX+ALARM_RADIUS/2, (orgY+40+subY)/2, orgX+ALARM_RADIUS+10, (orgY+40+subY)/2-40);
 					 GUI_DrawLine(orgX+ALARM_RADIUS+10, (orgY+40+subY)/2-40, drawArea.x1-20, (orgY+40+subY)/2-40);
 					 
-					 GUI_DrawHLine((orgY+40+subY)/2-1, orgX+4, orgX+9);                                                //×ó²à¼ıÍ·
+					 GUI_DrawHLine((orgY+40+subY)/2-1, orgX+4, orgX+9);                                                //å·¦ä¾§ç®­å¤´
 					 GUI_DrawHLine((orgY+40+subY)/2-2, orgX+7, orgX+9);
 					 GUI_DrawHLine((orgY+40+subY)/2+1, orgX+4, orgX+9);
 					 GUI_DrawHLine((orgY+40+subY)/2+2, orgX+7, orgX+9);
 					 
-					 GUI_DrawHLine((orgY+40+subY)/2-1, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-4);                     //ÓÒ²à¼ıÍ·
+					 GUI_DrawHLine((orgY+40+subY)/2-1, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-4);                     //å³ä¾§ç®­å¤´
 					 GUI_DrawHLine((orgY+40+subY)/2-2, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-7);
 					 GUI_DrawHLine((orgY+40+subY)/2+1, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-4);
 					 GUI_DrawHLine((orgY+40+subY)/2+2, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-7);
 					 
 					 GUI_SetLineStyle(GUI_LS_DOT);
 					 
-					 GUI_DrawLine(orgX, orgY + 60, subX, subY);                                   //ÖĞ¼äĞéÏß
+					 GUI_DrawLine(orgX, orgY + 60, subX, subY);                                   //ä¸­é—´è™šçº¿
 					 
 					 GUI_SetFont(&GUI_Font24_ASCII);
 					 GUI_DispStringAt("range:", orgX+ALARM_RADIUS+20, 145);
@@ -241,9 +241,9 @@ INFO("paint");
   }
 }
 
-/** @brief ´´½¨µ¥Ë«ÍÏÄ£Ê½Ñ¡Ôñ´°¿Ú
+/** @brief åˆ›å»ºå•åŒæ‹–æ¨¡å¼é€‰æ‹©çª—å£
  *
- *    @param [out] Ëù´´½¨´°¿ÚµÄ¾ä±ú
+ *    @param [out] æ‰€åˆ›å»ºçª—å£çš„å¥æŸ„
  */
 WM_HWIN WIN_InvdAlarmSetCreate(void){
    WM_HWIN handle;  

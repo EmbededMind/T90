@@ -39,8 +39,8 @@ INFO("MainTask Start");
    //EDIT_SetDefaultFont(&GUI_Font30);
    WIDGET_SetDefaultEffect(&WIDGET_Effect_None); 
 	
-	 GUI_SetBkColor(GUI_GRAY);
-   GUI_Clear();
+//	 GUI_SetBkColor(GUI_GRAY);
+//   GUI_Clear();
 	 GUI_SetColor(GUI_BLACK);
 	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
 	 GUI_FillRect(0, SCREEN_HEIGHT, 799, 479);

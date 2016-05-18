@@ -1,4 +1,4 @@
-#include "GUI.h"
+ï»¿#include "GUI.h"
 #include "WM.h"
 #include "maintask.h"
 #include "layout_single_ship.h"
@@ -10,7 +10,7 @@
 
 extern boat mothership;
 
-/** @brief µ¥ÍÏÄ£Ê½´°¿ÚµÄ¾ä±ú */
+/** @brief å•æ‹–æ¨¡å¼çª—å£çš„å¥æŸ„ */
 WM_HWIN singleShipWin;
 
 static WM_HTIMER timer;
@@ -26,9 +26,9 @@ static int cursorOnStub = 0;
 static int timeCnt = 0;
 
 
-/**@brief µ¥ÍÏÄ£Ê½ÏÂµÄÖ÷½çÃæ
+/**@brief å•æ‹–æ¨¡å¼ä¸‹çš„ä¸»ç•Œé¢
  *
- *   @param [in] pMsg ÏûÏ¢Ö¸Õë 
+ *   @param [in] pMsg æ¶ˆæ¯æŒ‡é’ˆ 
  */
 static void myWindowCallback(WM_MESSAGE* pMsg)
 {
@@ -160,9 +160,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 }
 
 
-/**@brief ´´½¨µ¥ÍÏÄ£Ê½ÏÂµÄÖ÷½çÃæ´°¿Ú
+/**@brief åˆ›å»ºå•æ‹–æ¨¡å¼ä¸‹çš„ä¸»ç•Œé¢çª—å£
  *
- *  @return Ëù´´½¨´°¿ÚµÄ¾ä±ú
+ *  @return æ‰€åˆ›å»ºçª—å£çš„å¥æŸ„
  */
 WM_HWIN WIN_SingleShipCreate(void){
    WM_HWIN handle; 

@@ -1,4 +1,4 @@
-#include "DIALOG.h"
+﻿#include "DIALOG.h"
 #include "MainTask.h"
 #include "Config.h"
 //#include "Setting.h"

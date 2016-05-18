@@ -5,6 +5,7 @@
 #include "dlg.h"
 #include "T90.h"
 #include "Check.h"
+#include "t90font.h"
 
 #include "layout_sub_menu.h"
 #include "layout_dst_set.h"
@@ -155,11 +156,11 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 					buttons[0]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
 					WM_SetCallback(buttons[0], &myButtonCallback);
 					HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
-	//        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);       //这句好像并没有起作用
-					HSD_BUTTON_SetTextColor(buttons[0], pColors->btTextColor);           //默认值：BLACK，可以在buttoncb里面改变
-					HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);    //默认值：BLACK，不能在buttoncb里面改变
-					HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font24_ASCII);
-					HSD_BUTTON_SetText(buttons[0], "safety sign 0");
+	//        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);       //杩欏彞濂藉儚骞舵病鏈夎捣浣滅敤
+					HSD_BUTTON_SetTextColor(buttons[0], pColors->btTextColor);           //榛樿鍊硷細BLACK锛屽彲浠ュ湪buttoncb閲岄潰鏀瑰彉
+					HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);    //榛樿鍊硷細BLACK锛屼笉鑳藉湪buttoncb閲岄潰鏀瑰彉
+					HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_t90_30);
+					HSD_BUTTON_SetText(buttons[0], "01鍙疯窛绂诲畨鍏ㄦ爣");
 					
 					buttons[1]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
 					WM_SetCallback(buttons[1], &myButtonCallback);
@@ -167,8 +168,8 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 	//      HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);
 					HSD_BUTTON_SetTextColor(buttons[1], pColors->btTextColor);             
 					HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
-					HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font24_ASCII);
-					HSD_BUTTON_SetText(buttons[1], "safety sign 1");
+					HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_t90_30);
+					HSD_BUTTON_SetText(buttons[1], "02鍙疯窛绂诲畨鍏ㄦ爣");
 					
 					buttons[2]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
 					WM_SetCallback(buttons[2], &myButtonCallback);
@@ -176,10 +177,10 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 	//        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);
 					HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
 					HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
-					HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font24_ASCII);
-					HSD_BUTTON_SetText(buttons[2], "safety sign 2");
+					HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_t90_30);
+					HSD_BUTTON_SetText(buttons[2], "03鍙疯窛绂诲畨鍏ㄦ爣");
 					
-//					BUTTON_SetFocussable(buttons[1], 0);  //有用！！！！
+//					BUTTON_SetFocussable(buttons[1], 0);  //鏈夌敤锛侊紒锛侊紒
 					break;  
 					
 		 case WM_SET_FOCUS:
@@ -192,10 +193,10 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 					GUI_DrawGradientV( 0, 0,
 														 SUB_MENU_ITEM_WIDTH-1, SUB_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
 														 pColors->headTopColor, pColors->headBottomColor);
-					GUI_SetFont(GUI_FONT_24_ASCII);
+					GUI_SetFont(&GUI_Font_t90_30);
 					GUI_SetTextMode(GUI_TM_TRANS);
 					GUI_SetColor(pColors->headTextColor);
-					GUI_DispStringAt("dstSet", 92, 15);
+					GUI_DispStringAt("璺濈璁剧疆", 80, 9);
 					GUI_SetColor(pColors->btBkColor);
 					GUI_FillRect(0, SUB_MENU_ITEM_HEIGHT*4+SUB_MENU_ITEM_MARGIN*5, SUB_MENU_WIDTH-1, SUB_MENU_HEIGHT-1);
 					break;	

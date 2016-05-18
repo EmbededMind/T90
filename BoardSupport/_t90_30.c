@@ -1,4 +1,4 @@
-/*********************************************************************
+Ôªø/*********************************************************************
 *                SEGGER Microcontroller GmbH & Co. KG                *
 *        Solutions for real time microcontroller applications        *
 *                           www.segger.com                           *
@@ -13,15 +13,15 @@
 **********************************************************************
 *                                                                    *
 * Source file: _t90_30.c                                             *
-* Font:        Œ¢»Ì—≈∫⁄                                              *
+* Font:        ÂæÆËΩØÈõÖÈªë                                              *
 * Height:      30                                                    *
 *                                                                    *
 **********************************************************************
 *                                                                    *
 * Initial font height: 30                                            *
-* Read pattern file: C:\Users\LIYI\Desktop\T90≤Àµ•÷–◊÷.txt           *
+* Read pattern file: C:\Users\LIYI\Desktop\T90ËèúÂçï‰∏≠Â≠ó.txt           *
 * Range disabled: 0000 - FFFF                                        *
-* Read pattern file: C:\Users\LIYI\Desktop\T90≤Àµ•÷–◊÷.txt           *
+* Read pattern file: C:\Users\LIYI\Desktop\T90ËèúÂçï‰∏≠Â≠ó.txt           *
 *                                                                    *
 **********************************************************************
 */
