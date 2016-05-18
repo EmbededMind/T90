@@ -7,6 +7,7 @@
 #include "maintask.h"
 #include "T90.h"
 #include "Check.h"
+#include "t90font.h"
 
 #include "layout_main_menu.h"
 
@@ -23,9 +24,15 @@ static const MenuColor *pColors = mainMenuColors;
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
    {WINDOW_CreateIndirect,   "clientWin", ID_WINDOW,      0, 0,                                               MAIN_MENU_WIDTH,    MAIN_MENU_HEIGHT,           0, 0, 0},
    
+<<<<<<< HEAD
    {HSD_BUTTON_CreateIndirect,  "dstSet", GUI_ID_BUTTON0, 0, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2,   MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
    {HSD_BUTTON_CreateIndirect,  "almSet", GUI_ID_BUTTON1, 0, MAIN_MENU_ITEM_HEIGHT*2+MAIN_MENU_ITEM_MARGIN*3, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
    {HSD_BUTTON_CreateIndirect,  "sysSet", GUI_ID_BUTTON2, 0, MAIN_MENU_ITEM_HEIGHT*3+MAIN_MENU_ITEM_MARGIN*4, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
+=======
+   {HSD_BUTTON_CreateIndirect,  "¾àÀëÉèÖÃ", GUI_ID_BUTTON0, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2,   MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
+   {HSD_BUTTON_CreateIndirect,  "almSet", GUI_ID_BUTTON1, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT*2+MAIN_MENU_ITEM_MARGIN*3, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
+   {HSD_BUTTON_CreateIndirect,  "sysSet", GUI_ID_BUTTON2, MAIN_MENU_ITEM_MARGIN, MAIN_MENU_ITEM_HEIGHT*3+MAIN_MENU_ITEM_MARGIN*4, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
+>>>>>>> 6e60ba1a77c60fe0a78f2cfa8373503c82918056
 };
 
 
@@ -158,7 +165,7 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
             WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);           
             
 						buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
-            HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font24B_ASCII);
+            HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_t90_30);
             HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
             WM_SetCallback(buttons[0], &myButtonCallback);
 						HSD_BUTTON_SetText(buttons[0], "dstSet");
