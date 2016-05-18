@@ -132,9 +132,15 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 			GUI_SetColor(pColors->textColor);
 			for(i = 0; i < 6; i++)
 			{
-				GUI_DispStringAt("关闭", SLIDER_ORG_X-50,             SLIDER_ORG_Y+5+(SLIDER_HEIGHT+SLIDER_MARGIN)*i);
-				GUI_DispStringAt("开启",  SLIDER_ORG_X+SLIDER_WIDTH+2, SLIDER_ORG_Y+5+(SLIDER_HEIGHT+SLIDER_MARGIN)*i);
+				GUI_DispStringAt("关闭", SLIDER_ORG_X-50,             SLIDER_ORG_Y+(SLIDER_HEIGHT+SLIDER_MARGIN)*i);
+				GUI_DispStringAt("开启",  SLIDER_ORG_X+SLIDER_WIDTH+2, SLIDER_ORG_Y+(SLIDER_HEIGHT+SLIDER_MARGIN)*i);
 			}
+			GUI_DispStringAt("台湾：", 45,             SLIDER_ORG_Y+(SLIDER_HEIGHT+SLIDER_MARGIN)*0);
+			GUI_DispStringAt("日本：", 45,             SLIDER_ORG_Y+(SLIDER_HEIGHT+SLIDER_MARGIN)*1);
+			GUI_DispStringAt("韩国：", 45,             SLIDER_ORG_Y+(SLIDER_HEIGHT+SLIDER_MARGIN)*2);
+			GUI_DispStringAt("朝鲜：", 45,             SLIDER_ORG_Y+(SLIDER_HEIGHT+SLIDER_MARGIN)*3);
+			GUI_DispStringAt("印尼：", 45,             SLIDER_ORG_Y+(SLIDER_HEIGHT+SLIDER_MARGIN)*4);
+			GUI_DispStringAt("越南：", 45,             SLIDER_ORG_Y+(SLIDER_HEIGHT+SLIDER_MARGIN)*5);
 			break;
 		case WM_NOTIFY_PARENT:
 			if(pMsg->Data.v == WM_NOTIFICATION_VALUE_CHANGED)

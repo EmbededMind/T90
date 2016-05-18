@@ -11,10 +11,10 @@
 
 #define ALARM_RADIUS      60
 
-#define SLIDER_ORG_X      ((ALARM_SET_WIDTH-SLIDER_WIDTH)/2+50)
+#define SLIDER_ORG_X      ((ALARM_SET_WIDTH-SLIDER_WIDTH)/2+40)
 #define SLIDER_ORG_Y      55
 #define SLIDER_WIDTH      120
 #define SLIDER_HEIGHT     30
-#define SLIDER_MARGIN     12
+#define SLIDER_MARGIN     17
 
 #endif

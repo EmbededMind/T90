@@ -255,14 +255,15 @@ void _Play_Task(void* p_arg)
    ISD_PWRDn();      
    while(1)
    {
-      if(monitorState == ON) // ¼à¿Ø
-		  {   
-              if(FetchSTime() == 0)
-              {
-                   MUSIC_ADD(SND_ID_STOF);
-              }
-              else
-              {
+       
+        if(FetchSTime() == 0)
+        {
+              MUSIC_ADD(SND_ID_STOF);
+        }
+         else
+         {
+								if(monitorState == ON) // Ý à ˜
+		            {  
                    thisBulyBerth  = BULY_fetchNextPlayBerth();
                    if(thisBulyBerth){                             
                    if((thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //ÓæÕþ´¬
@@ -411,6 +412,7 @@ void _Play_Task(void* p_arg)
                                }
                           }
                       }
+										}
                       if(musicCursor){
                       int i  = 0;
                           
@@ -431,7 +433,7 @@ void _Play_Task(void* p_arg)
                       ISD_PWRDn();            
                       MUSIC_RESET;                // ÏÂ±êÖÃ0         
                  } /// End. execute play 
-            } /// End . if(monitorState == FALSE)    
+             /// End . if(monitorState == FALSE)    
             OSTimeDlyHMSM(0, 0, 3, 0);
      } /// 'End'. while(1).In fact this will not happen
   

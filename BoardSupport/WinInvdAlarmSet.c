@@ -1,9 +1,10 @@
-﻿#include "Config.h"
+#include "Config.h"
 #include "WM.h"
 #include "MainTask.h"
 #include "dlg.h"
 #include "HSD_BUTTON.h"
 #include "T90.h"
+#include "t90font.h"
 
 #include "layout_alarm_set.h"
 
@@ -125,14 +126,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 agent_set = t90_set.alarm.invd_dst;
 		
 				 pColors = &setWinColors[t90_set.sys.nightmode];
-				 GUI_SetFont(&GUI_Font24_ASCII);	
-         button  = HSD_BUTTON_CreateEx(drawArea.x1-96,
-                                   145, 
-                                   40, 
+				 GUI_SetFont(&GUI_Font_T90_30);	
+         button  = HSD_BUTTON_CreateEx(drawArea.x1-95,
+                                   159, 
+                                   36, 
                                    GUI_GetFontSizeY(), 
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
          WM_SetCallback(button, &myButtonCallback); 
-				 HSD_BUTTON_SetTxFont(button, &GUI_Font24_ASCII);
+				 HSD_BUTTON_SetTxFont(button, &GUI_Font_T90_30);
          HSD_BUTTON_SetBkColor(button, pColors->bkColor);
 				 HSD_BUTTON_SetTextColor(button, pColors->textColor);
 				 HSD_BUTTON_SetTextFocusColor(button, pColors->focusTextColor);
@@ -198,21 +199,21 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 
 					 GUI_DrawLine(orgX, orgY + 60, subX, subY);                                   //中间虚线
 					 
-					 GUI_SetFont(&GUI_Font24_ASCII);
-					 GUI_DispStringAt("range:", orgX+ALARM_RADIUS+20, 145);
+					 GUI_SetFont(&GUI_Font_T90_30);
+					 GUI_DispStringAt("范围：", orgX+ALARM_RADIUS+10, 158);
 					 
 					 if(t90_set.sys.unit == NM)
 					 {
-							GUI_DispStringAt("nm", drawArea.x1-55, 145);
+							GUI_DispStringAt("nm", drawArea.x1-55, 158);
 						  sprintf(pStrBuf,"%01d.%01d",agent_set/1000, (agent_set%1000)/100);
 					 }
 					 else
 					 {
-						 GUI_DispStringAt("km", drawArea.x1-55, 145);
+						 GUI_DispStringAt("km", drawArea.x1-55, 158);
 						 sprintf(pStrBuf,"%01d.%01d",agent_set*37/20000, ((agent_set*37/20)%1000)/100);
 					 }
 					 HSD_BUTTON_SetText(button, pStrBuf);
-INFO("paint");					 
+//INFO("paint");					 
 				 }
          break;
 		
