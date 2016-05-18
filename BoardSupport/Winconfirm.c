@@ -1,11 +1,11 @@
-﻿#include "DIALOG.h"
+#include "DIALOG.h"
 #include "MainTask.h"
 #include "Config.h"
 //#include "Setting.h"
 #include "dlg.h"
 #include "28.h"
 #include "T90.h"
-
+#include "t90font.h"
 
 #define ID_WINDOW_0      (GUI_ID_USER + 0x00)
 //#define ID_BUTTON_OK     (GUI_ID_USER + 0x01)
@@ -66,8 +66,8 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        BUTTON_CreateEx (60,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON0);
        buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
        WM_ShowWindow (buttons[0]);
-       BUTTON_SetText(buttons[0], "OK");
-       BUTTON_SetFont(buttons[0], &GUI_Font30);
+       BUTTON_SetText(buttons[0], "确定");
+       BUTTON_SetFont(buttons[0], &GUI_Font_t90_30);
 			 WM_SetCallback(buttons[0], &myButton);
 	
        BUTTON_SetBkColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btBkColor);
@@ -79,8 +79,8 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        BUTTON_CreateEx(260,  110,   80,  40,thisFrame,WM_CF_HASTRANS,0,GUI_ID_BUTTON1);
        buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
        WM_ShowWindow (buttons[1]);
-       BUTTON_SetText(buttons[1], "Cancle");
-       BUTTON_SetFont(buttons[1], &GUI_Font30);
+       BUTTON_SetText(buttons[1], "取消");
+       BUTTON_SetFont(buttons[1], &GUI_Font_t90_30);
 			 WM_SetCallback(buttons[1], &myButton);
 			 
        BUTTON_SetBkColor(buttons[1],BUTTON_BI_UNPRESSED,pColors->btBkColor);
@@ -92,7 +92,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 		   TEXT_CreateEx (0,   40,  400, 40, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
        dlgTextContent = WM_GetDialogItem(pMsg->hWin, ID_TEXT_CONTENT);
 		   TEXT_SetTextAlign(dlgTextContent,TEXT_CF_HCENTER);
-       TEXT_SetFont(dlgTextContent, &GUI_Font24_ASCII);
+       TEXT_SetFont(dlgTextContent, &GUI_Font_t90_30);
 			 
 			 TEXT_SetTextColor (dlgTextContent,pColors->textColor);
 
@@ -182,10 +182,10 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
               TEXT_SetText(dlgTextContent, "????????????");
               break;
          case SYS_SETTING:
-              TEXT_SetText(dlgTextContent, "Change  the  settings?");
+              TEXT_SetText(dlgTextContent, "是否更改设置内容？");
 							break;
          case SYS_RESET:
-              TEXT_SetText(dlgTextContent, "Reset  all  configuration");
+              TEXT_SetText(dlgTextContent, "是否恢复出厂设置？");
               break;
          
          default:       

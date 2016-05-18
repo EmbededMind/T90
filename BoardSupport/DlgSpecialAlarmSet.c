@@ -1,4 +1,4 @@
-﻿#include "config.h"
+#include "config.h"
 #include "maintask.h"
 #include "dlg.h"
 #include "HSD_SLIDER.h"
@@ -6,6 +6,7 @@
 #include "WM.h"
 #include "DIALOG.h"
 #include "T90.h"
+#include "t90font.h"
 
 #include "layout_alarm_set.h"
 
@@ -127,12 +128,12 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 		case WM_PAINT:
 			GUI_SetColor(GUI_RED);
 			GUI_DrawRect(30, ALARM_SET_HEIGHT-62, ALARM_SET_WIDTH-30, ALARM_SET_HEIGHT-30);
-			GUI_SetFont(&GUI_Font24_ASCII);
+			GUI_SetFont(&GUI_Font_t90_30);
 			GUI_SetColor(pColors->textColor);
 			for(i = 0; i < 6; i++)
 			{
-				GUI_DispStringAt("OFF", SLIDER_ORG_X-50,             SLIDER_ORG_Y+5+(SLIDER_HEIGHT+SLIDER_MARGIN)*i);
-				GUI_DispStringAt("ON",  SLIDER_ORG_X+SLIDER_WIDTH+2, SLIDER_ORG_Y+5+(SLIDER_HEIGHT+SLIDER_MARGIN)*i);
+				GUI_DispStringAt("关闭", SLIDER_ORG_X-50,             SLIDER_ORG_Y+5+(SLIDER_HEIGHT+SLIDER_MARGIN)*i);
+				GUI_DispStringAt("开启",  SLIDER_ORG_X+SLIDER_WIDTH+2, SLIDER_ORG_Y+5+(SLIDER_HEIGHT+SLIDER_MARGIN)*i);
 			}
 			break;
 		case WM_NOTIFY_PARENT:

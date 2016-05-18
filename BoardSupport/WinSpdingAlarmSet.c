@@ -1,9 +1,10 @@
-﻿#include "Config.h"
+#include "Config.h"
 #include "WM.h"
 #include "MainTask.h"
 #include "dlg.h"
 #include "HSD_BUTTON.h"
 #include "T90.h"
+#include "t90font.h"
 
 #include "layout_alarm_set.h"
 
@@ -170,9 +171,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		
 				 GUI_FillRect(ALARM_SET_WIDTH/2+35, ALARM_SET_HEIGHT/2-2, ALARM_SET_WIDTH/2+47, ALARM_SET_HEIGHT/2+10);
 				 
-				 GUI_SetFont(&GUI_Font24_ASCII);
-				 GUI_DispStringAt("alarm sog", 50, ALARM_SET_HEIGHT/2-10);
-				 GUI_DispStringAt("kt", ALARM_SET_WIDTH-70, ALARM_SET_HEIGHT/2-10);
+				 GUI_SetFont(&GUI_Font_t90_30);
+				 GUI_DispStringAt("报警航速", 50, ALARM_SET_HEIGHT/2-10);
+				 GUI_DispStringAt("节", ALARM_SET_WIDTH-70, ALARM_SET_HEIGHT/2-10);
 		
          break;
 		
