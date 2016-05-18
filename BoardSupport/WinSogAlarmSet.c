@@ -232,9 +232,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 GUI_DrawHLine(ALARM_SET_HEIGHT/2-12, ALARM_SET_WIDTH/2-15, ALARM_SET_WIDTH/2+15);
 				 
 				 GUI_SetFont(&GUI_Font_t90_30);
-				 GUI_DispStringAt("正常航速", ALARM_SET_WIDTH/2-60, ALARM_SET_HEIGHT/2-90);
-				 GUI_DispStringAt("节", ALARM_SET_WIDTH/2-39, ALARM_SET_HEIGHT/2-2);
-				 GUI_DispStringAt("节", ALARM_SET_WIDTH/2+161, ALARM_SET_HEIGHT/2-2);
+				 GUI_DispStringAt("正常航速", ALARM_SET_WIDTH/2-45, ALARM_SET_HEIGHT/2-105);
+				 GUI_DispStringAt("节", ALARM_SET_WIDTH/2-39, ALARM_SET_HEIGHT/2-8);
+				 GUI_DispStringAt("节", ALARM_SET_WIDTH/2+161, ALARM_SET_HEIGHT/2-8);
 		
          break;
 		
