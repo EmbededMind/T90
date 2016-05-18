@@ -204,6 +204,7 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
    if(pBerth->Boat.category == 0  &&  p_msg->SOG >= HIGH_SPEED)
    {
       unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
+//		  nation = 0x10;//////////////////////////////////////////////////////////////////////////
       pBerth->Boat.category  = nation | TYPE_BULLY;
 INFO("find high speed boat :0x%x", pBerth->Boat.category);      
       BULY_add(pBerth);
@@ -384,7 +385,8 @@ INFO("alloc berth failed!");
    if(buf->Boat.category == 0  &&  p_msg->SOG >= HIGH_SPEED)
    {
       unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
-      buf->Boat.category  = nation |  TYPE_BULLY;
+//      nation = 0x10;/////////////////////////////////////////////////////////////////////////////////////
+		  buf->Boat.category  = nation |  TYPE_BULLY;
 INFO("find high speed boat :0x%x", buf->Boat.category);   
       BULY_add(buf); 
 			llToxy(buf);
