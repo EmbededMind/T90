@@ -127,8 +127,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		
 				 pColors = &setWinColors[t90_set.sys.nightmode];
 				 GUI_SetFont(&GUI_Font_T90_30);	
-         button  = HSD_BUTTON_CreateEx(drawArea.x1-96,
-                                   162, 
+         button  = HSD_BUTTON_CreateEx(drawArea.x1-95,
+                                   159, 
                                    36, 
                                    GUI_GetFontSizeY(), 
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
