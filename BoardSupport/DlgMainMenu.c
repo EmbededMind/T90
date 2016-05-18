@@ -159,21 +159,21 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
             WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);           
             
 						buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
-            HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_t90_30);
+            HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
             HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
             WM_SetCallback(buttons[0], &myButtonCallback);
 						HSD_BUTTON_SetText(buttons[0], "距离设置");
 						HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
             
 						buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
-            HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_t90_30);
+            HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
             HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
             WM_SetCallback(buttons[1],&myButtonCallback);
 						HSD_BUTTON_SetText(buttons[1], "报警设置");
 						HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
             
 						buttons[2] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
-            HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_t90_30);
+            HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
             HSD_BUTTON_SetBkColor(buttons[2], pColors->btBkColor);
             WM_SetCallback(buttons[2],&myButtonCallback);
 						HSD_BUTTON_SetText(buttons[2], "系统设置");
@@ -186,7 +186,7 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 						GUI_DrawGradientV( 0, 0,
 															 MAIN_MENU_WIDTH-MAIN_MENU_ITEM_MARGIN-1, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
 															 pColors->headTopColor, pColors->headBottomColor);
-						GUI_SetFont(&GUI_Font_t90_30);
+						GUI_SetFont(&GUI_Font_T90_30);
 						GUI_SetTextMode(GUI_TM_TRANS);
 						GUI_SetColor(pColors->headTextColor);
 						GUI_DispStringAt("主菜单", 30, 9);

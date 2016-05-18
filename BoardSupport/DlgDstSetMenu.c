@@ -159,7 +159,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 	//        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);       //这句好像并没有起作用
 					HSD_BUTTON_SetTextColor(buttons[0], pColors->btTextColor);           //默认值：BLACK，可以在buttoncb里面改变
 					HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);    //默认值：BLACK，不能在buttoncb里面改变
-					HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_t90_30);
+					HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
 					HSD_BUTTON_SetText(buttons[0], "01号距离安全标");
 					
 					buttons[1]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
@@ -168,7 +168,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 	//      HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);
 					HSD_BUTTON_SetTextColor(buttons[1], pColors->btTextColor);             
 					HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
-					HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_t90_30);
+					HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
 					HSD_BUTTON_SetText(buttons[1], "02号距离安全标");
 					
 					buttons[2]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
@@ -177,7 +177,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 	//        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);
 					HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
 					HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
-					HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_t90_30);
+					HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
 					HSD_BUTTON_SetText(buttons[2], "03号距离安全标");
 					
 //					BUTTON_SetFocussable(buttons[1], 0);  //有用！！！！
@@ -193,7 +193,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 					GUI_DrawGradientV( 0, 0,
 														 SUB_MENU_ITEM_WIDTH-1, SUB_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
 														 pColors->headTopColor, pColors->headBottomColor);
-					GUI_SetFont(&GUI_Font_t90_30);
+					GUI_SetFont(&GUI_Font_T90_30);
 					GUI_SetTextMode(GUI_TM_TRANS);
 					GUI_SetColor(pColors->headTextColor);
 					GUI_DispStringAt("距离设置", 80, 9);
