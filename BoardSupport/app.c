@@ -411,8 +411,8 @@ void _Play_Task(void* p_arg)
                                    playList = 1;
                                }
                           }
-                      }
-										}
+                       }
+					 }
                       if(musicCursor){
                       int i  = 0;
                           
