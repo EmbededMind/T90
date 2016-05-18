@@ -67,7 +67,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
        WM_ShowWindow (buttons[0]);
        BUTTON_SetText(buttons[0], "确定");
-       BUTTON_SetFont(buttons[0], &GUI_Font_t90_30);
+       BUTTON_SetFont(buttons[0], &GUI_Font_T90_30);
 			 WM_SetCallback(buttons[0], &myButton);
 	
        BUTTON_SetBkColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btBkColor);
@@ -80,7 +80,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
        WM_ShowWindow (buttons[1]);
        BUTTON_SetText(buttons[1], "取消");
-       BUTTON_SetFont(buttons[1], &GUI_Font_t90_30);
+       BUTTON_SetFont(buttons[1], &GUI_Font_T90_30);
 			 WM_SetCallback(buttons[1], &myButton);
 			 
        BUTTON_SetBkColor(buttons[1],BUTTON_BI_UNPRESSED,pColors->btBkColor);
@@ -92,7 +92,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 		   TEXT_CreateEx (0,   40,  400, 40, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
        dlgTextContent = WM_GetDialogItem(pMsg->hWin, ID_TEXT_CONTENT);
 		   TEXT_SetTextAlign(dlgTextContent,TEXT_CF_HCENTER);
-       TEXT_SetFont(dlgTextContent, &GUI_Font_t90_30);
+       TEXT_SetFont(dlgTextContent, &GUI_Font_T90_30);
 			 
 			 TEXT_SetTextColor (dlgTextContent,pColors->textColor);
 

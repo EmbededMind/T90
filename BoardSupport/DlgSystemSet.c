@@ -220,7 +220,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
             break;
           
        case WM_PAINT:
-						GUI_SetFont(&GUI_Font_t90_30);
+						GUI_SetFont(&GUI_Font_T90_30);
 						GUI_SetColor(pColors->textColor);
 						GUI_DispStringAt("系统设置：",SYSTEM_SET_ITEM_X,SYSTEM_SET_Y+15);
 						GUI_DispStringAt("作业方式切换：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y);

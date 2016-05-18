@@ -128,7 +128,7 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 		case WM_PAINT:
 			GUI_SetColor(GUI_RED);
 			GUI_DrawRect(30, ALARM_SET_HEIGHT-62, ALARM_SET_WIDTH-30, ALARM_SET_HEIGHT-30);
-			GUI_SetFont(&GUI_Font_t90_30);
+			GUI_SetFont(&GUI_Font_T90_30);
 			GUI_SetColor(pColors->textColor);
 			for(i = 0; i < 6; i++)
 			{

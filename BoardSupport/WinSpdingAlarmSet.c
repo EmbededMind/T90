@@ -171,7 +171,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		
 				 GUI_FillRect(ALARM_SET_WIDTH/2+35, ALARM_SET_HEIGHT/2-2, ALARM_SET_WIDTH/2+47, ALARM_SET_HEIGHT/2+10);
 				 
-				 GUI_SetFont(&GUI_Font_t90_30);
+				 GUI_SetFont(&GUI_Font_T90_30);
 				 GUI_DispStringAt("报警航速", 50, ALARM_SET_HEIGHT/2-10);
 				 GUI_DispStringAt("节", ALARM_SET_WIDTH-70, ALARM_SET_HEIGHT/2-10);
 		
