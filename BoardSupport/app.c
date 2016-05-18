@@ -412,6 +412,7 @@ void _Play_Task(void* p_arg)
                                }
                           }
                       }
+										}
                       if(musicCursor){
                       int i  = 0;
                           
@@ -432,7 +433,7 @@ void _Play_Task(void* p_arg)
                       ISD_PWRDn();            
                       MUSIC_RESET;                // œ¬±Í÷√0         
                  } /// End. execute play 
-            } /// End . if(monitorState == FALSE)    
+             /// End . if(monitorState == FALSE)    
             OSTimeDlyHMSM(0, 0, 3, 0);
      } /// 'End'. while(1).In fact this will not happen
   
