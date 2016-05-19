@@ -1,4 +1,4 @@
-﻿#include "GUI.h"
+#include "GUI.h"
 #include "WM.h"
 #include "maintask.h"
 #include "layout_single_ship.h"
@@ -6,6 +6,7 @@
 #include "T90.h"
 #include "plot.h"
 #include "Check.h"
+#include "t90font.h"
 
 
 extern boat mothership;
@@ -184,18 +185,18 @@ static void _onPaint1(void)
    /** Paint BBS context */ 
    GUI_SetTextMode(GUI_TM_TRANS);          
    GUI_SetColor(pColor->textColor);
-   GUI_SetFont(&GUI_Font32_1);
+   GUI_SetFont(&GUI_Font_T90_40);
 
-   GUI_DispStringAt("SOG", BBS1_ABOVE_X+40, BBS1_ABOVE_Y+20);
+   GUI_DispStringAt("航速", BBS1_ABOVE_X+40, BBS1_ABOVE_Y+20);
 
-   GUI_SetFont(&GUI_Font24_1);
-   GUI_DispStringAt("COG:", BBS1_ABOVE_X+195, BBS1_ABOVE_Y+20);
+   GUI_SetFont(&GUI_Font_T90_30);
+   GUI_DispStringAt("航向：", BBS1_ABOVE_X+195, BBS1_ABOVE_Y+20);
 	 sprintf(pStrBuf, "%3d", mothership.COG/10);
    pStrBuf[3]  = 194;
    pStrBuf[4]  = 176;
    pStrBuf[5]  = '\0';
 	 GUI_DispStringAt(pStrBuf, BBS1_ABOVE_X+255, BBS1_ABOVE_Y+20);
-   GUI_DispStringAt("kt" , BBS1_ABOVE_X+280, BBS1_ABOVE_Y+120);
+   GUI_DispStringAt("节" , BBS1_ABOVE_X+280, BBS1_ABOVE_Y+120);
 
    GUI_SetFont(GUI_FONT_D80);
 	 

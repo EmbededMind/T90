@@ -268,7 +268,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         GUI_DispStringAt("使用       选择选项，使用      选择数字。",50, DST_SET_HEIGHT-50 +2);
    
         GUI_SetDrawMode(GUI_DM_NORMAL);
-        GUI_SetColor(pColors->textColor);
+//        GUI_SetColor(pColors->textColor);
         
         {
            int orgX  = DST_SET_WIDTH /2;
@@ -281,6 +281,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            GUI_DrawVLine(orgX-16, orgY+17, orgY+60);         
            
            GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);         //母船
+					
+					 GUI_DispStringAt("本", orgX-8, orgY+14);
+					 GUI_DispStringAt("船", orgX-8, orgY+12+GUI_GetFontSizeY());
            
            GUI_SetLineStyle(GUI_LS_DOT);
            
