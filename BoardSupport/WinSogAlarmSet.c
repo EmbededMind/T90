@@ -212,7 +212,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
          break;
          
     case WM_PAINT:
-         GUI_SetFont(&GUI_Font_T90_20);
+         GUI_SetFont(&GUI_Font_T90_24);
          GUI_DispStringAt("使用   选择选项，使用   选择数字。",50, 406);
          GUI_SetBkColor(pColors->bkColor);
          WM_GetClientRectEx(pMsg->hWin, &clientRect);
