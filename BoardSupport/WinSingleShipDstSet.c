@@ -1,4 +1,4 @@
-﻿#include "Config.h"
+#include "Config.h"
 #include "WM.h"
 #include "MainTask.h"
 #include "dlg.h"
@@ -8,7 +8,7 @@
 #include "stdio.h"
 #include "T90.h"
 #include "layout_dst_set.h"
-
+#include "t90font.h"
 
 #define SF_NUM  3
 #define DMS_NUM 5
@@ -232,7 +232,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
         HSD_DIMENSION_SetUnitText(hDimensions[2], "m");
         WM_SetHasTrans(hDimensions[2]);    
-        WM_SetCallback(hDimensions[2], &dimensionCallback);        
+        WM_SetCallback(hDimensions[2], &dimensionCallback);
         break;
 				
 	 case USER_MSG_REPLY:
@@ -263,9 +263,10 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         WM_GetClientRectEx(pMsg->hWin, &clientRect);
         GUI_ClearRectEx(&clientRect);
         GUI_SetColor(GUI_RED);
-        
+        GUI_SetFont(&GUI_Font_T90_20);
         GUI_DrawRectEx(&tipStrArea);
-        
+        GUI_DispStringAt("使用   选择选项，使用   选择数字。",50, DST_SET_HEIGHT-50 +2);
+   
         GUI_SetDrawMode(GUI_DM_NORMAL);
         GUI_SetColor(pColors->textColor);
         
@@ -289,6 +290,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            GUI_DrawLine(orgX-16, orgY+60, orgX-100, orgY+200);
            GUI_DrawLine(orgX+16, orgY+60, orgX+100, orgY+200);
         }
+        
+        
         break;
         
         
