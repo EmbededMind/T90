@@ -143,6 +143,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
          break;
          
     case WM_PAINT:
+         GUI_SetFont(&GUI_Font_T90_20);         
+         GUI_DispStringAt("使用   调整数字。",600, 406);
          GUI_SetBkColor(pColors->bkColor);
          WM_GetClientRectEx(pMsg->hWin, &clientRect);
          GUI_ClearRectEx(&clientRect);

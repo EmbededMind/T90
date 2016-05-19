@@ -126,6 +126,8 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 			}
 			break;
 		case WM_PAINT:
+            GUI_SetFont(&GUI_Font_T90_20);
+            GUI_DispStringAt("使用   选择选项，使用   选择数字。",50, 406);
 			GUI_SetColor(GUI_RED);
 			GUI_DrawRect(30, ALARM_SET_HEIGHT-62, ALARM_SET_WIDTH-30, ALARM_SET_HEIGHT-30);
 			GUI_SetFont(&GUI_Font_T90_30);
