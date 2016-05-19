@@ -47,17 +47,33 @@ void DispSOGNums(int x, int y, int num, int type)
 {
     int tenth; 
     int ones;
-	  Point atpointtenth;
-	  Point atpointones;
-	  atpointones.x = x;
-	  atpointones.y = y;
-	  atpointtenth.x = atpointones .x + 148;
-	  atpointtenth.y = atpointones.y;
-    GUI_FillRect(atpointones.x+112,atpointones.y+59,atpointones.x+138,atpointones.y+79);
-    ones = num/10;
-    tenth = num%10;
-    DrawNums(atpointones,numcode[ones],type);
-    DrawNums(atpointtenth,numcode[tenth],type);    
+    
+	Point atpointtenth;
+	Point atpointones;
+	atpointones.x = x;
+	atpointones.y = y;
+    if(type)
+    {
+        atpointtenth.x = atpointones .x + 148;
+        atpointtenth.y = atpointones.y;
+        GUI_FillRect(atpointones.x+112,atpointones.y+59,atpointones.x+138,atpointones.y+79);
+        ones = num/10;
+        tenth = num%10;
+        DrawNums(atpointones,numcode[ones],type);
+        DrawNums(atpointtenth,numcode[tenth],type);
+    }
+    else
+    {
+        atpointtenth.x = atpointones .x + 64;
+        atpointtenth.y = atpointones.y;
+        GUI_FillRect(atpointones.x+66,atpointones.y+29,atpointones.x+81,atpointones.y+47);
+        ones = num/10;
+        tenth = num%10;
+        DrawNums(atpointones,numcode[ones],type);
+        DrawNums(atpointtenth,numcode[tenth],type); 
+    
+    }
+    
 }
 
 
