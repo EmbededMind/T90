@@ -207,18 +207,18 @@ static void _onPaint1(void)
 		 {
 		   GUI_SetColor(GUI_RED);
 //			 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-			 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG,BIG);
+			 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
 		 }
 	 }
 	 else if(MS_isMax_SOG || MS_isMin_SOG)
 	 {
 		 GUI_SetColor(GUI_RED);
-		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG,BIG);
+		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
 	 }
 	 else
 	 {
 		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG,BIG);
+		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
 	 }
 
 
@@ -288,21 +288,18 @@ static void _onPaint2(void)
 		 if(timeCnt%2 == 0)
 		 {
 		   GUI_SetColor(GUI_RED);
-			 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-			 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50);
+			 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
 		 }
 	 }
 	 else if(MS_isMax_SOG || MS_isMin_SOG)
 	 {
 		 GUI_SetColor(GUI_RED);
-		 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-		 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50);
+		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
 	 }
 	 else
 	 {
 		 GUI_SetColor(pColor->numColor);
-		 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-		 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50);
+		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
 	 }
 	 
 	 GUI_SetColor(pColor->textColor);                             
