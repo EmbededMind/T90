@@ -143,17 +143,19 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
          break;
          
     case WM_PAINT:
-         GUI_SetFont(&GUI_Font_T90_24);         
-         GUI_DispStringAt("使用   调整数字。",600, 406);
+
          GUI_SetBkColor(pColors->bkColor);
          WM_GetClientRectEx(pMsg->hWin, &clientRect);
          GUI_ClearRectEx(&clientRect);
-         GUI_SetColor(GUI_RED);
+//         GUI_SetColor(GUI_RED);
 //         GUI_SetLineStyle(GUI_LS_SOLID);
 //         GUI_DrawRectEx(&drawArea);
 		
-				 GUI_DrawVLine(ALARM_SET_WIDTH/2+25, ALARM_SET_HEIGHT-30-32, ALARM_SET_HEIGHT-30);
-				 GUI_DrawHLine(ALARM_SET_HEIGHT-30-32, ALARM_SET_WIDTH/2+25, ALARM_SET_WIDTH-30);
+//				 GUI_DrawVLine(ALARM_SET_WIDTH/2+25, ALARM_SET_HEIGHT-30-32, ALARM_SET_HEIGHT-30);
+//				 GUI_DrawHLine(ALARM_SET_HEIGHT-30-32, ALARM_SET_WIDTH/2+25, ALARM_SET_WIDTH-30);
+				 GUI_SetColor(pColors->textColor);
+         GUI_SetFont(&GUI_Font_T90_24);         
+         GUI_DispStringAt("使用       调整数字。",ALARM_SET_WIDTH/2+25, ALARM_SET_HEIGHT-30-32);
 		
 				 GUI_SetDrawMode(GUI_DM_NORMAL);
 				 GUI_SetColor(pColors->textColor);
