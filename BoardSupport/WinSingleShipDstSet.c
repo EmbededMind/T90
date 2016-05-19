@@ -262,10 +262,10 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         GUI_SetBkColor(pColors->bkColor);
         WM_GetClientRectEx(pMsg->hWin, &clientRect);
         GUI_ClearRectEx(&clientRect);
-        GUI_SetColor(GUI_RED);
+        GUI_SetColor(pColors->textColor);
         GUI_SetFont(&GUI_Font_T90_24);
-        GUI_DrawRectEx(&tipStrArea);
-        GUI_DispStringAt("使用   选择选项，使用   选择数字。",50, DST_SET_HEIGHT-50 +2);
+//        GUI_DrawRectEx(&tipStrArea);
+        GUI_DispStringAt("使用       选择选项，使用      选择数字。",50, DST_SET_HEIGHT-50 +2);
    
         GUI_SetDrawMode(GUI_DM_NORMAL);
         GUI_SetColor(pColors->textColor);
