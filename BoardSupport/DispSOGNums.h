@@ -4,7 +4,7 @@
 #include "GUI.h"
 #include "stub.h"
 void DrawNums(Point ,uint8_t numCode);
-
+void DispSOGNums(int x, int y, int num);
 
 
 
@@ -13,3 +13,4 @@ void DrawNums(Point ,uint8_t numCode);
 
 
 #endif
+

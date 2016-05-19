@@ -7,6 +7,7 @@
 #include "plot.h"
 #include "Check.h"
 #include "t90font.h"
+#include "DispSOGNums.h"
 
 
 extern boat mothership;
@@ -205,21 +206,19 @@ static void _onPaint1(void)
 		 if(timeCnt%2 == 0)
 		 {
 		   GUI_SetColor(GUI_RED);
-			 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-			 GUI_DispStringAt(pStrBuf, BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60);
+//			 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
+			 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG);
 		 }
 	 }
 	 else if(MS_isMax_SOG || MS_isMin_SOG)
 	 {
 		 GUI_SetColor(GUI_RED);
-		 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-		 GUI_DispStringAt(pStrBuf, BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60);
+		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG);
 	 }
 	 else
 	 {
 		 GUI_SetColor(pColor->numColor);
-		 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-		 GUI_DispStringAt(pStrBuf, BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60);
+		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG);
 	 }
 
 

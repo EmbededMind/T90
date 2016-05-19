@@ -12,7 +12,7 @@ void DrawNums(Point Atpoint,uint8_t numCode)
     if((numCode & (0x01<<2)) == 4)
         GUI_FillRect(Atpoint.x+76, Atpoint.y, Atpoint.x+102, Atpoint.y+49);
     if((numCode & (0x01<<3)) == 8)
-        GUI_FillRect(Atpoint.x+29, Atpoint.y+79, Atpoint.x+102, Atpoint.y+79);
+        GUI_FillRect(Atpoint.x+76, Atpoint.y+29, Atpoint.x+102, Atpoint.y+79);
     if((numCode & (0x01<<4)) == 16)
         GUI_FillRect(Atpoint.x, Atpoint.y+59, Atpoint.x+102, Atpoint.y+79);
     if((numCode & (0x01<<5)) == 32)
@@ -21,10 +21,16 @@ void DrawNums(Point Atpoint,uint8_t numCode)
         GUI_FillRect(Atpoint.x, Atpoint.y+29, Atpoint.x+79, Atpoint.y+49);    
 }
 
-void DispSOGNums(Point atpointones, Point atpointtenth, int num)
+void DispSOGNums(int x, int y, int num)
 {
     int tenth; 
     int ones;
+	  Point atpointtenth;
+	  Point atpointones;
+	  atpointones.x = x;
+	  atpointones.y = y;
+	  atpointtenth.x = atpointones .x + 148;
+	  atpointtenth.y = atpointones.y;
     GUI_FillRect(atpointones.x+112,atpointones.y+59,atpointones.x+138,atpointones.y+79);
     ones = num/10;
     tenth = num%10;
