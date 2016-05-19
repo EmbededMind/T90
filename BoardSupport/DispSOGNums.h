@@ -3,8 +3,11 @@
 #include "stdint.h"
 #include "GUI.h"
 #include "stub.h"
-void DrawNums(Point ,uint8_t numCode);
-void DispSOGNums(int x, int y, int num);
+
+#define BIG    0
+#define SMALL  1
+void DrawNums(Point, uint8_t numCode, int type);
+void DispSOGNums(int x, int y, int num, int type);
 
 
 
