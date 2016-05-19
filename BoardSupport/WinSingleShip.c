@@ -191,7 +191,7 @@ static void _onPaint1(void)
 
    GUI_SetFont(&GUI_Font_T90_30);
    GUI_DispStringAt("航向：", BBS1_ABOVE_X+195, BBS1_ABOVE_Y+20);
-	 sprintf(pStrBuf, "%3d", mothership.COG/10);
+   sprintf(pStrBuf, "%3d", mothership.COG/10);
    pStrBuf[3]  = 194;
    pStrBuf[4]  = 176;
    pStrBuf[5]  = '\0';
