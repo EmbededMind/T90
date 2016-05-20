@@ -30,7 +30,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 //           else{
 //              BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, GUI_GRAY);
 //           }
-           BUTTON_Callback(pMsg);
+//           BUTTON_Callback(pMsg);
+					 WM_Paint(workModeWin);
            break;
       
       case WM_KEY:
