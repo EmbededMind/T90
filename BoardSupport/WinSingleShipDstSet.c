@@ -160,77 +160,77 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 	 
 				pColors = &setWinColors[t90_set.sys.nightmode];
 	 
-        hStickFigures[0]  = HSD_STICKFIGURE_CreateEx(DST_SET_WIDTH/2-100-8, 251, 16, 20, pMsg->hWin, WM_CF_SHOW, 0, ID_SF_0);
+        hStickFigures[0]  = HSD_STICKFIGURE_CreateEx(DST_SET_WIDTH/2-100-8, 291, 16, 20, pMsg->hWin, WM_CF_SHOW, 0, ID_SF_0);
         WM_SetHasTrans(hStickFigures[0]);
         
-        hStickFigures[2]  = HSD_STICKFIGURE_CreateEx(DST_SET_WIDTH/2+100-8, 251, 16, 20, pMsg->hWin, WM_CF_SHOW, 0, ID_SF_2);
+        hStickFigures[2]  = HSD_STICKFIGURE_CreateEx(DST_SET_WIDTH/2+100-8, 291, 16, 20, pMsg->hWin, WM_CF_SHOW, 0, ID_SF_2);
         WM_SetHasTrans(hStickFigures[2]);
         
-        hStickFigures[1]  = HSD_STICKFIGURE_CreateEx(DST_SET_WIDTH/2-8,     301, 16, 20, pMsg->hWin, WM_CF_SHOW, 0, ID_SF_1);
+        hStickFigures[1]  = HSD_STICKFIGURE_CreateEx(DST_SET_WIDTH/2-8,     341, 16, 20, pMsg->hWin, WM_CF_SHOW, 0, ID_SF_1);
         WM_SetHasTrans(hStickFigures[1]);
           
-        hDimensions[0]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2-145, 112, 90, 140, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_VERTICAL, ID_DMS_0);
+        hDimensions[0]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2-145, 112, 90, 180, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_VERTICAL, ID_DMS_0);
         HSD_DIMENSION_SetBkColor(hDimensions[0], HSD_DIMENSION_CI_UNFOCUS, pColors->bkColor);
         HSD_DIMENSION_SetBkColor(hDimensions[0], HSD_DIMENSION_CI_FOCUS, pColors->bkColor);
-        HSD_DIMENSION_SetValFont(hDimensions[0], &GUI_Font20_ASCII);
+        HSD_DIMENSION_SetValFont(hDimensions[0], &GUI_Font_T90_24);
 				HSD_DIMENSION_SetValColor(hDimensions[0], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
 				HSD_DIMENSION_SetValColor(hDimensions[0], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
 				HSD_DIMENSION_SetArrowLineColor(hDimensions[0], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
 				sprintf(pStrBuf,"%d",t90_set.dst.dst1);
         HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
-        HSD_DIMENSION_SetUnitText(hDimensions[0], "m");
+        HSD_DIMENSION_SetUnitText(hDimensions[0], "米");
         WM_SetHasTrans(hDimensions[0]);
         WM_SetCallback(hDimensions[0],&dimensionCallback);
         
-        hDimensions[1]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2-95, 240, 95, 40, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_HORIZONTAL, ID_DMS_1);
+        hDimensions[1]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2-97, 240, 97, 100, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_HORIZONTAL, ID_DMS_1);
         HSD_DIMENSION_SetBkColor(hDimensions[1], HSD_DIMENSION_CI_UNFOCUS, pColors->bkColor);
         HSD_DIMENSION_SetBkColor(hDimensions[1], HSD_DIMENSION_CI_FOCUS,   pColors->bkColor);
-        HSD_DIMENSION_SetValFont(hDimensions[1], &GUI_Font20_ASCII);
+        HSD_DIMENSION_SetValFont(hDimensions[1], &GUI_Font_T90_24);
 				HSD_DIMENSION_SetValColor(hDimensions[1], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
 				HSD_DIMENSION_SetValColor(hDimensions[1], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
 				HSD_DIMENSION_SetArrowLineColor(hDimensions[1], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
         sprintf(pStrBuf,"%d",t90_set.dst.dst2);
         HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
-        HSD_DIMENSION_SetUnitText(hDimensions[1], "m");
+        HSD_DIMENSION_SetUnitText(hDimensions[1], "米");
         WM_SetHasTrans(hDimensions[1]);  
         WM_SetCallback(hDimensions[1],&dimensionCallback);        
 
-        hDimensions[4]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2+55, 112, 90, 140, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_VERTICAL, ID_DMS_4);
+        hDimensions[4]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2+55, 112, 90, 180, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_VERTICAL, ID_DMS_4);
         HSD_DIMENSION_SetBkColor(hDimensions[4], HSD_DIMENSION_CI_UNFOCUS, pColors->bkColor);
         HSD_DIMENSION_SetBkColor(hDimensions[4], HSD_DIMENSION_CI_FOCUS,   pColors->bkColor);
-        HSD_DIMENSION_SetValFont(hDimensions[4], &GUI_Font20_ASCII);
+        HSD_DIMENSION_SetValFont(hDimensions[4], &GUI_Font_T90_24);
 				HSD_DIMENSION_SetValColor(hDimensions[4], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
 				HSD_DIMENSION_SetValColor(hDimensions[4], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
 				HSD_DIMENSION_SetArrowLineColor(hDimensions[4], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
         sprintf(pStrBuf,"%d",t90_set.dst.dst5);
         HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
-        HSD_DIMENSION_SetUnitText(hDimensions[4], "m");
+        HSD_DIMENSION_SetUnitText(hDimensions[4], "米");
         WM_SetHasTrans(hDimensions[4]);  
         WM_SetCallback(hDimensions[4], &dimensionCallback);
         
-        hDimensions[3]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2, 240, 95, 40, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_HORIZONTAL, ID_DMS_3);
+        hDimensions[3]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2+2, 240, 97, 100, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_HORIZONTAL, ID_DMS_3);
         HSD_DIMENSION_SetBkColor(hDimensions[3], HSD_DIMENSION_CI_UNFOCUS, pColors->bkColor);
         HSD_DIMENSION_SetBkColor(hDimensions[3], HSD_DIMENSION_CI_FOCUS,   pColors->bkColor);
-        HSD_DIMENSION_SetValFont(hDimensions[3], &GUI_Font20_ASCII);
+        HSD_DIMENSION_SetValFont(hDimensions[3], &GUI_Font_T90_24);
 				HSD_DIMENSION_SetValColor(hDimensions[3], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
 				HSD_DIMENSION_SetValColor(hDimensions[3], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
 				HSD_DIMENSION_SetArrowLineColor(hDimensions[3], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
         sprintf(pStrBuf,"%d",t90_set.dst.dst4);
         HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
-        HSD_DIMENSION_SetUnitText(hDimensions[3], "m");
+        HSD_DIMENSION_SetUnitText(hDimensions[3], "米");
         WM_SetHasTrans(hDimensions[3]);
         WM_SetCallback(hDimensions[3], &dimensionCallback);
         
-        hDimensions[2]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2-45, 112, 90, 190, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_VERTICAL, ID_DMS_2);
+        hDimensions[2]  = HSD_DIMENSION_CreateEx(DST_SET_WIDTH/2-45, 112, 90, 230, pMsg->hWin, WM_CF_SHOW,HSD_DIMENSION_CF_VERTICAL, ID_DMS_2);
         HSD_DIMENSION_SetBkColor(hDimensions[2], HSD_DIMENSION_CI_UNFOCUS, pColors->bkColor);
         HSD_DIMENSION_SetBkColor(hDimensions[2], HSD_DIMENSION_CI_FOCUS,   pColors->bkColor);
-        HSD_DIMENSION_SetValFont(hDimensions[2], &GUI_Font20_ASCII);
+        HSD_DIMENSION_SetValFont(hDimensions[2], &GUI_Font_T90_24);
 				HSD_DIMENSION_SetValColor(hDimensions[2], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
 				HSD_DIMENSION_SetValColor(hDimensions[2], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
 				HSD_DIMENSION_SetArrowLineColor(hDimensions[2], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
         sprintf(pStrBuf,"%d",t90_set.dst.dst3);
         HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
-        HSD_DIMENSION_SetUnitText(hDimensions[2], "m");
+        HSD_DIMENSION_SetUnitText(hDimensions[2], "米");
         WM_SetHasTrans(hDimensions[2]);    
         WM_SetCallback(hDimensions[2], &dimensionCallback);
         break;
@@ -265,7 +265,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         GUI_SetColor(pColors->textColor);
         GUI_SetFont(&GUI_Font_T90_24);
 //        GUI_DrawRectEx(&tipStrArea);
-        GUI_DispStringAt("使用       选择选项，使用      选择数字。",50, DST_SET_HEIGHT-50 +2);
+        GUI_DispStringAt("使用  卞  选择选项，使用 咗祐 选择数字。",50, DST_SET_HEIGHT-50 +2);
    
         GUI_SetDrawMode(GUI_DM_NORMAL);
 //        GUI_SetColor(pColors->textColor);
@@ -282,16 +282,16 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            
            GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);         //母船
 					
-					 GUI_DispStringAt("本", orgX-8, orgY+14);
-					 GUI_DispStringAt("船", orgX-8, orgY+12+GUI_GetFontSizeY());
+					 GUI_DispStringAt("本", orgX-8, orgY+12);
+					 GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
            
            GUI_SetLineStyle(GUI_LS_DOT);
            
            GUI_DrawLine(drawArea.x0, orgY+60, orgX-17, orgY+60);
            GUI_DrawLine(orgX+17, orgY+60, drawArea.x1, orgY+60);
            
-           GUI_DrawLine(orgX-16, orgY+60, orgX-100, orgY+200);
-           GUI_DrawLine(orgX+16, orgY+60, orgX+100, orgY+200);
+           GUI_DrawLine(orgX-16, orgY+60, orgX-100, orgY+240);
+           GUI_DrawLine(orgX+16, orgY+60, orgX+100, orgY+240);
         }
         
         

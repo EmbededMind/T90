@@ -71,9 +71,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 									break;
 						 
 						 case GUI_KEY_UP:	 
-//									WM_DeleteTimer(timer);
-//									WM_BringToTop(alarmMonitorWin);
-//									WM_SetFocus(alarmMonitorWin);
+									WM_DeleteTimer(timer);
+									WM_BringToTop(alarmMonitorWin);
+									WM_SetFocus(alarmMonitorWin);
 									cursorOnStub = 0;
 									WM_Paint(singleShipWin);
 									break;
@@ -270,18 +270,20 @@ static void _onPaint2(void)
    /** Paint BBS context */ 
    GUI_SetTextMode(GUI_TM_TRANS);          
    GUI_SetColor(pColor->textColor);
-   GUI_SetFont(GUI_FONT_24B_1);
+   
+   GUI_SetFont(&GUI_Font_T90_24);
+   GUI_DispStringAt("航速", BBS2_ABOVE_X+30, BBS2_ABOVE_Y+20);
 
-   GUI_DispStringAt("SOG", BBS2_ABOVE_X+30, BBS2_ABOVE_Y+20);
-
+   GUI_SetFont(&GUI_Font_T90_20);
+   GUI_DispStringAt("航向：", BBS2_ABOVE_X+110, BBS2_ABOVE_Y+20);
    GUI_SetFont(GUI_FONT_16B_1);
-   GUI_DispStringAt("COG:", BBS2_ABOVE_X+110, BBS2_ABOVE_Y+20);
-	 sprintf(pStrBuf, "%3d", mothership.COG/10);
+   sprintf(pStrBuf, "%3d", mothership.COG/10);
    pStrBuf[3]  = 194;
    pStrBuf[4]  = 176;
    pStrBuf[5]  = '\0';
-	 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+158, BBS2_ABOVE_Y+20);
-   GUI_DispStringAt("kt" , BBS2_ABOVE_X+173, BBS2_ABOVE_Y+80);
+   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+158, BBS2_ABOVE_Y+20);
+   GUI_SetFont(&GUI_Font_T90_20);
+   GUI_DispStringAt("节" , BBS2_ABOVE_X+173, BBS2_ABOVE_Y+80);
 
    GUI_SetFont(GUI_FONT_D48);
 	 
@@ -332,43 +334,57 @@ static void _onPaint2(void)
                              BBS2_BELOW_Y + BBS2_BELOW_HEIGHT-1,            /// y1
                              BBS2_RADIUS, pColor->bbsTopColor, pColor->bbsBottomColor);  
                              
-	 GUI_SetFont(GUI_FONT_24B_1);
+	 GUI_SetFont(&GUI_Font_T90_30);
 	 
-	 GUI_DispStringAt("name:",      BBS2_BELOW_X+30,  BBS2_BELOW_Y+40);
-	 GUI_DispStringAt("MMSI:",      BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+32);
-	 GUI_DispStringAt("distance:",  BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+32*2);
-	 GUI_DispStringAt("m",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+32*2);
-	 GUI_DispStringAt("offset:",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+32*3);
-	 GUI_DispStringAt("m",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+32*3);
+	 GUI_DispStringAt("船名：",      BBS2_BELOW_X+30,  BBS2_BELOW_Y+35);
+	 GUI_DispStringAt("MMSI：",      BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40);
+	 GUI_DispStringAt("距离船尾：",  BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*2);
+	 GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+35+40*2);
 	 
-	 GUI_SetColor(pColor->numColor);
 	 switch(cursorOnStub)
 	 {
 		 case 1:
-			 GUI_DispStringAt("TUOWANG1", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+             GUI_SetColor(pColor->numColor);
+             GUI_SetFont(GUI_FONT_24B_1);
+			 GUI_DispStringAt("TUOWANG1", BBS2_BELOW_X+110, BBS2_BELOW_Y+35);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst1);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*2);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*2);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst2);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*3);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*3);
+             GUI_SetFont(&GUI_Font_T90_30);
+             GUI_SetColor(pColor->textColor);
+             GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*3);
+             GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+35+40*3);
 			 break;
 		 case 2:
-			 GUI_DispStringAt("TUOWANG2", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+             GUI_SetColor(pColor->numColor);
+             GUI_SetFont(GUI_FONT_24B_1);
+			 GUI_DispStringAt("TUOWANG2", BBS2_BELOW_X+110, BBS2_BELOW_Y+35);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst3);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*2);
-			 sprintf(pStrBuf, "%4d", 0);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*3);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*2);
+//			 sprintf(pStrBuf, "%4d", 0);
+//			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*3);
+//             GUI_SetFont(&GUI_Font_T90_24);
+//             GUI_SetColor(pColor->textColor);
+//             GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+32*3);
 			 break;
 		 case 3:
-			 GUI_DispStringAt("TUOWANG3", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+             GUI_SetColor(pColor->numColor);
+             GUI_SetFont(GUI_FONT_24B_1);
+			 GUI_DispStringAt("TUOWANG3", BBS2_BELOW_X+110, BBS2_BELOW_Y+35);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst5);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*2);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*2);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst4);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*3);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*3);
+             GUI_SetFont(&GUI_Font_T90_30);
+             GUI_SetColor(pColor->textColor);
+             GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*3);
+             GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+35+40*3);
 			 break;
 	 }
-	 
-	 sprintf(pStrBuf, "%d", timeCnt);
-   GUI_DispStringAt(pStrBuf, 20, 20);
+	GUI_SetFont(&GUI_Font_T90_24);
+	sprintf(pStrBuf, "%d", timeCnt);
+    GUI_DispStringAt(pStrBuf, 20, 20);
 
 	GUI_SetColor(pColor->textColor);
 	DrawStubs(0);

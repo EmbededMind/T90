@@ -1,4 +1,4 @@
-﻿#include "GUI.h"
+#include "GUI.h"
 #include "WM.h"
 #include "maintask.h"
 #include "layout_single_ship.h"
@@ -9,7 +9,7 @@
 #include "snap.h"
 #include "plot.h"
 #include "Check.h"
-
+#include "t90font.h"
 //#define MNT_LABEL_TIME   3
 
 /** @brief 单拖模式窗口的句柄 */
@@ -172,17 +172,18 @@ static void _onPaint(void)
 
 	GUI_DrawGradientV(0, 0, SCREEN_WIDTH-1, 45-1, pColor->bbsTopColor, pColor->bbsBottomColor);
 	GUI_SetColor(pColor->textColor);                             
-  GUI_SetFont(GUI_FONT_24B_1);
+    GUI_SetFont(GUI_FONT_24B_1);
 	GUI_DispCharAt('N', 15, 10);
 	GUI_DispCharAt('E', 165, 10);
-	GUI_DispStringAt("SOG:", 335, 10);
-	GUI_DispStringAt("kt", 445, 10);
-	GUI_DispStringAt("COG:", 480, 10);
 	sprintf(pStrBuf, "%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
 	GUI_DispStringAt(pStrBuf, 595, 10);
 	sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
-	GUI_DispStringAt(pStrBuf, 715, 10);     
-  
+	GUI_DispStringAt(pStrBuf, 715, 10);
+    GUI_SetFont(&GUI_Font_T90_30);
+    GUI_DispStringAt("航速：", 330, 5);
+	GUI_DispStringAt("节", 445, 5);
+	GUI_DispStringAt("航向：", 480, 5);
+    GUI_SetFont(GUI_FONT_24B_1);
 	GUI_SetColor(pColor->numColor);
 	lltostr(mothership.latitude, pStrBuf);
 	GUI_DispStringAt(pStrBuf, 40, 10);
@@ -195,7 +196,7 @@ static void _onPaint(void)
   pStrBuf[3]  = 194;
   pStrBuf[4]  = 176;
   pStrBuf[5]  = '\0';
-	GUI_DispStringAt(pStrBuf, 535, 10);
+	GUI_DispStringAt(pStrBuf, 545, 10);
 	sprintf(pStrBuf, "%d", timeCnt);
   GUI_DispStringAt(pStrBuf, 20, 60);
 	
@@ -207,20 +208,20 @@ static void _onPaint(void)
 		{
 		GUI_SetColor(GUI_RED);
 		sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-		GUI_DispStringAt(pStrBuf, 390, 10);
+		GUI_DispStringAt(pStrBuf, 395, 10);
 		}
 	}
 	else if(MS_isMax_SOG || MS_isMin_SOG)
 	{
 		GUI_SetColor(GUI_RED);
 		sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-		GUI_DispStringAt(pStrBuf, 390, 10);
+		GUI_DispStringAt(pStrBuf, 395, 10);
 	}
 	else
 	{
 		GUI_SetColor(pColor->numColor);
 		sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-		GUI_DispStringAt(pStrBuf, 390, 10);
+		GUI_DispStringAt(pStrBuf, 395, 10);
 	}
 //	
 //	if(mntLabelTimeCnt)
