@@ -5,21 +5,21 @@
 const HomeColor homeColors[2] = {
 //  bkColor       bbsTopColor   bbsBottonColor  textColor       numColor	         bullyColor    forgbullyColor
 	{ 0x00c3e0e9,   0x00e5f4f7,   0x00819298,     0x002f2f2f,     FOCUS_COLOR_DAY,   GUI_RED,      GUI_RED},
-	{ 0x001A1A1A,   GUI_GRAY,     GUI_DARKGRAY,   0x00E1E1E1,  FOCUS_COLOR_NIGHT, GUI_RED,      GUI_RED}
+	{ 0x001A1A1A,   0x003F3F3F,     0x00292929,   0x00E1E1E1,  FOCUS_COLOR_NIGHT,    GUI_RED,      GUI_RED}
 };
 		
 
 const MenuColor mainMenuColors[2] = {
 //  bkColor     headTopColor  headBottomColor  headTextColor  btBkColor       btTextColor    btFocusBkColor       btPrevFocusBkColor  btFocusTextColor
-	{ 0x00c3e0e9, 0x00404448,   0x0025292c,      0x00eaeaea,    0x009baeb7,   0x002f2f2f,    FOCUS_COLOR_DAY,     0x007c8b92,         0x00eaeaea},
-	{ 0x001D1D1D,  0x00707070,   0x0025292c,     0x00EAEAEA, GUI_DARKGRAY, GUI_LIGHTGRAY, FOCUS_COLOR_NIGHT,   0x007c8b92,       GUI_LIGHTGRAY}
+	{ 0x00c3e0e9, 0x00646c71,   0x00343c41,      0x00eaeaea,    0x009baeb7,   0x002f2f2f,    FOCUS_COLOR_DAY,     0x007c8b92,         0x00eaeaea},
+	{ GUI_BLACK,  0x00686c6f,   0x00383c3f,     0x00EAEAEA,      0x00202123, GUI_LIGHTGRAY, FOCUS_COLOR_NIGHT,   0x007c8b92,       GUI_LIGHTGRAY}
 };
 
 
 const MenuColor subMenuColors[2] = {
 //  bkColor     headTopColor  headBottomColor  headTextColor  btBkColor   btTextColor    btFocusBkColor       btPrevFocusBkColor  btFocusTextColor
-	{ 0x00c3e0e9, 0x005E5C5B,   0x0025292c,      0x00eaeaea,    0x008b9da5, 0x002f2f2f,    FOCUS_COLOR_DAY,     0x007c8b92,         0x00eaeaea},
-	{ 0x00303030,  0x006A6969,   0x0025292c,      GUI_LIGHTGRAY, GUI_DARKGRAY,   GUI_LIGHTGRAY, FOCUS_COLOR_NIGHT,   0x007c8b92,       GUI_LIGHTGRAY}
+	{ 0x00c3e0e9, 0x00646c71,   0x00343c41,      0x00eaeaea,    0x008b9da5, 0x002f2f2f,    FOCUS_COLOR_DAY,     0x007c8b92,         0x00eaeaea},
+	{ GUI_BLACK,  0x00686c6f,   0x00383c3f,      GUI_LIGHTGRAY, 0x00303030,  GUI_LIGHTGRAY, FOCUS_COLOR_NIGHT,   0x007c8b92,       GUI_LIGHTGRAY}
 };
 
 
