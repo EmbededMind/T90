@@ -23,16 +23,11 @@ static const HomeColor *pColor = homeColors;
 static void myButtonCallback(WM_MESSAGE* pMsg){
 
    switch(pMsg->MsgId){
-      case WM_SET_FOCUS:
-//           if(pMsg->Data.v){
-//              BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, GUI_BLUE);
-//           }
-//           else{
-//              BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, GUI_GRAY);
-//           }
+//      case WM_SET_FOCUS:
+////     
 //           BUTTON_Callback(pMsg);
-					 WM_Paint(workModeWin);
-           break;
+//					 WM_Paint(workModeWin);
+//           break;
       
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
@@ -68,6 +63,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 										WM_SendMessageNoPara(systemSetDlg, WM_INIT_DIALOG);
                     break;
             }
+            BUTTON_Callback(pMsg);
+            WM_Paint(workModeWin);
            break;
            
      default :
@@ -93,25 +90,25 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
                                        SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 
                                        LAYOUT_WORKMODE_BUTTON_WIDTH, 
                                        LAYOUT_WORKMODE_BUTTON_HEIGHT, 
-                                       pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
+                                       pMsg->hWin, WM_CF_HIDE,  0,  GUI_ID_BUTTON0);   
          WM_SetCallback(buttons[0], &myButtonCallback);                                       
 //         BUTTON_SetText(buttons[0], "single");
-         BUTTON_SetBkColor(buttons[0], BUTTON_CI_UNPRESSED,pColor->bkColor);
-//         BUTTON_SetBkColor(buttons[0], BUTTON_CI_PRESSED, GUI_LIGHTBLUE);
+//         BUTTON_SetBkColor(buttons[0], BUTTON_CI_UNPRESSED,pColor->bkColor);
+//         BUTTON_SetBkColor(buttons[0], BUTTON_CI_PRESSED, pColor->bkColor);
 //         BUTTON_SetTextColor(buttons[0], BUTTON_CI_UNPRESSED, GUI_LIGHTGRAY);
          
          buttons[1]  = BUTTON_CreateEx(SCREEN_WIDTH -SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2,
                                        SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 
                                        LAYOUT_WORKMODE_BUTTON_WIDTH, 
                                        LAYOUT_WORKMODE_BUTTON_HEIGHT, 
-                                       pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON1);    
+                                       pMsg->hWin, WM_CF_HIDE,  0,  GUI_ID_BUTTON1);    
          WM_SetCallback(buttons[1], &myButtonCallback);                                       
 //         BUTTON_SetText(buttons[1], "double");
-         BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED,pColor->bkColor);
-//         BUTTON_SetBkColor(buttons[1], BUTTON_CI_PRESSED, GUI_LIGHTBLUE);
+//         BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED,pColor->bkColor);
+//         BUTTON_SetBkColor(buttons[1], BUTTON_CI_PRESSED, pColor->bkColor);
 //         BUTTON_SetTextColor(buttons[1], BUTTON_CI_UNPRESSED, GUI_LIGHTGRAY);
 				 
-				 WM_DefaultProc(pMsg);
+//				 WM_DefaultProc(pMsg);
          break;
          
     case WM_PAINT:
@@ -128,7 +125,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 				 GUI_FillRoundedRect(SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2,
                              SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 
                              LAYOUT_WORKMODE_BUTTON_WIDTH - 1 + SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2, 
-                             LAYOUT_WORKMODE_BUTTON_HEIGHT - 1 + SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 5);
+                             LAYOUT_WORKMODE_BUTTON_HEIGHT - 1 + SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 8);
 				 if(WM_HasFocus(buttons[1]))
 				 {
 					 GUI_SetColor(pColor->numColor);
@@ -140,16 +137,16 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 				 GUI_FillRoundedRect(SCREEN_WIDTH -SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2,
 														 SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 
 														 LAYOUT_WORKMODE_BUTTON_WIDTH - 1 + SCREEN_WIDTH -SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2, 
-														 LAYOUT_WORKMODE_BUTTON_HEIGHT - 1 + SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 5);
+														 LAYOUT_WORKMODE_BUTTON_HEIGHT - 1 + SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 8);
 		
-         break;
+                    break;
 		
 		case WM_SET_FOCUS:
 				 if(pMsg->Data.v)
 				 {
 						WM_SetFocus(buttons[0]);
 				 }
-
+                 WM_Paint(workModeWin);
 				 break;
          
     default:
