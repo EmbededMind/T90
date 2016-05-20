@@ -193,11 +193,13 @@ static void _onPaint1(void)
    GUI_SetFont(&GUI_Font_T90_30);
    GUI_DispStringAt("航向：", BBS1_ABOVE_X+195, BBS1_ABOVE_Y+20);
    sprintf(pStrBuf, "%3d", mothership.COG/10);
+   GUI_SetFont(&GUI_Font32B_1); 
    pStrBuf[3]  = 194;
    pStrBuf[4]  = 176;
    pStrBuf[5]  = '\0';
-	 GUI_DispStringAt(pStrBuf, BBS1_ABOVE_X+255, BBS1_ABOVE_Y+20);
-   GUI_DispStringAt("节" , BBS1_ABOVE_X+280, BBS1_ABOVE_Y+120);
+   GUI_DispStringAt(pStrBuf, BBS1_ABOVE_X+275, BBS1_ABOVE_Y+20);
+   GUI_SetFont(&GUI_Font_T90_30);
+   GUI_DispStringAt("节" , BBS1_ABOVE_X+297, BBS1_ABOVE_Y+120);
 
    GUI_SetFont(GUI_FONT_D80);
 	 
@@ -207,18 +209,18 @@ static void _onPaint1(void)
 		 {
 		   GUI_SetColor(GUI_RED);
 //			 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-			 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
+			 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.COG, BIG);
 		 }
 	 }
 	 else if(MS_isMax_SOG || MS_isMin_SOG)
 	 {
 		 GUI_SetColor(GUI_RED);
-		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
+		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.COG, BIG);
 	 }
 	 else
 	 {
 		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
+		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.COG, BIG);
 	 }
 
 
@@ -278,8 +280,8 @@ static void _onPaint2(void)
    pStrBuf[3]  = 194;
    pStrBuf[4]  = 176;
    pStrBuf[5]  = '\0';
-	 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+155, BBS2_ABOVE_Y+20);
-   GUI_DispStringAt("kt" , BBS2_ABOVE_X+165, BBS2_ABOVE_Y+80);
+	 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+158, BBS2_ABOVE_Y+20);
+   GUI_DispStringAt("kt" , BBS2_ABOVE_X+173, BBS2_ABOVE_Y+80);
 
    GUI_SetFont(GUI_FONT_D48);
 	 
@@ -288,18 +290,18 @@ static void _onPaint2(void)
 		 if(timeCnt%2 == 0)
 		 {
 		   GUI_SetColor(GUI_RED);
-			 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
+			 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50,mothership.COG, SMALL);
 		 }
 	 }
 	 else if(MS_isMax_SOG || MS_isMin_SOG)
 	 {
 		 GUI_SetColor(GUI_RED);
-		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
+		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.COG, SMALL);
 	 }
 	 else
 	 {
 		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
+		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.COG, SMALL);
 	 }
 	 
 	 GUI_SetColor(pColor->textColor);                             
