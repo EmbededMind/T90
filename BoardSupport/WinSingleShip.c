@@ -71,9 +71,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 									break;
 						 
 						 case GUI_KEY_UP:	 
-									WM_DeleteTimer(timer);
-									WM_BringToTop(alarmMonitorWin);
-									WM_SetFocus(alarmMonitorWin);
+//									WM_DeleteTimer(timer);
+//									WM_BringToTop(alarmMonitorWin);
+//									WM_SetFocus(alarmMonitorWin);
 									cursorOnStub = 0;
 									WM_Paint(singleShipWin);
 									break;
@@ -134,10 +134,10 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 if(monitorState == OFF)
 					 { 
 						 GUI_SetColor(GUI_RED);
-						 GUI_FillRoundedRect(20, 15, 109, 49, 6);
+						 GUI_FillRoundedRect(20, 15, 100, 50, 6);
 						 GUI_SetColor(pColor->bkColor);
-						 GUI_SetFont(GUI_FONT_16B_ASCII);
-						 GUI_DispStringAt("Monitor OFF", 27, 24);
+						 GUI_SetFont(&GUI_Font_T90_30);
+						 GUI_DispStringAt("静音", 38, 15);
 					 }
            break;
 			
@@ -207,20 +207,20 @@ static void _onPaint1(void)
 	 {
 		 if(timeCnt%2 == 0)
 		 {
-		   GUI_SetColor(GUI_RED);
-//			 sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-			 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.COG, BIG);
+		   GUI_SetColor(pColor->numColor);
+             
+			 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
 		 }
 	 }
 	 else if(MS_isMax_SOG || MS_isMin_SOG)
 	 {
-		 GUI_SetColor(GUI_RED);
-		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.COG, BIG);
+		 GUI_SetColor(pColor->numColor);
+		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
 	 }
 	 else
 	 {
 		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.COG, BIG);
+		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
 	 }
 
 
@@ -249,8 +249,8 @@ static void _onPaint1(void)
 	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+220, BBS1_BELOW_Y+110);
 	 
-	 sprintf(pStrBuf, "%d", timeCnt);
-   GUI_DispStringAt(pStrBuf, 20, 20);
+//	 sprintf(pStrBuf, "%d", timeCnt);
+//   GUI_DispStringAt(pStrBuf, 20, 20);
 	 
 	GUI_SetColor(pColor->textColor);
 	DrawStubs(0);
@@ -291,19 +291,19 @@ static void _onPaint2(void)
 	 {
 		 if(timeCnt%2 == 0)
 		 {
-		   GUI_SetColor(GUI_RED);
-			 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50,mothership.COG, SMALL);
+		   GUI_SetColor(pColor->numColor);
+			 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50,mothership.SOG, SMALL);
 		 }
 	 }
 	 else if(MS_isMax_SOG || MS_isMin_SOG)
 	 {
-		 GUI_SetColor(GUI_RED);
-		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.COG, SMALL);
+		 GUI_SetColor(pColor->numColor);
+		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
 	 }
 	 else
 	 {
 		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.COG, SMALL);
+		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
 	 }
 	 
 	 GUI_SetColor(pColor->textColor);                             
@@ -346,22 +346,22 @@ static void _onPaint2(void)
 		 case 1:
              GUI_SetColor(pColor->numColor);
              GUI_SetFont(GUI_FONT_24B_1);
-			 GUI_DispStringAt("TUOWANG1", BBS2_BELOW_X+110, BBS2_BELOW_Y+35);
+			 GUI_DispStringAt("TUOWANG1", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst1);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*2);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst2);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*3);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*3);
              GUI_SetFont(&GUI_Font_T90_30);
              GUI_SetColor(pColor->textColor);
-             GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*3);
-             GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+35+40*3);
+             GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+             GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
 			 break;
 		 case 2:
              GUI_SetColor(pColor->numColor);
              GUI_SetFont(GUI_FONT_24B_1);
-			 GUI_DispStringAt("TUOWANG2", BBS2_BELOW_X+110, BBS2_BELOW_Y+35);
+			 GUI_DispStringAt("TUOWANG2", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst3);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*2);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
 //			 sprintf(pStrBuf, "%4d", 0);
 //			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*3);
 //             GUI_SetFont(&GUI_Font_T90_24);
@@ -371,20 +371,20 @@ static void _onPaint2(void)
 		 case 3:
              GUI_SetColor(pColor->numColor);
              GUI_SetFont(GUI_FONT_24B_1);
-			 GUI_DispStringAt("TUOWANG3", BBS2_BELOW_X+110, BBS2_BELOW_Y+35);
+			 GUI_DispStringAt("TUOWANG3", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst5);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*2);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst4);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+35+40*3);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*3);
              GUI_SetFont(&GUI_Font_T90_30);
              GUI_SetColor(pColor->textColor);
-             GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*3);
-             GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+35+40*3);
+             GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+             GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
 			 break;
 	 }
 	GUI_SetFont(&GUI_Font_T90_24);
-	sprintf(pStrBuf, "%d", timeCnt);
-    GUI_DispStringAt(pStrBuf, 20, 20);
+//	sprintf(pStrBuf, "%d", timeCnt);
+//    GUI_DispStringAt(pStrBuf, 20, 20);
 
 	GUI_SetColor(pColor->textColor);
 	DrawStubs(0);

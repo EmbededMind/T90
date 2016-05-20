@@ -161,7 +161,16 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
          GUI_ClearRectEx(&clientRect);
          GUI_SetColor(pColors->textColor);
 				 GUI_SetFont(&GUI_Font_T90_24);
-         GUI_DispStringAt("使用   选择选项，使用   选择数字。",50, ALARM_SET_HEIGHT-30-32);
+//         GUI_DispStringAt("使用   选择选项，使用   选择数字。",50, ALARM_SET_HEIGHT-30-32);
+         GUI_DispStringAt("使用",50, ALARM_SET_HEIGHT-30-32);
+         GUI_SetColor(pColors->focusBkColor);
+         GUI_DispString("  卞  ");
+         GUI_SetColor(pColors->textColor);
+         GUI_DispString("选择选项，使用");
+         GUI_SetColor(pColors->focusBkColor);
+         GUI_DispString(" 咗祐 ");
+         GUI_SetColor(pColors->textColor);
+         GUI_DispString("选择数字。");
 //         GUI_SetLineStyle(GUI_LS_SOLID);
 //         GUI_DrawRectEx(&drawArea);
 				

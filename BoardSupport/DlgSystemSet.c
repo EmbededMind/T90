@@ -251,7 +251,17 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
 //						GUI_SetColor(GUI_RED);
 //						GUI_DrawRect(100,400,SYSTEM_SET_WIDTH-100,432);
 						GUI_SetFont(&GUI_Font_T90_24);
-						GUI_DispStringAt("使用     选择选项，使用     切换开启关闭或者更改参数", 100, 400);
+//						GUI_DispStringAt("使用     选择选项，使用     切换开启关闭或者更改参数", 100, 400);
+                        GUI_DispStringAt("使用",100, 400);
+                        GUI_SetColor(pColors->focusSliderColor);
+                        GUI_DispString("  卞  ");
+                        GUI_SetColor(pColors->textColor);
+                        GUI_DispString("选择选项，使用");
+                        GUI_SetColor(pColors->focusSliderColor);
+                        GUI_DispString(" 咗祐 ");
+                        GUI_SetColor(pColors->textColor);
+                        GUI_DispString("切换开启关闭或者更改参数。");
+                        
             break;
        default:
            WM_DefaultProc(pMsg);

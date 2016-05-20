@@ -197,8 +197,8 @@ static void _onPaint(void)
   pStrBuf[4]  = 176;
   pStrBuf[5]  = '\0';
 	GUI_DispStringAt(pStrBuf, 545, 10);
-	sprintf(pStrBuf, "%d", timeCnt);
-  GUI_DispStringAt(pStrBuf, 20, 60);
+//	sprintf(pStrBuf, "%d", timeCnt);
+//  GUI_DispStringAt(pStrBuf, 20, 60);
 	
 	
 	
@@ -230,9 +230,10 @@ static void _onPaint(void)
 	if(monitorState == OFF)
 	{
 		GUI_SetColor(GUI_RED);
-		GUI_FillRoundedRect(20, 60, 160, 110, 8);
+		GUI_FillRoundedRect(20, 60, 100, 95, 8);
 		GUI_SetColor(pColor->bkColor);
-		GUI_DispStringAt("OFF", 30, 73);	
+        GUI_SetFont(&GUI_Font_T90_30);
+		GUI_DispStringAt("静音", 38, 60);	
 	}
 //		else
 //		{

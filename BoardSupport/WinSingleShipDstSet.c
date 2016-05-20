@@ -265,7 +265,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         GUI_SetColor(pColors->textColor);
         GUI_SetFont(&GUI_Font_T90_24);
 //        GUI_DrawRectEx(&tipStrArea);
-        GUI_DispStringAt("使用  卞  选择选项，使用 咗祐 选择数字。",50, DST_SET_HEIGHT-50 +2);
+        GUI_DispStringAt("使用",50, DST_SET_HEIGHT-50 +2);
+        GUI_SetColor(pColors->focusBkColor);
+        GUI_DispString("  卞  ");
+        GUI_SetColor(pColors->textColor);
+        GUI_DispString("选择选项，使用");
+        GUI_SetColor(pColors->focusBkColor);
+        GUI_DispString(" 咗祐 ");
+        GUI_SetColor(pColors->textColor);
+        GUI_DispString("选择数字。");
    
         GUI_SetDrawMode(GUI_DM_NORMAL);
 //        GUI_SetColor(pColors->textColor);
@@ -273,13 +281,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         {
            int orgX  = DST_SET_WIDTH /2;
            int orgY  = drawArea.y0 +1;
-           
+            
+           GUI_SetColor(pColors->arrowLineColor); 
            GUI_DrawLine(orgX, orgY, orgX+16, orgY+16);
            
            GUI_DrawVLine(orgX+16, orgY+17, orgY+60);
            GUI_DrawHLine(orgY+60, orgX-15, orgX+15);
            GUI_DrawVLine(orgX-16, orgY+17, orgY+60);         
-           
+                   
            GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);         //母船
 					
 					 GUI_DispStringAt("本", orgX-8, orgY+12);

@@ -155,8 +155,12 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //				 GUI_DrawHLine(ALARM_SET_HEIGHT-30-32, ALARM_SET_WIDTH/2+25, ALARM_SET_WIDTH-30);
 				 GUI_SetColor(pColors->textColor);
          GUI_SetFont(&GUI_Font_T90_24);         
-         GUI_DispStringAt("使用       调整数字。",ALARM_SET_WIDTH/2+25, ALARM_SET_HEIGHT-30-32);
-		
+//         GUI_DispStringAt("使用       调整数字。",ALARM_SET_WIDTH/2+25, ALARM_SET_HEIGHT-30-32);
+		 GUI_DispStringAt("使用",ALARM_SET_WIDTH/2+25, ALARM_SET_HEIGHT-30-32);
+         GUI_SetColor(pColors->focusBkColor);
+         GUI_DispString("  卞  ");
+         GUI_SetColor(pColors->textColor);
+         GUI_DispString("调整数字。");
 				 GUI_SetDrawMode(GUI_DM_NORMAL);
 				 GUI_SetColor(pColors->textColor);
 		

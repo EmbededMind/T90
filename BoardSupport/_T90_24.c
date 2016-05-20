@@ -676,6 +676,8 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_24_535E[ 72] = { /* code 535E */
   __XXXXXX,XXXXXXXX,X_______,
   _XXXXXXX,XXXXXXXX,XX______,
   ________,________,________,
+  ________,________,________,
+  ________,________,________,
   _XXXXXXX,XXXXXXXX,XX______,
   __XXXXXX,XXXXXXXX,X_______, 
   ___XXXXX,XXXXXXXX,________,
@@ -685,9 +687,7 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_24_535E[ 72] = { /* code 535E */
   _______X,XXXX____,________, 
   ________,XXX_____,________,
   ________,_X______,________,
-  ________,________,________,
-  ________,________,________,
-  ________,________,________};
+  ________,________,________,};
 
 GUI_CONST_STORAGE unsigned char acGUI_Font_T90_24_53C2[ 72] = { /* code 53C2 */
   ________,________,________,

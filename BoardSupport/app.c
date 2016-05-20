@@ -296,7 +296,7 @@ void _Play_Task(void* p_arg)
                              MUSIC_ADD(SND_ID_DEG);
                           }                                                    
                           if(thisBulyBerth->pBoatLink->Boat.dist < 99999){
-                              SND_ParseNum((t90_set.sys.unit == NM)? thisBulyBerth->pBoatLink->Boat.dist : thisBulyBerth->pBoatLink->Boat.dist * 37/20, aNums);
+                               SND_ParseNum((t90_set.sys.unit == NM)? thisBulyBerth->pBoatLink->Boat.dist/100*100 : thisBulyBerth->pBoatLink->Boat.dist * 37/20/100*100, aNums);
                                MUSIC_ADD(SND_ID_DST);      
                                MUSIC_ADD_5NUMS;                                   
                                if(t90_set.sys.unit == NM)
@@ -324,7 +324,7 @@ void _Play_Task(void* p_arg)
                                MUSIC_ADD(SND_ID_DEG);
                            }                                                 
                            MUSIC_ADD(SND_ID_DST);     
-                           SND_ParseNum((t90_set.sys.unit == NM)? thisBulyBerth->pBoatLink->Boat.dist : thisBulyBerth->pBoatLink->Boat.dist * 37/20, aNums);
+                           SND_ParseNum((t90_set.sys.unit == NM)? thisBulyBerth->pBoatLink->Boat.dist/100*100 : thisBulyBerth->pBoatLink->Boat.dist * 37/20/100*100, aNums);
                            MUSIC_ADD_5NUMS;
                            if(t90_set.sys.unit == NM)
                            {   
@@ -364,7 +364,7 @@ void _Play_Task(void* p_arg)
                                              MUSIC_ADD(SND_ID_DEG);
                                          }                                         
                                         MUSIC_ADD(SND_ID_DST);
-                                        SND_ParseNum((t90_set.sys.unit == NM)? thisinvdBerth->Boat.dist : thisinvdBerth->Boat.dist * 37/20, aNums);																	 
+                                        SND_ParseNum((t90_set.sys.unit == NM)? thisinvdBerth->Boat.dist/100*100 : thisinvdBerth->Boat.dist * 37/20/100*100, aNums);																	 
                                         MUSIC_ADD_5NUMS;
                                         if(t90_set.sys.unit == NM)
                                         {   

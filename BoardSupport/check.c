@@ -188,7 +188,7 @@ BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
             {
                  if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
                  {
-                     SNAP_SetSnapLink(SimpBerthes[i].pBerth);
+//                     SNAP_SetSnapLink(SimpBerthes[i].pBerth);
                      pBerth =  SimpBerthes[i].pBerth;
                      user_id = SimpBerthes[i].pBerth->Boat.user_id;
                      return SimpBerthes[i].pBerth;
@@ -201,7 +201,7 @@ BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
         {            
             if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
             {
-                SNAP_SetSnapLink(SimpBerthes[i].pBerth);
+//                SNAP_SetSnapLink(SimpBerthes[i].pBerth);
                 pBerth =  SimpBerthes[i].pBerth;
                 user_id = SimpBerthes[i].pBerth->Boat.user_id;
                 return SimpBerthes[i].pBerth;
@@ -214,7 +214,7 @@ BERTH* SIMP_BERTH_fetchNextPlayBerth()    //invader alarm
         {            
             if(SimpBerthes[i].pBerth->isInvader && SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
             {
-                SNAP_SetSnapLink(SimpBerthes[i].pBerth);
+//                SNAP_SetSnapLink(SimpBerthes[i].pBerth);
                 pBerth =  SimpBerthes[i].pBerth;
                 user_id = SimpBerthes[i].pBerth->Boat.user_id;
                 return SimpBerthes[i].pBerth;
