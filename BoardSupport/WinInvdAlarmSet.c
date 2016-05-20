@@ -209,7 +209,10 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 
 					 GUI_SetFont(&GUI_Font_T90_30);
 					 GUI_DispStringAt("范围：", orgX+ALARM_RADIUS+10, 158);
-					 
+                     GUI_SetFont(&GUI_Font_T90_24);
+					 GUI_DispStringAt("本", orgX-8, orgY+12);
+                     GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
+                     
 					 if(t90_set.sys.unit == NM)
 					 {
 							GUI_DispStringAt("nm", drawArea.x1-55, 158);

@@ -159,7 +159,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				agent_set.dst5 = t90_set.dst.dst5;
 	 
 				pColors = &setWinColors[t90_set.sys.nightmode];
-	 
         hStickFigures[0]  = HSD_STICKFIGURE_CreateEx(DST_SET_WIDTH/2-100-8, 291, 16, 20, pMsg->hWin, WM_CF_SHOW, 0, ID_SF_0);
         WM_SetHasTrans(hStickFigures[0]);
         
@@ -282,7 +281,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            int orgX  = DST_SET_WIDTH /2;
            int orgY  = drawArea.y0 +1;
             
-           GUI_SetColor(pColors->arrowLineColor); 
+           GUI_SetColor(pColors->textColor); 
            GUI_DrawLine(orgX, orgY, orgX+16, orgY+16);
            
            GUI_DrawVLine(orgX+16, orgY+17, orgY+60);
@@ -291,11 +290,12 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                    
            GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);         //母船
 					
-					 GUI_DispStringAt("本", orgX-8, orgY+12);
-					 GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
+		   
            
            GUI_SetLineStyle(GUI_LS_DOT);
-           
+           GUI_SetColor(pColors->textColor);
+           GUI_DispStringAt("本", orgX-8, orgY+12);
+		   GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
            GUI_DrawLine(drawArea.x0, orgY+60, orgX-17, orgY+60);
            GUI_DrawLine(orgX+17, orgY+60, drawArea.x1, orgY+60);
            
