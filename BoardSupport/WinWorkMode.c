@@ -7,6 +7,7 @@
 //#include "Config.h"
 #include "T90.h"
 #include "maintask.h"
+#include "t90font.h"
 
 /** @brief 单拖模式、双拖模式按钮 */
 static WM_HWIN buttons[2];
@@ -86,22 +87,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 		
 				 pColor = &homeColors[t90_set.sys.nightmode];
 		
-         buttons[0]  = BUTTON_CreateEx(SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2,
-                                       SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 
-                                       LAYOUT_WORKMODE_BUTTON_WIDTH, 
-                                       LAYOUT_WORKMODE_BUTTON_HEIGHT, 
-                                       pMsg->hWin, WM_CF_HIDE,  0,  GUI_ID_BUTTON0);   
+         buttons[0]  = BUTTON_CreateEx(0,0,1,1,pMsg->hWin, WM_CF_HIDE,  0,  GUI_ID_BUTTON0);   
          WM_SetCallback(buttons[0], &myButtonCallback);                                       
 //         BUTTON_SetText(buttons[0], "single");
 //         BUTTON_SetBkColor(buttons[0], BUTTON_CI_UNPRESSED,pColor->bkColor);
 //         BUTTON_SetBkColor(buttons[0], BUTTON_CI_PRESSED, pColor->bkColor);
 //         BUTTON_SetTextColor(buttons[0], BUTTON_CI_UNPRESSED, GUI_LIGHTGRAY);
          
-         buttons[1]  = BUTTON_CreateEx(SCREEN_WIDTH -SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2,
-                                       SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 
-                                       LAYOUT_WORKMODE_BUTTON_WIDTH, 
-                                       LAYOUT_WORKMODE_BUTTON_HEIGHT, 
-                                       pMsg->hWin, WM_CF_HIDE,  0,  GUI_ID_BUTTON1);    
+         buttons[1]  = BUTTON_CreateEx( 0,0,1,1,pMsg->hWin, WM_CF_HIDE,  0,  GUI_ID_BUTTON1);    
          WM_SetCallback(buttons[1], &myButtonCallback);                                       
 //         BUTTON_SetText(buttons[1], "double");
 //         BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED,pColor->bkColor);
@@ -122,10 +115,12 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 				 {
 					 GUI_SetColor(pColor->bbsBottomColor);
 				 }
-				 GUI_FillRoundedRect(SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2,
-                             SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 
-                             LAYOUT_WORKMODE_BUTTON_WIDTH - 1 + SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2, 
-                             LAYOUT_WORKMODE_BUTTON_HEIGHT - 1 + SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 8);
+				 GUI_FillRoundedRect(BUTTON0_X,BUTTON0_Y,BUTTON0_X+BUTTON_WIDTH-1,BUTTON0_Y+BUTTON_HEIGHT-1,8);
+
+                 GUI_SetTextMode(GUI_TM_TRANS);
+                 GUI_SetColor(pColor->bkColor);
+                 GUI_SetFont(&GUI_Font_T90_30B);
+                 GUI_DispStringAt("单拖模式", BUTTON0_X+43,BUTTON0_Y+8);
 				 if(WM_HasFocus(buttons[1]))
 				 {
 					 GUI_SetColor(pColor->numColor);
@@ -134,10 +129,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 				 {
 					 GUI_SetColor(pColor->bbsBottomColor);
 				 }
-				 GUI_FillRoundedRect(SCREEN_WIDTH -SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2,
-														 SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 
-														 LAYOUT_WORKMODE_BUTTON_WIDTH - 1 + SCREEN_WIDTH -SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2, 
-														 LAYOUT_WORKMODE_BUTTON_HEIGHT - 1 + SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 8);
+				 GUI_FillRoundedRect(BUTTON1_X,BUTTON1_Y,BUTTON1_X+BUTTON_WIDTH-1,BUTTON1_Y+BUTTON_HEIGHT-1,8);
+                 GUI_SetColor(pColor->bkColor);
+                 GUI_DispStringAt("双拖模式", BUTTON1_X+43,BUTTON1_Y+8);
 		
                     break;
 		
