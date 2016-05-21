@@ -5,6 +5,7 @@
 #include "HSD_BUTTON.h"
 #include "T90.h"
 #include "t90font.h"
+#include "stub.h"
 
 #include "layout_alarm_set.h"
 
@@ -241,6 +242,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					{
 						 t90_set.alarm.invd_dst = agent_set;
 						 T90_Store();
+						StubRefresh();
 					}
 					else
 					{
