@@ -99,6 +99,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
          BUTTON_SetBkColor(buttons[0], BUTTON_CI_UNPRESSED,pColor->bkColor);
 //         BUTTON_SetBkColor(buttons[0], BUTTON_CI_PRESSED, GUI_LIGHTBLUE);
 //         BUTTON_SetTextColor(buttons[0], BUTTON_CI_UNPRESSED, GUI_LIGHTGRAY);
+				 WM_HideWindow(buttons[0]);
          
          buttons[1]  = BUTTON_CreateEx(SCREEN_WIDTH -SCREEN_WIDTH/4 - LAYOUT_WORKMODE_BUTTON_WIDTH/2,
                                        SCREEN_HEIGHT/2 - LAYOUT_WORKMODE_BUTTON_HEIGHT/2, 
@@ -110,8 +111,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
          BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED,pColor->bkColor);
 //         BUTTON_SetBkColor(buttons[1], BUTTON_CI_PRESSED, GUI_LIGHTBLUE);
 //         BUTTON_SetTextColor(buttons[1], BUTTON_CI_UNPRESSED, GUI_LIGHTGRAY);
+				 WM_HideWindow(buttons[0]);
 				 
-				 WM_DefaultProc(pMsg);
+//				 WM_DefaultProc(pMsg);
          break;
          
     case WM_PAINT:
