@@ -60,7 +60,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 										}
 										
 										T90_Store();
-
+                                        monitorState = ON;
 										WM_SendMessageNoPara(systemSetDlg, WM_INIT_DIALOG);
                     break;
             }

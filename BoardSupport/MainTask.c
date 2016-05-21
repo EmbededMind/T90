@@ -22,12 +22,21 @@ GUI_MEMDEV_Handle hMute;
 
 void MainTask(void)
 {
-//   GUI_MEMDEV_Handle hMem0;
+   GUI_MEMDEV_Handle hMem0;
 INFO("MainTask Start");
-//printf("\r\n ab \r c \n d \n\r");
+
    GUI_Init();	
    WM_SetCreateFlags(WM_CF_MEMDEV);
    
+    hMem0 = GUI_MEMDEV_Create(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+   GUI_MEMDEV_Select(hMem0);
+   GUI_SetBkColor(0x009c6f00);
+    GUI_Clear();
+    
+    GUI_MEMDEV_CopyToLCD(hMem0);
+    GUI_MEMDEV_Delete(hMem0);
+    GUI_Delay(1000);
+    
    //创建字体
    GUI_UC_SetEncodeUTF8();	
    //字体设置	//GUI_SetDefaultFont (&SIF_Font);
@@ -47,7 +56,8 @@ INFO("MainTask Start");
 	 
 	 GUI_CURSOR_Select(&GUI_CursorCrossS);
 	 GUI_CURSOR_Hide();
-	
+        
+	 monitorState = OFF;
 	 
 //DLG_testDimensinCreate();
 	

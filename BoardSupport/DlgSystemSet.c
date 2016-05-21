@@ -81,6 +81,8 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
    {   
       case USER_MSG_DIM:   
            HSD_SLIDER_Loop(slideres[4]);
+           t90_set.sys.bright = HSD_SLIDER_GetValue(slideres[4]);
+           T90_Store();
            break;
 //      case USER_MSG_MNT_SWT:
 //           

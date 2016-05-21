@@ -328,11 +328,11 @@ static void _onPaint2(void)
 	 GUI_SetColor(pColor->textColor);                             
    GUI_SetFont(GUI_FONT_20_1);
 	 sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
-	 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+200, BBS2_ABOVE_Y+76); 
+	 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+200, BBS2_ABOVE_Y+79); 
 	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
-   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+300, BBS2_ABOVE_Y+76);
+   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+300, BBS2_ABOVE_Y+79);
 	 
-	 GUI_DrawVLine(BBS2_ABOVE_X+188, BBS2_ABOVE_Y+25, BBS2_ABOVE_Y+BBS2_ABOVE_HEIGHT-20);
+	 GUI_DrawVLine(BBS2_ABOVE_X+191, BBS2_ABOVE_Y+25, BBS2_ABOVE_Y+BBS2_ABOVE_HEIGHT-20);
 
 
    GUI_DrawGradientRoundedV( BBS2_BELOW_X,                         /// x0
