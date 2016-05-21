@@ -11,6 +11,7 @@
 #include "Config.h"
 #include "layout.h"
 #include "T90.h"
+#include "t90font.h"
 
 //extern unsigned char isSub0Inited;
 //extern unsigned char isSub2Inited;
@@ -23,15 +24,19 @@ GUI_MEMDEV_Handle hMute;
 void MainTask(void)
 {
    GUI_MEMDEV_Handle hMem0;
-INFO("MainTask Start");
+   INFO("MainTask Start");
 
    GUI_Init();	
    WM_SetCreateFlags(WM_CF_MEMDEV);
    
     hMem0 = GUI_MEMDEV_Create(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-   GUI_MEMDEV_Select(hMem0);
-   GUI_SetBkColor(0x009c6f00);
+    GUI_MEMDEV_Select(hMem0);
+    GUI_SetBkColor(0x009c6f00);
     GUI_Clear();
+    
+    GUI_SetFont(&GUI_Font_T90_60);
+    GUI_SetColor(0x00c3e0e9);
+    GUI_DispStringAt("拖网距离安全标终端",200,200);
     
     GUI_MEMDEV_CopyToLCD(hMem0);
     GUI_MEMDEV_Delete(hMem0);
