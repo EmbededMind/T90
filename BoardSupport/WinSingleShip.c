@@ -231,20 +231,20 @@ static void _onPaint1(void)
                              BBS1_RADIUS, pColor->bbsTopColor, pColor->bbsBottomColor);  
                              
    GUI_SetColor(pColor->textColor);                             
-   GUI_SetFont(GUI_FONT_32B_1);
+   GUI_SetFont(&GUI_Font_T90_40B);
    
    GUI_DispCharAt('N', BBS1_BELOW_X+60, BBS1_BELOW_Y+20);
    GUI_DispCharAt('E', BBS1_BELOW_X+60, BBS1_BELOW_Y+60);  
    
    GUI_SetColor(pColor->numColor);  
-	 lltostr(mothership.latitude, pStrBuf);
+   lltostr(mothership.latitude, pStrBuf);
    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+100, BBS1_BELOW_Y+20);
-	 lltostr(mothership.longitude, pStrBuf);
+   lltostr(mothership.longitude, pStrBuf);
    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+100, BBS1_BELOW_Y+60);
 	 
 	 GUI_SetColor(pColor->textColor);                             
    GUI_SetFont(GUI_FONT_32_1);
-	 sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
+	 sprintf(pStrBuf, "201%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
 	 GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+60, BBS1_BELOW_Y+110); 
 	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+240, BBS1_BELOW_Y+110);
