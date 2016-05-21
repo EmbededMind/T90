@@ -175,7 +175,7 @@ static void _onPaint(void)
     GUI_SetFont(GUI_FONT_24B_1);
 	GUI_DispCharAt('N', 15, 10);
 	GUI_DispCharAt('E', 165, 10);
-	sprintf(pStrBuf, "%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
+	sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
 	GUI_DispStringAt(pStrBuf, 595, 10);
 	sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
 	GUI_DispStringAt(pStrBuf, 715, 10);

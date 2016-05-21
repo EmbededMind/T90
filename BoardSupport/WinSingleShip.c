@@ -260,6 +260,8 @@ static void _onPaint1(void)
 
 static void _onPaint2(void)
 {
+    
+     GUI_RECT Rect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+117,BBS2_ABOVE_Y+20+40};
    /** Paint BBS background */
    GUI_DrawGradientRoundedV( BBS2_ABOVE_X,                         /// x0
                              BBS2_ABOVE_Y,                         /// y0
@@ -312,15 +314,20 @@ static void _onPaint2(void)
    GUI_DispCharAt('N', BBS2_ABOVE_X+200, BBS2_ABOVE_Y+20);
    GUI_DispCharAt('E', BBS2_ABOVE_X+200, BBS2_ABOVE_Y+48);  
    
-   GUI_SetColor(pColor->numColor);  
+   GUI_SetColor(pColor->numColor);
 	 lltostr(mothership.latitude, pStrBuf);
-   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20);
+//   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20);
+//     GUI_RECT pRect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+10,BBS2_ABOVE_Y+20+40};
+     GUI_DispStringInRect(pStrBuf,&Rect,GUI_TA_RIGHT);
 	 lltostr(mothership.longitude, pStrBuf);
-   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+230, BBS2_ABOVE_Y+48);
+//   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+230, BBS2_ABOVE_Y+48);
+     Rect.y0 = BBS2_ABOVE_Y+48;
+     Rect.y1 = BBS2_ABOVE_Y+68;
+     GUI_DispStringInRect(pStrBuf,&Rect,GUI_TA_RIGHT);
 	 
 	 GUI_SetColor(pColor->textColor);                             
-   GUI_SetFont(GUI_FONT_24B_1);
-	 sprintf(pStrBuf, "%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
+   GUI_SetFont(GUI_FONT_20_1);
+	 sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
 	 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+200, BBS2_ABOVE_Y+76); 
 	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
    GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+300, BBS2_ABOVE_Y+76);
