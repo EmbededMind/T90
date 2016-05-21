@@ -93,6 +93,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 //         BUTTON_SetBkColor(buttons[0], BUTTON_CI_UNPRESSED,pColor->bkColor);
 //         BUTTON_SetBkColor(buttons[0], BUTTON_CI_PRESSED, pColor->bkColor);
 //         BUTTON_SetTextColor(buttons[0], BUTTON_CI_UNPRESSED, GUI_LIGHTGRAY);
+				 WM_HideWindow(buttons[0]);
          
          buttons[1]  = BUTTON_CreateEx( 0,0,1,1,pMsg->hWin, WM_CF_HIDE,  0,  GUI_ID_BUTTON1);    
          WM_SetCallback(buttons[1], &myButtonCallback);                                       
@@ -100,6 +101,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 //         BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED,pColor->bkColor);
 //         BUTTON_SetBkColor(buttons[1], BUTTON_CI_PRESSED, pColor->bkColor);
 //         BUTTON_SetTextColor(buttons[1], BUTTON_CI_UNPRESSED, GUI_LIGHTGRAY);
+				 WM_HideWindow(buttons[0]);
 				 
 //				 WM_DefaultProc(pMsg);
          break;

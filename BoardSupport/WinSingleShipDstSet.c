@@ -9,6 +9,7 @@
 #include "T90.h"
 #include "layout_dst_set.h"
 #include "t90font.h"
+#include "stub.h"
 
 #define SF_NUM  3
 #define DMS_NUM 5
@@ -239,6 +240,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				{
 					 memcpy(&t90_set.dst, &agent_set, sizeof(agent_set));
 					 T90_Store();
+					StubRefresh();
 				}
 				else
 				{

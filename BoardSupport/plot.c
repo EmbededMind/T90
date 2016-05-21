@@ -17,7 +17,7 @@ static void FigureScale(int flag);
 void DrawStubs(int flag)
 {
 	int alarmLineZoom;
-	StubRefresh();
+//	StubRefresh();
 	FigureScale(flag);
 	DrawShipFamily(flag);
 
