@@ -38,6 +38,7 @@ void MainTask(void)
     GUI_SetColor(0x00c3e0e9);
     GUI_DispStringAt("拖网距离安全标终端",200,200);
     
+		GUI_MEMDEV_Select(0);
     GUI_MEMDEV_CopyToLCD(hMem0);
     GUI_MEMDEV_Delete(hMem0);
     GUI_Delay(1000);
