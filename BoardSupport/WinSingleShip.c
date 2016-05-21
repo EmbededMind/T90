@@ -188,18 +188,18 @@ static void _onPaint1(void)
    GUI_SetColor(pColor->textColor);
    GUI_SetFont(&GUI_Font_T90_40);
 
-   GUI_DispStringAt("航速", BBS1_ABOVE_X+40, BBS1_ABOVE_Y+20);
+   GUI_DispStringAt("航速", BBS1_ABOVE_X+60, BBS1_ABOVE_Y+20);
 
    GUI_SetFont(&GUI_Font_T90_30);
-   GUI_DispStringAt("航向：", BBS1_ABOVE_X+195, BBS1_ABOVE_Y+20);
+   GUI_DispStringAt("航向：", BBS1_ABOVE_X+215, BBS1_ABOVE_Y+20);
    sprintf(pStrBuf, "%3d", mothership.COG/10);
    GUI_SetFont(&GUI_Font32B_1); 
    pStrBuf[3]  = 194;
    pStrBuf[4]  = 176;
    pStrBuf[5]  = '\0';
-   GUI_DispStringAt(pStrBuf, BBS1_ABOVE_X+275, BBS1_ABOVE_Y+20);
+   GUI_DispStringAt(pStrBuf, BBS1_ABOVE_X+295, BBS1_ABOVE_Y+20);
    GUI_SetFont(&GUI_Font_T90_30);
-   GUI_DispStringAt("节" , BBS1_ABOVE_X+297, BBS1_ABOVE_Y+120);
+   GUI_DispStringAt("节" , BBS1_ABOVE_X+317, BBS1_ABOVE_Y+120);
 
    GUI_SetFont(GUI_FONT_D80);
 	 
@@ -209,18 +209,18 @@ static void _onPaint1(void)
 		 {
 		   GUI_SetColor(pColor->numColor);
              
-			 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
+			 DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
 		 }
 	 }
 	 else if(MS_isMax_SOG || MS_isMin_SOG)
 	 {
 		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
+		 DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
 	 }
 	 else
 	 {
 		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS1_ABOVE_X+40, BBS1_ABOVE_Y+60, mothership.SOG, BIG);
+		 DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
 	 }
 
 
@@ -233,21 +233,21 @@ static void _onPaint1(void)
    GUI_SetColor(pColor->textColor);                             
    GUI_SetFont(GUI_FONT_32B_1);
    
-   GUI_DispCharAt('N', BBS1_BELOW_X+40, BBS1_BELOW_Y+20);
-   GUI_DispCharAt('E', BBS1_BELOW_X+40, BBS1_BELOW_Y+60);  
+   GUI_DispCharAt('N', BBS1_BELOW_X+60, BBS1_BELOW_Y+20);
+   GUI_DispCharAt('E', BBS1_BELOW_X+60, BBS1_BELOW_Y+60);  
    
    GUI_SetColor(pColor->numColor);  
 	 lltostr(mothership.latitude, pStrBuf);
-   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+80, BBS1_BELOW_Y+20);
+   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+100, BBS1_BELOW_Y+20);
 	 lltostr(mothership.longitude, pStrBuf);
-   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+80, BBS1_BELOW_Y+60);
+   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+100, BBS1_BELOW_Y+60);
 	 
 	 GUI_SetColor(pColor->textColor);                             
-   GUI_SetFont(GUI_FONT_32B_1);
-	 sprintf(pStrBuf, "%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
-	 GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+40, BBS1_BELOW_Y+110); 
+   GUI_SetFont(GUI_FONT_32_1);
+	 sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
+	 GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+60, BBS1_BELOW_Y+110); 
 	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
-   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+220, BBS1_BELOW_Y+110);
+   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+240, BBS1_BELOW_Y+110);
 	 
 //	 sprintf(pStrBuf, "%d", timeCnt);
 //   GUI_DispStringAt(pStrBuf, 20, 20);

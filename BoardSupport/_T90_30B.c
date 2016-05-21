@@ -12,7 +12,7 @@
 *                                                                    *
 **********************************************************************
 *                                                                    *
-* Source file: _T90_30BOLD.c                                         *
+* Source file: _T90_30B.c                                            *
 * Font:        Î¢ÈíÑÅºÚ                                              *
 * Height:      30                                                    *
 *                                                                    *
@@ -34,10 +34,10 @@
 /* The following line needs to be included in any file selecting the
    font.
 */
-extern GUI_CONST_STORAGE GUI_FONT GUI_Font_T90_30BOLD;
+extern GUI_CONST_STORAGE GUI_FONT GUI_Font_T90_30B;
 
 /* Start of unicode area <CJK Unified Ideographs> */
-GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30BOLD_5355[ 90] = { /* code 5355 */
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30B_5355[ 90] = { /* code 5355 */
   ________,________,________,
   ________,________,________,
   ________,________,________,
@@ -69,7 +69,7 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30BOLD_5355[ 90] = { /* code 5355
   ________,________,________,
   ________,________,________};
 
-GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30BOLD_53CC[ 90] = { /* code 53CC */
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30B_53CC[ 90] = { /* code 53CC */
   ________,________,________,
   ________,________,________,
   ________,________,________,
@@ -101,7 +101,39 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30BOLD_53CC[ 90] = { /* code 53CC
   ________,________,________,
   ________,________,________};
 
-GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30BOLD_62D6[ 90] = { /* code 62D6 */
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30B_5F0F[ 90] = { /* code 5F0F */
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,___XXXX_,_X______,
+  ________,___XXXX_,XXX_____,
+  ________,___XXXX_,_XXX____,
+  ________,___XXXX_,_XXX____,
+  XXXXXXXX,XXXXXXXX,XXXXX___,
+  XXXXXXXX,XXXXXXXX,XXXXX___,
+  XXXXXXXX,XXXXXXXX,XXXXX___,
+  ________,____XXX_,________,
+  ________,____XXX_,________,
+  _XXXXXXX,XXX_XXX_,________,
+  _XXXXXXX,XXX_XXX_,________,
+  _XXXXXXX,XXX_XXX_,________,
+  _____XXX,____XXX_,________,
+  _____XXX,____XXX_,________,
+  _____XXX,_____XXX,________,
+  _____XXX,_____XXX,___X____,
+  _____XXX,XXXX_XXX,___XXX__,
+  XXXXXXXX,XXXX_XXX,__XXX___,
+  _XXXXXXX,XXXX_XXX,X_XXX___,
+  _XXXX___,______XX,XXXXX___,
+  ________,_______X,XXXXX___,
+  ________,________,XXXX____,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________};
+
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30B_62D6[ 90] = { /* code 62D6 */
   ________,________,________,
   ________,________,________,
   ________,________,________,
@@ -133,40 +165,88 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30BOLD_62D6[ 90] = { /* code 62D6
   ________,________,________,
   ________,________,________};
 
-GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30BOLD_CharInfo[3] = {
-   {  22,  22,  3, acGUI_Font_T90_30BOLD_5355 } /* code 5355 */
-  ,{  22,  22,  3, acGUI_Font_T90_30BOLD_53CC } /* code 53CC */
-  ,{  22,  22,  3, acGUI_Font_T90_30BOLD_62D6 } /* code 62D6 */
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30B_6A21[ 90] = { /* code 6A21 */
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ___XXX__,__XXX___,XXX_____,
+  ___XXX__,__XXX___,XXX_____,
+  ___XXX_X,XXXXXXXX,XXXXXX__,
+  ___XXX_X,XXXXXXXX,XXXXXX__,
+  ___XXX__,__XXX___,XXX_____,
+  XXXXXXXX,________,________,
+  XXXXXXXX,XXXXXXXX,XXXXX___,
+  XXXXXXXX,XXXXXXXX,XXXXX___,
+  ___XXX__,XXX_____,__XXX___,
+  __XXXX__,XXXXXXXX,XXXXX___,
+  __XXXXX_,XXXXXXXX,XXXXX___,
+  _XXXXXXX,XXX_____,__XXX___,
+  _XXXXXX_,XXXXXXXX,XXXXX___,
+  XXXXXX__,XXXXXXXX,XXXXX___,
+  _X_XXX__,_____XXX,________,
+  _X_XXX_X,XXXXXXXX,XXXXX___,
+  ___XXX_X,XXXXXXXX,XXXXX___,
+  ___XXX__,___XXXXX,X_______,
+  ___XXX__,_XXXXX_X,XXX_____,
+  ___XXX_X,XXXXX___,XXXXXX__,
+  ___XXX_X,XXX_____,_XXXX___,
+  ___XXX__,XX______,___XX___,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________};
+
+GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30B_CharInfo[5] = {
+   {  22,  22,  3, acGUI_Font_T90_30B_5355 } /* code 5355 */
+  ,{  22,  22,  3, acGUI_Font_T90_30B_53CC } /* code 53CC */
+  ,{  22,  22,  3, acGUI_Font_T90_30B_5F0F } /* code 5F0F */
+  ,{  22,  22,  3, acGUI_Font_T90_30B_62D6 } /* code 62D6 */
+  ,{  22,  22,  3, acGUI_Font_T90_30B_6A21 } /* code 6A21 */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30BOLD_Prop3 = {
-   0x62D6 /* first character */
-  ,0x62D6 /* last character  */
-  ,&GUI_Font_T90_30BOLD_CharInfo[  2] /* address of first character */
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30B_Prop5 = {
+   0x6A21 /* first character */
+  ,0x6A21 /* last character  */
+  ,&GUI_Font_T90_30B_CharInfo[  4] /* address of first character */
   ,(GUI_CONST_STORAGE GUI_FONT_PROP *)0 /* pointer to next GUI_FONT_PROP */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30BOLD_Prop2 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30B_Prop4 = {
+   0x62D6 /* first character */
+  ,0x62D6 /* last character  */
+  ,&GUI_Font_T90_30B_CharInfo[  3] /* address of first character */
+  ,&GUI_Font_T90_30B_Prop5 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30B_Prop3 = {
+   0x5F0F /* first character */
+  ,0x5F0F /* last character  */
+  ,&GUI_Font_T90_30B_CharInfo[  2] /* address of first character */
+  ,&GUI_Font_T90_30B_Prop4 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30B_Prop2 = {
    0x53CC /* first character */
   ,0x53CC /* last character  */
-  ,&GUI_Font_T90_30BOLD_CharInfo[  1] /* address of first character */
-  ,&GUI_Font_T90_30BOLD_Prop3 /* pointer to next GUI_FONT_PROP */
+  ,&GUI_Font_T90_30B_CharInfo[  1] /* address of first character */
+  ,&GUI_Font_T90_30B_Prop3 /* pointer to next GUI_FONT_PROP */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30BOLD_Prop1 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30B_Prop1 = {
    0x5355 /* first character */
   ,0x5355 /* last character  */
-  ,&GUI_Font_T90_30BOLD_CharInfo[  0] /* address of first character */
-  ,&GUI_Font_T90_30BOLD_Prop2 /* pointer to next GUI_FONT_PROP */
+  ,&GUI_Font_T90_30B_CharInfo[  0] /* address of first character */
+  ,&GUI_Font_T90_30B_Prop2 /* pointer to next GUI_FONT_PROP */
 };
 
-GUI_CONST_STORAGE GUI_FONT GUI_Font_T90_30BOLD = {
+GUI_CONST_STORAGE GUI_FONT GUI_Font_T90_30B = {
    GUI_FONTTYPE_PROP /* type of font    */
   ,30 /* height of font  */
   ,30 /* space of font y */
   ,1 /* magnification x */
   ,1 /* magnification y */
-  ,{&GUI_Font_T90_30BOLD_Prop1}
+  ,{&GUI_Font_T90_30B_Prop1}
   ,24 /* Baseline */
   ,12 /* Height of lowercase characters */
   ,17 /* Height of capital characters */

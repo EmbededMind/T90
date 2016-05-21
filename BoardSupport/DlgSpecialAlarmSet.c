@@ -81,7 +81,7 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 static void myDialogCallback(WM_MESSAGE*pMsg)
 {
 	int i;
-//	GUI_RECT clientRect;
+	GUI_RECT clientRect;
 	int id;
 	int sldValue;
 	switch(pMsg->MsgId)
@@ -126,11 +126,13 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 			}
 			break;
 		case WM_PAINT:
-
+                     GUI_SetBkColor(pColors->bkColor);
+            WM_GetClientRectEx(pMsg->hWin, &clientRect);
+            GUI_ClearRectEx(&clientRect);
 			GUI_SetColor(pColors->textColor);
 			GUI_SetFont(&GUI_Font_T90_24);
 //            GUI_DispStringAt("使用      选择选项，使用      选择数字。",30, ALARM_SET_HEIGHT-62);
-            GUI_DispStringAt("使用",30, ALARM_SET_HEIGHT-62);
+            GUI_DispStringAt("使用",50, ALARM_SET_HEIGHT-30-32);
             GUI_SetColor(pColors->focusSliderColor);
             GUI_DispString("  卞  ");
             GUI_SetColor(pColors->textColor);

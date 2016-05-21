@@ -8,9 +8,14 @@
 
 
 /** layout of window to choose work mode*/
-#define LAYOUT_WORKMODE_BUTTON_WIDTH    160
-#define LAYOUT_WORKMODE_BUTTON_HEIGHT   60
 
+#define BUTTON_WIDTH    174
+#define BUTTON_HEIGHT   48
+
+#define BUTTON0_X       154
+#define BUTTON0_Y       (SCREEN_VCENTER-BUTTON_HEIGHT)
+#define BUTTON1_X       452
+#define BUTTON1_Y       BUTTON0_Y
 
 #endif
 
