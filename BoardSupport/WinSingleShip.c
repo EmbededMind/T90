@@ -231,20 +231,20 @@ static void _onPaint1(void)
                              BBS1_RADIUS, pColor->bbsTopColor, pColor->bbsBottomColor);  
                              
    GUI_SetColor(pColor->textColor);                             
-   GUI_SetFont(&GUI_Font_T90_40B);
+   GUI_SetFont(&GUI_Font_T90_45B);
    
    GUI_DispCharAt('N', BBS1_BELOW_X+60, BBS1_BELOW_Y+20);
    GUI_DispCharAt('E', BBS1_BELOW_X+60, BBS1_BELOW_Y+60);  
    
    GUI_SetColor(pColor->numColor);  
    lltostr(mothership.latitude, pStrBuf);
-   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+100, BBS1_BELOW_Y+20);
+   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+110, BBS1_BELOW_Y+20);
    lltostr(mothership.longitude, pStrBuf);
-   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+100, BBS1_BELOW_Y+60);
+   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+110, BBS1_BELOW_Y+60);
 	 
 	 GUI_SetColor(pColor->textColor);                             
    GUI_SetFont(GUI_FONT_32_1);
-	 sprintf(pStrBuf, "201%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
+	 sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
 	 GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+60, BBS1_BELOW_Y+110); 
 	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+240, BBS1_BELOW_Y+110);
@@ -350,7 +350,7 @@ static void _onPaint2(void)
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst1);
 			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst2);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*3);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
              GUI_SetFont(&GUI_Font_T90_30);
              GUI_SetColor(pColor->textColor);
              GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
@@ -375,7 +375,7 @@ static void _onPaint2(void)
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst5);
 			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
 			 sprintf(pStrBuf, "%4d", t90_set.dst.dst4);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*3);
+			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
              GUI_SetFont(&GUI_Font_T90_30);
              GUI_SetColor(pColor->textColor);
              GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);

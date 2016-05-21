@@ -20,7 +20,7 @@
 *                                                                    *
 * Initial font height: 45                                            *
 * Range disabled: 0000 - FFFF                                        *
-* Read pattern file: C:\Users\LIYI\Desktop\×ÖÌå\T9040B.txt           *
+* Read pattern file: C:\Users\LIYI\Desktop\×ÖÌå\T9045B.txt           *
 * Character enabled:   0x27 (39)                                     *
 * Character enabled:   0xB0 (176)                                    *
 *                                                                    *
@@ -39,6 +39,53 @@
 extern GUI_CONST_STORAGE GUI_FONT GUI_Font_T90_45B;
 
 /* Start of unicode area <Basic Latin> */
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_0020[ 135] = { /* code 0020, SPACE */
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,};
+
 GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_0027[ 90] = { /* code 0027, APOSTROPHE */
   ________,________,
   ________,________,
@@ -76,6 +123,53 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_0027[ 90] = { /* code 0027, A
   ________,________,
   ________,________,
   ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________};
+
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_002E[ 90] = { /* code 002E, FULL STOP */
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ___XXXX_,________,
+  __XXXXXX,________,
+  __XXXXXX,________,
+  __XXXXXX,________,
+  __XXXXXX,________,
+  ___XXXX_,________,
   ________,________,
   ________,________,
   ________,________,
@@ -698,8 +792,10 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_00B0[ 90] = { /* code 00B0, D
   ________,________,
   ________,________};
 
-GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_45B_CharInfo[14] = {
-   {  10,  10,  2, acGUI_Font_T90_45B_0027 } /* code 0027 */
+GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_45B_CharInfo[16] = {
+   {  21,  21,  3, acGUI_Font_T90_45B_0020 } /* code 0020 */
+  ,{  10,  10,  2, acGUI_Font_T90_45B_0027 } /* code 0027 */
+  ,{  10,  10,  2, acGUI_Font_T90_45B_002E } /* code 002E */
   ,{  21,  21,  3, acGUI_Font_T90_45B_0030 } /* code 0030 */
   ,{  21,  21,  3, acGUI_Font_T90_45B_0031 } /* code 0031 */
   ,{  21,  21,  3, acGUI_Font_T90_45B_0032 } /* code 0032 */
@@ -715,37 +811,51 @@ GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_45B_CharInfo[14] = {
   ,{  14,  14,  2, acGUI_Font_T90_45B_00B0 } /* code 00B0 */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop5 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop7 = {
    0x00B0 /* first character */
   ,0x00B0 /* last character  */
-  ,&GUI_Font_T90_45B_CharInfo[ 13] /* address of first character */
+  ,&GUI_Font_T90_45B_CharInfo[ 15] /* address of first character */
   ,(GUI_CONST_STORAGE GUI_FONT_PROP *)0 /* pointer to next GUI_FONT_PROP */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop4 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop6 = {
    0x004E /* first character */
   ,0x004E /* last character  */
-  ,&GUI_Font_T90_45B_CharInfo[ 12] /* address of first character */
+  ,&GUI_Font_T90_45B_CharInfo[ 14] /* address of first character */
+  ,&GUI_Font_T90_45B_Prop7 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop5 = {
+   0x0045 /* first character */
+  ,0x0045 /* last character  */
+  ,&GUI_Font_T90_45B_CharInfo[ 13] /* address of first character */
+  ,&GUI_Font_T90_45B_Prop6 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop4 = {
+   0x0030 /* first character */
+  ,0x0039 /* last character  */
+  ,&GUI_Font_T90_45B_CharInfo[  3] /* address of first character */
   ,&GUI_Font_T90_45B_Prop5 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop3 = {
-   0x0045 /* first character */
-  ,0x0045 /* last character  */
-  ,&GUI_Font_T90_45B_CharInfo[ 11] /* address of first character */
+   0x002E /* first character */
+  ,0x002E /* last character  */
+  ,&GUI_Font_T90_45B_CharInfo[  2] /* address of first character */
   ,&GUI_Font_T90_45B_Prop4 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop2 = {
-   0x0030 /* first character */
-  ,0x0039 /* last character  */
+   0x0027 /* first character */
+  ,0x0027 /* last character  */
   ,&GUI_Font_T90_45B_CharInfo[  1] /* address of first character */
   ,&GUI_Font_T90_45B_Prop3 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop1 = {
-   0x0027 /* first character */
-  ,0x0027 /* last character  */
+   0x0020 /* first character */
+  ,0x0020 /* last character  */
   ,&GUI_Font_T90_45B_CharInfo[  0] /* address of first character */
   ,&GUI_Font_T90_45B_Prop2 /* pointer to next GUI_FONT_PROP */
 };
