@@ -24,7 +24,7 @@ GUI_MEMDEV_Handle hMute;
 void MainTask(void)
 {
    GUI_MEMDEV_Handle hMem0;
-   INFO("MainTask Start");
+INFO("MainTask Start");
 
    GUI_Init();	
    WM_SetCreateFlags(WM_CF_MEMDEV);
@@ -58,9 +58,9 @@ void MainTask(void)
 //   GUI_Clear();
 	 GUI_SetColor(GUI_BLACK);
 	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
-	 GUI_FillRect(0, SCREEN_HEIGHT, 799, 479);
+	 GUI_FillRect(0, SCREEN_HEIGHT, 799, 479);   //右边和下边被遮盖边框填充黑色
 	 
-	 GUI_CURSOR_Select(&GUI_CursorCrossS);
+	 GUI_CURSOR_Select(&GUI_CursorCrossS);       //选择光标类型
 	 GUI_CURSOR_Hide();
         
 	 monitorState = OFF;
@@ -92,7 +92,7 @@ INFO("singleShipWin:%ld", singleShipWin);
 INFO("alarmMonitorWin:%ld", alarmMonitorWin);
 
 
-		if(t90_set.sys.workmode == NONE_MODE)
+		if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖
 		{                         	
 			WM_BringToTop(workModeWin);
 			WM_SetFocus(workModeWin);

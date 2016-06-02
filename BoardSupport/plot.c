@@ -1,3 +1,7 @@
+
+/*画图部分都在这里*/
+
+
 #include "plot.h"
 #include "GUI.h"
 #include "T90.h"
@@ -14,7 +18,9 @@ int scale = 100;  //100像素代表的距离
 static void FigureMotherShipPixel(Point center, int flag);
 static void FigureScale(int flag);
 
-void DrawStubs(int flag)
+//画船和报警线
+void DrawStubs(int flag)														//flag=0表示singleshipWin调用此函数；
+																										//flag=1表示alarmmonitorWin调用此函数
 {
 	int alarmLineZoom;
 //	StubRefresh();
@@ -205,7 +211,8 @@ static void FigureMotherShipPixel(Point center, int flag)
 	motherShipPixel.y = screenCenter.y + center.y*TO_PIXEL;
 }
 	
-static void FigureScale(int flag)
+static void FigureScale(int flag)                  // 计算比例尺  flag=0表示singleshipWin调用此函数；
+																										//flag=1表示alarmmonitorWin调用此函数
 {
 	int i;
 	int x_min = 0, x_max = 0, y_min = 0, y_max = 0;
@@ -297,7 +304,7 @@ static void FigureScale(int flag)
 	FigureMotherShipPixel(center, flag);
 }
 
-void DrawInvdShip(Point pixel, int course)  //course:航向（角度制）
+void DrawInvdShip(Point pixel, int course)  //course:航向（角度制）  画一个闯入船
 {
 	double _cos = cos(course*ANGLE_TO_RAD);
 	double _sin = sin(course*ANGLE_TO_RAD);
@@ -314,7 +321,7 @@ void DrawInvdShip(Point pixel, int course)  //course:航向（角度制）
 	GUI_DrawLine(pixel.x+7*_cos-9*_sin, pixel.y+7*_sin+9*_cos, pixel.x-7*_cos-9*_sin, pixel.y-7*_sin+9*_cos );
 }
 
-void DrawBullyShip(Point pixel, int course)
+void DrawBullyShip(Point pixel, int course)    //画一个高速船或渔政船
 {
 	double _cos = cos(course*ANGLE_TO_RAD);
 	double _sin = sin(course*ANGLE_TO_RAD);
@@ -326,7 +333,7 @@ void DrawBullyShip(Point pixel, int course)
 	GUI_DrawLine(pixel.x+10.5*_cos-13.5*_sin, pixel.y+10.5*_sin+13.5*_cos, pixel.x-10.5*_cos-13.5*_sin, pixel.y-10.5*_sin+13.5*_cos );
 }
 
-void DrawAllOtherShips()
+void DrawAllOtherShips()    //画所有的船
 {
 	int i;
 	Point point;
