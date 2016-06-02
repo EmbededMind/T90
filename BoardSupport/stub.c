@@ -1,3 +1,7 @@
+
+//     此函数为关于母船和安全标的函数
+//     Stub结构体里包括桩点和桩点两侧的切点
+
 #include "stub.h"
 #include "math.h"
 #include "T90.h"
@@ -12,7 +16,7 @@ static void PrintStubInfo(void);
 static void FillStubInfo(void);
 
 
-void StubRefresh()
+void StubRefresh()   //根据设置的距离计算桩点的坐标
 {
 	stubs[0].basePoint.x = 0;
 	stubs[0].basePoint.y = 0;
@@ -27,7 +31,7 @@ void StubRefresh()
 //	PrintStubInfo();
 }
 
-Point GetRelativePoint(Point point1, Point point2)
+Point GetRelativePoint(Point point1, Point point2)   //两点的相对坐标
 {
 	Point point;
 	point.x = point2.x - point1.x;
@@ -35,7 +39,7 @@ Point GetRelativePoint(Point point1, Point point2)
 	return point;
 }
 
-int GetDistance(Point point1, Point point2)
+int GetDistance(Point point1, Point point2)   //两点间的距离
 {
 	Point point = GetRelativePoint(point1, point2);
 	return (int)sqrt(point.x*point.x + point.y*point.y);
@@ -57,7 +61,7 @@ static void PrintStubInfo()
 	printf("\r\n");	
 }
 
-static void FillStubInfo(void)
+static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
 {
 	int i;
 	int dist;

@@ -62,8 +62,6 @@ INFO("MainTask Start");
 	 
 	 GUI_CURSOR_Select(&GUI_CursorCrossS);       //选择光标类型
 	 GUI_CURSOR_Hide();
-        
-	 monitorState = OFF;
 	 
 //DLG_testDimensinCreate();
 	
@@ -93,7 +91,8 @@ INFO("alarmMonitorWin:%ld", alarmMonitorWin);
 
 
 		if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖
-		{                         	
+		{         
+			monitorState = OFF;
 			WM_BringToTop(workModeWin);
 			WM_SetFocus(workModeWin);
 		}

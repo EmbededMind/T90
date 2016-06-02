@@ -1,5 +1,6 @@
 
-/*画图部分都在这里*/
+/*     画图部分都在这里
+       所有对象的坐标都以母船为原点     */
 
 
 #include "plot.h"
@@ -31,7 +32,7 @@ void DrawStubs(int flag)														//flag=0表示singleshipWin调用此函数；
 	DrawAlarmLine(alarmLineZoom);
 }
 
-void DrawShipFamily(int flag)
+void DrawShipFamily(int flag)     //画船和安全标以及他们之间的连线
 {
 	int i;
 	int ms_zoom = scale/500;
@@ -87,7 +88,7 @@ void DrawShipFamily(int flag)
 	}
 }
 
-void DrawAlarmLine(int zoom)   //zoom：缩放比例
+void DrawAlarmLine(int zoom)   //画报警线   zoom：缩放比例 
 {
 	int i;
 	for(i = 0; i < STUB_NUM; i++)
@@ -114,7 +115,7 @@ void DrawAlarmLine(int zoom)   //zoom：缩放比例
 	}
 }
 
-void DrawCursor(Point pixel, int flag)
+void DrawCursor(Point pixel, int flag)  //显示光标及对应的信息
 {
 	int start_x, start_y;	
 	Point point;
@@ -185,7 +186,7 @@ void DrawCursor(Point pixel, int flag)
 
 
 
-Point GetItemPixel(Point itemPoint)
+Point GetItemPixel(Point itemPoint)    //得到对象的像素坐标
 {
 	Point itemPixel;
 	itemPixel.x =  itemPoint.x*TO_PIXEL + motherShipPixel.x;
@@ -194,9 +195,9 @@ Point GetItemPixel(Point itemPoint)
 }
 
 
-static void FigureMotherShipPixel(Point center, int flag)
+static void FigureMotherShipPixel(Point center, int flag)    //计算母船的像素坐标    center：实际需要显示范围的中心点
 {
-	Point screenCenter;
+	Point screenCenter; //定义屏幕显示区像素中心点
 	if(!flag)
 	{
 		screenCenter.x = 215;

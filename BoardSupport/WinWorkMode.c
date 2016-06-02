@@ -60,7 +60,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 										}
 										
 										T90_Store();
-                                        monitorState = ON;
+                    monitorState = ON;
 										WM_SendMessageNoPara(systemSetDlg, WM_INIT_DIALOG);
                     break;
             }
@@ -142,7 +142,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 				 {
 						WM_SetFocus(buttons[0]);
 				 }
-                 WM_Paint(workModeWin);
+					WM_Paint(workModeWin);
 				 break;
          
     default:
