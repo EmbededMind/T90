@@ -17,7 +17,7 @@ WM_HWIN singleShipWin;
 
 static WM_HTIMER timer;
 
-const HomeColor *pColor = homeColors;
+static const HomeColor *pColor = homeColors;
 
 static void _onPaint1(void);
 static void _onPaint2(void);
@@ -85,19 +85,11 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						 
 						 case GUI_KEY_LEFT:
 									cursorOnStub = 1;
-//									if(cursorOnStub < 0)
-//									{
-//										cursorOnStub = STUB_NUM-1;
-//									}
 									WM_Paint(singleShipWin);
 									break;
 												 
 						 case GUI_KEY_RIGHT:
 									cursorOnStub = 3;
-//									if(cursorOnStub >= STUB_NUM)
-//									{
-//										cursorOnStub = 0;
-//									}
 									WM_Paint(singleShipWin);
 									break;
 						 

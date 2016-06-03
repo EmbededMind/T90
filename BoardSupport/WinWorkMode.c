@@ -8,6 +8,7 @@
 #include "T90.h"
 #include "maintask.h"
 #include "t90font.h"
+#include "stub.h"
 
 /** @brief 单拖模式、双拖模式按钮 */
 static WM_HWIN buttons[2];
@@ -61,6 +62,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 										
 										T90_Store();
                     monitorState = ON;
+										StubRefresh();
 										WM_SendMessageNoPara(systemSetDlg, WM_INIT_DIALOG);
                     break;
             }

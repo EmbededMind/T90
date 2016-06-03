@@ -26,7 +26,9 @@ void MainTask(void)
    GUI_MEMDEV_Handle hMem0;
 INFO("MainTask Start");
 
-   GUI_Init();	
+   GUI_Init();
+	//创建字体
+   GUI_UC_SetEncodeUTF8();	
    WM_SetCreateFlags(WM_CF_MEMDEV);
    
     hMem0 = GUI_MEMDEV_Create(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -43,8 +45,7 @@ INFO("MainTask Start");
     GUI_MEMDEV_Delete(hMem0);
     GUI_Delay(1000);
     
-   //创建字体
-   GUI_UC_SetEncodeUTF8();	
+
    //字体设置	//GUI_SetDefaultFont (&SIF_Font);
    GUI_SetDefaultFont (&GUI_Font30);	
    TEXT_SetDefaultFont(&GUI_Font30);
@@ -86,8 +87,8 @@ INFO("MainTask Start");
 		
 		confirmWin = WIN_ConfirmCreate();
 		
-INFO("singleShipWin:%ld", singleShipWin);		
-INFO("alarmMonitorWin:%ld", alarmMonitorWin);
+//INFO("singleShipWin:%ld", singleShipWin);		
+//INFO("alarmMonitorWin:%ld", alarmMonitorWin);
 
 
 		if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖
@@ -101,7 +102,7 @@ INFO("alarmMonitorWin:%ld", alarmMonitorWin);
 			WM_BringToTop(singleShipWin);
 			WM_SetFocus(singleShipWin);
 		}
-		else
+		else if(t90_set.sys.workmode == DOUBLE_MODE)
 		{
 			WM_BringToTop(doubleShipWin);
 			WM_SetFocus(doubleShipWin);

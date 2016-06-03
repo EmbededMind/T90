@@ -9,26 +9,89 @@
 #include "transform.h"
 
 
-Stub stubs[STUB_NUM];
+Stub stubs[STUB_NUM_MAX];
+StubNode *pStubHead = NULL;
 
 
 static void PrintStubInfo(void);
 static void FillStubInfo(void);
+static void FillStubNodes(void);
 
 
 void StubRefresh()   //根据设置的距离计算桩点的坐标
 {
-	stubs[0].basePoint.x = 0;
-	stubs[0].basePoint.y = 0;
-	stubs[1].basePoint.x = -t90_set.dst.dst2*M_TO_MILLINM;
-	stubs[1].basePoint.y = -t90_set.dst.dst1*M_TO_MILLINM;
-	stubs[2].basePoint.x = 0;
-	stubs[2].basePoint.y = -t90_set.dst.dst3*M_TO_MILLINM;
-	stubs[3].basePoint.x =  t90_set.dst.dst4*M_TO_MILLINM;
-	stubs[3].basePoint.y = -t90_set.dst.dst5*M_TO_MILLINM;
+	if(t90_set.sys.workmode == SINGLE_MODE)
+	{
+		stubs[0].basePoint.x = 0;
+		stubs[0].basePoint.y = 0;
+		stubs[0].isValid = 1;
+		stubs[0].type = motherStub;
+		stubs[1].basePoint.x = -t90_set.dst.dst2*M_TO_MILLINM;
+		stubs[1].basePoint.y = -t90_set.dst.dst1*M_TO_MILLINM;
+		stubs[1].isValid = 0;
+		stubs[1].type = safetySignStub;
+		stubs[2].basePoint.x = 0;
+		stubs[2].basePoint.y = -t90_set.dst.dst3*M_TO_MILLINM;
+		stubs[2].isValid = 1;
+		stubs[2].type = safetySignStub;
+		stubs[3].basePoint.x =  t90_set.dst.dst4*M_TO_MILLINM;
+		stubs[3].basePoint.y = -t90_set.dst.dst5*M_TO_MILLINM;
+		stubs[3].isValid = 0;
+		stubs[3].type = safetySignStub;
+	}
+	else if(t90_set.sys.workmode == DOUBLE_MODE)
+	{
+		
+	}
+	FillStubNodes();
 	FillStubInfo();
 	detectInit();
-//	PrintStubInfo();
+	PrintStubInfo();
+}
+
+static void FillStubNodes(void)
+{
+	int i;
+	StubNode *pTemp, *pIndex = NULL;
+	pIndex = pStubHead;
+	if(pIndex)         //删除链表中所有节点
+	{
+		pIndex = pIndex->pNext;
+		if(pIndex == pStubHead)
+			free(pIndex);
+		else
+		{
+			do
+			{
+				pTemp = pIndex;
+				pIndex = pIndex->pNext;
+				free(pTemp);
+			}
+			while(pIndex != pStubHead);
+			free(pIndex);
+		}
+	}                 //删除完成
+	for(i = 0; i < STUB_NUM_MAX; i++)
+	{
+		if(stubs[i].isValid)
+		{
+			pTemp = (StubNode *)malloc(sizeof(StubNode));
+			if(pStubHead == NULL)
+			{
+				pStubHead = pTemp;
+				pIndex = pStubHead;
+				pIndex->pStub = &stubs[i];
+			}
+			else
+			{
+				pIndex->pNext = pTemp;
+				pIndex = pTemp;
+				pIndex->pStub = &stubs[i];
+			}
+		}
+	}
+	if(pIndex)
+		pIndex->pNext = pStubHead;
 }
 
 Point GetRelativePoint(Point point1, Point point2)   //两点的相对坐标
@@ -47,58 +110,126 @@ int GetDistance(Point point1, Point point2)   //两点间的距离
 
 static void PrintStubInfo()
 {
-	int i;
+	int i = 0;	
+	StubNode *pIndex = pStubHead;
 	printf("\r\n");
 	printf("StubInfo:\r\n");
-	for(i = 0; i < STUB_NUM; i++)
+	if(pIndex)
 	{
-		printf("stub[%d].basePoint:(%d, %d)\r\n", i, stubs[i].basePoint.x, stubs[i].basePoint.y);
-		printf("stub[%d].tang1.point:(%d, %d)\r\n", i, stubs[i].tang1.point.x, stubs[i].tang1.point.y);
-		printf("stub[%d].tang1.angle:%d\r\n", i, stubs[i].tang1.angle);
-		printf("stub[%d].tang2.point:(%d, %d)\r\n", i, stubs[i].tang2.point.x, stubs[i].tang2.point.y);
-		printf("stub[%d].tang2.angle:%d\r\n", i, stubs[i].tang2.angle);
-	}	
+		do
+		{
+			printf("stub[%d].basePoint:(%d, %d)\r\n", i, pIndex->pStub->basePoint.x, pIndex->pStub->basePoint.y);
+			printf("stub[%d].tang1.point:(%d, %d)\r\n", i, pIndex->pStub->tang1.point.x, pIndex->pStub->tang1.point.y);
+			printf("stub[%d].tang1.angle:%d\r\n", i, pIndex->pStub->tang1.angle);
+			printf("stub[%d].tang2.point:(%d, %d)\r\n", i, pIndex->pStub->tang2.point.x, pIndex->pStub->tang2.point.y);
+			printf("stub[%d].tang2.angle:%d\r\n", i, pIndex->pStub->tang2.angle);
+			i++;
+			pIndex = pIndex->pNext;
+		}
+		while(pIndex != pStubHead);
+	}
 	printf("\r\n");	
 }
 
 static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
 {
-	int i;
 	int dist;
 	Point point;
-	for(i = 0; i < STUB_NUM; i++)
+	StubNode *pIndex = pStubHead;
+
+	if(pIndex)
 	{
-		int j = (i+1 == STUB_NUM)? 0: i+1;
-		
-		point = GetRelativePoint(stubs[i].basePoint, stubs[j].basePoint);
+		do
+		{
+			point = GetRelativePoint(pIndex->pStub->basePoint, pIndex->pNext->pStub->basePoint);
 
-		dist = GetDistance(stubs[i].basePoint, stubs[j].basePoint);
+			dist = GetDistance(pIndex->pStub->basePoint, pIndex->pNext->pStub->basePoint);
 
-		stubs[i].tang1.point.x =  t90_set.alarm.invd_dst*point.y/dist + stubs[i].basePoint.x;
-		stubs[i].tang1.point.y = -t90_set.alarm.invd_dst*point.x/dist + stubs[i].basePoint.y;
-		stubs[i].tang1.angle = atan2(stubs[i].tang1.point.y - stubs[i].basePoint.y, 
-																 stubs[i].tang1.point.x - stubs[i].basePoint.x)*RAD_TO_ANGLE;
-		
-		stubs[j].tang2.point.x = stubs[i].tang1.point.x + point.x;
-		stubs[j].tang2.point.y = stubs[i].tang1.point.y + point.y;
-		stubs[j].tang2.angle = atan2(stubs[j].tang2.point.y - stubs[j].basePoint.y, 
-																 stubs[j].tang2.point.x - stubs[j].basePoint.x)*RAD_TO_ANGLE;
+			pIndex->pStub->tang1.point.x =  t90_set.alarm.invd_dst*point.y/dist + pIndex->pStub->basePoint.x;
+			pIndex->pStub->tang1.point.y = -t90_set.alarm.invd_dst*point.x/dist + pIndex->pStub->basePoint.y;
+			pIndex->pStub->tang1.angle = atan2(pIndex->pStub->tang1.point.y - pIndex->pStub->basePoint.y, 
+																				 pIndex->pStub->tang1.point.x - pIndex->pStub->basePoint.x)*RAD_TO_ANGLE;
+			
+			pIndex->pNext->pStub->tang2.point.x = pIndex->pStub->tang1.point.x + point.x;
+			pIndex->pNext->pStub->tang2.point.y = pIndex->pStub->tang1.point.y + point.y;
+			pIndex->pNext->pStub->tang2.angle = atan2(pIndex->pNext->pStub->tang2.point.y - pIndex->pNext->pStub->basePoint.y, 
+																								pIndex->pNext->pStub->tang2.point.x - pIndex->pNext->pStub->basePoint.x)*RAD_TO_ANGLE;
+			pIndex = pIndex->pNext;
+		}
+		while(pIndex != pStubHead);
 	}
 }
 
-Point STUB_GetYMin(void)
-{
-	int i;
-	Point point;
-	for(i = 0; i < STUB_NUM; i++)
+int STUB_GetMostValue(char type)
+{	
+	StubNode *pIndex = pStubHead;
+	switch(type)
 	{
-		if(stubs[i].basePoint.y < point.y)
+		case X_MAX:
 		{
-			point.y = stubs[i].basePoint.y;
-			point.x = stubs[i].basePoint.x;
+			int xMax = -99999;
+			if(pIndex)
+			{
+				do
+				{
+					if(pIndex->pStub->basePoint.x > xMax)
+						xMax = pIndex->pStub->basePoint.x;
+					pIndex = pIndex->pNext;
+				}
+				while(pIndex != pStubHead);
+			}
+			return xMax;
 		}
+		break;
+		case X_MIN:
+		{
+			int xMin = 99999;
+			if(pIndex)
+			{
+				do
+				{
+					if(pIndex->pStub->basePoint.x < xMin)
+						xMin = pIndex->pStub->basePoint.x;
+					pIndex = pIndex->pNext;
+				}
+				while(pIndex != pStubHead);
+			}
+			return xMin;
+		}
+		break;
+		case Y_MAX:
+		{
+			int yMax = -99999;
+			if(pIndex)
+			{
+				do
+				{
+					if(pIndex->pStub->basePoint.y > yMax)
+						yMax = pIndex->pStub->basePoint.y;
+					pIndex = pIndex->pNext;
+				}
+				while(pIndex != pStubHead);
+			}
+			return yMax;
+		}
+		break;
+		case Y_MIN:
+		{
+			int yMin = 99999;
+			if(pIndex)
+			{
+				do
+				{
+					if(pIndex->pStub->basePoint.y < yMin)
+						yMin = pIndex->pStub->basePoint.y;
+					pIndex = pIndex->pNext;
+				}
+				while(pIndex != pStubHead);
+			}
+			return yMin;
+		}
+		break;
 	}
-	return point;
 }
 		
 int FetchMidStub()
