@@ -1,5 +1,6 @@
 #include "lpc177x_8x_gpdma.h"
 #include "lpc177x_8x_pinsel.h"
+#include "lpc177x_8x_ssp.h"
 #include "dma.h"
 #include "uart.h"
 #include "lpc177x_8x_uart.h"
@@ -71,31 +72,16 @@ void DMA_IRQHandler (void)
        {
 
           GPDMA_ClearIntPending (GPDMA_STATCLR_INTERR, 0);
-          SPI1_DMA_Init();
-          printf("dma error\n\r");
-       }       
-//printf("myCnt:%d",myCnt);       
-     
-//        LPC_GPDMACH1->CControl = (LPC_GPDMACH1->CControl & 0xfffff000)|(sizeof(UART2_RX) &0x0fff);
-//        LPC_GPDMACH1->CDestAddr = (uint32_t) &UART2_RX;//ÖØÖÃÆðÊ¼µØÖ·		
-//printf("\r\nDMA OK.\n\r");    
+          SPI2_DMA_Init();
+          PRINT("dma error");
+       }          
     }
-    
-//    if (GPDMA_IntGetStatus(GPDMA_STAT_INTERR, 0)  )		/* 检查DMA通道0中断错误状态 */
-//    {
-//       printf("\r\n\aDMA Err!\r\n");
-//       GPDMA_ClearIntPending (GPDMA_STATCLR_INTERR, 0);//Channel0_Err++;	/* 清除DMA通道0中断错误请求 */
-//       SPI1_DMA_Init();  //lpc1788_DMA_Init();
-//    }
-       
-//    GPDMA_ClearIntPending (GPDMA_STATCLR_INTTC, 0);
-//    GPDMA_ChannelCmd(0, ENABLE);		
  }
 }
 
 
 
-void SPI1_DMA_Init(void)
+void SPI2_DMA_Init(void)
 {
 	NVIC_DisableIRQ(DMA_IRQn);		/* 关闭GPDMA中断 */
 	NVIC_SetPriority(DMA_IRQn, ((0x01<<3)|0x01));/* 设置抢占优先级preemption为1, 子优先级sub-priority为1 */
@@ -106,12 +92,13 @@ void SPI1_DMA_Init(void)
 	GPDMACfg.TransferSize = sizeof(DMADest_Buffer);/* 传输大小 */
 	//GPDMACfg.TransferWidth =GPDMA_WIDTH_WORD;	/* 传输宽度 */
 	GPDMACfg.TransferType = GPDMA_TRANSFERTYPE_P2M;	/* 设置传输类型为外设到存储器 */
-	GPDMACfg.SrcConn = GPDMA_CONN_SSP1_Rx;	/* 设置DMA源请求连接*/
+	GPDMACfg.SrcConn = GPDMA_CONN_SSP2_Rx;	/* 设置DMA源请求连接*/
 	GPDMACfg.DstConn = 0;	/* 设置DMA目的请求连接，未使用*/
 	GPDMACfg.DMALLI = 0;	/* 设置DMA通道链表项，未使用 */
 
 	GPDMA_Setup(&GPDMACfg);/* 把上面的参数设置进DMA相关寄存器 */
-	LPC_SSP1->DMACR |=0x11;//SSP_DMACmd (0, SSP_DMA_RXDMA_EN, ENABLE);
+	//LPC_SSP2->DMACR |=0x11;
+	SSP_DMACmd (LPC_SSP2, SSP_DMA_RX, ENABLE);
 	NVIC_EnableIRQ(DMA_IRQn);
 	GPDMA_ChannelCmd(0, ENABLE);
 }

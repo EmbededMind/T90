@@ -10,6 +10,7 @@
 #include "DMA.h"
 #include "Check.h"
 #include "uart.h"
+#include "SPI2.h"
 #include "SPI1.h"
 #include "GUI.h"
 #include "dlg.h"
@@ -448,13 +449,12 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   mothership.longitude = MOTHERSHIP_LG;
   mothership.true_heading  = 0;
   
-//  center.lgtude  = MOTHERSHIP_LG;
-//  center.lttude  = MOTHERSHIP_LA;
-  
-  SPI1_DMA_Init();
-  SPI1_Int();
+
   
   SPI2_Int();
+  SPI2_DMA_Init();  
+	
+  SPI1_Int();
 
   ISD_Init();
   

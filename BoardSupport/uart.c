@@ -33,7 +33,7 @@ void xl_UART_Config(unsigned char port)
       case 0:
            PINSEL_ConfigPin(0,2,1);
            PINSEL_ConfigPin(0,3,1);
-           UARTConfigStruct.Baud_rate  = 9600;
+           UARTConfigStruct.Baud_rate  = 115200;
            
            UART_Init( (UART_ID_Type)port, &UARTConfigStruct );
            UART_FIFOConfig( (UART_ID_Type)port, &UARTFIFOConfigStruct );
@@ -42,13 +42,14 @@ void xl_UART_Config(unsigned char port)
            UART_IntConfig(UART_0, UART_INTCFG_RBR, ENABLE);
            UART_IntConfig(UART_0, UART_INTCFG_RLS, ENABLE);           
            
-           NVIC_DisableIRQ(UART0_IRQn);           
+           NVIC_SetPriority(UART0_IRQn, ((0x02<<3)|0x02));
+	         NVIC_EnableIRQ(UART0_IRQn);          
            break;
            
       case 2:
            PINSEL_ConfigPin(0,10,1);
            PINSEL_ConfigPin(0,11,1);
-           UARTConfigStruct.Baud_rate = 115200;
+           UARTConfigStruct.Baud_rate = 9600;
            
            UART_Init( (UART_ID_Type)port, &UARTConfigStruct );
            UART_FIFOConfig( (UART_ID_Type)port, &UARTFIFOConfigStruct );
@@ -57,8 +58,8 @@ void xl_UART_Config(unsigned char port)
            UART_IntConfig(UART_2, UART_INTCFG_RBR, ENABLE);
            UART_IntConfig(UART_2, UART_INTCFG_RLS, ENABLE); 
            
-           NVIC_SetPriority(UART2_IRQn, ((0x02<<3)|0x02));
-	         	NVIC_EnableIRQ(UART2_IRQn);
+          // NVIC_SetPriority(UART2_IRQn, ((0x02<<3)|0x02));
+	         	NVIC_DisableIRQ(UART2_IRQn);
            break;
            
      default:
@@ -77,19 +78,19 @@ void USER_Init(void)
 
 }
 
-void UART2_IRQHandler(void)
+void UART0_IRQHandler(void)
 {
    uint8_t tmpc;
    uint32_t  tmp, tmp1;
-   tmp = ((LPC_UART2->IIR) & UART_IIR_BITMASK) & UART_IIR_INTID_MASK;
+   tmp = ((LPC_UART0->IIR) & UART_IIR_BITMASK) & UART_IIR_INTID_MASK;
    if (tmp == UART_IIR_INTID_RLS)	// Receive Line Status
    {
-     tmp1 = UART_GetLineStatus(UART_2);// Check line status
+     tmp1 = UART_GetLineStatus(UART_0);// Check line status
      tmp1 &= (UART_LSR_OE | UART_LSR_PE | UART_LSR_FE | UART_LSR_BI | UART_LSR_RXFE);// Mask out the Receive Ready and Transmit Holding empty status
    }
    if ((tmp == UART_IIR_INTID_RDA) || (tmp == UART_IIR_INTID_CTI))	// Receive Data Available or Character time-out
    {	
-       UART_Receive(UART_2, &tmpc, 1, NONE_BLOCKING);
+       UART_Receive(UART_0, &tmpc, 1, NONE_BLOCKING);
       if(tmpc >= GUI_KEY_MENU  &&  tmpc <= GUI_KEY_PGDOWN)   
       {   
                isKeyTrigged  = 1;

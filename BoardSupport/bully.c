@@ -63,7 +63,13 @@ Bool BULY_add(BERTH* pBoatLink)
    for(i=0; i<BULY_NUM_MAX; i++){
       if(BULY_Berth[i].pBoatLink == pBoatLink){
          pBuf  = &BULY_Berth[i];
-         break;
+         pBuf->pBoatLink  = pBoatLink;
+         if(pBuf->pBoatLink->mntState != MNTState_Triggered){
+            validCnt++;
+            pBuf->pBoatLink->mntState  = MNTState_Triggered;
+         }
+PRINT("readd bully");         
+        return TRUE;
       }
    }
    

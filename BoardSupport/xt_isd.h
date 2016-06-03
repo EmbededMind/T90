@@ -1,7 +1,7 @@
 #ifndef _XT_ISD_H
 #define _XT_ISD_H
-
-#include "SPI2.h"
+#include "stdint.h"
+#include "lpc177x_8x_gpio.h"
 
 
 void ISD_Init(void);
