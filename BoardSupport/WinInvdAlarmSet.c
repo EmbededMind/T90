@@ -241,7 +241,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					if(pMsg->Data.v == REPLY_OK)
 					{
 						 t90_set.alarm.invd_dst = agent_set;
-						 T90_Store();
+						 T90_Store();				
 						StubRefresh();
 					}
 					else

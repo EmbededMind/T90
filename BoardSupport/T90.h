@@ -15,6 +15,11 @@
 
 #define T90
 
+#define X_MAX   0x01
+#define X_MIN   0x02
+#define Y_MAX   0x03
+#define Y_MIN   0x04
+
 extern unsigned long SYS_Date;
 extern unsigned long SYS_Time;
 
