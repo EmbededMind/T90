@@ -152,7 +152,7 @@ void T90_Init()
 {        
    if(T90_Load())
    {
-INFO("System load successfully!");   
+//INFO("System load successfully!");   
    }
    else
    {
@@ -160,8 +160,8 @@ INFO("Error happened when system load.System will be configed with default value
    }
 
    PWM_SET(t90_set.sys.bright); 
-   SND_Init();
-	 StubRefresh();
+//   SND_Init();
+//	 StubRefresh();
 }
 
 

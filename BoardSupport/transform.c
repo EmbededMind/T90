@@ -10,6 +10,15 @@
 #define   GETANGLE(Y,X)   (int)(atan2(MYABS(Y),MYABS(X))*180/3.1416)
     
 
+int rectifyNum(int num, int stepValue)   //根据步进值对整形数纠正误差
+{
+	if(stepValue > 1)
+	{
+		return (num+stepValue-1 - (num+stepValue-1)%stepValue);
+	}
+	return num;
+}
+
 void llToxy(BERTH *pBerth)
 {
     

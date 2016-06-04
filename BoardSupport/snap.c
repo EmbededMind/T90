@@ -1,5 +1,6 @@
 #include "snap.h"
 #include "bully.h"
+#include "stub.h"
 
 
 extern boat mothership;
@@ -233,6 +234,36 @@ void SNAP_searchNearestObj(int Dir_x, int Dir_y)
         
         return ;
      }     
+}
+
+void SNAP_SearchNearestStub(char keyType, Stub *pCursorStub)
+{
+	Point point = pCursorStub->basePoint;
+	Stub *pTmp;
+	StubNode *pIndex = pStubHead;
+	switch(keyType)
+	{
+		case UP:	
+			if(pIndex)
+			{
+				do
+				{
+//					if(pIndex->pStub->basePoint.y > point.y)
+//						if(
+					pIndex = pIndex->pNext;
+				}
+				while(pIndex != pStubHead);
+			}
+			break;
+		case DOWN:
+			break;
+		case LEFT:
+			break;
+		case RIGHT:
+			break;
+		default:
+			break;
+	}
 }
 
 //void SNAP_getPara(int *x, int *y)

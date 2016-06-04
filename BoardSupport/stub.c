@@ -26,27 +26,55 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[0].basePoint.y = 0;
 		stubs[0].isValid = 1;
 		stubs[0].type = motherStub;
+		
 		stubs[1].basePoint.x = -t90_set.dst.dst2*M_TO_MILLINM;
 		stubs[1].basePoint.y = -t90_set.dst.dst1*M_TO_MILLINM;
-		stubs[1].isValid = 0;
+		stubs[1].isValid = 1;
 		stubs[1].type = safetySignStub;
+		
 		stubs[2].basePoint.x = 0;
 		stubs[2].basePoint.y = -t90_set.dst.dst3*M_TO_MILLINM;
 		stubs[2].isValid = 1;
 		stubs[2].type = safetySignStub;
+		
 		stubs[3].basePoint.x =  t90_set.dst.dst4*M_TO_MILLINM;
 		stubs[3].basePoint.y = -t90_set.dst.dst5*M_TO_MILLINM;
-		stubs[3].isValid = 0;
+		stubs[3].isValid = 1;
 		stubs[3].type = safetySignStub;
+		
+		stubs[4].isValid = 0;
 	}
 	else if(t90_set.sys.workmode == DOUBLE_MODE)
 	{
+		stubs[0].basePoint.x = 0;
+		stubs[0].basePoint.y = 0;
+		stubs[0].isValid = 1;
+		stubs[0].type = motherStub;
 		
+		stubs[1].basePoint.x = 50*M_TO_MILLINM;
+		stubs[1].basePoint.y = -400*M_TO_MILLINM;
+		stubs[1].isValid = 1;
+		stubs[1].type = safetySignStub;
+		
+		stubs[2].basePoint.x = 100*M_TO_MILLINM;
+		stubs[2].basePoint.y = -500*M_TO_MILLINM;
+		stubs[2].isValid = 1;
+		stubs[2].type = safetySignStub;
+		
+		stubs[3].basePoint.x =  150*M_TO_MILLINM;
+		stubs[3].basePoint.y = -400*M_TO_MILLINM;
+		stubs[3].isValid = 1;
+		stubs[3].type = safetySignStub;
+		
+		stubs[4].basePoint.x = 200*M_TO_MILLINM;
+		stubs[4].basePoint.y = 0;
+		stubs[4].isValid = 1;
+		stubs[4].type = aidedStub;
 	}
 	FillStubNodes();
 	FillStubInfo();
 	detectInit();
-	PrintStubInfo();
+//	PrintStubInfo();
 }
 
 static void FillStubNodes(void)
@@ -105,7 +133,7 @@ Point GetRelativePoint(Point point1, Point point2)   //两点的相对坐标
 int GetDistance(Point point1, Point point2)   //两点间的距离
 {
 	Point point = GetRelativePoint(point1, point2);
-	return (int)sqrt(point.x*point.x + point.y*point.y);
+	return (int)(sqrt(point.x*point.x + point.y*point.y)+0.5);
 }
 
 static void PrintStubInfo()
@@ -148,12 +176,12 @@ static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
 			pIndex->pStub->tang1.point.x =  t90_set.alarm.invd_dst*point.y/dist + pIndex->pStub->basePoint.x;
 			pIndex->pStub->tang1.point.y = -t90_set.alarm.invd_dst*point.x/dist + pIndex->pStub->basePoint.y;
 			pIndex->pStub->tang1.angle = atan2(pIndex->pStub->tang1.point.y - pIndex->pStub->basePoint.y, 
-																				 pIndex->pStub->tang1.point.x - pIndex->pStub->basePoint.x)*RAD_TO_ANGLE;
+																				 pIndex->pStub->tang1.point.x - pIndex->pStub->basePoint.x)*RAD_TO_ANGLE+1;
 			
 			pIndex->pNext->pStub->tang2.point.x = pIndex->pStub->tang1.point.x + point.x;
 			pIndex->pNext->pStub->tang2.point.y = pIndex->pStub->tang1.point.y + point.y;
 			pIndex->pNext->pStub->tang2.angle = atan2(pIndex->pNext->pStub->tang2.point.y - pIndex->pNext->pStub->basePoint.y, 
-																								pIndex->pNext->pStub->tang2.point.x - pIndex->pNext->pStub->basePoint.x)*RAD_TO_ANGLE;
+																								pIndex->pNext->pStub->tang2.point.x - pIndex->pNext->pStub->basePoint.x)*RAD_TO_ANGLE-1;
 			pIndex = pIndex->pNext;
 		}
 		while(pIndex != pStubHead);

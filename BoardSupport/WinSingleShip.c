@@ -23,6 +23,7 @@ static void _onPaint1(void);
 static void _onPaint2(void);
 
 static int cursorOnStub = 0;
+static Stub *pCursorStub = &stubs[0];
 //static Point cursorPixel;
 
 static int timeCnt = 0;
@@ -50,6 +51,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						 WM_SetFocus(alarmMonitorWin);
 					 }					 
 					 timeCnt++;
+					 if(timeCnt == 1)
+							GUI_CURSOR_Show();
 					 WM_Paint(singleShipWin);
 					 WM_RestartTimer(timer, 500);
 					 break;
@@ -61,11 +64,11 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 	
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
-						case GUI_KEY_PWM_INC:       
+						case GUI_KEY_PWM_INC:
 								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 								 break;
-						 case GUI_KEY_MENU:						 
-									WM_DeleteTimer(timer);					 
+						 case GUI_KEY_MENU:
+									WM_DeleteTimer(timer);
 									WM_BringToTop(mainMenuDlg);
 									WM_SetFocus(mainMenuDlg);
 									break;
@@ -114,15 +117,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				   WM_GetClientRect(&r);
 					 GUI_ClearRectEx(&r);
 			
-					 if(cursorOnStub)
-					 {
-						 _onPaint2();
-					 }
-					 else
+					 if(cursorOnStub == 0 || cursorOnStub == 4)
 					 {
 					   _onPaint1();
 					 }
-					
+					 else
+					 {
+						 _onPaint2();
+					 }
+
 					 if(monitorState == OFF)
 					 { 
 						 GUI_SetColor(GUI_RED);
@@ -136,13 +139,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			case WM_SET_FOCUS:
 					 if(pMsg->Data.v)
 					 {
-						 	GUI_CURSOR_Show();
 						 cursorOnStub = 0;
+						 timeCnt = 0;
+//						 GUI_CURSOR_Show();
 						 timer  = WM_CreateTimer(pMsg->hWin, 0, 500, 0);
 					 }
 					 else
 					 {
 						 GUI_CURSOR_Hide();
+//						 timeCnt = 0;
 					 }
 					 WM_DefaultProc(pMsg);
 					 break;

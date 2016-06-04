@@ -10,6 +10,7 @@
 #include "bully.h"
 #include "snap.h"
 #include "stub.h"
+#include "transform.h"
 
 
 Point motherShipPixel;
@@ -74,7 +75,12 @@ void DrawShipFamily(int flag)     //ª≠¥¨∫Õ∞≤»´±Í“‘º∞À˚√«÷Æº‰µƒ¡¨œﬂ
 			}
 			else if(pIndex->pStub->type == aidedStub)   //∏®¥¨
 			{
-				
+				pixelTmp1 = GetItemPixel(pIndex->pStub->basePoint);
+				GUI_DrawLine(pixelTmp1.x-(7-ms_zoom), pixelTmp1.y,                pixelTmp1.x,               pixelTmp1.y-(10-ms_zoom));  
+				GUI_DrawLine(pixelTmp1.x,               pixelTmp1.y-(10-ms_zoom), pixelTmp1.x+(7-ms_zoom), pixelTmp1.y );
+				GUI_DrawLine(pixelTmp1.x+(7-ms_zoom), pixelTmp1.y,                pixelTmp1.x+(5-ms_zoom), pixelTmp1.y+(20-ms_zoom));
+				GUI_DrawLine(pixelTmp1.x+(5-ms_zoom), pixelTmp1.y+(20-ms_zoom), pixelTmp1.x-(5-ms_zoom), pixelTmp1.y+(20-ms_zoom));
+				GUI_DrawLine(pixelTmp1.x-(5-ms_zoom), pixelTmp1.y+(20-ms_zoom), pixelTmp1.x-(7-ms_zoom), pixelTmp1.y);
 			}
 			pIndex = pIndex->pNext;
 		}
@@ -85,12 +91,12 @@ void DrawShipFamily(int flag)     //ª≠¥¨∫Õ∞≤»´±Í“‘º∞À˚√«÷Æº‰µƒ¡¨œﬂ
 	{
 		int y_min = STUB_GetMostValue(Y_MIN);
 		y_min = -y_min;
-		GUI_SetFont(GUI_FONT_24_ASCII);         
+		GUI_SetFont(GUI_FONT_24_ASCII);
 		GUI_DrawHLine(motherShipPixel.y, 34, 46);
 		GUI_DrawHLine(y_min*TO_PIXEL + motherShipPixel.y, 34, 46);
 		GUI_DrawVLine(40, motherShipPixel.y, y_min*TO_PIXEL/2 - 20 + motherShipPixel.y);
 		GUI_DrawVLine(40, y_min*TO_PIXEL/2 + 20 + motherShipPixel.y, y_min*TO_PIXEL + motherShipPixel.y);
-		sprintf(pStrBuf,"%dm",y_min*MILLINM_TO_M);	
+		sprintf(pStrBuf,"%dm", rectifyNum(y_min*MILLINM_TO_M, 5));
 		GUI_DispStringAt(pStrBuf, 40 - GUI_GetStringDistX(pStrBuf)/2 + 3, y_min*TO_PIXEL/2 - 12 + motherShipPixel.y);
 	}
 	
@@ -111,8 +117,10 @@ void DrawShipFamily(int flag)     //ª≠¥¨∫Õ∞≤»´±Í“‘º∞À˚√«÷Æº‰µƒ¡¨œﬂ
 void DrawAlarmLine(int zoom)   //ª≠±®æØœﬂ   zoom£∫Àı∑≈±»¿˝ 
 {
 	StubNode *pIndex = pStubHead;
+	int r;
 	if(pIndex)
 	{
+		r = sqrt(pIndex->pStub->tang1.point.x*pIndex->pStub->tang1.point.x + pIndex->pStub->tang1.point.y*pIndex->pStub->tang1.point.y);
 		do
 		{
 			if(pIndex->pStub->tang2.angle > pIndex->pStub->tang1.angle)
@@ -121,7 +129,8 @@ void DrawAlarmLine(int zoom)   //ª≠±®æØœﬂ   zoom£∫Àı∑≈±»¿˝
 			}
 			GUI_SetLineStyle(GUI_LS_SOLID);
 			GUI_DrawArc(pIndex->pStub->basePoint.x*TO_PIXEL + motherShipPixel.x, -pIndex->pStub->basePoint.y*TO_PIXEL + motherShipPixel.y, 
-									(t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, (t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, 
+								/*	(t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, (t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, */
+									(r*TO_PIXEL)/zoom, (r*TO_PIXEL)/zoom,
 									pIndex->pStub->tang2.angle, pIndex->pStub->tang1.angle);
 			GUI_DrawLine(((pIndex->pStub->tang1.point.x-pIndex->pStub->basePoint.x)/zoom+pIndex->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
 									-((pIndex->pStub->tang1.point.y-pIndex->pStub->basePoint.y)/zoom+pIndex->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y,
@@ -152,7 +161,7 @@ void DrawCursor(Point pixel, int flag)  //œ‘ æπ‚±Íº∞∂‘”¶µƒ–≈œ¢
 		sprintf(pStrBuf, "E  %s", strTmp);
 		infoWidth = GUI_GetStringDistX(pStrBuf);
 		infoHeight = strlen(pSnapLink->Boat.name) ? GUI_GetFontSizeY()*4 : GUI_GetFontSizeY()*3;
-		if(start_x+infoWidth > SCREEN_WIDTH)
+		if(start_x+infoWidth > SCREEN_WIDTH)    //∑¿÷π¥˝œ‘ æ–≈œ¢≥¨≥ˆ∆¡ƒª∑∂Œß
 		{
 			start_x = pixel.x - infoWidth -10;
 		}
@@ -200,6 +209,7 @@ void DrawCursor(Point pixel, int flag)  //œ‘ æπ‚±Íº∞∂‘”¶µƒ–≈œ¢
 	}
 	
 	GUI_CURSOR_SetPosition(pixel.x, pixel.y);
+//	GUI_CURSOR_Show();
 }
 
 
@@ -315,10 +325,6 @@ void DrawInvdShip(Point pixel, int course)  //course:∫ΩœÚ£®Ω«∂»÷∆£©  ª≠“ª∏ˆ¥≥»Î¥
 	
 	GUI_SetPenSize(2);
 	GUI_SetLineStyle(GUI_LS_SOLID);
-     
-//	GUI_DrawLine(pixel.x-7*_cos-10*_sin, pixel.y-7*_sin+10*_cos, pixel.x+10*_sin       , pixel.y-10*_cos);
-//	GUI_DrawLine(pixel.x+10*_sin,        pixel.y-10*_cos,        pixel.x+7*_cos-10*_sin, pixel.y+7*_sin+10*_cos);
-//	GUI_DrawLine(pixel.x+7*_cos-10*_sin, pixel.y+7*_sin+10*_cos, pixel.x-7*_cos-10*_sin, pixel.y-7*_sin+10*_cos );
 	
 	GUI_DrawLine(pixel.x-7*_cos-9*_sin, pixel.y-7*_sin+9*_cos, pixel.x+16*_sin      , pixel.y-16*_cos);
 	GUI_DrawLine(pixel.x+16*_sin,       pixel.y-16*_cos,       pixel.x+7*_cos-9*_sin, pixel.y+7*_sin+9*_cos);
