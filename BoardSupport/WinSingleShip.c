@@ -22,7 +22,10 @@ const HomeColor *pColor = homeColors;
 static void _onPaint1(void);
 static void _onPaint2(void);
 
-static int cursorOnStub = 0;
+extern  int cursorOnStub;
+extern long gPlugBoats[3];
+
+static Stub *pCursorStub = &stubs[0];
 //static Point cursorPixel;
 
 static int timeCnt = 0;
@@ -50,6 +53,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						 WM_SetFocus(alarmMonitorWin);
 					 }					 
 					 timeCnt++;
+					 if(timeCnt == 1)
+							GUI_CURSOR_Show();
 					 WM_Paint(singleShipWin);
 					 WM_RestartTimer(timer, 500);
 					 break;
@@ -61,11 +66,11 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 	
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
-						case GUI_KEY_PWM_INC:       
+						case GUI_KEY_PWM_INC:
 								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 								 break;
-						 case GUI_KEY_MENU:						 
-									WM_DeleteTimer(timer);					 
+						 case GUI_KEY_MENU:
+									WM_DeleteTimer(timer);
 									WM_BringToTop(mainMenuDlg);
 									WM_SetFocus(mainMenuDlg);
 									break;
@@ -75,30 +80,26 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //									WM_BringToTop(alarmMonitorWin);
 //									WM_SetFocus(alarmMonitorWin);
 									cursorOnStub = 0;
+printf("up:%d\n", cursorOnStub);         
 									WM_Paint(singleShipWin);
 									break;
 						 
 						 case GUI_KEY_DOWN:
 									cursorOnStub = 2;
+         
 									WM_Paint(singleShipWin);
 									break;
 						 
 						 case GUI_KEY_LEFT:
 									cursorOnStub = 1;
-//									if(cursorOnStub < 0)
-//									{
-//										cursorOnStub = STUB_NUM-1;
-//									}
 									WM_Paint(singleShipWin);
+           
 									break;
 												 
 						 case GUI_KEY_RIGHT:
 									cursorOnStub = 3;
-//									if(cursorOnStub >= STUB_NUM)
-//									{
-//										cursorOnStub = 0;
-//									}
 									WM_Paint(singleShipWin);
+         
 									break;
 						 
 //						 case GUI_KEY_MONITORING:
@@ -122,15 +123,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				   WM_GetClientRect(&r);
 					 GUI_ClearRectEx(&r);
 			
-					 if(cursorOnStub)
-					 {
-						 _onPaint2();
-					 }
-					 else
+					 if(cursorOnStub == 0 || cursorOnStub == 4)
 					 {
 					   _onPaint1();
 					 }
-					
+					 else
+					 {
+						 _onPaint2();
+					 }
+
 					 if(monitorState == OFF)
 					 { 
 						 GUI_SetColor(GUI_RED);
@@ -144,13 +145,16 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			case WM_SET_FOCUS:
 					 if(pMsg->Data.v)
 					 {
-						 	GUI_CURSOR_Show();
 						 cursorOnStub = 0;
+      
+						 timeCnt = 0;
+//						 GUI_CURSOR_Show();
 						 timer  = WM_CreateTimer(pMsg->hWin, 0, 500, 0);
 					 }
 					 else
 					 {
 						 GUI_CURSOR_Hide();
+//						 timeCnt = 0;
 					 }
 					 WM_DefaultProc(pMsg);
 					 break;
@@ -260,8 +264,9 @@ static void _onPaint1(void)
 
 static void _onPaint2(void)
 {
-    
-     GUI_RECT Rect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+117,BBS2_ABOVE_Y+20+40};
+   int i  = 0;
+   BERTH* pBerth  = NULL;
+   GUI_RECT Rect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+117,BBS2_ABOVE_Y+20+40};
    /** Paint BBS background */
    GUI_DrawGradientRoundedV( BBS2_ABOVE_X,                         /// x0
                              BBS2_ABOVE_Y,                         /// y0
@@ -283,7 +288,7 @@ static void _onPaint2(void)
    pStrBuf[3]  = 194;
    pStrBuf[4]  = 176;
    pStrBuf[5]  = '\0';
-   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+158, BBS2_ABOVE_Y+20);
+   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+150, BBS2_ABOVE_Y+15);
    GUI_SetFont(&GUI_Font_T90_20);
    GUI_DispStringAt("节" , BBS2_ABOVE_X+173, BBS2_ABOVE_Y+80);
 
@@ -291,51 +296,51 @@ static void _onPaint2(void)
 	 
 	 if(MS_isSpeeding)
 	 {
-		 if(timeCnt%2 == 0)
-		 {
-		   GUI_SetColor(pColor->numColor);
-			 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50,mothership.SOG, SMALL);
-		 }
+     if(timeCnt%2 == 0)
+     {
+        GUI_SetColor(pColor->numColor);
+        DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50,mothership.SOG, SMALL);
+     }
 	 }
 	 else if(MS_isMax_SOG || MS_isMin_SOG)
 	 {
-		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
+     GUI_SetColor(pColor->numColor);
+     DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
 	 }
 	 else
 	 {
-		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
+     GUI_SetColor(pColor->numColor);
+     DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
 	 }
 	 
 	 GUI_SetColor(pColor->textColor);                             
-   GUI_SetFont(GUI_FONT_24B_1);
+  GUI_SetFont(GUI_FONT_24B_1);
    
-   GUI_DispCharAt('N', BBS2_ABOVE_X+200, BBS2_ABOVE_Y+20);
-   GUI_DispCharAt('E', BBS2_ABOVE_X+200, BBS2_ABOVE_Y+48);  
+  GUI_DispCharAt('N', BBS2_ABOVE_X+200, BBS2_ABOVE_Y+20);
+  GUI_DispCharAt('E', BBS2_ABOVE_X+200, BBS2_ABOVE_Y+48);  
    
-   GUI_SetColor(pColor->numColor);
+  GUI_SetColor(pColor->numColor);
 	 lltostr(mothership.latitude, pStrBuf);
 //   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20);
 //     GUI_RECT pRect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+10,BBS2_ABOVE_Y+20+40};
-     GUI_DispStringInRect(pStrBuf,&Rect,GUI_TA_RIGHT);
+  GUI_DispStringInRect(pStrBuf,&Rect,GUI_TA_RIGHT);
 	 lltostr(mothership.longitude, pStrBuf);
 //   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+230, BBS2_ABOVE_Y+48);
-     Rect.y0 = BBS2_ABOVE_Y+48;
-     Rect.y1 = BBS2_ABOVE_Y+68;
-     GUI_DispStringInRect(pStrBuf,&Rect,GUI_TA_RIGHT);
+  Rect.y0 = BBS2_ABOVE_Y+48;
+  Rect.y1 = BBS2_ABOVE_Y+68;
+  GUI_DispStringInRect(pStrBuf,&Rect,GUI_TA_RIGHT);
 	 
 	 GUI_SetColor(pColor->textColor);                             
-   GUI_SetFont(GUI_FONT_20_1);
+  GUI_SetFont(GUI_FONT_20_1);
 	 sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
 	 GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+200, BBS2_ABOVE_Y+79); 
 	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
-   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+300, BBS2_ABOVE_Y+79);
+  GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+300, BBS2_ABOVE_Y+79);
 	 
 	 GUI_DrawVLine(BBS2_ABOVE_X+191, BBS2_ABOVE_Y+25, BBS2_ABOVE_Y+BBS2_ABOVE_HEIGHT-20);
 
 
-   GUI_DrawGradientRoundedV( BBS2_BELOW_X,                         /// x0
+  GUI_DrawGradientRoundedV( BBS2_BELOW_X,                         /// x0
                              BBS2_BELOW_Y,                         /// y0
                              BBS2_BELOW_X + BBS2_BELOW_WIDTH-1,             /// x1
                              BBS2_BELOW_Y + BBS2_BELOW_HEIGHT-1,            /// y1
@@ -350,52 +355,92 @@ static void _onPaint2(void)
 	 
 	 switch(cursorOnStub)
 	 {
+
 		 case 1:
-             GUI_SetColor(pColor->numColor);
-             GUI_SetFont(GUI_FONT_24B_1);
-			 GUI_DispStringAt("TUOWANG1", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst1);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst2);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
-             GUI_SetFont(&GUI_Font_T90_30);
-             GUI_SetColor(pColor->textColor);
-             GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
-             GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
-			 break;
+        GUI_SetColor(pColor->numColor);
+        GUI_SetFont(GUI_FONT_24B_1);
+        for(i; i<N_boat; i++){
+           if(gPlugBoats[0] == SimpBerthes[i].pBerth->Boat.user_id){
+              pBerth  = SimpBerthes[i].pBerth;
+              break;
+           }
+        }
+        
+        if(pBerth){
+           GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+           sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+           GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
+        }
+//        GUI_DispStringAt("TUOWANG1", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+        sprintf(pStrBuf, "%4d", t90_set.dst.dst1);
+        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+        sprintf(pStrBuf, "%4d", t90_set.dst.dst2);
+        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+        GUI_SetFont(&GUI_Font_T90_30);
+        GUI_SetColor(pColor->textColor);
+        GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+        GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
+        break;
 		 case 2:
-             GUI_SetColor(pColor->numColor);
-             GUI_SetFont(GUI_FONT_24B_1);
-			 GUI_DispStringAt("TUOWANG2", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst3);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-//			 sprintf(pStrBuf, "%4d", 0);
-//			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*3);
-//             GUI_SetFont(&GUI_Font_T90_24);
-//             GUI_SetColor(pColor->textColor);
-//             GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+32*3);
-			 break;
+        GUI_SetColor(pColor->numColor);
+        GUI_SetFont(GUI_FONT_24B_1);
+        
+        
+         for(i; i<N_boat; i++){
+           if(gPlugBoats[1] == SimpBerthes[i].pBerth->Boat.user_id){
+              pBerth  = SimpBerthes[i].pBerth;
+              break;
+           }
+        }
+        
+        if(pBerth){
+           GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+           sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+           GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
+        }   
+//        GUI_DispStringAt("TUOWANG2", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+        sprintf(pStrBuf, "%4d", t90_set.dst.dst3);
+        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+ //			  sprintf(pStrBuf, "%4d", 0);
+// 			  GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*3);
+//        GUI_SetFont(&GUI_Font_T90_24);
+//        GUI_SetColor(pColor->textColor);
+//        GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+32*3);
+        break;
 		 case 3:
-             GUI_SetColor(pColor->numColor);
-             GUI_SetFont(GUI_FONT_24B_1);
-			 GUI_DispStringAt("TUOWANG3", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst5);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst4);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
-             GUI_SetFont(&GUI_Font_T90_30);
-             GUI_SetColor(pColor->textColor);
-             GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
-             GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
-			 break;
+        GUI_SetColor(pColor->numColor);
+        GUI_SetFont(GUI_FONT_24B_1);
+        
+         for(i; i<N_boat; i++){
+           if(gPlugBoats[2] == SimpBerthes[i].pBerth->Boat.user_id){
+              pBerth  = SimpBerthes[i].pBerth;
+              break;
+           }
+        }
+        
+        if(pBerth){
+           GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+           sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+           GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
+        }
+//        GUI_DispStringAt("TUOWANG3", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+        sprintf(pStrBuf, "%4d", t90_set.dst.dst5);
+        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+        sprintf(pStrBuf, "%4d", t90_set.dst.dst4);
+        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+        GUI_SetFont(&GUI_Font_T90_30);
+        GUI_SetColor(pColor->textColor);
+        GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+        GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
+    			 break;
 	 }
-	GUI_SetFont(&GUI_Font_T90_24);
+	 GUI_SetFont(&GUI_Font_T90_24);
 //	sprintf(pStrBuf, "%d", timeCnt);
 //    GUI_DispStringAt(pStrBuf, 20, 20);
 
-	GUI_SetColor(pColor->textColor);
-	DrawStubs(0);
-	DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0); 
+	 GUI_SetColor(pColor->textColor);
+	 DrawStubs(0);
+	 DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0); 
 }
 
 

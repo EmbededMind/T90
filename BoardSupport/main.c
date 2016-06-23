@@ -51,6 +51,7 @@ int main(void)
 
 //初始化UART0 ，UART2，打开Timer2
 	USER_Init();
+ printf("-------\n");
 	lpc1788_Lcd_Init();	  /* 初始化LCD */	
 
 // lpc1788_SDRAM_Test();

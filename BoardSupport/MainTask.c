@@ -12,10 +12,13 @@
 #include "layout.h"
 #include "T90.h"
 #include "t90font.h"
+#include "stub.h"
 
 //extern unsigned char isSub0Inited;
 //extern unsigned char isSub2Inited;
 //extern unsigned char isChecked;
+extern unsigned char  isDstSetChanged;
+extern unsigned char isDstSetNeedUpdate;
 
 WM_HWIN handle;
 
@@ -24,9 +27,11 @@ GUI_MEMDEV_Handle hMute;
 void MainTask(void)
 {
    GUI_MEMDEV_Handle hMem0;
-INFO("MainTask Start");
+//INFO("MainTask Start");
 
-   GUI_Init();	
+   GUI_Init();
+	//创建字体
+   GUI_UC_SetEncodeUTF8();	
    WM_SetCreateFlags(WM_CF_MEMDEV);
    
     hMem0 = GUI_MEMDEV_Create(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -43,8 +48,7 @@ INFO("MainTask Start");
     GUI_MEMDEV_Delete(hMem0);
     GUI_Delay(1000);
     
-   //创建字体
-   GUI_UC_SetEncodeUTF8();	
+
    //字体设置	//GUI_SetDefaultFont (&SIF_Font);
    GUI_SetDefaultFont (&GUI_Font30);	
    TEXT_SetDefaultFont(&GUI_Font30);
@@ -60,17 +64,17 @@ INFO("MainTask Start");
 	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
 	 GUI_FillRect(0, SCREEN_HEIGHT, 799, 479);   //右边和下边被遮盖边框填充黑色
 	 
+	 
 	 GUI_CURSOR_Select(&GUI_CursorCrossS);       //选择光标类型
 	 GUI_CURSOR_Hide();
-        
-	 monitorState = OFF;
 	 
 //DLG_testDimensinCreate();
 	
 		workModeWin = WIN_WorkModeCreate(); 
 	
 		singleShipWin = WIN_SingleShipCreate();	
-		doubleShipWin = WIN_DoubleShipCreate();
+//		doubleShipWin = WIN_DoubleShipCreate();
+  
 		
 		alarmMonitorWin = WIN_AlarmMonitorCreate();           //创建窗口 
 		
@@ -80,6 +84,7 @@ INFO("MainTask Start");
 		systemSetDlg = DLG_SystemSetCreate();
 		
 		singleShipDstSetWin = WIN_SingleShipDstSetCreate();
+  doubleShipDstSetWin  = WIN_doubleShipDstSetCreate();
 		
 		invdAlarmSetWin = WIN_InvdAlarmSetCreate();
 		spdingAlarmSetWin = WIN_SpdingAlarmSetCreate();
@@ -88,29 +93,41 @@ INFO("MainTask Start");
 		
 		confirmWin = WIN_ConfirmCreate();
 		
-INFO("singleShipWin:%ld", singleShipWin);		
-INFO("alarmMonitorWin:%ld", alarmMonitorWin);
+//INFO("singleShipWin:%ld", singleShipWin);		
+//INFO("alarmMonitorWin:%ld", alarmMonitorWin);
 
 
 		if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖
-		{                         	
+		{         
+			monitorState = OFF;
 			WM_BringToTop(workModeWin);
 			WM_SetFocus(workModeWin);
 		}
-		else if(t90_set.sys.workmode == SINGLE_MODE)
+
+		else
 		{
+			StubRefresh();
 			WM_BringToTop(singleShipWin);
 			WM_SetFocus(singleShipWin);
 		}
-		else
-		{
-			WM_BringToTop(doubleShipWin);
-			WM_SetFocus(doubleShipWin);
-		}
+//		else if(t90_set.sys.workmode == SINGLE_MODE)
+//		{
+//			WM_BringToTop(singleShipWin);
+//			WM_SetFocus(singleShipWin);
+//		}
+//		else if(t90_set.sys.workmode == DOUBLE_MODE)
+//		{
+//			WM_BringToTop(doubleShipWin);
+//			WM_SetFocus(doubleShipWin);
+//		}
 
 //DLG_testCustomedWidgetCreate();
    while(1)
    {
+      if(isDstSetNeedUpdate){
+         isDstSetNeedUpdate  = 0;
+         WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
+      }
       GUI_Delay(200);
    }
 }

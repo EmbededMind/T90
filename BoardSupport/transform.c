@@ -10,6 +10,15 @@
 #define   GETANGLE(Y,X)   (int)(atan2(MYABS(Y),MYABS(X))*180/3.1416)
     
 
+int rectifyNum(int num, int stepValue)   //根据步进值对整形数纠正误差
+{
+	if(stepValue > 1)
+	{
+		return (num+stepValue-1 - (num+stepValue-1)%stepValue);
+	}
+	return num;
+}
+
 void llToxy(BERTH *pBerth)
 {
     
@@ -286,5 +295,48 @@ int SND_ParseNum(int num, uint8_t *pNum)
 
 
 
+/** 将距离设置参数转化为双托模式的参数
+ *
+ *  @oaram [in] pDouDstSet 转换后距离参数的引用
+ *  @return   若当前参数符合双托模式的规则，返回TRUE；否则返回FALSE.
+ *  若当前参数不符合双托模式的规则，则使用默认参数.
+ *
+ */
+ Bool  DstSetParamToDouble(DouDstSet* pDouDstSet)
+ {
+    Bool retFlag  = TRUE;
+    int width  = 0;
+    
+    int halfWidth  = 0;
+    int height     = 0;
+    
+    if(t90_set.dst.dst1 >= t90_set.dst.dst4){
+       retFlag  = FALSE;
+    }
+    
+    if(t90_set.dst.dst3 <= t90_set.dst.dst2  ||  t90_set.dst.dst3 <= t90_set.dst.dst5){
+       retFlag  = FALSE;
+    }
 
+    if(t90_set.dst.dst2 != t90_set.dst.dst5){
+       retFlag  = FALSE;
+    }
+    
+    if(retFlag == FALSE){
+       t90_set.dst.dst1 = DEFAULT_DST1;
+       t90_set.dst.dst2 = DEFAULT_DST2;
+       t90_set.dst.dst3 = DEFAULT_DST3;
+       t90_set.dst.dst4 = DEFAULT_DST4;
+       t90_set.dst.dst5 = DEFAULT_DST5;    
+    }
+    
+    pDouDstSet->width1  = t90_set.dst.dst4 +t90_set.dst.dst1;
+    pDouDstSet->width2  = t90_set.dst.dst4 -t90_set.dst.dst1;
+    pDouDstSet->length1 = (int)sqrt(t90_set.dst.dst1*t90_set.dst.dst1 + t90_set.dst.dst2 * t90_set.dst.dst2);
+    halfWidth  = pDouDstSet->width2>>1;
+    height     = t90_set.dst.dst3 - t90_set.dst.dst2;
+    pDouDstSet->length2 = pDouDstSet->length1 + (int)sqrt(halfWidth*halfWidth + height*height);    
+    
+    return retFlag;    
+ }
 

@@ -92,7 +92,7 @@ void CHECK_DelHighSpeed()
         if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.SOG < HIGH_SPEED)
         {
             pBerth->pBoatLink->Boat.category = 0;
-						BULY_delete(pBerth->pBoatLink);
+						      BULY_delete(pBerth->pBoatLink);
         }
         pBerth = pBerth->pNext;
     }    
@@ -133,7 +133,7 @@ void check()
 	CHECK_MS_Speed();
   CHECK_STRefresh();
 //INFO("highspeed num:%d",validCnt);
-	BULY_dump();
+//	BULY_dump();
 }
 
 int CHECK_GetAlarmState(void)

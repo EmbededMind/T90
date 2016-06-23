@@ -17,6 +17,7 @@
 #define USER_MSG_FOCUS     (WM_USER + 0x10)
 #define USER_MSG_MNT_SWT   (WM_USER + 0x11)
 #define USER_MSG_DST_SET   (WM_USER + 0x12)
+#define USER_MSG_DST_UPDATE (WM_USER + 0x13)
 
 
 #define STORE_SETTING   1

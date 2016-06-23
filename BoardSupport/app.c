@@ -10,6 +10,7 @@
 #include "DMA.h"
 #include "Check.h"
 #include "uart.h"
+#include "SPI2.h"
 #include "SPI1.h"
 #include "GUI.h"
 #include "dlg.h"
@@ -91,6 +92,16 @@ void mntSetting_init(void);
 /*----------------- Global   variables --------------------*/
 ///Insert , Refresh互斥信号量
 int isKeyTrigged  = 0;
+///                                  _   _
+/// 标记是否有新的插入事件(不要想歪  \ @ / )
+///                                   ''' 
+T90_PlugEvent plugEvent;
+
+///
+unsigned char  isDstSetChanged  = 0;
+unsigned char  isDstSetNeedUpdate  = 0;
+
+long gPlugBoats[3];
 
 unsigned char isChecked  = 0;
 
@@ -139,7 +150,8 @@ extern int insert_18(struct message_18 * p_msg);
 extern int insert_24A(struct message_24_partA * p_msg);
 extern int insert_24B(type_of_ship * p_msg);
 extern void updateTimeStamp(void);
-
+extern void deleteBoat(long mmsi);
+void setCategory(long mmsi, uint8_t category);
 //extern void getMntWrapPara(long* pLg, long* pLt, map_scale* pScale);
 
 /*----------------- External variables -----------------------*/
@@ -161,7 +173,9 @@ int N_boat = 0;
 
 void SysTick_Init(void);
 
+void detectPlugEvent();
 
+void sendPulse();
 
 void UI_Task(void *p_arg)/*描述(Description):	任务UI_Task*/
 {
@@ -188,20 +202,16 @@ void Insert_Task(void *p_arg)  //等待接收采集到的数据
       OSMutexPend(Refresher, 0, &myErr);        
       switch(tmp)
       {
-         case 18:
-PRINT("msg 18");         
+         case 18:       
               insert_18(&text_out);
               break;
-          case 240:
-PRINT("msg 24A");          
+          case 240:         
               insert_24A(&text_out_24A);
               break;
-          case 241:   
-PRINT("msg 24B");          
+          case 241:            
               insert_24B(&text_out_type_of_ship);       
               break;
           default:
-PRINT("msg null");
            break;
       }
     OSMutexPost(Refresher);    
@@ -213,30 +223,23 @@ PRINT("msg null");
 
 void Refresh_Task(void *p_arg)//任务Refresh_Task
 {
-
-//   MapPara_lg  = mothership.longitude;
-//   MapPara_lt  = mothership.latitude;
-//   MapPara_scale.pixel  = 100;
-//   MapPara_scale.minute  = 100;
    while(1)
    {
-    OSMutexPend(Refresher, 0, &myErr);
-//    OSSchedLock();
-    updateTimeStamp();    
-    check();
-//    getMntWrapPara(&MapPara_lg, &MapPara_lt, &MapPara_scale);
-//    OSSchedUnlock();
-    OSMutexPost(Refresher);
+      OSMutexPend(Refresher, 0, &myErr);     
+      detectPlugEvent();      
+      updateTimeStamp();    
+      check();
+      OSMutexPost(Refresher);
 
-    isChecked  = 1;
-  
-    OSTimeDlyHMSM(0,0,5,0);
+      isChecked  = 1;
+      sendPulse();
+      
+      OSTimeDlyHMSM(0,0,5,0);
    }
 }
 
 
-  
- 
+   
 void _Play_Task(void* p_arg)
 {
    uint8_t  musics[30];
@@ -448,17 +451,20 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   mothership.longitude = MOTHERSHIP_LG;
   mothership.true_heading  = 0;
   
-//  center.lgtude  = MOTHERSHIP_LG;
-//  center.lttude  = MOTHERSHIP_LA;
+  T90_Init();
   
-  SPI1_DMA_Init();
-  SPI1_Int();
+  GPDMA_Init();
+  
+//  UART2_DMA_Init();
   
   SPI2_Int();
+  SPI2_DMA_Init();  
+	
+  SPI1_Int();
 
   ISD_Init();
   
-  T90_Init();
+
   
   OSInit();  
   SysTick_Init();/* 初始化SysTick定时器 */
@@ -569,25 +575,13 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
   }
 
 	else if((text[4]=='M')&&(text[5]=='C')) //GPS GPRMC
-	{
-//    tempgprmc = text[6]; mothership.latitude = tempgprmc << 24;
-//    tempgprmc = text[7]; mothership.latitude = mothership.latitude + (tempgprmc << 16);
-//    tempgprmc = text[8]; mothership.latitude = mothership.latitude + (tempgprmc << 8);
-//    mothership.latitude = mothership.latitude + text[9];
-//    mothership.latitude = mothership.latitude/10;    
+	{ 
     shiftReg   = text[6];
     shiftReg   = (shiftReg << 8) | text[7];
     shiftReg   = (shiftReg << 8) | text[8];
     shiftReg   = (shiftReg << 8) | text[9];
     if(shiftReg )
        mothership.latitude  = shiftReg / 10;
-    
-    
-//    tempgprmc = text[10]; mothership.longitude = tempgprmc << 24;
-//    tempgprmc = text[11]; mothership.longitude = mothership.longitude + (tempgprmc << 16);
-//    tempgprmc = text[12]; mothership.longitude = mothership.longitude + (tempgprmc << 8);
-//    mothership.longitude = mothership.longitude + text[13];
-//    mothership.longitude = mothership.longitude/10;
       
     shiftReg   = text[10];
     shiftReg   = (shiftReg << 8) | text[11];
@@ -596,53 +590,159 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
     if(shiftReg)
        mothership.longitude  = shiftReg / 10;
     
-//    tempgprmc = text[14]; mothership.SOG = mothership.SOG + (tempgprmc << 8);
-//    mothership.SOG = mothership.SOG + text[15];
-
-      shiftReg   = text[14];
-      shiftReg   = (shiftReg << 8) | text[15];
-//      mothership.SOG  = shiftReg;
-			mothership.SOG = 50;
+    shiftReg   = text[14];
+    shiftReg   = (shiftReg << 8) | text[15];
+    mothership.SOG = shiftReg;
    
-//    tempgprmc = text[16]; mothership.COG = mothership.COG + (tempgprmc << 8);
-//    mothership.COG = mothership.COG + text[17];
 
-      shiftReg   = text[16];
-      shiftReg   = (shiftReg << 8) | text[17];
-      mothership.COG  = shiftReg;
-			mothership.COG = 1800;
+    shiftReg   = text[16];
+    shiftReg   = (shiftReg << 8) | text[17];
+    mothership.COG = shiftReg /10;
 
-//    tempgprmc = text[18]; SYS_Date = tempgprmc << 24;
-//    tempgprmc = text[19]; SYS_Date = SYS_Date + (tempgprmc << 16);
-//    tempgprmc = text[20]; SYS_Date = SYS_Date + (tempgprmc << 8);
-//    SYS_Date = SYS_Date + text[21];
 
-      shiftReg   = text[18];
-      shiftReg   = (shiftReg << 8) | text[19];
-      shiftReg   = (shiftReg << 8) | text[20];
-      shiftReg   = (shiftReg << 8) | text[21];
-      SYS_Date   = shiftReg;
-   
-//    tempgprmc = text[22]; SYS_Time = tempgprmc << 24;
-//    tempgprmc = text[23]; SYS_Time = SYS_Time + (tempgprmc << 16);
-//    tempgprmc = text[24]; SYS_Time = SYS_Time + (tempgprmc << 8);
-//    SYS_Time = SYS_Time + text[25];	
+    shiftReg   = text[18];
+    shiftReg   = (shiftReg << 8) | text[19];
+    shiftReg   = (shiftReg << 8) | text[20];
+    shiftReg   = (shiftReg << 8) | text[21];
+    SYS_Date   = shiftReg;
 
-      shiftReg   = text[22];
-      shiftReg   = (shiftReg << 8) | text[23];
-      shiftReg   = (shiftReg << 8) | text[24];
-      shiftReg   = (shiftReg << 8) | text[25];
-      SYS_Time   = shiftReg;
+
+    shiftReg   = text[22];
+    shiftReg   = (shiftReg << 8) | text[23];
+    shiftReg   = (shiftReg << 8) | text[24];
+    shiftReg   = (shiftReg << 8) | text[25];
+    SYS_Time   = shiftReg;
 	}
 
-return 0;
+  return 0;
 }
 
 /************************************* End *************************************/
 
 
 
+void detectPlugEvent()
+{
+      if(isDstSetChanged == 0){
+         return ;
+      }
+      isDstSetChanged   = 0;
+      isDstSetNeedUpdate++;
+//   if(plugEvent.eventType == PGEvent_Data){
+//      if(plugEvent.whichPort & 0x01){
+         if(plugEvent.status & 0x01){
+            Stub_setParam(1, plugEvent.dist_1, plugEvent.dist_2);
+            Stub_setValidity(1, TRUE);
+            if(gPlugBoats[0] != plugEvent.mmsi[0] && gPlugBoats[1] != plugEvent.mmsi[0] && gPlugBoats[2] != plugEvent.mmsi[0]){
+               gPlugBoats[0]  = plugEvent.mmsi[0];
+               setCategory(gPlugBoats[0], TYPE_SAFETY);
+            }
+         }
+         else{
+            Stub_setValidity(1, FALSE);
+            if(gPlugBoats[0] > 0){
+               deleteBoat(gPlugBoats[0]);
+            }
+         }
+//      }
+//      if(plugEvent.whichPort & 0x02){
+         if(plugEvent.status & 0x04){
+            Stub_setParam(2, 0, plugEvent.dist_4); 
+            Stub_setValidity(2, TRUE);
+            if(gPlugBoats[0] != plugEvent.mmsi[1] && gPlugBoats[1] != plugEvent.mmsi[1] && gPlugBoats[2] != plugEvent.mmsi[1]){
+               gPlugBoats[1]  = plugEvent.mmsi[1];
+               setCategory(gPlugBoats[1], TYPE_SAFETY);
+            }
+         }
+        else{
+           Stub_setValidity(2, FALSE);
+           deleteBoat(gPlugBoats[1]);
+        }        
+//      }
+//      if(plugEvent.whichPort & 0x04){
+         if(plugEvent.status & 0x10){
+            Stub_setParam(3, plugEvent.dist_5, plugEvent.dist_6);
+            Stub_setValidity(3, TRUE); 
+            if(gPlugBoats[0] != plugEvent.mmsi[2] && gPlugBoats[1] != plugEvent.mmsi[2] && gPlugBoats[2] != plugEvent.mmsi[2]){
+               gPlugBoats[2]  = plugEvent.mmsi[2];
+               setCategory(gPlugBoats[2], TYPE_SAFETY);
+            }            
+         }
+         else{
+            Stub_setValidity(3, FALSE);    
+            deleteBoat(gPlugBoats[2]);
+         }
+//      }
+      
+//      memset(&plugEvent, 0, sizeof(plugEvent));
+      plugEvent.whichPort  = 0;    
+//      plugEvent.eventType  = PGEvent_None;
+      StubRefresh();  
+      
+//   }
+//   else if(plugEvent.eventType == PGEvent_Pull){
+//      if(plugEvent.whichPort & 0x01){
+//         Stub_setValidity(1, FALSE);
+//      }
+//      if(plugEvent.whichPort & 0x02){
+//         Stub_setValidity(2, FALSE);
+//      }
+//      if(plugEvent.whichPort & 0x04){
+//         Stub_setValidity(3, FALSE);
+//      }
+//      isDstSetChanged  = TRUE;
+//      plugEvent.whichPort  = 0;    
+//      plugEvent.eventType  = PGEvent_None;
+//      StubRefresh();  
+//   }
+}
 
+
+uint16_t msg_crc(uint8_t *ptr,uint8_t num)
+{
+   uint16_t crc=0xffff;
+   uint8_t i;
+   uint16_t gx=0x1021;
+   
+   while(num--)
+   {
+    for(i=0x01;i!=0;i<<=1)
+    {
+     if((crc&0x8000)!=0)
+     {
+      crc<<=1;
+      crc^=gx;
+     }
+     else
+     {
+      crc<<=1;
+     }
+     if(((*ptr)&i)!=0) 
+     {
+      crc^=gx;
+     }
+    }
+    ptr++;
+   }
+   return ~crc;
+}
+
+
+void sendPulse()
+{
+   uint8_t buf[18]  ={0};
+   uint16_t i  = 0;
+   
+   buf[0]  = 0x24;
+   buf[1]  = 0x5a;
+   
+   i  = msg_crc(buf, 16);
+   
+   buf[16]  = i >> 8;
+   buf[17]  = i & 0xff;
+   
+   UART_Send(UART_2, buf, 18, BLOCKING);
+}
 
 
 

@@ -15,6 +15,11 @@
 
 #define T90
 
+#define X_MAX   0x01
+#define X_MIN   0x02
+#define Y_MAX   0x03
+#define Y_MIN   0x04
+
 extern unsigned long SYS_Date;
 extern unsigned long SYS_Time;
 
@@ -52,6 +57,14 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_BRIGHT     4
 
 
+
+
+
+/**
+
+
+
+ */
 typedef struct Dst_Set
 {
 	int dst1;
@@ -59,7 +72,26 @@ typedef struct Dst_Set
 	int dst3;
 	int dst4;
 	int dst5;
+// int dst6; ///   Distance of mothership to brother ship
+// int dst7; ///   Distance of fishing net end points
+// int dst8; ///   Distance of left end point  to motherhip
+// int dst9; ///   Distance of net middle dot to mothership
 } Dst_Set;
+
+
+/**双托距离设置参数
+ *
+ *
+ */
+typedef struct
+{
+   int width1;  /**< 母船和辅船的距离 */
+   int width2;  /**< 左侧和右侧安全标的距离 */
+   int length1; /**< 左侧牵引绳长度 */
+   int length2; /**< 牵引绳长+网长的一半 */
+} DouDstSet;
+
+
 
 typedef struct Alarm_Set
 {
@@ -90,6 +122,29 @@ typedef struct T90_Set
 	System_Set sys;
 } T90_Set;
 
+
+
+typedef enum {
+   PGEvent_None  = 0,
+   PGEvent_Pull  = 1,
+   PGEvent_Insert  = 2,
+   PGEvent_Ack  = 4,
+   PGEvent_Data  = 8
+} PlugEventType;
+
+typedef struct T90_PlugEvent
+{
+   unsigned char whichPort;
+   unsigned char status;
+   PlugEventType eventType;
+   int dist_1;
+   int dist_2;
+   int dist_3;
+   int dist_4;
+   int dist_5;
+   int dist_6;
+   long mmsi[3];
+}T90_PlugEvent;
 
 extern T90_Set t90_set;
 

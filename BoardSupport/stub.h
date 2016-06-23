@@ -2,8 +2,11 @@
 #define _STUB_H
 
 #include "layout.h"
+#include "lpc_types.h"
 
 #define STUB_NUM         4
+//#define STUB_NUM_SINGLE  4
+#define STUB_NUM_MAX  5
 
 #define PI               3.1416
 #define RAD_TO_ANGLE     180/PI
@@ -11,7 +14,6 @@
 
 #define M_TO_MILLINM     20/37
 #define MILLINM_TO_M     37/20
-
 
 
 //#define SHIP_FAMILY_PIXEL_HEIGHT   
@@ -28,21 +30,41 @@ typedef struct Tangency
 	int angle;
 } Tangency;
 	
+typedef enum StubType
+{
+	motherStub,
+	aidedStub,
+	safetySignStub
+} StubType;
+
 typedef struct Stub
 {
 	Point basePoint;
 	Tangency tang1;
 	Tangency tang2;
+	Bool isValid;
+	StubType type;
 } Stub;
 
-extern Stub stubs[STUB_NUM];
+typedef struct StubNode
+{
+	Stub *pStub;
+	struct StubNode *pNext;
+} StubNode;
+
+extern Stub stubs[STUB_NUM_MAX];
+
+extern StubNode *pStubHead;
 
 
+//void Stub_setParam(int which, int distX, int distY,Bool isValid);
+void Stub_setParam(int which, int distX, int distY);
+void Stub_setValidity(int which, Bool validity);
 void StubRefresh(void);
 Point GetRelativePoint(Point, Point);
 int GetDistance(Point, Point);
 
-Point STUB_GetYMin(void);
+int STUB_GetMostValue(char type);
 
 int FetchMidStub(void);
 

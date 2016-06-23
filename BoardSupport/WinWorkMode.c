@@ -8,6 +8,7 @@
 #include "T90.h"
 #include "maintask.h"
 #include "t90font.h"
+#include "stub.h"
 
 /** @brief 单拖模式、双拖模式按钮 */
 static WM_HWIN buttons[2];
@@ -48,19 +49,19 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 							 case GUI_KEY_ENTER:
 										if(WM_HasFocus(buttons[0]))
 										{
-											WM_BringToTop(singleShipWin);
-											WM_SetFocus(singleShipWin);
 											t90_set.sys.workmode = SINGLE_MODE;
 										}
 										if(WM_HasFocus(buttons[1]))
 										{
-											WM_BringToTop(doubleShipWin);
-											WM_SetFocus(doubleShipWin);
+//											WM_BringToTop(doubleShipWin);
+//											WM_SetFocus(doubleShipWin);
 											t90_set.sys.workmode = DOUBLE_MODE;
 										}
-										
+										WM_BringToTop(singleShipWin);
+										WM_SetFocus(singleShipWin);
 										T90_Store();
-                                        monitorState = ON;
+                    monitorState = ON;
+										StubRefresh();
 										WM_SendMessageNoPara(systemSetDlg, WM_INIT_DIALOG);
                     break;
             }
@@ -142,7 +143,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 				 {
 						WM_SetFocus(buttons[0]);
 				 }
-                 WM_Paint(workModeWin);
+					WM_Paint(workModeWin);
 				 break;
          
     default:

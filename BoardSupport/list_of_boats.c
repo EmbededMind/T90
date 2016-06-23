@@ -32,6 +32,8 @@ extern BERTH Berthes[BOAT_NUM_MAX];
 extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 //extern MNT_BERTH * pMntHeader;
 extern Bool INVD_deleteByMMSI(long MMSI);
+
+extern long gPlugBoats[3];
 /*----------------------- external functions -----------------------*/
 
 
@@ -200,17 +202,16 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
    
    pBerth->Boat.time_cnt  = TIMESTAMP;
 
-#ifdef P_AM128A
+
    if(pBerth->Boat.category == 0  &&  p_msg->SOG >= HIGH_SPEED)
    {
       unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
 //		  nation = 0x10;//////////////////////////////////////////////////////////////////////////
-      pBerth->Boat.category  = nation | TYPE_BULLY;
-INFO("find high speed boat :0x%x", pBerth->Boat.category);      
+      pBerth->Boat.category  = nation | TYPE_BULLY;   
       BULY_add(pBerth);
 		  llToxy(pBerth);
    }
-#endif
+
    
    tmp  = pBerth;
 
@@ -349,8 +350,7 @@ INFO("Err!");
              tmp->pNext   = pBerth;
              return 1;
          }
-      }
-INFO("Err!");      
+      }   
       return -1;
    }
 }
@@ -366,7 +366,6 @@ int add_18(struct message_18 * p_msg)
    buf  = allocOneBerth();
    if(buf == NULL) 
    {
-INFO("alloc berth failed!");   
       return -1;
    }
    
@@ -381,17 +380,21 @@ INFO("alloc berth failed!");
    buf->Boat.dist  = Dist;
    buf->Boat.time_cnt  = TIMESTAMP;
    
-#ifdef P_AM128A   
-   if(buf->Boat.category == 0  &&  p_msg->SOG >= HIGH_SPEED)
+   if(buf->Boat.user_id == gPlugBoats[0] || buf->Boat.user_id == gPlugBoats[1] || buf->Boat.user_id == gPlugBoats[2]){
+      buf->Boat.category  |= TYPE_SAFETY;
+      buf->isInvader  = 0;
+printf("find plug boat:%09ld\n", buf->Boat.user_id);        
+   }
+
+   else if(buf->Boat.category == 0  &&  p_msg->SOG >= HIGH_SPEED)
    {
       unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
 //      nation = 0x10;/////////////////////////////////////////////////////////////////////////////////////
 		  buf->Boat.category  = nation |  TYPE_BULLY;
-INFO("find high speed boat :0x%x", buf->Boat.category);   
       BULY_add(buf); 
 			llToxy(buf);
    }
-#endif   
+ 
 
 //printf("alloc:%d--%09ld\n",buf-Berthes,buf->Boat.user_id);   
    if(pHeader == NULL)
@@ -496,14 +499,19 @@ int add_24A(struct message_24_partA * p_msg)
    buf  = allocOneBerth();
    
    if(buf == NULL)
-   {
-INFO("alloc berth failed!");   
+   {  
       return -1;
    }
    
    buf->Boat.user_id  = p_msg->user_id;
 //   buf->Boat.dist  = 999999;
    buf->Boat.time_cnt  = TIMESTAMP;
+   
+   if(buf->Boat.user_id == gPlugBoats[0] || buf->Boat.user_id == gPlugBoats[1] || buf->Boat.user_id == gPlugBoats[2]){
+      buf->Boat.category  |= TYPE_SAFETY;
+      buf->isInvader  = 0;
+printf("find plug boat:%09ld\n", buf->Boat.user_id);      
+   }
    
    for(i=0;i<20;i++)
    {
@@ -551,12 +559,12 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
        && p_msg->vender_id[2] == 4)
    {
    
-      pBerth->Boat.category = TYPE_HSD;
+      pBerth->Boat.category |= TYPE_HSD;
 //INFO("find hsd :%09ld", pBerth->Boat.user_id);      
       return 0;
    }
    
-#ifdef P_AM128A
+ 
    else
    {
       if( p_msg->type_of_ship_and_cargo_type == 55  &&  (pBerth->Boat.category&0xf0) == 0 )
@@ -568,17 +576,15 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
          {
             pBerth->Boat.category  = nation | TYPE_BULLY;              
             BULY_add(pBerth);
-					  llToxy(pBerth);
-INFO("find bully :%09ld--0x%0x",pBerth->Boat.user_id,pBerth->Boat.category);            
+				     	  llToxy(pBerth);          
          }
          else
          {
-INFO("find bully without nation");
+
          }         
          return 1;
       }
    }
-#endif
    
    return 1;
 }
@@ -593,24 +599,27 @@ int add_24B(type_of_ship * p_msg)
    buf  = allocOneBerth();
    
    if(buf == NULL)
-   {
-INFO("alloc berth failed!");      
+   {     
        return -1;
    }
    
    buf->Boat.user_id  = p_msg->user_id;
    buf->Boat.time_cnt   = TIMESTAMP;
    
+   if(buf->Boat.user_id == gPlugBoats[0] || buf->Boat.user_id == gPlugBoats[1] || buf->Boat.user_id == gPlugBoats[2]){
+      buf->Boat.category  |= TYPE_SAFETY;
+printf("find plug boat:%09ld\n", p_msg->user_id);      
+   }
  
    if(    p_msg->vender_id[0] == 8
        && p_msg->vender_id[1] == 19
        && p_msg->vender_id[2] == 4)
    {
-      buf->Boat.category   = TYPE_HSD;
+      buf->Boat.category   |= TYPE_HSD;
 //INFO("find hsd:%09ld", buf->Boat.user_id);      
    }
    
-#ifdef P_AM128A
+
    else 
    {
       if(p_msg->type_of_ship_and_cargo_type == 55)
@@ -621,20 +630,16 @@ INFO("alloc berth failed!");
          {
             buf->Boat.category  = nation | TYPE_BULLY;
             BULY_add(buf);
-					  llToxy(buf);
-INFO("find bully: %09ld--0x%0x", buf->Boat.user_id, buf->Boat.category);            
+					  llToxy(buf);          
          }
          else
          {
-INFO("find bully without nation");         
+         
          }
       }
    }
-#else   
+ 
    
-   #endif
-//   buf->Boat.isHSD  = TRUE;
-//printf("alloc:%d--%09ld\n",buf-Berthes, buf->Boat.user_id);   
    if(pHeader == NULL)
    {
       pHeader  = buf;
@@ -655,7 +660,6 @@ INFO("find bully without nation");
 
 void updateTimeStamp()
 {
-//   MNT_BERTH * pIterator  = NULL;
    BERTH * tmp  = NULL;
      
    BERTH * pCur  = NULL;
@@ -663,13 +667,7 @@ void updateTimeStamp()
    pCur  = pHeader; 
    
    while(pCur)
-   {
-//      if(pCur->Boat.user_id == 0){
-//INFO("LinkedList Err");
-//         pCur  = pCur->pNext;
-//         continue;
-//      }
-      
+   {      
       if(pCur->Boat.time_cnt > 0)
       {
          SimpBerthes[i].latitude   = pCur->Boat.latitude;
@@ -682,21 +680,10 @@ void updateTimeStamp()
          i++;
       }
       else
-      { 
-
-//         if(pCur->isInvader)
-//         {        
-//            INVD_deleteByAddr(pCur);    
-//         }
-//         else if(pCur->mntState == MNTState_Monitored)
-//         {
-//            MNT_snapOnMiss(pCur);
-//         }
-                
+      {                 
          if( (pCur->Boat.category&0x0f) == TYPE_BULLY)
          {
-            BULY_delete(pCur);
-INFO("delete bully");            
+            BULY_delete(pCur);          
          }
        
          /// Delete at header
@@ -720,8 +707,7 @@ INFO("delete bully");
             pTail  = pCur->pPrev;
          }
          tmp  = pCur->pNext;
-         
-//printf("free:%d--%09ld\n",pCur-Berthes, pCur->Boat.user_id);         
+               
          memset((void*)pCur, 0, sizeof(BERTH));
          
          pCur  = tmp;
@@ -731,6 +717,58 @@ INFO("delete bully");
    }
    N_boat  = i;    
 
+}
+
+
+
+void deleteBoat(long mmsi)
+{
+   BERTH* pCur  = NULL;
+   BERTH* tmp  = NULL;
+   
+   int i  = 0;
+   
+   pCur  = pHeader;
+   
+   while(pCur){
+      if(pCur->Boat.user_id == mmsi){
+printf("delete plug boat:%ld\n", mmsi);         
+         if(pCur == pHeader){
+            pHeader  = pCur->pNext;
+            pCur->pNext->pPrev  = NULL;
+         }
+         
+         else if(pCur->pNext){
+            pCur->pPrev->pNext  = pCur->pNext;
+            pCur->pNext->pPrev  = pCur->pPrev;
+         }
+         else{
+            pCur->pPrev->pNext  = NULL;
+            pTail  = pCur->pPrev;
+         }
+
+         memset((void*)pCur, 0, sizeof(BERTH));
+         return ;
+      }
+      else{
+         pCur  = pCur->pNext;
+      }
+   }
+}
+
+
+void setCategory(long mmsi, uint8_t category)
+{
+   int i  = 0;
+   
+   for(i; i<N_boat; i++){
+      if(SimpBerthes[i].pBerth->Boat.user_id == mmsi){
+         SimpBerthes[i].pBerth->Boat.category  |= category;
+         SimpBerthes[i].pBerth->isInvader  = 0;
+printf("set cate:%ld\n", mmsi);         
+         return ;
+      }
+   }
 }
 
 

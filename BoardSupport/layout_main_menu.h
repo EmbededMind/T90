@@ -12,7 +12,7 @@
 
 /***主菜单所包含控件的大小***/
 #define MAIN_MENU_ITEM_WIDTH     (MAIN_MENU_WIDTH-MAIN_MENU_ITEM_MARGIN)
-#define MAIN_MENU_ITEM_HEIGHT    45
+#define MAIN_MENU_ITEM_HEIGHT    46
 #define MAIN_MENU_ITEM_MARGIN    3      //边缘留白
 
 #endif

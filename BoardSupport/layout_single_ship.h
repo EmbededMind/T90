@@ -13,7 +13,7 @@
 #define BBS1_BELOW_X       BBS1_ABOVE_X
 #define BBS1_BELOW_Y       (SCREEN_VCENTER + BBS1_MARGIN)
 
-#define BBS1_WIDTH         (800-BBS1_ABOVE_X)
+#define BBS1_WIDTH         (810-BBS1_ABOVE_X)
 #define BBS1_HEIGHT        (SCREEN_VCENTER - BBS1_MARGIN * 4)
 
 

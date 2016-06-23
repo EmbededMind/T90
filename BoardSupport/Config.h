@@ -8,7 +8,7 @@
 #define MOTHERSHIP_LA    1927265
 #define MOTHERSHIP_LG    7128663
 
-
+#define __PRINT_ENABLE
 
 //#define DEBUG_LEVEL  0
 //#define DEBUG_LEVEL DEBUG_LEVEL_ERROR
@@ -115,7 +115,7 @@
  */
  #define TYPE_HSD     0x01
  #define TYPE_BULLY   0x02
- 
+ #define TYPE_SAFETY  0x04
  
  /********************************************************************
  *

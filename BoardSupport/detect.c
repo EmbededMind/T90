@@ -109,15 +109,16 @@ void detect()
 	  {
 		    SimpBerthes[i].pBerth->isInvader = 0;
 	  }
-	
-    for(i = 0;i < N_boat;i++)
-    {
-        if(SimpBerthes[i].Dist < (t90_set.alarm.invd_dst+500)*7/4){
-            llToxy(SimpBerthes[i].pBerth);
-            isInvader(SimpBerthes[i].pBerth);
-        }
-        
-    }
+	  
+   if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
+     for(i = 0;i < N_boat;i++)
+     {
+         if(SimpBerthes[i].Dist < (t90_set.alarm.invd_dst+500)*7/4  &&  (SimpBerthes[i].pBerth->Boat.category&TYPE_SAFETY) == 0){
+             llToxy(SimpBerthes[i].pBerth);
+             isInvader(SimpBerthes[i].pBerth);
+         }
+         
+     }
 
 }
 

@@ -37,82 +37,82 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 	 static int flag_prevfocus = 0;
    switch(pMsg->MsgId){
       case WM_SET_FOCUS:
-           if(pMsg->Data.v)
-					 {
-							flag_prevfocus = 0;
-						  for(i = 0; i < 3; i++)                      //all buttons reset to unfocussed state,
-						  {
-								HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
-							  HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
-						  }
-							
-							HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btFocusBkColor);  //then, set the focussed button's backcolor.
+           if(pMsg->Data.v){
+              flag_prevfocus = 0;
+              for(i = 0; i < 3; i++)                      //all buttons reset to unfocussed state,
+              {
+                HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
+                HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
+              }
+              
+              HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btFocusBkColor);  //then, set the focussed button's backcolor.
               id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
               switch(id){
               case 0:
                    WM_BringToTop(dstSetMenuDlg);
-									 WM_BringToTop(singleShipDstSetWin);
+                   WM_BringToTop(singleShipDstSetWin);
                    break;
-							case 1:
-									 WM_BringToTop(alarmSetMenuDlg);
-									 WM_BringToTop(invdAlarmSetWin);
-									 break;
-							case 2:
-									 WM_BringToTop(systemSetDlg);
-									 break;
+              case 1:
+                 WM_BringToTop(alarmSetMenuDlg);
+                 WM_BringToTop(invdAlarmSetWin);
+                 break;
+              case 2:
+                   WM_BringToTop(systemSetDlg);
+                   break;
               }
            }
-					 else
-					 {				 
-						 if(flag_prevfocus)																						//if previous focussed
-						 {
-								HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btPrevFocusBkColor);   
-							  HSD_BUTTON_SetTextColor(pMsg->hWin, pColors->btFocusTextColor);
-						 }
-						 else																													//if unfocussed
-						 {
-							 HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btBkColor);
-							 HSD_BUTTON_SetTextColor(pMsg->hWin, pColors->btTextColor);
-						 }
-					 }
+           else
+           {				 
+              if(flag_prevfocus)																						//if previous focussed
+              {
+                 HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btPrevFocusBkColor);   
+                 HSD_BUTTON_SetTextColor(pMsg->hWin, pColors->btFocusTextColor);
+              }
+              else																													//if unfocussed
+              {
+                 HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btBkColor);
+                 HSD_BUTTON_SetTextColor(pMsg->hWin, pColors->btTextColor);
+              }
+           }
            HSD_BUTTON_Callback(pMsg);
            break;
+           
       case WM_KEY:          
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
-						 case GUI_KEY_PWM_INC:       
-								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-								 break;
-              case GUI_KEY_RIGHT:
-                   id  = WM_GetId(pMsg->hWin)-GUI_ID_BUTTON0;
-									 flag_prevfocus = 1;
-                   switch(id){
-                   case 0:								
-                        WM_SetFocus(dstSetMenuDlg);
-                        break;
-                   case 1:
-												WM_SetFocus(alarmSetMenuDlg);
-                        break;
-                   case 2:
-												WM_SetFocus(systemSetDlg);
-                        break;
-                   default:
-                        break;
-                   }
-                   break;
-							case GUI_KEY_BACKSPACE:
-							case GUI_KEY_MENU:
-									 WM_SetFocus(WM_GetDialogItem(WM_GetParent(pMsg->hWin), GUI_ID_BUTTON0));
-									 if(CHECK_GetAlarmState())
-									 {
-										 WM_BringToTop(alarmMonitorWin);
-										 WM_SetFocus(alarmMonitorWin);
-									 }
-									 else
-									 {
-										 WM_BringToTop(singleShipWin);
-										 WM_SetFocus(singleShipWin);
-									 }
-									 break;
+						     case GUI_KEY_PWM_INC:       
+								        WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+								        break;
+           case GUI_KEY_RIGHT:
+                id  = WM_GetId(pMsg->hWin)-GUI_ID_BUTTON0;
+                flag_prevfocus = 1;
+                switch(id){
+                case 0:								
+                     WM_SetFocus(dstSetMenuDlg);
+                     break;
+                case 1:
+                     WM_SetFocus(alarmSetMenuDlg);
+                     break;
+                case 2:
+                     WM_SetFocus(systemSetDlg);
+                     break;
+                default:
+                     break;
+                }
+                break;
+           case GUI_KEY_BACKSPACE:
+           case GUI_KEY_MENU:
+                WM_SetFocus(WM_GetDialogItem(WM_GetParent(pMsg->hWin), GUI_ID_BUTTON0));
+                if(CHECK_GetAlarmState())
+                {
+                   WM_BringToTop(alarmMonitorWin);
+                   WM_SetFocus(alarmMonitorWin);
+                }
+                else
+                {
+                   WM_BringToTop(singleShipWin);
+                   WM_SetFocus(singleShipWin);
+                }
+                break;
              default:
                    HSD_BUTTON_Callback(pMsg);
                    break;
@@ -147,6 +147,7 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 						HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
 						HSD_BUTTON_SetTextColor(buttons[1], pColors->btTextColor);
 						HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
+      
 			 
 
 						HSD_BUTTON_SetBkColor(buttons[2], pColors->btPrevFocusBkColor);

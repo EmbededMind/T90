@@ -13,6 +13,7 @@
 #include "T90.h"
 #include "xt_isd.h"
 #include "t90font.h"
+#include "stub.h"
 
 #include "layout_system_set.h"
 
@@ -188,6 +189,11 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
 								 myMsg.Data.v = agent_set.unit;
 								 myMsg.hWin = invdAlarmSetWin;
 								 WM_SendMessage(invdAlarmSetWin, &myMsg);
+							 }
+							 if(t90_set.sys.workmode != agent_set.workmode)
+							 {
+								 t90_set.sys.workmode = agent_set.workmode;
+								 StubRefresh();
 							 }
                memcpy(&t90_set.sys, &agent_set, sizeof(t90_set.sys));
                T90_Store();
