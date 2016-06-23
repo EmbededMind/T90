@@ -14,7 +14,11 @@ int getAngleOfShip(BERTH *pBerth);
 int SND_ParseNum(int num, uint8_t *pNum);
 
 
+
 Bool  DstSetParamToDouble(DouDstSet* pDouDstSet);
+
+
+
 
 #endif
 

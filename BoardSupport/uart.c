@@ -56,14 +56,16 @@ void xl_UART_Config(unsigned char port)
            
            NVIC_SetPriority(UART0_IRQn, ((0x02<<3)|0x02));
 	          NVIC_EnableIRQ(UART0_IRQn);          
+
            break;
            
       case 2:      
            PINSEL_ConfigPin(0,10,1);
            PINSEL_ConfigPin(0,11,1);
-           
+
            /**  */
            PINSEL_ConfigPin(1, 19, 6); 
+
            UARTConfigStruct.Baud_rate = 9600;
            
            UART_Init( (UART_ID_Type)port, &UARTConfigStruct );
@@ -79,6 +81,8 @@ void xl_UART_Config(unsigned char port)
            
            NVIC_SetPriority(UART2_IRQn, ((0x02<<3)|0x03));
 	         	NVIC_EnableIRQ(UART2_IRQn);      
+
+
            break;
            
      default:
@@ -94,7 +98,6 @@ void USER_Init(void)
  xl_UART_Config(2);
  xl_UART_Config(0);
 }
-
 
 
 void UART0_IRQHandler(void)

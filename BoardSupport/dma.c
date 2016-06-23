@@ -87,7 +87,6 @@ void DMA_IRQHandler (void)
 
           GPDMA_ClearIntPending (GPDMA_STATCLR_INTERR, 0);
           SPI2_DMA_Init();
-          PRINT("spi2 dma error");
        }          
     }
  }
@@ -105,12 +104,16 @@ void SPI2_DMA_Init(void)
 	GPDMACfg_SPI2.DstMemAddr = (uint32_t)DMADest_Buffer;	/* 目的地址 */
 	GPDMACfg_SPI2.TransferSize = sizeof(DMADest_Buffer);/* 传输大小 */
 	//GPDMACfg.TransferWidth =GPDMA_WIDTH_WORD;	/* 传输宽度 */
+
 	GPDMACfg_SPI2.TransferType = GPDMA_TRANSFERTYPE_P2M;	/* 设置传输类型为外设到存储器 */
 	GPDMACfg_SPI2.SrcConn = GPDMA_CONN_SSP2_Rx;	/* 设置DMA源请求连接*/
 	GPDMACfg_SPI2.DstConn = 0;	/* 设置DMA目的请求连接，未使用*/
 	GPDMACfg_SPI2.DMALLI = 0;	/* 设置DMA通道链表项，未使用 */
 
 	GPDMA_Setup(&GPDMACfg_SPI2);/* 把上面的参数设置进DMA相关寄存器 */
+
+
+
 	//LPC_SSP2->DMACR |=0x11;
 	SSP_DMACmd (LPC_SSP2, SSP_DMA_RX, ENABLE);
 	NVIC_EnableIRQ(DMA_IRQn);

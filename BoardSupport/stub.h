@@ -54,8 +54,12 @@ typedef struct StubNode
 
 extern Stub stubs[STUB_NUM_MAX];
 
+
 extern StubNode *pStubHead;
 
+
+
+extern StubNode *pStubHead;
 
 //void Stub_setParam(int which, int distX, int distY,Bool isValid);
 void Stub_setParam(int which, int distX, int distY);

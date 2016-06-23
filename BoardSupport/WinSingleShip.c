@@ -22,6 +22,7 @@ const HomeColor *pColor = homeColors;
 static void _onPaint1(void);
 static void _onPaint2(void);
 
+
 extern  int cursorOnStub;
 extern long gPlugBoats[3];
 
@@ -146,7 +147,7 @@ printf("up:%d\n", cursorOnStub);
 					 if(pMsg->Data.v)
 					 {
 						 cursorOnStub = 0;
-      
+
 						 timeCnt = 0;
 //						 GUI_CURSOR_Show();
 						 timer  = WM_CreateTimer(pMsg->hWin, 0, 500, 0);

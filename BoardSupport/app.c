@@ -173,7 +173,7 @@ int N_boat = 0;
 
 void SysTick_Init(void);
 
-void detectPlugEvent();
+void detectPlugEvent(void);
 
 void sendPulse();
 
@@ -451,11 +451,13 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   mothership.longitude = MOTHERSHIP_LG;
   mothership.true_heading  = 0;
   
+
   T90_Init();
   
   GPDMA_Init();
   
 //  UART2_DMA_Init();
+
   
   SPI2_Int();
   SPI2_DMA_Init();  

@@ -3,4 +3,8 @@
 
 void DMA_IRQHandler (void);
 void SPI2_DMA_Init(void);
+
 void UART2_DMA_Init(void);
+
+void DMA_Config(unsigned char channe);
+

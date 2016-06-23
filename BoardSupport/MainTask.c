@@ -74,7 +74,9 @@ void MainTask(void)
 	
 		singleShipWin = WIN_SingleShipCreate();	
 //		doubleShipWin = WIN_DoubleShipCreate();
+
   
+
 		
 		alarmMonitorWin = WIN_AlarmMonitorCreate();           //创建窗口 
 		

@@ -18,6 +18,7 @@ static void FillStubInfo(void);
 static void FillStubNodes(void);
 
 
+
 void Stub_setParam(int which, int distX, int distY)
 {
    if(t90_set.sys.workmode == SINGLE_MODE){
@@ -46,123 +47,99 @@ void Stub_setParam(int which, int distX, int distY)
 }
 
 
-/** @brief设置Stub的参数
- *  
- *  @param[in] which  要设置的Stub编号[1 2 3]
- *             distX  要设置的Stub的X偏移距离
- *             distY  要设置的Stub的Y偏移距离，当设置2号Stub时，此参数无效
- *             isValid 有效化或无效化Stub
- *  @return    void
- */
- 
- /*
-void Stub_setParam(int which, int distX, int distY,Bool isValid)
-{
-   if(t90_set.sys.workmode == SINGLE_MODE){
-      switch(which){
-         case 1:
-              if(isValid){
-                 t90_set.dst.dst1 = distX;
-                 t90_set.dst.dst1 = distY;
-                 stubs[which].basePoint.x  = -t90_set.dst.dst2 *M_TO_MILLINM;
-                 stubs[which].basePoint.y  = -t90_set.dst.dst1 *M_TO_MILLINM;
-                 stubs[which].isValid  = isValid;
-              }
-              else{
-                 t90_set.dst.dst1  = DEFAULT_DST1;
-                 t90_set.dst.dst2  = DEFAULT_DST2;
-                 stubs[which].isValid  = isValid;
-              }
-              break;
-         case 2:
-              if(isValid){
-                 t90_set.dst.dst3 = distX;
-                 stubs[which].basePoint.x  = 0;
-                 stubs[which].basePoint.y  = -t90_set.dst.dst3 *M_TO_MILLINM;
-                 stubs[which].isValid  = isValid;
-              }
-              else{
-                 t90_set.dst.dst3  = DEFAULT_DST1;
-                 stubs[which].isValid  = isValid;
-              }
-              break;
-         case 3:
-              if(isValid){
-                 t90_set.dst.dst4 = distX;
-                 t90_set.dst.dst5 = distY;
-                 stubs[which].basePoint.x  = -t90_set.dst.dst4 *M_TO_MILLINM;
-                 stubs[which].basePoint.y  = -t90_set.dst.dst5 *M_TO_MILLINM;
-                 stubs[which].isValid  = isValid;
-              }
-              else{
-                 t90_set.dst.dst1  = DEFAULT_DST4;
-                 t90_set.dst.dst2  = DEFAULT_DST5;
-                 stubs[which].isValid  = isValid;
-              }
-              break;
-         default:
-              INFO("stub number is out of range!");
-              break;
-      }
-   }
-   else if(t90_set.sys.workmode  == DOUBLE_MODE){
-   
-   }
-}
-*/
+
 
 void StubRefresh()   //根据设置的距离计算桩点的坐标
 {
+
 	if(t90_set.sys.workmode == SINGLE_MODE)
 	{
 		stubs[0].basePoint.x = 0;
 		stubs[0].basePoint.y = 0;
+
 		stubs[0].isValid = TRUE;
+
+		stubs[0].isValid = 1;
+
 		stubs[0].type = motherStub;
 		
 		stubs[1].basePoint.x = -t90_set.dst.dst2*M_TO_MILLINM;
 		stubs[1].basePoint.y = -t90_set.dst.dst1*M_TO_MILLINM;
+
+		stubs[1].isValid = 1;
+
 		stubs[1].type = safetySignStub;
 		
 		stubs[2].basePoint.x = 0;
 		stubs[2].basePoint.y = -t90_set.dst.dst3*M_TO_MILLINM;
+
+
+		stubs[2].isValid = 1;
+
 		stubs[2].type = safetySignStub;
 		
 		stubs[3].basePoint.x =  t90_set.dst.dst4*M_TO_MILLINM;
 		stubs[3].basePoint.y = -t90_set.dst.dst5*M_TO_MILLINM;
+
 		stubs[3].type = safetySignStub;
 		
 		stubs[4].isValid = FALSE;
   
-//  stubs[1].isValid  = 1;
-//  stubs[2].isValid  = 1;
-//  stubs[3].isValid  = 1;
+
+		stubs[3].isValid = 1;
+		stubs[3].type = safetySignStub;
+		
+		stubs[4].isValid = 0;
+  
+  
+  stubs[1].isValid  = 0;
+  stubs[2].isValid  = 0;
+  stubs[3].isValid  = 0;
+
 	}
 	else if(t90_set.sys.workmode == DOUBLE_MODE)
 	{
 		stubs[0].basePoint.x = 0;
 		stubs[0].basePoint.y = 0;
+
 		stubs[0].isValid = TRUE;
+
+		stubs[0].isValid = 1;
+
 		stubs[0].type = motherStub;
 		
 		stubs[1].basePoint.x = 50*M_TO_MILLINM;
 		stubs[1].basePoint.y = -400*M_TO_MILLINM;
+
+
+
+		stubs[1].isValid = 1;
 
 		stubs[1].type = safetySignStub;
 		
 		stubs[2].basePoint.x = 100*M_TO_MILLINM;
 		stubs[2].basePoint.y = -500*M_TO_MILLINM;
 
+		stubs[2].isValid = 1;
+
 		stubs[2].type = safetySignStub;
 		
 		stubs[3].basePoint.x =  150*M_TO_MILLINM;
 		stubs[3].basePoint.y = -400*M_TO_MILLINM;
 
+
+
+		stubs[3].isValid = 1;
+
 		stubs[3].type = safetySignStub;
 		
 		stubs[4].basePoint.x = 200*M_TO_MILLINM;
 		stubs[4].basePoint.y = 0;
+
 		stubs[4].isValid = TRUE;
+
+		stubs[4].isValid = 1;
+
 		stubs[4].type = aidedStub;
 	}
 	FillStubNodes();
@@ -170,6 +147,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 	detectInit();
 //	PrintStubInfo();
 }
+
 
 
 void Stub_setValidity(int which, Bool validity)
@@ -185,6 +163,7 @@ void Stub_setValidity(int which, Bool validity)
       }
    }
 }
+
 
 static void FillStubNodes(void)
 {
@@ -274,6 +253,7 @@ static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
 	Point point;
 	StubNode *pIndex = pStubHead;
 
+
 	if(pIndex)
 	{
 		do
@@ -297,83 +277,158 @@ static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
 	}
 }
 
+//int STUB_GetMostValue(char type)
+//{	
+//   StubNode *pIndex = pStubHead;
+//   
+//   switch(type)
+//   {
+//      case X_MAX:
+//      {
+//         int xMax = -99999;
+//         
+//         if(pIndex)
+//         {
+//            do
+//            {
+//               if(pIndex->pStub->basePoint.x > xMax)
+//                  xMax = pIndex->pStub->basePoint.x;
+//               pIndex = pIndex->pNext;
+//            }
+//            while(pIndex != pStubHead);
+//         }
+//         return xMax;
+//      }
+
+//      case X_MIN:
+//      {
+//         int xMin = 99999;
+//         
+//         if(pIndex)
+//         {
+//            do
+//            {
+//               if(pIndex->pStub->basePoint.x < xMin)
+//                  xMin = pIndex->pStub->basePoint.x;
+//               pIndex = pIndex->pNext;
+//            }
+//            while(pIndex != pStubHead);
+//         }
+//         return xMin;
+//      }
+
+//      
+//      case Y_MAX:
+//      {
+//         int yMax = -99999;
+//         
+//         if(pIndex)
+//         {
+//          do
+//          {
+//             if(pIndex->pStub->basePoint.y > yMax)
+//                yMax = pIndex->pStub->basePoint.y;
+//             pIndex = pIndex->pNext;
+//            }
+//            while(pIndex != pStubHead);
+//         }
+//         return yMax;
+//      }
+
+//      
+//      case Y_MIN:
+//      {
+//         int yMin = 99999;
+//         
+//         if(pIndex)
+//         {
+//            do
+//            {
+//               if(pIndex->pStub->basePoint.y < yMin)
+//                  yMin = pIndex->pStub->basePoint.y;
+//               pIndex = pIndex->pNext;
+//            }
+//            while(pIndex != pStubHead);
+//         }
+//         return yMin;
+//      }
+
+//   }
+//}
+
+
+
 int STUB_GetMostValue(char type)
 {	
-   StubNode *pIndex = pStubHead;
-   
-   switch(type)
-   {
-      case X_MAX:
-      {
-         int xMax = -99999;
-         
-         if(pIndex)
-         {
-            do
-            {
-               if(pIndex->pStub->basePoint.x > xMax)
-                  xMax = pIndex->pStub->basePoint.x;
-               pIndex = pIndex->pNext;
-            }
-            while(pIndex != pStubHead);
-         }
-         return xMax;
-      }
+	StubNode *pIndex = pStubHead;
+	switch(type)
+	{
+		case X_MAX:
+		{
+			int xMax = -99999;
+			if(pIndex)
+			{
+				do
+				{
+					if(pIndex->pStub->basePoint.x > xMax)
+						xMax = pIndex->pStub->basePoint.x;
+					pIndex = pIndex->pNext;
+				}
+				while(pIndex != pStubHead);
+			}
+			return xMax;
+		}
+		break;
+		case X_MIN:
+		{
+			int xMin = 99999;
+			if(pIndex)
+			{
+				do
+				{
+					if(pIndex->pStub->basePoint.x < xMin)
+						xMin = pIndex->pStub->basePoint.x;
+					pIndex = pIndex->pNext;
+				}
+				while(pIndex != pStubHead);
+			}
+			return xMin;
+		}
+		break;
+		case Y_MAX:
+		{
+			int yMax = -99999;
+			if(pIndex)
+			{
+				do
+				{
+					if(pIndex->pStub->basePoint.y > yMax)
+						yMax = pIndex->pStub->basePoint.y;
+					pIndex = pIndex->pNext;
+				}
+				while(pIndex != pStubHead);
+			}
+			return yMax;
+		}
+		break;
+		case Y_MIN:
+		{
+			int yMin = 99999;
+			if(pIndex)
+			{
+				do
+				{
+					if(pIndex->pStub->basePoint.y < yMin)
+						yMin = pIndex->pStub->basePoint.y;
+					pIndex = pIndex->pNext;
+				}
+				while(pIndex != pStubHead);
+			}
+			return yMin;
+		}
+		break;
+	}
 
-      case X_MIN:
-      {
-         int xMin = 99999;
-         
-         if(pIndex)
-         {
-            do
-            {
-               if(pIndex->pStub->basePoint.x < xMin)
-                  xMin = pIndex->pStub->basePoint.x;
-               pIndex = pIndex->pNext;
-            }
-            while(pIndex != pStubHead);
-         }
-         return xMin;
-      }
-
-      
-      case Y_MAX:
-      {
-         int yMax = -99999;
-         
-         if(pIndex)
-         {
-          do
-          {
-             if(pIndex->pStub->basePoint.y > yMax)
-                yMax = pIndex->pStub->basePoint.y;
-             pIndex = pIndex->pNext;
-            }
-            while(pIndex != pStubHead);
-         }
-         return yMax;
-      }
-
-      
-      case Y_MIN:
-      {
-         int yMin = 99999;
-         
-         if(pIndex)
-         {
-            do
-            {
-               if(pIndex->pStub->basePoint.y < yMin)
-                  yMin = pIndex->pStub->basePoint.y;
-               pIndex = pIndex->pNext;
-            }
-            while(pIndex != pStubHead);
-         }
-         return yMin;
-      }
-
-   }
 }
 		
 int FetchMidStub()

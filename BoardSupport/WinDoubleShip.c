@@ -20,7 +20,9 @@ static const HomeColor *pColor = homeColors;
 static void _onPaint1(void);
 static void _onPaint2(void);
 
+
 int cursorOnStub = 0;
+
 //static Point cursorPixel;
 
 static int timeCnt = 0;
