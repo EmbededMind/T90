@@ -50,7 +50,8 @@ static void _Paint(HSD_DIMENSION_EX_Obj* pObj, HSD_DIMENSION_EX_Handle hObj)
    }
    
 //   GUI_SetColor(bkColor);
-//   GUI_FillRectEx(&r);
+////   GUI_FillRectEx(&r);
+//   GUI_DrawRectEx(&r);
    
    GUI_SetColor(arrowLineColor);
    GUI_SetLineStyle(GUI_LS_SOLID);
@@ -89,7 +90,7 @@ static void _Paint(HSD_DIMENSION_EX_Obj* pObj, HSD_DIMENSION_EX_Handle hObj)
          GUI_FillRect(r.x0, r.y0, r.x0 + valTextWidth, r.y0 + textHeight);
          GUI_SetColor(GUI_WHITE);
       }
-      GUI_DispStringAt("100", r.x0, r.y0);
+      GUI_DispStringAt(sVal, r.x0, r.y0);
       GUI_SetColor(valColor);
       GUI_DispString(sUnit);
    }

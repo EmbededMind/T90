@@ -51,8 +51,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
               case 0:
                    if(t90_set.sys.workmode == SINGLE_MODE){
                       WM_BringToTop(dstSetMenuDlg);
-//                      WM_BringToTop(singleShipDstSetWin);
-                      WM_BringToTop(doubleShipDstSetWin);
+                      WM_BringToTop(singleShipDstSetWin);
+//                      WM_BringToTop(doubleShipDstSetWin);
                    }
                    else if(t90_set.sys.workmode == DOUBLE_MODE){
                       WM_BringToTop(dstSetMenuDlg);
