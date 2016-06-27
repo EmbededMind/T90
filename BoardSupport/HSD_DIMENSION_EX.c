@@ -57,7 +57,7 @@ static void _Paint(HSD_DIMENSION_EX_Obj* pObj, HSD_DIMENSION_EX_Handle hObj)
    GUI_SetLineStyle(GUI_LS_SOLID);
    GUI_SetPenSize(1);
 
-   GUI_FillPolygon(pObj->arrows, 3, 0,0);
+   GUI_FillPolygon(pObj->arrows, 3, 0, 0);
    
    GUI_FillPolygon(&(pObj->arrows[3]), 3, 0, 0);
    
@@ -84,10 +84,13 @@ static void _Paint(HSD_DIMENSION_EX_Obj* pObj, HSD_DIMENSION_EX_Handle hObj)
       r.y0  = (pObj->arrows[0].y + pObj->arrows[3].y)/2 - textHeight/2;
       r.y1  = (pObj->arrows[0].y + pObj->arrows[3].y)/2 + textHeight/2;
       GUI_FillRectEx(&r);
+
       
       GUI_SetColor(valColor);
       if(pObj->widget.State & WIDGET_STATE_FOCUS){
          GUI_FillRect(r.x0, r.y0, r.x0 + valTextWidth, r.y0 + textHeight);
+
+         
          GUI_SetColor(GUI_WHITE);
       }
       GUI_DispStringAt(sVal, r.x0, r.y0);
@@ -194,7 +197,7 @@ void HSD_DIMENSION_EX_SetArrowLineColor(HSD_DIMENSION_EX_Handle hObj,  I16 flag,
 
 void HSD_DIMENSION_EX_SetBkColor(HSD_DIMENSION_EX_Handle hObj, I16 flag, GUI_COLOR color)
 {
-   if(hObj && flag <+HSD_DIMENSION_EX_CI_FOCUS){
+   if(hObj && flag <= HSD_DIMENSION_EX_CI_FOCUS){
       HSD_DIMENSION_EX_Obj * pObj;
       WM_LOCK();
       pObj   = HSD_DIMENSION_EX_H2P(hObj);

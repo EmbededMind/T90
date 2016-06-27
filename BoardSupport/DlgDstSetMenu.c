@@ -196,7 +196,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         BUTTON_SetFocusColor(buttons[0], pColors->btFocusBkColor);
         BUTTON_SetFont(buttons[1], &GUI_Font_T90_30); 
         BUTTON_SetText(buttons[1], "02号安全标");
-        BUTTON_SetFocussable(buttons[1], 0);
+        BUTTON_SetFocussable(buttons[1], 1);
         
         buttons[2]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
         WM_SetCallback(buttons[2], &myButtonCallback);

@@ -194,9 +194,9 @@ void HSD_DIMENSION_Callback(WM_MESSAGE* pMsg){
       case WM_PAINT:
            _Paint(pObj, hObj);
            return ;
-      case WM_KEY:
-           _OnKey(hObj, pMsg);
-           return ;
+//      case WM_KEY:
+//           _OnKey(hObj, pMsg);
+//           return ;
    }
    WM_DefaultProc(pMsg);
 }

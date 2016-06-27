@@ -37,7 +37,8 @@ static WM_HWIN hFigs[3];
 
 
 static void myDimCallback(WM_MESSAGE* pMsg)
-{
+{  
+   int id  = 0;
    switch(pMsg->MsgId)
    {
       case WM_KEY:
@@ -46,11 +47,53 @@ static void myDimCallback(WM_MESSAGE* pMsg)
               case GUI_KEY_UP:
                    
                    break;
+                   
               case GUI_KEY_DOWN:
                    
                    break;
+              
+              case GUI_KEY_LEFT:
+              case GUI_KEY_RIGHT:
+                   id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
+                   switch(id)
+                   {
+                      case 0: 
+                           if(whichFig == 0){
+                              WM_SetFocus(hExDim[2]);
+                           }
+                           else if(whichFig == 1){
+                              WM_SetFocus(hExDim[3]);
+                           }
+                           else{
+                              WM_SetFocus(hExDim[4]);
+                           }
+                           break;
+                      case 1:
+                           if(whichFig != 1){
+                              WM_SetFocus(hExDim[0]);
+                           }
+                           break;
+                      case 2:
+                           WM_SetFocus(hExDim[1]);
+                           break;
+                      case 3:
+                           WM_SetFocus(hExDim[0]);
+                           break;
+                      case 4:
+                           WM_SetFocus(hExDim[1]);
+                           break;
+                   }
+                   break;
+              case GUI_KEY_BACKSPACE:
+                   HSD_STICKFIGURE_SetPenColor(hFigs[whichFig], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
+                   WM_SetFocus(dstSetMenuDlg);
+                   break;
            }
            break;
+           
+      default:
+           HSD_DIMENSION_EX_Callback(pMsg);
+           break;      
    }
 }
 
@@ -109,11 +152,14 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            HSD_STICKFIGURE_SetPenColor(hFigs[2], HSD_STICKFIGURE_CI_FOCUS,   pColors->focusArrowLineColor);
            WM_SetHasTrans(hFigs[2]);                                     
            
-           hExDim[0]  = HSD_DIMENSION_EX_CreateEx(128,60, 153, 40, pMsg->hWin, WM_CF_SHOW, 0, ID_EX_DIM_0);         
+           hExDim[0]  = HSD_DIMENSION_EX_CreateEx(128,60, 153, 40, pMsg->hWin, WM_CF_SHOW, 0, ID_EX_DIM_0);   
+           WM_SetCallback(hExDim[0], &myDimCallback);           
            HSD_DIMENSION_EX_SetBkColor(hExDim[0], HSD_DIMENSION_EX_CI_UNFOCUS,pColors->bkColor);
-           HSD_DIMENSION_EX_SetBkColor(hExDim[0], HSD_DIMENSION_EX_CI_FOCUS,  pColors->focusBkColor);
+           HSD_DIMENSION_EX_SetBkColor(hExDim[0], HSD_DIMENSION_EX_CI_FOCUS,  pColors->bkColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[0],HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[0], HSD_DIMENSION_EX_CI_FOCUS, pColors->focusArrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[0], HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[0], HSD_DIMENSION_EX_CI_FOCUS,   pColors->focusBkColor);
            arrows[0].x =  0;  arrows[1].x =  6; arrows[2].x =  6; arrows[3].x = 153; arrows[4].x = 147; arrows[5].x = 147; 
            arrows[0].y = 20;  arrows[1].y = 22; arrows[2].y = 18; arrows[3].y = 20;  arrows[4].y = 22;  arrows[5].y = 18;
            HSD_DIMENSION_EX_SetArrows(hExDim[0], arrows); 
@@ -123,10 +169,13 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            WM_SetHasTrans(hExDim[0]);           
          
            hExDim[1]  = HSD_DIMENSION_EX_CreateEx(160, 206,88, 40, pMsg->hWin, WM_CF_SHOW, 0, ID_EX_DIM_1);         
+           WM_SetCallback(hExDim[1], &myDimCallback);  
            HSD_DIMENSION_EX_SetBkColor(hExDim[1], HSD_DIMENSION_EX_CI_UNFOCUS,pColors->bkColor);
-           HSD_DIMENSION_EX_SetBkColor(hExDim[1], HSD_DIMENSION_EX_CI_FOCUS,  pColors->focusBkColor);
+           HSD_DIMENSION_EX_SetBkColor(hExDim[1], HSD_DIMENSION_EX_CI_FOCUS,  pColors->bkColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[1],HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[1], HSD_DIMENSION_EX_CI_FOCUS, pColors->focusArrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[1], HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[1], HSD_DIMENSION_EX_CI_FOCUS,   pColors->focusBkColor);
            arrows[0].x = 0;   arrows[1].x =  6; arrows[2].x =  6; arrows[3].x = 88; arrows[4].x = 82; arrows[5].x = 82; 
            arrows[0].y = 20;  arrows[1].y = 22; arrows[2].y = 18; arrows[3].y = 20; arrows[4].y = 22; arrows[5].y = 18;
            HSD_DIMENSION_EX_SetArrows(hExDim[1], arrows); 
@@ -136,10 +185,13 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            WM_SetHasTrans(hExDim[1]);          
          
            hExDim[2]  = HSD_DIMENSION_EX_CreateEx(70, 120,68, 112, pMsg->hWin, WM_CF_SHOW, 0, ID_EX_DIM_2);         
+           WM_SetCallback(hExDim[2], &myDimCallback);  
            HSD_DIMENSION_EX_SetBkColor(hExDim[2], HSD_DIMENSION_EX_CI_UNFOCUS,pColors->bkColor);
-           HSD_DIMENSION_EX_SetBkColor(hExDim[2], HSD_DIMENSION_EX_CI_FOCUS,  pColors->focusBkColor);
+           HSD_DIMENSION_EX_SetBkColor(hExDim[2], HSD_DIMENSION_EX_CI_FOCUS,  pColors->bkColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[2],HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[2], HSD_DIMENSION_EX_CI_FOCUS, pColors->focusArrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[2], HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[2], HSD_DIMENSION_EX_CI_FOCUS,   pColors->focusBkColor);
            arrows[0].x = 14;  arrows[1].x =  17; arrows[2].x = 13; arrows[3].x =  52; arrows[4].x =  48; arrows[5].x =  53; 
            arrows[0].y =  1;  arrows[1].y =   5; arrows[2].y =  7; arrows[3].y = 113; arrows[4].y = 110; arrows[5].y = 108;
            HSD_DIMENSION_EX_SetArrows(hExDim[2], arrows); 
@@ -149,10 +201,13 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            WM_SetHasTrans(hExDim[2]);    
 
            hExDim[3]  = HSD_DIMENSION_EX_CreateEx(224, 125,120, 260, pMsg->hWin, WM_CF_SHOW, 0, ID_EX_DIM_3);         
+           WM_SetCallback(hExDim[3], &myDimCallback);  
            HSD_DIMENSION_EX_SetBkColor(hExDim[3], HSD_DIMENSION_EX_CI_UNFOCUS,pColors->bkColor);
-           HSD_DIMENSION_EX_SetBkColor(hExDim[3], HSD_DIMENSION_EX_CI_FOCUS,  pColors->focusBkColor);
+           HSD_DIMENSION_EX_SetBkColor(hExDim[3], HSD_DIMENSION_EX_CI_FOCUS,  pColors->bkColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[3],HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[3], HSD_DIMENSION_EX_CI_FOCUS, pColors->focusArrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[3], HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[3], HSD_DIMENSION_EX_CI_FOCUS,   pColors->focusBkColor);
            arrows[0].x = 110;  arrows[1].x = 105; arrows[2].x =  111; arrows[3].x =  10; arrows[4].x =  9; arrows[5].x = 14; 
            arrows[0].y =   1;  arrows[1].y =   5; arrows[2].y =    7; arrows[3].y = 258; arrows[4].y = 252; arrows[5].y = 254;
            HSD_DIMENSION_EX_SetArrows(hExDim[3], arrows); 
@@ -162,15 +217,18 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            WM_SetHasTrans(hExDim[3]);   
 
            hExDim[4]  = HSD_DIMENSION_EX_CreateEx(218, 106,75, 112, pMsg->hWin, WM_CF_SHOW, 0, ID_EX_DIM_4);         
+           WM_SetCallback(hExDim[4], &myDimCallback);  
            HSD_DIMENSION_EX_SetBkColor(hExDim[4], HSD_DIMENSION_EX_CI_UNFOCUS,pColors->bkColor);
-           HSD_DIMENSION_EX_SetBkColor(hExDim[4], HSD_DIMENSION_EX_CI_FOCUS,  pColors->focusBkColor);
+           HSD_DIMENSION_EX_SetBkColor(hExDim[4], HSD_DIMENSION_EX_CI_FOCUS,  pColors->bkColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[4],HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
            HSD_DIMENSION_EX_SetArrowLineColor(hExDim[4], HSD_DIMENSION_EX_CI_FOCUS, pColors->focusArrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[4], HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
+           HSD_DIMENSION_EX_SetValColor(hExDim[4], HSD_DIMENSION_EX_CI_FOCUS,   pColors->focusBkColor);
            arrows[0].x = 62;  arrows[1].x = 58; arrows[2].x =  63; arrows[3].x =  20; arrows[4].x =  19; arrows[5].x =  24; 
            arrows[0].y =  1;  arrows[1].y =  5; arrows[2].y =   7; arrows[3].y = 108; arrows[4].y = 102; arrows[5].y = 104;
            HSD_DIMENSION_EX_SetArrows(hExDim[4], arrows); 
            HSD_DIMENSION_EX_SetFont(hExDim[4], &GUI_Font_T90_24);
-           HSD_DIMENSION_EX_SetValText(hExDim[4], "3000");
+           HSD_DIMENSION_EX_SetValText(hExDim[4], "4000");
            HSD_DIMENSION_EX_SetUnitText(hExDim[4], "米");
            WM_SetHasTrans(hExDim[4]);           
            break;
