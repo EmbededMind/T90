@@ -46,6 +46,13 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_DST3   500
 #define DEFAULT_DST4   25
 #define DEFAULT_DST5   400
+#define DEFAULT_DST6   100
+#define DEFAULT_DOUDST1 2000
+#define DEFAULT_DOUDST2 1000
+#define DEFAULT_DOUDST3 4000
+#define DEFAULT_DOUDST4 2000
+#define DEFAULT_DOUDST5 4000
+#define DEFAULT_DOUDST6 3000
 
 #define DEFAULT_INVD_DST         2000
 #define DEFAULT_DANGER_SOG_X10   80
@@ -72,7 +79,7 @@ typedef struct Dst_Set
 	int dst3;
 	int dst4;
 	int dst5;
-// int dst6; ///   Distance of mothership to brother ship
+//   int dst6; ///   Distance of mothership to brother ship
 // int dst7; ///   Distance of fishing net end points
 // int dst8; ///   Distance of left end point  to motherhip
 // int dst9; ///   Distance of net middle dot to mothership
@@ -85,10 +92,12 @@ typedef struct Dst_Set
  */
 typedef struct
 {
-   int width1;  /**< 母船和辅船的距离 */
-   int width2;  /**< 左侧和右侧安全标的距离 */
-   int length1; /**< 左侧牵引绳长度 */
-   int length2; /**< 牵引绳长+网长的一半 */
+   int dst1;
+   int dst2;
+   int dst3;
+   int dst4;
+   int dst5;
+   int dst6;
 } DouDstSet;
 
 
@@ -117,6 +126,7 @@ typedef struct System_Set
 
 typedef struct T90_Set
 {
+   int motoas;
 	Dst_Set dst;
 	Alarm_Set alarm;
 	System_Set sys;
@@ -146,6 +156,13 @@ typedef struct T90_PlugEvent
    long mmsi[3];
 }T90_PlugEvent;
 
+typedef struct 
+{
+   uint16_t motoas;
+   uint16_t motostub;
+   uint16_t stubtostub;
+}DoubleDstSet;
+
 extern T90_Set t90_set;
 
 
@@ -168,7 +185,7 @@ Bool T90_Load(void);
 void T90_Store(void);
 void T90_Reset(void);
 
-
+DoubleDstSet* fetchdoudstset();
 #endif
 
 

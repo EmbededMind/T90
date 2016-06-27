@@ -41,7 +41,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
    switch(pMsg->MsgId){
    case WM_SET_FOCUS:
         if(pMsg->Data.v)
-			    	{
+			 {
            id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
            flag_prevfocus  = 0;
            
@@ -53,6 +53,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            myMsg.hWinSrc = pMsg->hWin;
            myMsg.MsgId = USER_MSG_DST_SET;
            myMsg.Data.v = id;
+           WM_SendMessage(myMsg.hWin, &myMsg);
+           myMsg.hWin = doubleShipDstSetWin;
            WM_SendMessage(myMsg.hWin, &myMsg);
         }     
         else

@@ -178,42 +178,42 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
 								
 					 case GUI_KEY_LEFT:
 					 case GUI_KEY_RIGHT:
-								id  = WM_GetId(pMsg->hWin) - ID_DMS_0;
-								switch(id)
-								{
-									case 0:
-										WM_SetFocus(hDimensions[1]);
-										break;
-									case 1:
-										WM_SetFocus(hDimensions[0]);
-										break;
-									case 2:
-										break;
-									case 3:
-										WM_SetFocus(hDimensions[4]);
-										break;
-									case 4:
-										WM_SetFocus(hDimensions[3]);
-										break;
-								}
-								break;
+                     id  = WM_GetId(pMsg->hWin) - ID_DMS_0;
+                     switch(id)
+                     {
+                        case 0:
+                           WM_SetFocus(hDimensions[1]);
+                           break;
+                        case 1:
+                           WM_SetFocus(hDimensions[0]);
+                           break;
+                        case 2:
+                           break;
+                        case 3:
+                           WM_SetFocus(hDimensions[4]);
+                           break;
+                        case 4:
+                           WM_SetFocus(hDimensions[3]);
+                           break;
+                     }
+                     break;
 					 
            case GUI_KEY_BACKSPACE:
-								if(Mem_isEqual(&t90_set.dst, &agent_set, sizeof(agent_set)))
-								{
-									WM_SetFocus(dstSetMenuDlg);
-								}
-								else
-								{
-									myMsg.hWin  = WM_GetClientWindow(confirmWin);
-									myMsg.hWinSrc  = singleShipDstSetWin;
-									myMsg.MsgId  = USER_MSG_CHOOSE;
-									myMsg.Data.v  = SYS_SETTING;
-									WM_SendMessage(myMsg.hWin, &myMsg);
-									
-									WM_BringToTop(confirmWin);
-									WM_SetFocus(confirmWin); 
-								}
+                  if(Mem_isEqual(&t90_set.dst, &agent_set, sizeof(agent_set)))
+                  {
+                     WM_SetFocus(dstSetMenuDlg);
+                  }
+                  else
+                  {
+                     myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                     myMsg.hWinSrc  = singleShipDstSetWin;
+                     myMsg.MsgId  = USER_MSG_CHOOSE;
+                     myMsg.Data.v  = SYS_SETTING;
+                     WM_SendMessage(myMsg.hWin, &myMsg);
+                     
+                     WM_BringToTop(confirmWin);
+                     WM_SetFocus(confirmWin); 
+                  }
                 break;
         }
         break;

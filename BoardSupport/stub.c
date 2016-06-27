@@ -99,47 +99,34 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 	}
 	else if(t90_set.sys.workmode == DOUBLE_MODE)
 	{
+      DoubleDstSet *pdoubleDstSet;
+      pdoubleDstSet = fetchdoudstset();
 		stubs[0].basePoint.x = 0;
 		stubs[0].basePoint.y = 0;
-
-		stubs[0].isValid = TRUE;
-
 		stubs[0].isValid = 1;
-
 		stubs[0].type = motherStub;
 		
-		stubs[1].basePoint.x = 50*M_TO_MILLINM;
-		stubs[1].basePoint.y = -400*M_TO_MILLINM;
-
-
-
+      
+		stubs[1].basePoint.x = -(pdoubleDstSet[0].stubtostub - pdoubleDstSet[0].motoas) / 2;
+		stubs[1].basePoint.y = -sqrt(-stubs[1].basePoint.x * stubs[1].basePoint.x + pdoubleDstSet[0].motostub * pdoubleDstSet[0].motostub);
 		stubs[1].isValid = 1;
-
 		stubs[1].type = safetySignStub;
 		
-		stubs[2].basePoint.x = 100*M_TO_MILLINM;
-		stubs[2].basePoint.y = -500*M_TO_MILLINM;
-
+		stubs[2].basePoint.x = pdoubleDstSet[1].motoas / 2;
+		stubs[2].basePoint.y = -sqrt(pdoubleDstSet[1].motostub * pdoubleDstSet[1].motostub - stubs[2].basePoint.x * stubs[2].basePoint.x);
 		stubs[2].isValid = 1;
-
 		stubs[2].type = safetySignStub;
 		
-		stubs[3].basePoint.x =  150*M_TO_MILLINM;
-		stubs[3].basePoint.y = -400*M_TO_MILLINM;
-
-
-
+		stubs[3].basePoint.x = (pdoubleDstSet[2].stubtostub + pdoubleDstSet[2].motoas)/2;
+		stubs[3].basePoint.y = -sqrt(pdoubleDstSet[2].motostub * pdoubleDstSet[2].motostub 
+                             - (pdoubleDstSet[2].stubtostub - pdoubleDstSet[2].motoas) * (pdoubleDstSet[2].stubtostub - pdoubleDstSet[2].motoas) / 4);
 		stubs[3].isValid = 1;
-
 		stubs[3].type = safetySignStub;
 		
-		stubs[4].basePoint.x = 200*M_TO_MILLINM;
+		stubs[4].basePoint.x = t90_set.motoas;
 		stubs[4].basePoint.y = 0;
-
 		stubs[4].isValid = TRUE;
-
 		stubs[4].isValid = 1;
-
 		stubs[4].type = aidedStub;
 	}
 	FillStubNodes();

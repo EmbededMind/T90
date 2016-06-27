@@ -19,13 +19,16 @@ unsigned long SYS_Date;
 unsigned long SYS_Time;
 
 T90_Set t90_set = {
+   3000,
 	{
 		DEFAULT_DST1,
 		DEFAULT_DST2,
 		DEFAULT_DST3,
 		DEFAULT_DST4,
-		DEFAULT_DST5  },	
-	
+		DEFAULT_DST5,
+         },
+
+
 	{
 		DEFAULT_INVD_DST, 	
 		DEFAULT_DANGER_SOG_X10,   
