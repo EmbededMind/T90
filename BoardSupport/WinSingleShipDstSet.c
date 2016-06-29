@@ -248,20 +248,20 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
        break;
 
 	 case USER_MSG_SKIN:
-       pColors = &(setWinColors[pMsg->Data.v]);	
+         pColors = &(setWinColors[pMsg->Data.v]);	
        
-       for(i = 0; i < DMS_NUM; i++)
-       {
-          HSD_DIMENSION_SetBkColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->bkColor);
-          HSD_DIMENSION_SetBkColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->bkColor);
-          
-          HSD_DIMENSION_SetValColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
-          HSD_DIMENSION_SetValColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
-          
-          HSD_DIMENSION_SetArrowLineColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
-          HSD_DIMENSION_SetArrowLineColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
-       }
-       break;  
+          for(i = 0; i < DMS_NUM; i++)
+          {
+             HSD_DIMENSION_SetBkColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->bkColor);
+             HSD_DIMENSION_SetBkColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->bkColor);
+             
+             HSD_DIMENSION_SetValColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
+             HSD_DIMENSION_SetValColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
+             
+             HSD_DIMENSION_SetArrowLineColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
+             HSD_DIMENSION_SetArrowLineColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
+          }
+          break;  
 
   /**@brief 安全标连接状态改变，更新距离设置窗口
    *  

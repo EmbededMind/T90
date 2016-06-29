@@ -73,7 +73,7 @@ void MainTask(void)
 		workModeWin = WIN_WorkModeCreate(); 
 	
 		singleShipWin = WIN_SingleShipCreate();	
-//		doubleShipWin = WIN_DoubleShipCreate();
+		doubleShipWin = WIN_DoubleShipCreate();
 
   
 
@@ -106,29 +106,38 @@ void MainTask(void)
 			WM_SetFocus(workModeWin);
 		}
 
-		else
-		{
-			StubRefresh();
-			WM_BringToTop(singleShipWin);
-			WM_SetFocus(singleShipWin);
-		}
-//		else if(t90_set.sys.workmode == SINGLE_MODE)
+//		else
 //		{
+//			StubRefresh();
 //			WM_BringToTop(singleShipWin);
 //			WM_SetFocus(singleShipWin);
 //		}
-//		else if(t90_set.sys.workmode == DOUBLE_MODE)
-//		{
-//			WM_BringToTop(doubleShipWin);
-//			WM_SetFocus(doubleShipWin);
-//		}
+		else if(t90_set.sys.workmode == SINGLE_MODE)
+		{
+         StubRefresh();
+			WM_BringToTop(singleShipWin);
+			WM_SetFocus(singleShipWin);
+		}
+		else if(t90_set.sys.workmode == DOUBLE_MODE)
+		{
+         StubRefresh();
+			WM_BringToTop(doubleShipWin);
+			WM_SetFocus(doubleShipWin);
+		}
 
 //DLG_testCustomedWidgetCreate();
    while(1)
    {
       if(isDstSetNeedUpdate){
          isDstSetNeedUpdate  = 0;
-         WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
+         if(t90_set.sys.workmode == SINGLE_MODE)
+         {
+            WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
+         }
+         else
+         {
+            WM_SendMessageNoPara(doubleShipDstSetWin, USER_MSG_DST_UPDATE);
+         }
       }
       GUI_Delay(200);
    }

@@ -42,7 +42,29 @@ void Stub_setParam(int which, int distX, int distY)
       }
    }
    else if(t90_set.sys.workmode  == DOUBLE_MODE){
-   
+        switch(which){
+           case 1:
+              stubs[1].basePoint.x = distX;
+              stubs[1].basePoint.y = distY;
+           break;
+           case 2:
+              stubs[2].basePoint.x = distX;
+              stubs[2].basePoint.y = distY;
+           break;
+           case 3:
+              stubs[3].basePoint.x = distX;
+              stubs[3].basePoint.y = distY;
+           break;
+//           case 4:
+//              stubs[4].basePoint.x = distX;
+//              stubs[4].basePoint.y = distY;
+//           break;
+           default:
+              INFO("stub number is out of range!");
+           break;
+                
+        
+        }
    }
 }
 
@@ -92,13 +114,14 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[4].isValid = 0;
   
   
-  stubs[1].isValid  = 0;
-  stubs[2].isValid  = 0;
-  stubs[3].isValid  = 0;
+//  stubs[1].isValid  = 0;
+//  stubs[2].isValid  = 0;
+//  stubs[3].isValid  = 0;
 
 	}
 	else if(t90_set.sys.workmode == DOUBLE_MODE)
 	{
+      int motoas = *fetchmotoas();
       DoubleDstSet *pdoubleDstSet;
       pdoubleDstSet = fetchdoudstset();
 		stubs[0].basePoint.x = 0;
@@ -107,27 +130,40 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[0].type = motherStub;
 		
       
-		stubs[1].basePoint.x = -(pdoubleDstSet[0].stubtostub - pdoubleDstSet[0].motoas) / 2;
-		stubs[1].basePoint.y = -sqrt(-stubs[1].basePoint.x * stubs[1].basePoint.x + pdoubleDstSet[0].motostub * pdoubleDstSet[0].motostub);
+		stubs[1].basePoint.x = -(pdoubleDstSet[0].stubtostub - motoas) * M_TO_MILLINM / 2;
+		stubs[1].basePoint.y = -sqrt(-stubs[1].basePoint.x * stubs[1].basePoint.x 
+                             + pdoubleDstSet[0].motostub * pdoubleDstSet[0].motostub*M_TO_MILLINM*M_TO_MILLINM);
+//      stubs[1].basePoint.x=-100;
+//      stubs[1].basePoint.y=-100;
 		stubs[1].isValid = 1;
 		stubs[1].type = safetySignStub;
 		
-		stubs[2].basePoint.x = pdoubleDstSet[1].motoas / 2;
-		stubs[2].basePoint.y = -sqrt(pdoubleDstSet[1].motostub * pdoubleDstSet[1].motostub - stubs[2].basePoint.x * stubs[2].basePoint.x);
+		stubs[2].basePoint.x = motoas * M_TO_MILLINM/ 2;
+		stubs[2].basePoint.y = -sqrt(pdoubleDstSet[1].motostub * pdoubleDstSet[1].motostub*M_TO_MILLINM*M_TO_MILLINM 
+                             - stubs[2].basePoint.x * stubs[2].basePoint.x);
+//      stubs[2].basePoint.x=100;
+//      stubs[2].basePoint.y=-200;
 		stubs[2].isValid = 1;
 		stubs[2].type = safetySignStub;
 		
-		stubs[3].basePoint.x = (pdoubleDstSet[2].stubtostub + pdoubleDstSet[2].motoas)/2;
+		stubs[3].basePoint.x = (pdoubleDstSet[2].stubtostub + motoas)*M_TO_MILLINM/2;
 		stubs[3].basePoint.y = -sqrt(pdoubleDstSet[2].motostub * pdoubleDstSet[2].motostub 
-                             - (pdoubleDstSet[2].stubtostub - pdoubleDstSet[2].motoas) * (pdoubleDstSet[2].stubtostub - pdoubleDstSet[2].motoas) / 4);
-		stubs[3].isValid = 1;
+                             - (pdoubleDstSet[2].stubtostub - motoas) * (pdoubleDstSet[2].stubtostub - motoas) / 4)*M_TO_MILLINM;
+//		stubs[3].basePoint.x=300;
+//      stubs[3].basePoint.y=-100;
+      stubs[3].isValid = 1;
 		stubs[3].type = safetySignStub;
 		
-		stubs[4].basePoint.x = t90_set.motoas;
+		stubs[4].basePoint.x = motoas*M_TO_MILLINM;
 		stubs[4].basePoint.y = 0;
+//      stubs[4].basePoint.x = pdoubleDstSet[4].motoas*M_TO_MILLINM;
+//      stubs[4].basePoint.y=0;
 		stubs[4].isValid = TRUE;
 		stubs[4].isValid = 1;
 		stubs[4].type = aidedStub;
+//      stubs[1].isValid  = 0;
+//      stubs[2].isValid  = 0;
+//      stubs[3].isValid  = 0;
 	}
 	FillStubNodes();
 	FillStubInfo();

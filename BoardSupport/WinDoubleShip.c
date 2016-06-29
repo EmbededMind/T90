@@ -10,15 +10,15 @@
 #include "DispSOGNums.h"
 
 
-/** @brief 单拖模式窗口的句柄 */
+/** @brief 双拖模式窗口的句柄 */
 WM_HWIN doubleShipWin;
 
 static WM_HTIMER timer;
 
 static const HomeColor *pColor = homeColors;
 
-static void _onPaint1(void);
-static void _onPaint2(void);
+static void _onDPaint1(void);
+static void _onDPaint2(void);
 
 
 int cursorOnStub = 0;
@@ -28,7 +28,7 @@ int cursorOnStub = 0;
 static int timeCnt = 0;
 
 
-/**@brief 单拖模式下的主界面
+/**@brief 双拖模式下的主界面
  *
  *   @param [in] pMsg 消息指针 
  */
@@ -50,7 +50,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						 WM_SetFocus(alarmMonitorWin);
 					 }					 
 					 timeCnt++;
-					 WM_Paint(singleShipWin);
+					 WM_Paint(doubleShipWin);
 					 WM_RestartTimer(timer, 500);
 					 break;
 		 
@@ -75,22 +75,22 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //									WM_BringToTop(alarmMonitorWin);
 //									WM_SetFocus(alarmMonitorWin);
 									cursorOnStub = 0;
-									WM_Paint(singleShipWin);
+									WM_Paint(doubleShipWin);
 									break;
 						 
 						 case GUI_KEY_DOWN:
 									cursorOnStub = 2;
-									WM_Paint(singleShipWin);
+									WM_Paint(doubleShipWin);
 									break;
 						 
 						 case GUI_KEY_LEFT:
 									cursorOnStub = 1;
-									WM_Paint(singleShipWin);
+									WM_Paint(doubleShipWin);
 									break;
 												 
 						 case GUI_KEY_RIGHT:
 									cursorOnStub = 3;
-									WM_Paint(singleShipWin);
+									WM_Paint(doubleShipWin);
 									break;
 						 
 //						 case GUI_KEY_MONITORING:
@@ -100,7 +100,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //						 
 						 case GUI_KEY_CANCEL:
 									monitorState = monitorState == ON? OFF: ON;
-									WM_Paint(singleShipWin);
+									WM_Paint(doubleShipWin);
 									break;
 						 
 						 default:
@@ -116,11 +116,11 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			
 					 if(cursorOnStub)
 					 {
-						 _onPaint2();
+						 _onDPaint2();
 					 }
 					 else
 					 {
-					   _onPaint1();
+					   _onDPaint1();
 					 }
 					
 					 if(monitorState == OFF)
@@ -154,7 +154,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 }
 
 
-/**@brief 创建单拖模式下的主界面窗口
+/**@brief 创建双拖模式下的主界面窗口
  *
  *  @return 所创建窗口的句柄
  */
@@ -166,7 +166,7 @@ WM_HWIN WIN_DoubleShipCreate(void){
 
 
 
-static void _onPaint1(void)
+static void _onDPaint1(void)
 {
    /** Paint BBS background */
    GUI_DrawGradientRoundedV( BBS1_ABOVE_X,                         /// x0
@@ -240,20 +240,16 @@ static void _onPaint1(void)
 	 GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+60, BBS1_BELOW_Y+110); 
 	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+240, BBS1_BELOW_Y+110);
-	 
-//	 sprintf(pStrBuf, "%d", timeCnt);
-//   GUI_DispStringAt(pStrBuf, 20, 20);
-	 
+		 
 	GUI_SetColor(pColor->textColor);
 	DrawStubs(0);
 	DrawCursor(motherShipPixel, 0);
 }
 
 
-static void _onPaint2(void)
-{
-    
-     GUI_RECT Rect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+117,BBS2_ABOVE_Y+20+40};
+static void _onDPaint2(void)
+{  
+   GUI_RECT Rect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+117,BBS2_ABOVE_Y+20+40};
    /** Paint BBS background */
    GUI_DrawGradientRoundedV( BBS2_ABOVE_X,                         /// x0
                              BBS2_ABOVE_Y,                         /// y0
@@ -345,36 +341,44 @@ static void _onPaint2(void)
 		 case 1:
              GUI_SetColor(pColor->numColor);
              GUI_SetFont(GUI_FONT_24B_1);
-			 GUI_DispStringAt("TUOWANG1", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst1);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst2);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+			    GUI_DispStringAt("TUOWANG1", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+			    sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.y));
+			    GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+			    sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.x));
+			    GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
              GUI_SetFont(&GUI_Font_T90_30);
              GUI_SetColor(pColor->textColor);
-             GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+             if(stubs[1].basePoint.x<0)
+             {
+                GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+             }
+             else
+             {
+                GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+             }
              GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
 			 break;
 		 case 2:
              GUI_SetColor(pColor->numColor);
              GUI_SetFont(GUI_FONT_24B_1);
-			 GUI_DispStringAt("TUOWANG2", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst3);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-//			 sprintf(pStrBuf, "%4d", 0);
-//			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*3);
-//             GUI_SetFont(&GUI_Font_T90_24);
-//             GUI_SetColor(pColor->textColor);
-//             GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+32*3);
+			    GUI_DispStringAt("TUOWANG2", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+			    sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.y));
+			    GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+			    sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.x));
+			    GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+             GUI_SetFont(&GUI_Font_T90_30);
+             GUI_SetColor(pColor->textColor);
+             GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+             GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
 			 break;
 		 case 3:
              GUI_SetColor(pColor->numColor);
              GUI_SetFont(GUI_FONT_24B_1);
-			 GUI_DispStringAt("TUOWANG3", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst5);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-			 sprintf(pStrBuf, "%4d", t90_set.dst.dst4);
-			 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+			    GUI_DispStringAt("TUOWANG3", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+			    sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.y));
+             GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+			    sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.x));
+			    GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
              GUI_SetFont(&GUI_Font_T90_30);
              GUI_SetColor(pColor->textColor);
              GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);

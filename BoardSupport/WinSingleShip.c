@@ -126,7 +126,7 @@ printf("up:%d\n", cursorOnStub);
 			
 					 if(cursorOnStub == 0 || cursorOnStub == 4)
 					 {
-					   _onPaint1();
+					    _onPaint1();
 					 }
 					 else
 					 {
@@ -360,7 +360,7 @@ static void _onPaint2(void)
 		 case 1:
         GUI_SetColor(pColor->numColor);
         GUI_SetFont(GUI_FONT_24B_1);
-        for(i; i<N_boat; i++){
+        for(i=0; i<N_boat; i++){
            if(gPlugBoats[0] == SimpBerthes[i].pBerth->Boat.user_id){
               pBerth  = SimpBerthes[i].pBerth;
               break;
@@ -387,7 +387,7 @@ static void _onPaint2(void)
         GUI_SetFont(GUI_FONT_24B_1);
         
         
-         for(i; i<N_boat; i++){
+         for(i=0; i<N_boat; i++){
            if(gPlugBoats[1] == SimpBerthes[i].pBerth->Boat.user_id){
               pBerth  = SimpBerthes[i].pBerth;
               break;
@@ -412,7 +412,7 @@ static void _onPaint2(void)
         GUI_SetColor(pColor->numColor);
         GUI_SetFont(GUI_FONT_24B_1);
         
-         for(i; i<N_boat; i++){
+         for(i=0; i<N_boat; i++){
            if(gPlugBoats[2] == SimpBerthes[i].pBerth->Boat.user_id){
               pBerth  = SimpBerthes[i].pBerth;
               break;

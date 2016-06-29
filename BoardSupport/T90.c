@@ -19,7 +19,7 @@ unsigned long SYS_Date;
 unsigned long SYS_Time;
 
 T90_Set t90_set = {
-   3000,
+   DEFAULT_MOTOAS,
 	{
 		DEFAULT_DST1,
 		DEFAULT_DST2,

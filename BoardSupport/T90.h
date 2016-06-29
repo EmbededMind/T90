@@ -41,6 +41,7 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define OFF      0
 #define ON       1
 
+#define DEFAULT_MOTOAS 2000
 #define DEFAULT_DST1   400
 #define DEFAULT_DST2   25
 #define DEFAULT_DST3   500
@@ -158,7 +159,6 @@ typedef struct T90_PlugEvent
 
 typedef struct 
 {
-   uint16_t motoas;
    uint16_t motostub;
    uint16_t stubtostub;
 }DoubleDstSet;
@@ -186,6 +186,7 @@ void T90_Store(void);
 void T90_Reset(void);
 
 DoubleDstSet* fetchdoudstset();
+int* fetchmotoas();
 #endif
 
 

@@ -49,13 +49,19 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
            
            
-           myMsg.hWin = singleShipDstSetWin;
+           if(t90_set.sys.workmode == SINGLE_MODE)
+           {
+              myMsg.hWin = singleShipDstSetWin;  
+           }
+           else
+           {
+              myMsg.hWin = doubleShipDstSetWin;
+           } 
            myMsg.hWinSrc = pMsg->hWin;
            myMsg.MsgId = USER_MSG_DST_SET;
            myMsg.Data.v = id;
            WM_SendMessage(myMsg.hWin, &myMsg);
-           myMsg.hWin = doubleShipDstSetWin;
-           WM_SendMessage(myMsg.hWin, &myMsg);
+
         }     
         else
         {
@@ -105,10 +111,18 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
              WM_SetFocus(buttons[0]);
              WM_SetFocus(mainMenuDlg);
           
-             myMsg.hWin = singleShipDstSetWin;
+             
              myMsg.hWinSrc = pMsg->hWin;
              myMsg.MsgId = USER_MSG_DST_SET;
              myMsg.Data.v = -1;
+             if(t90_set.sys.workmode == SINGLE_MODE)
+             {
+                myMsg.hWin = singleShipDstSetWin;  
+             }
+             else
+             {
+                myMsg.hWin = doubleShipDstSetWin;
+             }            
              WM_SendMessage(myMsg.hWin, &myMsg);
              break;
         

@@ -39,17 +39,23 @@ static WM_HWIN hExDim[5];
 static WM_HWIN hFigs[3];
 
 
-
-
-static DoubleDstSet tempdoudstset[3];
+static int tempmotoas;
+static DoubleDstSet tempDouDstSet[3];
+static int premotoas;
+static DoubleDstSet preDouDstSet[3];
 
 DoubleDstSet* fetchdoudstset(){
-   return tempdoudstset;   
+   return preDouDstSet;   
 }
-
+int* fetchmotoas()
+{
+   return &premotoas;
+}
 static void myDimCallback(WM_MESSAGE* pMsg)
-{  
+{
+   int i = 0;   
    int id  = 0;
+   WM_MESSAGE myMsg;
    switch(pMsg->MsgId)
    {
       case WM_KEY:
@@ -59,87 +65,88 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
                       case 0:                          
-                          if(tempdoudstset[whichFig].motoas < MAXMOTOAS){
-                              tempdoudstset[whichFig].motoas  += 50;
-                              tempdoudstset[whichFig].motoas  -= (tempdoudstset[whichFig].motoas %50);
-                              sprintf(pStrBuf, "%d", tempdoudstset[whichFig].motoas);
-                              HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
+                          if(tempmotoas < MAXMOTOAS){
+                                tempmotoas += 50;
+                                tempmotoas -= (tempmotoas %50);
+                                sprintf(pStrBuf, "%d", tempmotoas);
+                                HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                               }
+                          
                       break;
                       case 1:
-                           if(tempdoudstset[whichFig].stubtostub < MAXSTUBTOSTUB){
-                              tempdoudstset[whichFig].stubtostub  += 50;
-                              tempdoudstset[whichFig].stubtostub -= (tempdoudstset[whichFig].stubtostub %50);
-                              sprintf(pStrBuf, "%d", tempdoudstset[whichFig].stubtostub);
+                           if(tempDouDstSet[whichFig].stubtostub < MAXSTUBTOSTUB){
+                              tempDouDstSet[whichFig].stubtostub += 50;
+                              tempDouDstSet[whichFig].stubtostub -= (tempDouDstSet[whichFig].stubtostub %50);
+                              sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].stubtostub);
                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                               }
                       break;
                       case 2:
-                            if(tempdoudstset[whichFig].motostub < MAXMOTOSTUB){
-                              tempdoudstset[whichFig].motostub  += 50;
-                              tempdoudstset[whichFig].motostub  -= (tempdoudstset[whichFig].motostub %50);
-                              sprintf(pStrBuf, "%d", tempdoudstset[whichFig].motostub);
+                            if(tempDouDstSet[whichFig].motostub < MAXMOTOSTUB){
+                              tempDouDstSet[whichFig].motostub  += 50;
+                              tempDouDstSet[whichFig].motostub  -= (tempDouDstSet[whichFig].motostub %50);
+                              sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].motostub);
                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                             }
                       break;
                       case 3:
-                             if(tempdoudstset[whichFig].motostub < MAXMOTOSTUB){
-                                tempdoudstset[whichFig].motostub += 50;
-                                tempdoudstset[whichFig].motostub -= (tempdoudstset [whichFig].motostub % 50);
-                                sprintf(pStrBuf, "%d", tempdoudstset[whichFig].motostub);
+                             if(tempDouDstSet[whichFig].motostub < MAXMOTOSTUB){
+                                tempDouDstSet[whichFig].motostub += 50;
+                                tempDouDstSet[whichFig].motostub -= (tempDouDstSet [whichFig].motostub % 50);
+                                sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].motostub);
                                 HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                              }
                       break;
                       case 4:
-                             if(tempdoudstset[whichFig].motostub < MAXMOTOSTUB){
-                                tempdoudstset[whichFig].motostub += 50;
-                                tempdoudstset[whichFig].motostub -= (tempdoudstset [whichFig].motostub % 50);
-                                sprintf(pStrBuf, "%d", tempdoudstset[whichFig].motostub);
+                             if(tempDouDstSet[whichFig].motostub < MAXMOTOSTUB){
+                                tempDouDstSet[whichFig].motostub += 50;
+                                tempDouDstSet[whichFig].motostub -= (tempDouDstSet [whichFig].motostub % 50);
+                                sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].motostub);
                                 HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                              }
-                   break;
-                   }
-                   break;
+                     break;
+                     }
+                     break;
               case GUI_KEY_DOWN:
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
                       case 0:                          
-                          if(tempdoudstset[whichFig].motoas > 0){
-                              tempdoudstset[whichFig].motoas  -= 50;
-                              tempdoudstset[whichFig].motoas  -= (tempdoudstset[whichFig].motoas %50);
-                              sprintf(pStrBuf, "%d", tempdoudstset[whichFig].motoas);
+                          if(tempmotoas > 0){
+                              tempmotoas  -= 50;
+                              tempmotoas  -= (tempmotoas %50);
+                              sprintf(pStrBuf, "%d", tempmotoas);
                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                               }
                       break;
                       case 1:
-                           if(tempdoudstset[whichFig].stubtostub > 0){
-                              tempdoudstset[whichFig].stubtostub -= 50;
-                              tempdoudstset[whichFig].stubtostub -= (tempdoudstset[whichFig].stubtostub %50);
-                              sprintf(pStrBuf, "%d", tempdoudstset[whichFig].stubtostub);
+                           if(tempDouDstSet[whichFig].stubtostub > 0){
+                              tempDouDstSet[whichFig].stubtostub -= 50;
+                              tempDouDstSet[whichFig].stubtostub -= (tempDouDstSet[whichFig].stubtostub %50);
+                              sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].stubtostub);
                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                               }
                       break;
                       case 2:
-                            if(tempdoudstset[whichFig].motostub > 0){
-                              tempdoudstset[whichFig].motostub  -= 50;
-                              tempdoudstset[whichFig].motostub  -= (tempdoudstset[whichFig].motostub %50);
-                              sprintf(pStrBuf, "%d", tempdoudstset[whichFig].motostub);
+                            if(tempDouDstSet[whichFig].motostub > 0){
+                              tempDouDstSet[whichFig].motostub  -= 50;
+                              tempDouDstSet[whichFig].motostub  -= (tempDouDstSet[whichFig].motostub %50);
+                              sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].motostub);
                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                             }
                       break;
                       case 3:
-                             if(tempdoudstset[whichFig].motostub > 0){
-                                tempdoudstset[whichFig].motostub -= 50;
-                                tempdoudstset[whichFig].motostub -= (tempdoudstset [whichFig].motostub % 50);
-                                sprintf(pStrBuf, "%d", tempdoudstset[whichFig].motostub);
+                             if(tempDouDstSet[whichFig].motostub > 0){
+                                tempDouDstSet[whichFig].motostub -= 50;
+                                tempDouDstSet[whichFig].motostub -= (tempDouDstSet [whichFig].motostub % 50);
+                                sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].motostub);
                                 HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                              }
                       break;
                       case 4:
-                             if(tempdoudstset[whichFig].motostub > 0){
-                                tempdoudstset[whichFig].motostub -= 50;
-                                tempdoudstset[whichFig].motostub -= (tempdoudstset [whichFig].motostub % 50);
-                                sprintf(pStrBuf, "%d", tempdoudstset[whichFig].motostub);
+                             if(tempDouDstSet[whichFig].motostub > 0){
+                                tempDouDstSet[whichFig].motostub -= 50;
+                                tempDouDstSet[whichFig].motostub -= (tempDouDstSet [whichFig].motostub % 50);
+                                sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].motostub);
                                 HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                              }
                    break;
@@ -179,13 +186,26 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                    }
                    break;
               case GUI_KEY_BACKSPACE:
-                   StubRefresh();
-                   HSD_STICKFIGURE_SetPenColor(hFigs[whichFig], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
-                   WM_SetFocus(dstSetMenuDlg);
+                   if(Mem_isEqual(preDouDstSet, tempDouDstSet, sizeof(tempDouDstSet)) && premotoas == tempmotoas)
+                   {
+                       WM_SetFocus(dstSetMenuDlg);
+                   }
+                   else
+                   {
+                      myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                      myMsg.hWinSrc  = doubleShipDstSetWin;
+                      myMsg.MsgId  = USER_MSG_CHOOSE;
+                      myMsg.Data.v  = SYS_SETTING;
+                      WM_SendMessage(myMsg.hWin, &myMsg);
+                        
+                      WM_BringToTop(confirmWin);
+                      WM_SetFocus(confirmWin);
+                   }
+//                   StubRefresh();
+//                   WM_SetFocus(dstSetMenuDlg);
                    break;
            }
-           break;
-           
+           break;     
       default:
            HSD_DIMENSION_EX_Callback(pMsg);
            break;      
@@ -202,7 +222,41 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
    int i;
    
    switch(pMsg->MsgId){
-      
+      case USER_MSG_DST_UPDATE:
+           t90_set.motoas = stubs[4].basePoint.x;
+           preDouDstSet[0].motostub = sqrt(stubs[1].basePoint.x*stubs[1].basePoint.x + stubs[1].basePoint.y*stubs[1].basePoint.y);
+           preDouDstSet[0].stubtostub = abs(premotoas-stubs[1].basePoint.x*2);
+           preDouDstSet[1].motostub = sqrt(stubs[2].basePoint.x*stubs[2].basePoint.x + stubs[2].basePoint.y*stubs[2].basePoint.y);
+           preDouDstSet[2].motostub = sqrt((stubs[3].basePoint.x-stubs[4].basePoint.x)*(stubs[3].basePoint.x-stubs[4].basePoint.x)+
+                                            stubs[3].basePoint.y*stubs[3].basePoint.y);
+           preDouDstSet[2].stubtostub = abs(premotoas-stubs[3].basePoint.y*2);
+         break;
+      case USER_MSG_REPLY:
+           if(pMsg->Data.v == REPLY_OK)
+           {
+              memcpy(preDouDstSet,tempDouDstSet,sizeof(tempDouDstSet));
+              premotoas = tempmotoas;
+           }
+           else
+           {
+              memcpy(tempDouDstSet,preDouDstSet,sizeof(preDouDstSet));
+              tempmotoas = premotoas;
+              sprintf(pStrBuf, "%d", tempmotoas);
+              HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
+              sprintf(pStrBuf, "%d", tempDouDstSet[1].stubtostub);
+              HSD_DIMENSION_EX_SetValText(hExDim[1], pStrBuf);
+              sprintf(pStrBuf, "%d", tempDouDstSet[2].stubtostub);
+              HSD_DIMENSION_EX_SetValText(hExDim[1], pStrBuf);
+              sprintf(pStrBuf, "%d", tempDouDstSet[0].motostub);
+              HSD_DIMENSION_EX_SetValText(hExDim[2], pStrBuf);
+              sprintf(pStrBuf, "%d", tempDouDstSet[1].motostub);
+              HSD_DIMENSION_EX_SetValText(hExDim[3], pStrBuf);
+              sprintf(pStrBuf, "%d", tempDouDstSet[2].motostub);
+              HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);
+           }
+           StubRefresh();
+           WM_SetFocus(dstSetMenuDlg);
+      break;
       case USER_MSG_DST_SET:
        
           for(i = 0; i < 3; i++)  //clear
@@ -214,15 +268,30 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
              HSD_STICKFIGURE_SetPenColor(hFigs[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor);
              prevwhichFig = whichFig;
              whichFig = pMsg->Data.v;
-             sprintf(pStrBuf, "%d", tempdoudstset[whichFig].motoas);
+             sprintf(pStrBuf, "%d", tempmotoas);
              HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
              if(whichFig != 1)
              {
-                sprintf(pStrBuf, "%d", tempdoudstset[whichFig].stubtostub);
+                sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].stubtostub);
                 HSD_DIMENSION_EX_SetValText(hExDim[1], pStrBuf);  
              }                
           }
           break;
+      case USER_MSG_SKIN:
+       pColors = &(setWinColors[pMsg->Data.v]);	
+       
+       for(i = 0; i < 5; i++)
+       {
+          HSD_DIMENSION_EX_SetBkColor(hExDim[i], HSD_DIMENSION_EX_CI_UNFOCUS,pColors->bkColor);
+          HSD_DIMENSION_EX_SetBkColor(hExDim[i], HSD_DIMENSION_EX_CI_FOCUS,  pColors->bkColor);
+          
+          HSD_DIMENSION_EX_SetValColor(hExDim[i], HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
+          HSD_DIMENSION_EX_SetValColor(hExDim[i], HSD_DIMENSION_EX_CI_FOCUS,   pColors->focusBkColor);
+          
+          HSD_DIMENSION_EX_SetArrowLineColor(hExDim[i],HSD_DIMENSION_EX_CI_UNFOCUS, pColors->arrowLineColor);
+          HSD_DIMENSION_EX_SetArrowLineColor(hExDim[i], HSD_DIMENSION_EX_CI_FOCUS, pColors->focusArrowLineColor);
+       }
+       break;
       case USER_MSG_FOCUS:
            if(pMsg->Data.v < 3){
               whichFig  = pMsg->Data.v;
@@ -232,21 +301,21 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
                  case 1:WM_SetFocus(hExDim[0]); break;
                  case 2:WM_SetFocus(hExDim[4]); break;
               }
-              HSD_STICKFIGURE_SetPenColor(hFigs[whichFig], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusArrowLineColor);
+              
+              HSD_STICKFIGURE_SetPenColor(hFigs[whichFig], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor);
            }
            break;
    
       case WM_CREATE:
-           tempdoudstset[0].motoas = 2000;
-           tempdoudstset[0].motostub = 1000;
-           tempdoudstset[0].stubtostub = 1500;
-           tempdoudstset[1].motoas = 2000;
-           tempdoudstset[1].motostub = 3000;
-           tempdoudstset[1].stubtostub = 0;
-           tempdoudstset[2].motoas = 2000;
-           tempdoudstset[2].motostub = 1000;
-           tempdoudstset[2].stubtostub = 1500;
-      
+           tempmotoas = 2000;
+           tempDouDstSet[0].motostub = 1000;
+           tempDouDstSet[0].stubtostub = 1500;
+           tempDouDstSet[1].motostub = 3000;
+           tempDouDstSet[1].stubtostub = 0;
+           tempDouDstSet[2].motostub = 1000;
+           tempDouDstSet[2].stubtostub = 1500;
+           premotoas = tempmotoas;
+           memcpy(preDouDstSet,tempDouDstSet,sizeof(tempDouDstSet));
            
            pColors  = &setWinColors[t90_set.sys.nightmode];
            
@@ -283,7 +352,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            arrows[0].y = 20;  arrows[1].y = 22; arrows[2].y = 18; arrows[3].y = 20;  arrows[4].y = 22;  arrows[5].y = 18;
            HSD_DIMENSION_EX_SetArrows(hExDim[0], arrows); 
            HSD_DIMENSION_EX_SetFont(hExDim[0], &GUI_Font_T90_24);
-           sprintf(pStrBuf,"%d",tempdoudstset[whichFig].motoas);
+           sprintf(pStrBuf,"%d",tempmotoas);
            HSD_DIMENSION_EX_SetValText(hExDim[0],pStrBuf);
            HSD_DIMENSION_EX_SetUnitText(hExDim[0], "米");
            WM_SetHasTrans(hExDim[0]);           
@@ -300,7 +369,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            arrows[0].y = 20;  arrows[1].y = 22; arrows[2].y = 18; arrows[3].y = 20; arrows[4].y = 22; arrows[5].y = 18;
            HSD_DIMENSION_EX_SetArrows(hExDim[1], arrows); 
            HSD_DIMENSION_EX_SetFont(hExDim[1], &GUI_Font_T90_24);
-           sprintf(pStrBuf,"%d",tempdoudstset[whichFig == 2?prevwhichFig:whichFig].stubtostub);
+           sprintf(pStrBuf,"%d",tempDouDstSet[whichFig == 2?prevwhichFig:whichFig].stubtostub);
            HSD_DIMENSION_EX_SetValText(hExDim[1], pStrBuf);
            HSD_DIMENSION_EX_SetUnitText(hExDim[1], "米");
            WM_SetHasTrans(hExDim[1]);          
@@ -317,7 +386,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            arrows[0].y =  1;  arrows[1].y =   5; arrows[2].y =  7; arrows[3].y = 113; arrows[4].y = 110; arrows[5].y = 108;
            HSD_DIMENSION_EX_SetArrows(hExDim[2], arrows); 
            HSD_DIMENSION_EX_SetFont(hExDim[2], &GUI_Font_T90_24);
-           sprintf(pStrBuf,"%d",tempdoudstset[0].motostub);
+           sprintf(pStrBuf,"%d",tempDouDstSet[0].motostub);
            HSD_DIMENSION_EX_SetValText(hExDim[2], pStrBuf);
            HSD_DIMENSION_EX_SetUnitText(hExDim[2], "米");
            WM_SetHasTrans(hExDim[2]);    
@@ -334,7 +403,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            arrows[0].y =   1;  arrows[1].y =   5; arrows[2].y =    7; arrows[3].y = 258; arrows[4].y = 252; arrows[5].y = 254;
            HSD_DIMENSION_EX_SetArrows(hExDim[3], arrows); 
            HSD_DIMENSION_EX_SetFont(hExDim[3], &GUI_Font_T90_24);
-           sprintf(pStrBuf,"%d",tempdoudstset[1].motostub);
+           sprintf(pStrBuf,"%d",tempDouDstSet[1].motostub);
            HSD_DIMENSION_EX_SetValText(hExDim[3], pStrBuf);
            HSD_DIMENSION_EX_SetUnitText(hExDim[3], "米");
            WM_SetHasTrans(hExDim[3]);   
@@ -351,7 +420,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            arrows[0].y =  1;  arrows[1].y =  5; arrows[2].y =   7; arrows[3].y = 108; arrows[4].y = 102; arrows[5].y = 104;
            HSD_DIMENSION_EX_SetArrows(hExDim[4], arrows); 
            HSD_DIMENSION_EX_SetFont(hExDim[4], &GUI_Font_T90_24);
-           sprintf(pStrBuf,"%d",tempdoudstset[2].motostub);
+           sprintf(pStrBuf,"%d",tempDouDstSet[2].motostub);
            HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);
            HSD_DIMENSION_EX_SetUnitText(hExDim[4], "米");
            WM_SetHasTrans(hExDim[4]);           
