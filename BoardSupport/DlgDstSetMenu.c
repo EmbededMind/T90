@@ -22,7 +22,7 @@ static WM_HWIN buttons[3];
 static  const MenuColor *pColors = subMenuColors;
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
-   {WINDOW_CreateIndirect,     "clientWin",     ID_WINDOW,      0, 0,                                             SUB_MENU_WIDTH,    SUB_MENU_HEIGHT,      0, 0, 0},
+   {WINDOW_CreateIndirect,     "clientWin",     ID_WINDOW,      0, 0,                                            SUB_MENU_WIDTH,    SUB_MENU_HEIGHT,      0, 0, 0},
    
 //   {HSD_BUTTON_CreateIndirect, "safety sign 0", GUI_ID_BUTTON0, 0, SUB_MENU_ITEM_HEIGHT+  SUB_MENU_ITEM_MARGIN*2, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
 //   {HSD_BUTTON_CreateIndirect, "safety sign 1", GUI_ID_BUTTON1, 0, SUB_MENU_ITEM_HEIGHT*2+SUB_MENU_ITEM_MARGIN*3, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},

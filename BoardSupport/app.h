@@ -78,6 +78,7 @@
 // };
 
 //////////////////////////////////////////////////
+
 int change_table(unsigned char ch)
 {
   int temp_add_40=0,temp_add_sum=0,temp_final;

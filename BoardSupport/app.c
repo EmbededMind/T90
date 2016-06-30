@@ -52,10 +52,11 @@ static	OS_STK	Refresh_Task_Stack[KEY_TASK_STACK_SIZE];
 
 static OS_STK Play_Task_Statck[PLAY_TAST_STACK_SIZE];
 
+extern OS_EVENT *MSBOX;
 //static  OS_STK_DATA UI_Task_Stack_Use;
 //static  OS_STK_DATA Insert_Task_Stack_Use;
 //static  OS_STK_DATA Refresh_Task_Stack_Use;
-
+OS_EVENT *MSBOX;
 
 #define MUSIC_ADD(x)  if(x==0) \
                          musics[musicCursor]  = SND_ID_ZRO; \
@@ -178,7 +179,7 @@ void detectPlugEvent(void);
 void sendPulse();
 
 void UI_Task(void *p_arg)/*描述(Description):	任务UI_Task*/
-{
+{      
 		MainTask();
 }
 
@@ -445,7 +446,7 @@ void _Play_Task(void* p_arg)
  
 void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
 {
-	INT8U err;
+  INT8U err;
 
   mothership.latitude = MOTHERSHIP_LA;
   mothership.longitude = MOTHERSHIP_LG;
@@ -473,6 +474,7 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   Refresher  = OSMutexCreate(6,&myErr);
   Updater    = OSMutexCreate(6,&myErr_2);
   QSem = OSQCreate(&MsgQeueTb[0],MSG_QUEUE_TABNUM); //创建消息队列，10条消息
+  
   PartitionPt=OSMemCreate(Partition,MSG_QUEUE_TABNUM,100,&err);
   
   OSTaskCreateExt(     UI_Task, 
@@ -632,6 +634,7 @@ void detectPlugEvent()
       isDstSetNeedUpdate++;
 //   if(plugEvent.eventType == PGEvent_Data){
 //      if(plugEvent.whichPort & 0x01){
+         OSMboxPost(MSBOX,&plugEvent);
          if(plugEvent.status & 0x01){
             Stub_setParam(1, plugEvent.dist_1, plugEvent.dist_2);
             Stub_setValidity(1, TRUE);
@@ -644,7 +647,7 @@ void detectPlugEvent()
             Stub_setValidity(1, FALSE);
             if(gPlugBoats[0] > 0){
                deleteBoat(gPlugBoats[0]);
-            }
+            }           
          }
 //      }
 //      if(plugEvent.whichPort & 0x02){
@@ -658,7 +661,9 @@ void detectPlugEvent()
          }
         else{
            Stub_setValidity(2, FALSE);
-           deleteBoat(gPlugBoats[1]);
+           if(gPlugBoats[1] > 0){
+              deleteBoat(gPlugBoats[1]);
+           }
         }        
 //      }
 //      if(plugEvent.whichPort & 0x04){
@@ -671,8 +676,10 @@ void detectPlugEvent()
             }            
          }
          else{
-            Stub_setValidity(3, FALSE);    
-            deleteBoat(gPlugBoats[2]);
+            Stub_setValidity(3, FALSE);
+            if(gPlugBoats[2] > 0){            
+               deleteBoat(gPlugBoats[2]);
+            }
          }
 //      }
       

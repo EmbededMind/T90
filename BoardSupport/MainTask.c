@@ -128,6 +128,9 @@ void MainTask(void)
 //DLG_testCustomedWidgetCreate();
    while(1)
    {
+//      T90_PlugEvent *plugEvent;
+//      uint8_t *err;
+//      plugEvent=OSMboxAccept(MSBOX);    
       if(isDstSetNeedUpdate){
          isDstSetNeedUpdate  = 0;
          if(t90_set.sys.workmode == SINGLE_MODE)

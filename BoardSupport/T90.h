@@ -159,6 +159,7 @@ typedef struct T90_PlugEvent
 
 typedef struct 
 {
+   uint16_t motoas;
    uint16_t motostub;
    uint16_t stubtostub;
 }DoubleDstSet;
@@ -179,14 +180,12 @@ extern int screen_vcenter;
 
 
 
-
 void T90_Init(void);
 Bool T90_Load(void);
 void T90_Store(void);
 void T90_Reset(void);
 
 DoubleDstSet* fetchdoudstset();
-int* fetchmotoas();
 #endif
 
 
