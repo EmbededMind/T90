@@ -23,7 +23,7 @@ static void _onPaint1(void);
 static void _onPaint2(void);
 
 
-extern  int cursorOnStub;
+static int cursorOnStub;
 extern long gPlugBoats[3];
 
 static Stub *pCursorStub = &stubs[0];
@@ -62,6 +62,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		 
       case WM_CREATE:
            pColor = &homeColors[t90_set.sys.nightmode];
+           _onPaint1();
            break;
 			
 	
@@ -86,21 +87,28 @@ printf("up:%d\n", cursorOnStub);
 									break;
 						 
 						 case GUI_KEY_DOWN:
-									cursorOnStub = 2;
-         
-									WM_Paint(singleShipWin);
+                           if(fetchplug()&(0x01<<2))
+                           {
+									   cursorOnStub = 2;                          
+									   WM_Paint(singleShipWin);
+                           }
 									break;
 						 
 						 case GUI_KEY_LEFT:
-									cursorOnStub = 1;
-									WM_Paint(singleShipWin);
+                           if(fetchplug()&(0x01<<0))
+                           {
+									   cursorOnStub = 1;                           
+									   WM_Paint(singleShipWin);
+                           }
            
 									break;
 												 
 						 case GUI_KEY_RIGHT:
-									cursorOnStub = 3;
-									WM_Paint(singleShipWin);
-         
+                           if(fetchplug()&(0x01<<4))
+                           {
+									   cursorOnStub = 3;                       
+									   WM_Paint(singleShipWin);
+                           }
 									break;
 						 
 //						 case GUI_KEY_MONITORING:
@@ -124,7 +132,7 @@ printf("up:%d\n", cursorOnStub);
 				   WM_GetClientRect(&r);
 					 GUI_ClearRectEx(&r);
 			
-					 if(cursorOnStub == 0 || cursorOnStub == 4)
+					 if(cursorOnStub == 0 )
 					 {
 					    _onPaint1();
 					 }
@@ -373,13 +381,16 @@ static void _onPaint2(void)
            GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
         }
 //        GUI_DispStringAt("TUOWANG1", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-        sprintf(pStrBuf, "%4d", t90_set.dst.dst1);
+        sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.y)*MILLINM_TO_M);
         GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-        sprintf(pStrBuf, "%4d", t90_set.dst.dst2);
+        sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.x)*MILLINM_TO_M);
         GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
         GUI_SetFont(&GUI_Font_T90_30);
         GUI_SetColor(pColor->textColor);
-        GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+        if(stubs[1].basePoint.x)
+           GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+        else
+           GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
         GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
         break;
 		 case 2:
@@ -400,13 +411,21 @@ static void _onPaint2(void)
            GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
         }   
 //        GUI_DispStringAt("TUOWANG2", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-        sprintf(pStrBuf, "%4d", t90_set.dst.dst3);
+        sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.y)*MILLINM_TO_M);
         GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
  //			  sprintf(pStrBuf, "%4d", 0);
-// 			  GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+32*3);
-//        GUI_SetFont(&GUI_Font_T90_24);
-//        GUI_SetColor(pColor->textColor);
-//        GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+32*3);
+        if(t90_set.sys.workmode == DOUBLE_MODE)
+        {
+           sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.x)*MILLINM_TO_M);
+           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+           GUI_SetFont(&GUI_Font_T90_30);
+           GUI_SetColor(pColor->textColor);
+           if(stubs[1].basePoint.x)
+              GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+           else
+              GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+           GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
+        }
         break;
 		 case 3:
         GUI_SetColor(pColor->numColor);
@@ -425,13 +444,16 @@ static void _onPaint2(void)
            GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
         }
 //        GUI_DispStringAt("TUOWANG3", BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-        sprintf(pStrBuf, "%4d", t90_set.dst.dst5);
+        sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.y)*MILLINM_TO_M);
         GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-        sprintf(pStrBuf, "%4d", t90_set.dst.dst4);
+        sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.x)*MILLINM_TO_M);
         GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
         GUI_SetFont(&GUI_Font_T90_30);
         GUI_SetColor(pColor->textColor);
-        GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+        if(stubs[1].basePoint.x)
+           GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+        else
+           GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
         GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
     			 break;
 	 }

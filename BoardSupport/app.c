@@ -52,11 +52,11 @@ static	OS_STK	Refresh_Task_Stack[KEY_TASK_STACK_SIZE];
 
 static OS_STK Play_Task_Statck[PLAY_TAST_STACK_SIZE];
 
-extern OS_EVENT *MSBOX;
+OS_EVENT *  pMSBOX;
 //static  OS_STK_DATA UI_Task_Stack_Use;
 //static  OS_STK_DATA Insert_Task_Stack_Use;
 //static  OS_STK_DATA Refresh_Task_Stack_Use;
-OS_EVENT *MSBOX;
+
 
 #define MUSIC_ADD(x)  if(x==0) \
                          musics[musicCursor]  = SND_ID_ZRO; \
@@ -226,12 +226,15 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
 {
    while(1)
    {
+//      int i = 1;
       OSMutexPend(Refresher, 0, &myErr);     
       detectPlugEvent();      
       updateTimeStamp();    
       check();
       OSMutexPost(Refresher);
 
+      
+//      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
       sendPulse();
       
@@ -474,7 +477,7 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   Refresher  = OSMutexCreate(6,&myErr);
   Updater    = OSMutexCreate(6,&myErr_2);
   QSem = OSQCreate(&MsgQeueTb[0],MSG_QUEUE_TABNUM); //创建消息队列，10条消息
-  MSBOX = OSMboxCreate(0);
+  pMSBOX = OSMboxCreate(0);
   
   PartitionPt=OSMemCreate(Partition,MSG_QUEUE_TABNUM,100,&err);
   

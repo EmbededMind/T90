@@ -20,7 +20,7 @@
 //extern unsigned char isChecked;
 extern unsigned char  isDstSetChanged;
 extern unsigned char isDstSetNeedUpdate;
-extern OS_EVENT MSBOX; 
+extern OS_EVENT* pMSBOX; 
 
 WM_HWIN handle;
 
@@ -89,7 +89,7 @@ void MainTask(void)
 		systemSetDlg = DLG_SystemSetCreate();
 		
 		singleShipDstSetWin = WIN_SingleShipDstSetCreate();
-  doubleShipDstSetWin  = WIN_doubleShipDstSetCreate();
+      doubleShipDstSetWin  = WIN_doubleShipDstSetCreate();
 		
 		invdAlarmSetWin = WIN_InvdAlarmSetCreate();
 		spdingAlarmSetWin = WIN_SpdingAlarmSetCreate();
@@ -130,27 +130,37 @@ void MainTask(void)
 
 //DLG_testCustomedWidgetCreate();
    while(1)
-   {
-      
+   {    
       T90_PlugEvent *plugEvent;
-      plugEvent=OSMboxAccept(&MSBOX);
+//      printf("bfstatus = %x\n",plugEvent->status);
+//      int *i;
+//printf("oldi=%d\n",*i);
+      plugEvent = OSMboxAccept(pMSBOX);
+//      i = OSMboxAccept(&MSBOX);
+//printf("newi=%d\n",*i);
       
-      if(plugEvent->status)
+      if(plugEvent != NULL)
       {
-         myMsg.MsgId = USER_MSG_PLUG;
-         myMsg.Data.v = plugEvent->whichPort;
-         myMsg.Data.Color = 1;
-         myMsg.hWin = dstSetMenuDlg;
-         WM_SendMessage(myMsg.hWin, &myMsg);
-      }
-      else
-      {
-         myMsg.MsgId = USER_MSG_PLUG;
-         myMsg.Data.v = plugEvent->whichPort;
-         myMsg.Data.Color = 0;
-         myMsg.hWin = dstSetMenuDlg;
-         WM_SendMessage(myMsg.hWin, &myMsg);
-      }
+         printf("afstatus = %x\n",plugEvent->status);
+ 
+//         if(plugEvent->status)
+//         {
+            myMsg.MsgId = USER_MSG_PLUG;
+//            myMsg.Data.v = plugEvent->whichPort*2+1;
+            myMsg.Data.v  = plugEvent->status;
+            myMsg.hWin = dstSetMenuDlg;
+            WM_SendMessage(myMsg.hWin, &myMsg);
+//            printf("plug in\n");
+//         }
+//         else
+//         {
+//            myMsg.MsgId = USER_MSG_PLUG;
+//            myMsg.Data.v = plugEvent->whichPort*2;
+//            myMsg.hWin = dstSetMenuDlg;
+//            WM_SendMessage(myMsg.hWin, &myMsg);
+//            printf("plug out \n");
+//         }
+       }
       
 //      if(plugEvent->status & 0x04)
 //      {
@@ -197,8 +207,9 @@ void MainTask(void)
             WM_SendMessageNoPara(doubleShipDstSetWin, USER_MSG_DST_UPDATE);
          }
       }
-      GUI_Delay(200);
+      GUI_Delay(200);      
    }
+
 }
 
 /*************************** End of file ****************************/

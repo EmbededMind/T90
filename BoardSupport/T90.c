@@ -62,11 +62,7 @@ void printT90_Set(T90_Set * p)
 {
    printf("\r\n");
 	
-	 printf("Distance1       %d\r\n", p->dst.dst1);
-	 printf("Distance2       %d\r\n", p->dst.dst2);
-	 printf("Distance3       %d\r\n", p->dst.dst3);
-	 printf("Distance4       %d\r\n", p->dst.dst4);
-	 printf("Distance5       %d\r\n", p->dst.dst5);
+
 
 	 printf("Invd_dst        %d\r\n", p->alarm.invd_dst);
 	 printf("Danger_sog      %d\r\n", p->alarm.danger_sog);
@@ -171,7 +167,7 @@ INFO("Error happened when system load.System will be configed with default value
 void T90_Reset(void)
 {
 
-  t90_set.dst.dst1 = DEFAULT_DST1;
+   t90_set.dst.dst1 = DEFAULT_DST1;
 	t90_set.dst.dst2 = DEFAULT_DST2;
 	t90_set.dst.dst3 = DEFAULT_DST3;
 	t90_set.dst.dst4 = DEFAULT_DST4;

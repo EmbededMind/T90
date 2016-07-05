@@ -186,6 +186,7 @@ void T90_Store(void);
 void T90_Reset(void);
 
 DoubleDstSet* fetchdoudstset();
+int fetchplug();
 #endif
 
 

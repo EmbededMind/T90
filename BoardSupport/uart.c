@@ -25,7 +25,7 @@ extern T90_PlugEvent plugEvent;
 
 extern uint8_t SND[4][6];
 extern int isKeyTrigged;
-extern OS_EVENT *MSBOX;
+extern OS_EVENT * pMSBOX;
 
 volatile Bool Doubleclick  = FALSE;
 volatile Bool isReleasedDet  = FALSE;
@@ -35,7 +35,7 @@ uint8_t* pRecBuf  = recBuf;
 
 void xl_UART_Config(unsigned char port)
 {
-   UART_CFG_Type      UARTConfigStruct;
+     UART_CFG_Type      UARTConfigStruct;
    UART_FIFO_CFG_Type UARTFIFOConfigStruct;
    
    UART_ConfigStructInit(&UARTConfigStruct);
@@ -254,7 +254,10 @@ printf("3 mmsi:%ld\n", plugEvent.mmsi[2]);
              plugEvent.status  |=  0x10;
              
           }
-          OSMboxPost(MSBOX,&plugEvent);
+
+printf("post mbox\n");
+          OSMboxPost(pMSBOX,&plugEvent);
+
        }
        }
    }

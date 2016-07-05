@@ -19,6 +19,8 @@ WM_HWIN dstSetMenuDlg;
 
 static WM_HWIN buttons[3]; 
 
+static int plug;
+
 static  const MenuColor *pColors = subMenuColors;
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
@@ -32,7 +34,10 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
    {BUTTON_CreateIndirect, "safety sign 2", GUI_ID_BUTTON2, 0, SUB_MENU_ITEM_HEIGHT*3+SUB_MENU_ITEM_MARGIN*4, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0}
 };
 
-
+int fetchplug()
+{
+   return plug;
+}
 static void myButtonCallback(WM_MESSAGE* pMsg)
 {
 	int id;
@@ -44,10 +49,16 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 			 {
            id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
            flag_prevfocus  = 0;
-           
-           BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusBkColor);
-           BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
-           
+           if(plug & (0x01<<(id*2)))
+           {
+              BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusBkColor);
+              BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
+           }
+           else
+           {
+              BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btPrevFocusBkColor);
+              BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
+           }
            
            if(t90_set.sys.workmode == SINGLE_MODE)
            {
@@ -69,11 +80,13 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            {
               BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btPrevFocusBkColor);
               BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
+              BUTTON_SetFrameColor(pMsg->hWin,pColors->btPrevFocusBkColor);
            }
            else
            {
               BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btBkColor);
               BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btTextColor);
+              BUTTON_SetFrameColor(pMsg->hWin,pColors->btBkColor);
            }
         }
         BUTTON_Callback(pMsg);
@@ -85,21 +98,26 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
              WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
              break;
         case GUI_KEY_RIGHT:
-             flag_prevfocus = 1;
+            
              id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-             if(t90_set.sys.workmode == SINGLE_MODE  &&  singleShipDstSetWin)
-             {		
-                WM_SetFocus(WM_GetDialogItem(singleShipDstSetWin,ID_DMS_0+id*2));
-             }   
-             else if(t90_set.sys.workmode == DOUBLE_MODE &&  doubleShipDstSetWin){
-                WM_MESSAGE myMsg;
-                myMsg.hWin  = doubleShipDstSetWin;
-                myMsg.Data.v  = id;
-                myMsg.MsgId  = USER_MSG_FOCUS;
-                WM_SendMessage(myMsg.hWin, &myMsg);
+             if(plug & (0x01<<id*2))
+             {
+                 flag_prevfocus = 1;
+                if(t90_set.sys.workmode == SINGLE_MODE  &&  singleShipDstSetWin)
+                {		
+                   WM_SetFocus(WM_GetDialogItem(singleShipDstSetWin,ID_DMS_0+id*2));
+                }   
+                else if(t90_set.sys.workmode == DOUBLE_MODE &&  doubleShipDstSetWin){
+                   WM_MESSAGE myMsg;
+                   myMsg.hWin  = doubleShipDstSetWin;
+                   myMsg.Data.v  = id;
+                   myMsg.MsgId  = USER_MSG_FOCUS;
+                   WM_SendMessage(myMsg.hWin, &myMsg);
+                }
+                
              }
              break;
-						  case GUI_KEY_UP:
+		  case GUI_KEY_UP:
              GUI_StoreKeyMsg(GUI_KEY_BACKTAB, 1);
              break;
              
@@ -164,9 +182,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 static void myDialogCallback(WM_MESSAGE* pMsg)
 {
    switch(pMsg->MsgId){
-
       case USER_MSG_PLUG:
-        BUTTON_SetFocussable(buttons[pMsg->Data.v],pMsg->Data.Color); 
+         plug = pMsg->Data.v;
+         break;
       case USER_MSG_SKIN:
         pColors = &(subMenuColors[pMsg->Data.v]);	
       
@@ -176,16 +194,19 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         BUTTON_SetTextColor(buttons[0], BUTTON_CI_UNPRESSED, pColors->btTextColor);
         BUTTON_SetTextColor(buttons[0], BUTTON_CI_PRESSED,   pColors->btTextColor);
         BUTTON_SetFocusColor(buttons[0], pColors->btFocusBkColor);
+        BUTTON_SetFrameColor(buttons[0],pColors->btFocusBkColor);
         
         BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED, pColors->btBkColor);
         BUTTON_SetTextColor(buttons[1], BUTTON_CI_UNPRESSED, pColors->btTextColor);
         BUTTON_SetTextColor(buttons[1], BUTTON_CI_PRESSED,   pColors->btTextColor);
         BUTTON_SetFocusColor(buttons[1], pColors->btFocusBkColor);
+        BUTTON_SetFrameColor(buttons[1],pColors->btFocusBkColor);
         
         BUTTON_SetBkColor(buttons[2], BUTTON_CI_UNPRESSED, pColors->btBkColor);
         BUTTON_SetTextColor(buttons[2], BUTTON_CI_UNPRESSED, pColors->btTextColor);
         BUTTON_SetTextColor(buttons[2], BUTTON_CI_PRESSED,   pColors->btTextColor);     
         BUTTON_SetFocusColor(buttons[2], pColors->btFocusBkColor);
+        BUTTON_SetFrameColor(buttons[2],pColors->btFocusBkColor);
         break;
 		 case WM_INIT_DIALOG:
        
@@ -241,8 +262,8 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         break;	
 				
 		 default:
-				   	WM_DefaultProc(pMsg);
-					   break;
+         WM_DefaultProc(pMsg);
+         break;
 		} 
 }
 

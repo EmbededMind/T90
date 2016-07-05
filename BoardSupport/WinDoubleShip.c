@@ -21,7 +21,7 @@ static void _onDPaint1(void);
 static void _onDPaint2(void);
 
 
-int cursorOnStub = 0;
+static int cursorOnStub = 0;
 
 //static Point cursorPixel;
 
@@ -56,6 +56,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		 
       case WM_CREATE:
            pColor = &homeColors[t90_set.sys.nightmode];
+           _onDPaint1();
            break;
 			
 	
@@ -70,27 +71,33 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 									WM_SetFocus(mainMenuDlg);
 									break;
 						 
-						 case GUI_KEY_UP:	 
-//									WM_DeleteTimer(timer);
-//									WM_BringToTop(alarmMonitorWin);
-//									WM_SetFocus(alarmMonitorWin);
+						 case GUI_KEY_UP:                     
 									cursorOnStub = 0;
 									WM_Paint(doubleShipWin);
 									break;
 						 
 						 case GUI_KEY_DOWN:
-									cursorOnStub = 2;
-									WM_Paint(doubleShipWin);
+                           if(fetchplug()&(0x01<<2))
+                           {
+									   cursorOnStub = 2;                           
+									   WM_Paint(doubleShipWin);
+                           }
 									break;
 						 
 						 case GUI_KEY_LEFT:
-									cursorOnStub = 1;
-									WM_Paint(doubleShipWin);
+                           if(fetchplug()&(0x01<<0))
+                           {
+									   cursorOnStub = 1;                          
+									   WM_Paint(doubleShipWin);
+                           }
 									break;
 												 
 						 case GUI_KEY_RIGHT:
-									cursorOnStub = 3;
-									WM_Paint(doubleShipWin);
+                           if(fetchplug()&(0x01<<(cursorOnStub-1)))
+                           {
+									   cursorOnStub = 3;                          
+									   WM_Paint(doubleShipWin);
+                           }
 									break;
 						 
 //						 case GUI_KEY_MONITORING:
@@ -111,17 +118,17 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
       case WM_PAINT:
 
 					 GUI_SetBkColor(pColor->bkColor);
-				   WM_GetClientRect(&r);
+				    WM_GetClientRect(&r);
 					 GUI_ClearRectEx(&r);
 			
 					 if(cursorOnStub)
 					 {
 						 _onDPaint2();
 					 }
-					 else
-					 {
-					   _onDPaint1();
-					 }
+                else
+                {
+                   _onDPaint1();
+                }
 					
 					 if(monitorState == OFF)
 					 { 
@@ -234,11 +241,11 @@ static void _onDPaint1(void)
    lltostr(mothership.longitude, pStrBuf);
    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+110, BBS1_BELOW_Y+60);
 	 
-	 GUI_SetColor(pColor->textColor);                             
+	GUI_SetColor(pColor->textColor);                             
    GUI_SetFont(GUI_FONT_32_1);
-	 sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
-	 GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+60, BBS1_BELOW_Y+110); 
-	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
+	sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
+	GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+60, BBS1_BELOW_Y+110); 
+	sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+240, BBS1_BELOW_Y+110);
 		 
 	GUI_SetColor(pColor->textColor);

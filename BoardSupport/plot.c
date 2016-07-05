@@ -72,9 +72,9 @@ void DrawShipFamily(int flag)     //ۭԬۍвȫҪӔ̻ܰć֮ݤքlП
 			else if(pIndex->pStub->type == safetySignStub)      //ɽއҪ
 			{
 				pixelTmp1 = GetItemPixel(pIndex->pStub->basePoint);
-    if(&stubs[cursorOnStub] == pIndex->pStub){
-       GUI_SetColor(pColor->numColor);
-    }
+//    if(&stubs[cursorOnStub] == pIndex->pStub){
+//       GUI_SetColor(pColor->numColor);
+//    }
     GUI_FillPolygon(shipe, 3, pixelTmp1.x, pixelTmp1.y);
 //    GUI_DrawCircle(pixelTmp1.x, pixelTmp1.y, 3);
 //				GUI_DrawLine(pixelTmp1.x-(5-net_zoom), pixelTmp1.y+(5-net_zoom), pixelTmp1.x,               pixelTmp1.y-(5-net_zoom));  
