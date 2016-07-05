@@ -474,6 +474,7 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   Refresher  = OSMutexCreate(6,&myErr);
   Updater    = OSMutexCreate(6,&myErr_2);
   QSem = OSQCreate(&MsgQeueTb[0],MSG_QUEUE_TABNUM); //创建消息队列，10条消息
+  MSBOX = OSMboxCreate(0);
   
   PartitionPt=OSMemCreate(Partition,MSG_QUEUE_TABNUM,100,&err);
   
@@ -634,7 +635,7 @@ void detectPlugEvent()
       isDstSetNeedUpdate++;
 //   if(plugEvent.eventType == PGEvent_Data){
 //      if(plugEvent.whichPort & 0x01){
-         OSMboxPost(MSBOX,&plugEvent);
+         
          if(plugEvent.status & 0x01){
             Stub_setParam(1, plugEvent.dist_1, plugEvent.dist_2);
             Stub_setValidity(1, TRUE);

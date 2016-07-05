@@ -165,7 +165,9 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 {
    switch(pMsg->MsgId){
 
-		 case USER_MSG_SKIN:
+      case USER_MSG_PLUG:
+        BUTTON_SetFocussable(buttons[pMsg->Data.v],pMsg->Data.Color); 
+      case USER_MSG_SKIN:
         pColors = &(subMenuColors[pMsg->Data.v]);	
       
         WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor); 

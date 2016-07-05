@@ -25,6 +25,7 @@ extern T90_PlugEvent plugEvent;
 
 extern uint8_t SND[4][6];
 extern int isKeyTrigged;
+extern OS_EVENT *MSBOX;
 
 volatile Bool Doubleclick  = FALSE;
 volatile Bool isReleasedDet  = FALSE;
@@ -80,7 +81,7 @@ void xl_UART_Config(unsigned char port)
            UART_IntConfig(UART_2, UART_INTCFG_RLS, ENABLE); 
            
            NVIC_SetPriority(UART2_IRQn, ((0x02<<3)|0x03));
-	         	NVIC_EnableIRQ(UART2_IRQn);      
+	        NVIC_EnableIRQ(UART2_IRQn);      
 
 
            break;
@@ -253,6 +254,7 @@ printf("3 mmsi:%ld\n", plugEvent.mmsi[2]);
              plugEvent.status  |=  0x10;
              
           }
+          OSMboxPost(MSBOX,&plugEvent);
        }
        }
    }

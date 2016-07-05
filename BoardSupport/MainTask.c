@@ -13,12 +13,14 @@
 #include "T90.h"
 #include "t90font.h"
 #include "stub.h"
+#include "ucos_ii.h"
 
 //extern unsigned char isSub0Inited;
 //extern unsigned char isSub2Inited;
 //extern unsigned char isChecked;
 extern unsigned char  isDstSetChanged;
 extern unsigned char isDstSetNeedUpdate;
+extern OS_EVENT MSBOX; 
 
 WM_HWIN handle;
 
@@ -26,6 +28,7 @@ GUI_MEMDEV_Handle hMute;
 
 void MainTask(void)
 {
+   WM_MESSAGE myMsg;
    GUI_MEMDEV_Handle hMem0;
 //INFO("MainTask Start");
 
@@ -128,9 +131,61 @@ void MainTask(void)
 //DLG_testCustomedWidgetCreate();
    while(1)
    {
-//      T90_PlugEvent *plugEvent;
-//      uint8_t *err;
-//      plugEvent=OSMboxAccept(MSBOX);    
+      
+      T90_PlugEvent *plugEvent;
+      plugEvent=OSMboxAccept(&MSBOX);
+      
+      if(plugEvent->status)
+      {
+         myMsg.MsgId = USER_MSG_PLUG;
+         myMsg.Data.v = plugEvent->whichPort;
+         myMsg.Data.Color = 1;
+         myMsg.hWin = dstSetMenuDlg;
+         WM_SendMessage(myMsg.hWin, &myMsg);
+      }
+      else
+      {
+         myMsg.MsgId = USER_MSG_PLUG;
+         myMsg.Data.v = plugEvent->whichPort;
+         myMsg.Data.Color = 0;
+         myMsg.hWin = dstSetMenuDlg;
+         WM_SendMessage(myMsg.hWin, &myMsg);
+      }
+      
+//      if(plugEvent->status & 0x04)
+//      {
+//         myMsg.MsgId = USER_MSG_PLUG;
+//         myMsg.Data.v = 1;
+//         myMsg.Data.Color = 1;
+//         myMsg.hWin = dstSetMenuDlg;
+//         WM_SendMessage(myMsg.hWin, &myMsg);
+//      }
+//      else
+//      {
+//         myMsg.MsgId = USER_MSG_PLUG;
+//         myMsg.Data.v = 1;
+//         myMsg.Data.Color = 0;
+//         myMsg.hWin = dstSetMenuDlg;
+//         WM_SendMessage(myMsg.hWin, &myMsg);
+//      }
+//      
+//      if(plugEvent->status & 0x10)
+//      {
+//         myMsg.MsgId = USER_MSG_PLUG;
+//         myMsg.Data.v = 2;
+//         myMsg.Data.Color = 1;
+//         myMsg.hWin = dstSetMenuDlg;
+//         WM_SendMessage(myMsg.hWin, &myMsg);
+//      }
+//      else
+//      {
+//         myMsg.MsgId = USER_MSG_PLUG;
+//         myMsg.Data.v = 2;
+//         myMsg.Data.Color = 0;
+//         myMsg.hWin = dstSetMenuDlg;
+//         WM_SendMessage(myMsg.hWin, &myMsg);
+//      }
+      
       if(isDstSetNeedUpdate){
          isDstSetNeedUpdate  = 0;
          if(t90_set.sys.workmode == SINGLE_MODE)
