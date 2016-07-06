@@ -20,7 +20,7 @@ static void FigureMotherShipPixel(Point center, int flag);
 static void FigureScale(int flag);
 
 //ۭԬۍѨޯП
-void DrawStubs(int flag)														//flag=0ҭʾsingleshipWinַԃՋگ˽û
+void DrawStubs(int flag)														//flag=0ҭʾmainShipWinַԃՋگ˽û
 																										//flag=1ҭʾalarmmonitorWinַԃՋگ˽
 {
 	int alarmLineZoom;
@@ -257,7 +257,7 @@ static void FigureMotherShipPixel(Point center, int flag)    //݆̣ĸԬքб̘ظ�
 	motherShipPixel.y = screenCenter.y + center.y*TO_PIXEL;
 }
 	
-static void FigureScale(int flag)                  // ݆̣҈}ԟ  flag=0ҭʾsingleshipWinַԃՋگ˽û
+static void FigureScale(int flag)                  // ݆̣҈}ԟ  flag=0ҭʾmainShipWinַԃՋگ˽û
 																										//flag=1ҭʾalarmmonitorWinַԃՋگ˽
 {
 	int i;

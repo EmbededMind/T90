@@ -49,8 +49,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 							 case GUI_KEY_ENTER:
 										if(WM_HasFocus(buttons[0]))
 										{
-                                 WM_BringToTop(singleShipWin);
-										   WM_SetFocus(singleShipWin);
+                                 WM_BringToTop(mainShipWin);
+										   WM_SetFocus(mainShipWin);
 											t90_set.sys.workmode = SINGLE_MODE;
 										}
 										if(WM_HasFocus(buttons[1]))

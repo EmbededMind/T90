@@ -116,8 +116,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                 }
                 else
                 {
-                   WM_BringToTop(singleShipWin);
-                   WM_SetFocus(singleShipWin);
+                   WM_BringToTop(mainShipWin);
+                   WM_SetFocus(mainShipWin);
                 }
                 break;
              default:

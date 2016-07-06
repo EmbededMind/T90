@@ -13,7 +13,7 @@
 extern boat mothership;
 
 /** @brief 单拖模式窗口的句柄 */
-WM_HWIN singleShipWin;
+WM_HWIN mainShipWin;
 
 static WM_HTIMER timer;
 
@@ -56,7 +56,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 timeCnt++;
 					 if(timeCnt == 1)
 							GUI_CURSOR_Show();
-					 WM_Paint(singleShipWin);
+					 WM_Paint(mainShipWin);
 					 WM_RestartTimer(timer, 500);
 					 break;
 		 
@@ -83,14 +83,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //									WM_SetFocus(alarmMonitorWin);
 									cursorOnStub = 0;
 printf("up:%d\n", cursorOnStub);         
-									WM_Paint(singleShipWin);
+									WM_Paint(mainShipWin);
 									break;
 						 
 						 case GUI_KEY_DOWN:
                            if(fetchplug()&(0x01<<2))
                            {
 									   cursorOnStub = 2;                          
-									   WM_Paint(singleShipWin);
+									   WM_Paint(mainShipWin);
                            }
 									break;
 						 
@@ -98,7 +98,7 @@ printf("up:%d\n", cursorOnStub);
                            if(fetchplug()&(0x01<<0))
                            {
 									   cursorOnStub = 1;                           
-									   WM_Paint(singleShipWin);
+									   WM_Paint(mainShipWin);
                            }
            
 									break;
@@ -107,18 +107,18 @@ printf("up:%d\n", cursorOnStub);
                            if(fetchplug()&(0x01<<4))
                            {
 									   cursorOnStub = 3;                       
-									   WM_Paint(singleShipWin);
+									   WM_Paint(mainShipWin);
                            }
 									break;
 						 
 //						 case GUI_KEY_MONITORING:
 //									monitorState = ON;
-//									WM_Paint(singleShipWin);
+//									WM_Paint(mainShipWin);
 //									break;
 //						 
 						 case GUI_KEY_CANCEL:
 									monitorState = monitorState == ON? OFF: ON;
-									WM_Paint(singleShipWin);
+									WM_Paint(mainShipWin);
 									break;
 						 
 						 default:

@@ -102,7 +102,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						 
 //						 case GUI_KEY_MONITORING:
 //									monitorState = ON;
-//									WM_Paint(singleShipWin);
+//									WM_Paint(mainShipWin);
 //									break;
 //						 
 						 case GUI_KEY_CANCEL:

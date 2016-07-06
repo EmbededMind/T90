@@ -18,7 +18,7 @@ extern WM_HWIN confirmWin;
 /** T90 **/
 extern WM_HWIN workModeWin;
 
-extern WM_HWIN singleShipWin;
+extern WM_HWIN mainShipWin;
 extern WM_HWIN doubleShipWin;
 extern WM_HWIN alarmMonitorWin;
 

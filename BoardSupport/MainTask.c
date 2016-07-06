@@ -75,7 +75,7 @@ void MainTask(void)
 	
 		workModeWin = WIN_WorkModeCreate(); 
 	
-		singleShipWin = WIN_SingleShipCreate();	
+		mainShipWin = WIN_SingleShipCreate();	
 		doubleShipWin = WIN_DoubleShipCreate();
 
   
@@ -98,7 +98,7 @@ void MainTask(void)
 		
 		confirmWin = WIN_ConfirmCreate();
 		
-//INFO("singleShipWin:%ld", singleShipWin);		
+//INFO("mainShipWin:%ld", mainShipWin);		
 //INFO("alarmMonitorWin:%ld", alarmMonitorWin);
 
 
@@ -112,14 +112,14 @@ void MainTask(void)
 //		else
 //		{
 //			StubRefresh();
-//			WM_BringToTop(singleShipWin);
-//			WM_SetFocus(singleShipWin);
+//			WM_BringToTop(mainShipWin);
+//			WM_SetFocus(mainShipWin);
 //		}
 		else if(t90_set.sys.workmode == SINGLE_MODE)
 		{
          StubRefresh();
-			WM_BringToTop(singleShipWin);
-			WM_SetFocus(singleShipWin);
+			WM_BringToTop(mainShipWin);
+			WM_SetFocus(mainShipWin);
 		}
 		else if(t90_set.sys.workmode == DOUBLE_MODE)
 		{
