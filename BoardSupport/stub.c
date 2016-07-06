@@ -223,7 +223,7 @@ void Stub_setValidity(int which, Bool validity)
                case 2: pdst_set->dst3 = DEFAULT_DST3;  break;
                case 3: pdst_set->dst4 = DEFAULT_DST4; pdst_set->dst5 = DEFAULT_DST5; break;
             }
-         }else if(t90_set.sys.workmode)
+         }else if(t90_set.sys.workmode == DOUBLE_MODE)
          {
             pdoubleDstSet = fetchdoudstset();
             switch(which){

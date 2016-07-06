@@ -457,7 +457,7 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   
 
   T90_Init();
-  
+printf("init motoas=%d\n",t90_set.motoas);
   GPDMA_Init();
   
 //  UART2_DMA_Init();

@@ -38,7 +38,7 @@ static void _OnUnitChanged(WM_MESSAGE * pMsg,int val);
 static void _OnUpdateChanged(WM_MESSAGE * pMsg,int val);
 
 
-static System_Set agentdst_set;
+static System_Set agentsys_set;
 
 
 static  void (* const ProcChanging[SLD_NUM-1])(WM_MESSAGE *, int)  = {
@@ -105,14 +105,14 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            break;
            
       case WM_INIT_DIALOG:  
-           agentdst_set.workmode  =  t90_set.sys.workmode;
-           agentdst_set.launch    =  t90_set.sys.launch;
-           agentdst_set.nightmode =  t90_set.sys.nightmode;
-           agentdst_set.volum     =  t90_set.sys.volum;
-           agentdst_set.bright    =  t90_set.sys.bright;
-					 agentdst_set.unit      =  t90_set.sys.unit;
-					 agentdst_set.update    =  t90_set.sys.update;
-					 agentdst_set.reset     =  t90_set.sys.reset;
+           agentsys_set.workmode  =  t90_set.sys.workmode;
+           agentsys_set.launch    =  t90_set.sys.launch;
+           agentsys_set.nightmode =  t90_set.sys.nightmode;
+           agentsys_set.volum     =  t90_set.sys.volum;
+           agentsys_set.bright    =  t90_set.sys.bright;
+					 agentsys_set.unit      =  t90_set.sys.unit;
+					 agentsys_set.update    =  t90_set.sys.update;
+					 agentsys_set.reset     =  t90_set.sys.reset;
                  
            pColors  = &(setDlgColors[t90_set.sys.nightmode]);
 		
@@ -177,25 +177,25 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
        case USER_MSG_REPLY:
             if(pMsg->Data.v == REPLY_OK)
             {
-               if(agentdst_set.nightmode != t90_set.sys.nightmode)
+               if(agentsys_set.nightmode != t90_set.sys.nightmode)
                {
                   myMsg.MsgId  = USER_MSG_SKIN;
-                  myMsg.Data.v  = agentdst_set.nightmode;
+                  myMsg.Data.v  = agentsys_set.nightmode;
                   WM_BroadcastMessage(&myMsg);
                }
-							 if(t90_set.sys.unit != agentdst_set.unit)
+							 if(t90_set.sys.unit != agentsys_set.unit)
 							 {
 								 myMsg.MsgId = USER_MSG_UNIT;
-								 myMsg.Data.v = agentdst_set.unit;
+								 myMsg.Data.v = agentsys_set.unit;
 								 myMsg.hWin = invdAlarmSetWin;
 								 WM_SendMessage(invdAlarmSetWin, &myMsg);
 							 }
-							 if(t90_set.sys.workmode != agentdst_set.workmode)
+							 if(t90_set.sys.workmode != agentsys_set.workmode)
 							 {
-								 t90_set.sys.workmode = agentdst_set.workmode;
+								 t90_set.sys.workmode = agentsys_set.workmode;
 								 StubRefresh();
 							 }
-               memcpy(&t90_set.sys, &agentdst_set, sizeof(t90_set.sys));
+               memcpy(&t90_set.sys, &agentsys_set, sizeof(t90_set.sys));
                T90_Store();
             }
             else 
@@ -204,9 +204,9 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                HSD_SLIDER_SetValue(slideres[1], t90_set.sys.launch);
                HSD_SLIDER_SetValue(slideres[2], t90_set.sys.nightmode);
                HSD_SLIDER_SetValue(slideres[3], t90_set.sys.volum);
-							 HSD_SLIDER_SetValue(slideres[4], t90_set.sys.bright);
-							 HSD_SLIDER_SetValue(slideres[5], t90_set.sys.unit);
-							 HSD_SLIDER_SetValue(slideres[6], t90_set.sys.update);
+					HSD_SLIDER_SetValue(slideres[4], t90_set.sys.bright);
+					HSD_SLIDER_SetValue(slideres[5], t90_set.sys.unit);
+					HSD_SLIDER_SetValue(slideres[6], t90_set.sys.update);
             }
             
             WM_SetFocus(slideres[0]);
@@ -302,7 +302,7 @@ static void sldListener(WM_MESSAGE * pMsg)
                    WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                    break;
               case GUI_KEY_BACKSPACE:
-                   if(Mem_isEqual(&t90_set.sys, &agentdst_set, sizeof(t90_set.sys)) )
+                   if(Mem_isEqual(&t90_set.sys, &agentsys_set, sizeof(t90_set.sys)) )
                    {
                       WM_SetFocus(slideres[0]);
                       WM_SetFocus(mainMenuDlg);                      
@@ -334,20 +334,20 @@ static void sldListener(WM_MESSAGE * pMsg)
 
 static void _OnWorkModeChanged(WM_MESSAGE * pMsg, int val)
 {
-   agentdst_set.workmode = val;
+   agentsys_set.workmode = val;
 }
 
 static void _OnLaunchChanged(WM_MESSAGE * pMsg, int val)
 {
-   agentdst_set.launch = val;
+   agentsys_set.launch = val;
 }
 
 static void _OnNightModeChanged(WM_MESSAGE * pMsg, int val)
 {
 	 WM_MESSAGE myMsg;
-   if(agentdst_set.nightmode  != val)
+   if(agentsys_set.nightmode  != val)
    {	 
-      agentdst_set.nightmode  = val;
+      agentsys_set.nightmode  = val;
           
 	    myMsg.hWin = mainMenuDlg;
       myMsg.Data.v = val;
@@ -365,18 +365,18 @@ static void _OnNightModeChanged(WM_MESSAGE * pMsg, int val)
 
 static void _OnBrightChanged(WM_MESSAGE * pMsg,int val)
 {
-   if(agentdst_set.bright != val)
+   if(agentsys_set.bright != val)
    {
-      agentdst_set.bright  = val;      
+      agentsys_set.bright  = val;      
       PWM_SET(val);
    }
 }
 
 static void _OnVolumChanged(WM_MESSAGE * pMsg,int val)
 {
-   if(agentdst_set.volum != val)
+   if(agentsys_set.volum != val)
    {
-      agentdst_set.volum  = val;
+      agentsys_set.volum  = val;
 
 		  ISD_Wait_PWRUp();
       ISD_SetVolumn(val);
@@ -388,12 +388,12 @@ static void _OnVolumChanged(WM_MESSAGE * pMsg,int val)
 
 static void _OnUnitChanged(WM_MESSAGE * pMsg,int val)
 {
-   agentdst_set.unit  = val;
+   agentsys_set.unit  = val;
 }
 
 static void _OnUpdateChanged(WM_MESSAGE * pMsg,int val)
 {
-   agentdst_set.update  = val;
+   agentsys_set.update  = val;
 }
 
 
@@ -422,7 +422,7 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
                    break;
               
               case GUI_KEY_BACKSPACE:
-                   if(Mem_isEqual(&t90_set.sys, &agentdst_set, sizeof(t90_set.sys)) )
+                   if(Mem_isEqual(&t90_set.sys, &agentsys_set, sizeof(t90_set.sys)) )
                    {
                       WM_SetFocus(slideres[0]);
                       WM_SetFocus(mainMenuDlg);                      
@@ -456,7 +456,7 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
                  myMsg.MsgId  = USER_MSG_SKIN;
                  myMsg.Data.v  = DAY;
                  WM_BroadcastMessage(&myMsg);
-                 agentdst_set.nightmode  = t90_set.sys.nightmode;
+                 agentsys_set.nightmode  = t90_set.sys.nightmode;
               }
               
               T90_Reset();

@@ -19,7 +19,8 @@ unsigned long SYS_Date;
 unsigned long SYS_Time;
 
 T90_Set t90_set = {
-   DEFAULT_MOTOAS,
+
+      DEFAULT_MOTOAS,
 
 	{
 		DEFAULT_INVD_DST, 	
