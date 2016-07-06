@@ -15,7 +15,7 @@ WM_HWIN invdAlarmSetWin;
 
 static WM_HWIN button;
 
-static int agent_set;
+static int agentdst_set;
 
 static const SetWinColor *pColors = setWinColors;
 
@@ -45,7 +45,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 								   WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 								   break;
                case GUI_KEY_BACKSPACE:
-										if(t90_set.alarm.invd_dst == agent_set)
+										if(t90_set.alarm.invd_dst == agentdst_set)
 										{
 											WM_SetFocus(alarmSetMenuDlg);
 										}
@@ -65,13 +65,13 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                case GUI_KEY_UP:
 										if(t90_set.sys.unit == NM)
 										{
-											agent_set+=100;
-											if(agent_set > 9900) agent_set = 9900;
+											agentdst_set+=100;
+											if(agentdst_set > 9900) agentdst_set = 9900;
 										}
 										else
 										{
-											agent_set+=54;
-											if(agent_set > 5352) agent_set = 5352;
+											agentdst_set+=54;
+											if(agentdst_set > 5352) agentdst_set = 5352;
 										}
 										WM_Paint(invdAlarmSetWin);
 //										WM_InvalidateWindow(button);
@@ -80,13 +80,13 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 							 case GUI_KEY_DOWN:
 										if(t90_set.sys.unit == NM)
 										{
-											agent_set-=100;
-											if(agent_set < 0) agent_set = 0;
+											agentdst_set-=100;
+											if(agentdst_set < 0) agentdst_set = 0;
 										}
 										else
 										{
-											agent_set-=54;
-											if(agent_set < 0) agent_set = 0;
+											agentdst_set-=54;
+											if(agentdst_set < 0) agentdst_set = 0;
 										}
 										WM_Paint(invdAlarmSetWin);
 										break;
@@ -111,7 +111,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 if(pMsg->Data.v == NM)
 				 {
 					 t90_set.alarm.invd_dst = t90_set.alarm.invd_dst/100*100;
-					 agent_set = t90_set.alarm.invd_dst;
+					 agentdst_set = t90_set.alarm.invd_dst;
 				 }
 				 break;
 
@@ -124,7 +124,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		
     case WM_CREATE:		
 			
-				 agent_set = t90_set.alarm.invd_dst;
+				 agentdst_set = t90_set.alarm.invd_dst;
 		
 				 pColors = &setWinColors[t90_set.sys.nightmode];
 				 GUI_SetFont(&GUI_Font_T90_30);	
@@ -218,12 +218,12 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 if(t90_set.sys.unit == NM)
 					 {
 							GUI_DispStringAt("nm", drawArea.x1-55, 158);
-						  sprintf(pStrBuf,"%01d.%01d",agent_set/1000, (agent_set%1000)/100);
+						  sprintf(pStrBuf,"%01d.%01d",agentdst_set/1000, (agentdst_set%1000)/100);
 					 }
 					 else
 					 {
 						 GUI_DispStringAt("km", drawArea.x1-55, 158);
-						 sprintf(pStrBuf,"%01d.%01d",agent_set*37/20000, ((agent_set*37/20)%1000)/100);
+						 sprintf(pStrBuf,"%01d.%01d",agentdst_set*37/20000, ((agentdst_set*37/20)%1000)/100);
 					 }
 					 HSD_BUTTON_SetText(button, pStrBuf);
 //INFO("paint");					 
@@ -240,13 +240,13 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		 case USER_MSG_REPLY:
 					if(pMsg->Data.v == REPLY_OK)
 					{
-						 t90_set.alarm.invd_dst = agent_set;
+						 t90_set.alarm.invd_dst = agentdst_set;
 						 T90_Store();				
 						StubRefresh();
 					}
 					else
 					{
-						agent_set = t90_set.alarm.invd_dst;
+						agentdst_set = t90_set.alarm.invd_dst;
 					}
 					WM_SetFocus(alarmSetMenuDlg);
 					break;

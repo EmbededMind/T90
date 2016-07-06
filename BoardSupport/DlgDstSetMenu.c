@@ -103,11 +103,11 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
              if(plug & (0x01<<id*2))
              {
                  flag_prevfocus = 1;
-                if(t90_set.sys.workmode == SINGLE_MODE  &&  singleShipDstSetWin)
+                if(t90_set.sys.workmode == SINGLE_MODE  )
                 {		
                    WM_SetFocus(WM_GetDialogItem(singleShipDstSetWin,ID_DMS_0+id*2));
                 }   
-                else if(t90_set.sys.workmode == DOUBLE_MODE &&  doubleShipDstSetWin){
+                else if(t90_set.sys.workmode == DOUBLE_MODE ){
                    WM_MESSAGE myMsg;
                    myMsg.hWin  = doubleShipDstSetWin;
                    myMsg.Data.v  = id;

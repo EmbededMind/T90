@@ -76,7 +76,7 @@ void MainTask(void)
 		workModeWin = WIN_WorkModeCreate(); 
 	
 		mainShipWin = WIN_SingleShipCreate();	
-		doubleShipWin = WIN_DoubleShipCreate();
+//		doubleShipWin = WIN_DoubleShipCreate();
 
   
 
@@ -109,24 +109,25 @@ void MainTask(void)
 			WM_SetFocus(workModeWin);
 		}
 
-//		else
-//		{
-//			StubRefresh();
-//			WM_BringToTop(mainShipWin);
-//			WM_SetFocus(mainShipWin);
-//		}
-		else if(t90_set.sys.workmode == SINGLE_MODE)
+		else
 		{
-         StubRefresh();
+			StubRefresh();
 			WM_BringToTop(mainShipWin);
 			WM_SetFocus(mainShipWin);
 		}
-		else if(t90_set.sys.workmode == DOUBLE_MODE)
-		{
-         StubRefresh();
-			WM_BringToTop(doubleShipWin);
-			WM_SetFocus(doubleShipWin);
-		}
+      
+//		else if(t90_set.sys.workmode == SINGLE_MODE)
+//		{
+//         StubRefresh();
+//			WM_BringToTop(mainShipWin);
+//			WM_SetFocus(mainShipWin);
+//		}
+//		else if(t90_set.sys.workmode == DOUBLE_MODE)
+//		{
+//         StubRefresh();
+//			WM_BringToTop(doubleShipWin);
+//			WM_SetFocus(doubleShipWin);
+//		}
 
 //DLG_testCustomedWidgetCreate();
    while(1)

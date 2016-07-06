@@ -16,7 +16,7 @@ WM_HWIN specialAlarmSetDlg;
 
 static WM_HWIN slider[6];
 
-static char agent_set;
+static char agentdst_set;
 
 static const SetDlgColor *pColors = setDlgColors;
 
@@ -47,7 +47,7 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 						 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 						 break;
 				case GUI_KEY_BACKSPACE:
-					if(t90_set.alarm.nation == agent_set)
+					if(t90_set.alarm.nation == agentdst_set)
 					{
 					WM_SetFocus(slider[0]);                  //退出之前把焦点给第一个成员
 					WM_SetFocus(alarmSetMenuDlg);
@@ -104,7 +104,7 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 			
 		case WM_INIT_DIALOG:
 		
-			agent_set = t90_set.alarm.nation;
+			agentdst_set = t90_set.alarm.nation;
 		
 			pColors = &setDlgColors[t90_set.sys.nightmode];
 		
@@ -163,11 +163,11 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 				sldValue = HSD_SLIDER_GetValue(slider[id]);
 				if(sldValue)
 				{
-					agent_set |= (0x01<<id);
+					agentdst_set |= (0x01<<id);
 				}
 				else
 				{
-					agent_set &= (0xff-(0x01<<id));
+					agentdst_set &= (0xff-(0x01<<id));
 				}		
 			}
 			break;
@@ -175,7 +175,7 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 		case USER_MSG_REPLY:
 				if(pMsg->Data.v == REPLY_OK)
 				{
-					 t90_set.alarm.nation = agent_set;
+					 t90_set.alarm.nation = agentdst_set;
 					 T90_Store();
 				}
 				else

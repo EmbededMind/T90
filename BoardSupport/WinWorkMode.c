@@ -48,18 +48,17 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 										break;
 							 case GUI_KEY_ENTER:
 										if(WM_HasFocus(buttons[0]))
-										{
-                                 WM_BringToTop(mainShipWin);
-										   WM_SetFocus(mainShipWin);
+										{                                
 											t90_set.sys.workmode = SINGLE_MODE;
 										}
 										if(WM_HasFocus(buttons[1]))
 										{
-											WM_BringToTop(doubleShipWin);
-											WM_SetFocus(doubleShipWin);
+//											WM_BringToTop(doubleShipWin);
+//											WM_SetFocus(doubleShipWin);
 											t90_set.sys.workmode = DOUBLE_MODE;
 										}
-										
+										WM_BringToTop(mainShipWin);
+										WM_SetFocus(mainShipWin);
 										T90_Store();
                     monitorState = ON;
 										StubRefresh();

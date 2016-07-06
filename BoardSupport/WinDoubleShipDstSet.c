@@ -243,6 +243,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            if(pMsg->Data.v == REPLY_OK)
            {
               memcpy(preDouDstSet,tempDouDstSet,sizeof(tempDouDstSet));
+              t90_set.motoas = preDouDstSet[whichFig].motoas;
            }
            else
            {
@@ -321,15 +322,15 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
    
       case WM_CREATE:
 
-           tempDouDstSet[0].motostub = 1000;
-           tempDouDstSet[0].stubtostub = 1500;
-           tempDouDstSet[0].motoas = 2000;
-           tempDouDstSet[1].motostub = 3000;
-           tempDouDstSet[1].stubtostub = 0;
-           tempDouDstSet[1].motoas = 2000;
-           tempDouDstSet[2].motostub = 1000;
-           tempDouDstSet[2].stubtostub = 1500;
-           tempDouDstSet[2].motoas = 2000;
+           tempDouDstSet[0].motostub = DEFAULT_DOUDST1;
+           tempDouDstSet[0].stubtostub = DEFAULT_DOUDST2;
+           tempDouDstSet[0].motoas = DEFAULT_DOUDST3;
+           tempDouDstSet[1].motostub = DEFAULT_DOUDST4;
+           tempDouDstSet[1].stubtostub = DEFAULT_DOUDST1;
+           tempDouDstSet[1].motoas = DEFAULT_DOUDST3;
+           tempDouDstSet[2].motostub = DEFAULT_DOUDST1;
+           tempDouDstSet[2].stubtostub = DEFAULT_DOUDST2;
+           tempDouDstSet[2].motoas = DEFAULT_DOUDST3;
            memcpy(preDouDstSet,tempDouDstSet,sizeof(tempDouDstSet));
            
            pColors  = &setWinColors[t90_set.sys.nightmode];

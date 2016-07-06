@@ -20,14 +20,6 @@ unsigned long SYS_Time;
 
 T90_Set t90_set = {
    DEFAULT_MOTOAS,
-	{
-		DEFAULT_DST1,
-		DEFAULT_DST2,
-		DEFAULT_DST3,
-		DEFAULT_DST4,
-		DEFAULT_DST5,
-         },
-
 
 	{
 		DEFAULT_INVD_DST, 	
@@ -167,11 +159,7 @@ INFO("Error happened when system load.System will be configed with default value
 void T90_Reset(void)
 {
 
-   t90_set.dst.dst1 = DEFAULT_DST1;
-	t90_set.dst.dst2 = DEFAULT_DST2;
-	t90_set.dst.dst3 = DEFAULT_DST3;
-	t90_set.dst.dst4 = DEFAULT_DST4;
-	t90_set.dst.dst5 = DEFAULT_DST5;
+
 	
 	t90_set.alarm.invd_dst   = DEFAULT_INVD_DST;
 	t90_set.alarm.danger_sog = DEFAULT_DANGER_SOG_X10;

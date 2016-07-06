@@ -14,7 +14,7 @@ WM_HWIN spdingAlarmSetWin;
 
 static WM_HWIN buttons[2];
 
-static int agent_set;
+static int agentdst_set;
 
 static const SetWinColor *pColors = setWinColors;
 
@@ -45,7 +45,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                     WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                     break;
                case GUI_KEY_BACKSPACE:
-										if(t90_set.alarm.danger_sog == agent_set)
+										if(t90_set.alarm.danger_sog == agentdst_set)
 										{
 											WM_SetFocus(alarmSetMenuDlg);
 										}
@@ -70,22 +70,22 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 										break;
 							 case GUI_KEY_UP:
 										id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-										if(id==0) agent_set+=10;
-										if(id==1) agent_set+=1;
-										if(agent_set>99) agent_set=99;										
-										sprintf(pStrBuf,"%d",agent_set/10);
+										if(id==0) agentdst_set+=10;
+										if(id==1) agentdst_set+=1;
+										if(agentdst_set>99) agentdst_set=99;										
+										sprintf(pStrBuf,"%d",agentdst_set/10);
 							      HSD_BUTTON_SetText(buttons[0], pStrBuf);
-										sprintf(pStrBuf,"%d",agent_set%10);
+										sprintf(pStrBuf,"%d",agentdst_set%10);
 							      HSD_BUTTON_SetText(buttons[1], pStrBuf);										
                     break;
 							 case GUI_KEY_DOWN:
 										id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-							      if(id==0) agent_set-=10;
-										if(id==1) agent_set-=1;
-							      if(agent_set<0) agent_set=0;
-							      sprintf(pStrBuf,"%d",agent_set/10);
+							      if(id==0) agentdst_set-=10;
+										if(id==1) agentdst_set-=1;
+							      if(agentdst_set<0) agentdst_set=0;
+							      sprintf(pStrBuf,"%d",agentdst_set/10);
 							      HSD_BUTTON_SetText(buttons[0], pStrBuf);
-										sprintf(pStrBuf,"%d",agent_set%10);
+										sprintf(pStrBuf,"%d",agentdst_set%10);
 							      HSD_BUTTON_SetText(buttons[1], pStrBuf);		
             }
            break;
@@ -119,7 +119,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		
     case WM_CREATE:		
 			
-				 agent_set = t90_set.alarm.danger_sog;
+				 agentdst_set = t90_set.alarm.danger_sog;
 		
 				 pColors = &setWinColors[t90_set.sys.nightmode];
 		
@@ -199,7 +199,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		 case USER_MSG_REPLY:
 					if(pMsg->Data.v == REPLY_OK)
 					{
-						 t90_set.alarm.danger_sog = agent_set;
+						 t90_set.alarm.danger_sog = agentdst_set;
 						 T90_Store();
 					}
 					else
@@ -208,7 +208,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						HSD_BUTTON_SetText(buttons[0], pStrBuf);
 						sprintf(pStrBuf,"%d",t90_set.alarm.danger_sog%10);
 						HSD_BUTTON_SetText(buttons[1], pStrBuf);
-						agent_set = t90_set.alarm.danger_sog;
+						agentdst_set = t90_set.alarm.danger_sog;
 					}
 					WM_SetFocus(alarmSetMenuDlg);
 					break;

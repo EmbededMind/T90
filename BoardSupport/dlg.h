@@ -19,7 +19,7 @@ extern WM_HWIN confirmWin;
 extern WM_HWIN workModeWin;
 
 extern WM_HWIN mainShipWin;
-extern WM_HWIN doubleShipWin;
+//extern WM_HWIN doubleShipWin;
 extern WM_HWIN alarmMonitorWin;
 
 extern WM_HWIN mainMenuDlg;

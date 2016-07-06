@@ -11,7 +11,7 @@
 #include <ucos_ii.h>
 #include "sound.h"
 #include "T90.h"
-
+#include "stub.h"
 
 #define NUM_BYTE     7
 #define DST_X_BYTE   5 
@@ -257,7 +257,6 @@ printf("3 mmsi:%ld\n", plugEvent.mmsi[2]);
 
 printf("post mbox\n");
           OSMboxPost(pMSBOX,&plugEvent);
-
        }
        }
    }

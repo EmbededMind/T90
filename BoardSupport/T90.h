@@ -48,12 +48,11 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_DST4   25
 #define DEFAULT_DST5   400
 #define DEFAULT_DST6   100
-#define DEFAULT_DOUDST1 2000
-#define DEFAULT_DOUDST2 1000
-#define DEFAULT_DOUDST3 4000
-#define DEFAULT_DOUDST4 2000
-#define DEFAULT_DOUDST5 4000
-#define DEFAULT_DOUDST6 3000
+#define DEFAULT_DOUDST1 1000
+#define DEFAULT_DOUDST2 1500
+#define DEFAULT_DOUDST3 2000
+#define DEFAULT_DOUDST4 3000
+
 
 #define DEFAULT_INVD_DST         2000
 #define DEFAULT_DANGER_SOG_X10   80
@@ -64,7 +63,10 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_VOLUM      1
 #define DEFAULT_BRIGHT     4
 
-
+#define UP    0
+#define DOWN  1
+#define LEFT  2
+#define RIGHT 3
 
 
 
@@ -128,7 +130,6 @@ typedef struct System_Set
 typedef struct T90_Set
 {
    int motoas;
-	Dst_Set dst;
 	Alarm_Set alarm;
 	System_Set sys;
 } T90_Set;
@@ -186,6 +187,7 @@ void T90_Store(void);
 void T90_Reset(void);
 
 DoubleDstSet* fetchdoudstset();
+Dst_Set* fetchdst_set();
 int fetchplug();
 #endif
 

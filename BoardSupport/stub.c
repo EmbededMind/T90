@@ -12,7 +12,8 @@
 Stub stubs[STUB_NUM_MAX];
 StubNode *pStubHead = NULL;
 
-
+static DoubleDstSet *pdoubleDstSet;
+static Dst_Set *pdst_set;
 static void PrintStubInfo(void);
 static void FillStubInfo(void);
 static void FillStubNodes(void);
@@ -22,18 +23,18 @@ static void FillStubNodes(void);
 void Stub_setParam(int which, int distX, int distY)
 {
    if(t90_set.sys.workmode == SINGLE_MODE){
+      pdst_set = fetchdst_set();
       switch(which){
          case 1:
-              t90_set.dst.dst2 = distX;
-              t90_set.dst.dst1 = distY;
+              pdst_set->dst2 = distX;
+              pdst_set->dst1 = distY;
               break;
          case 2:
-
-              t90_set.dst.dst3 = distY;
+              pdst_set->dst3 = distY;
               break;
          case 3:
-              t90_set.dst.dst4 = distX;
-              t90_set.dst.dst5 = distY;
+              pdst_set->dst4 = distX;
+              pdst_set->dst5 = distY;
 
               break;
          default:
@@ -42,7 +43,7 @@ void Stub_setParam(int which, int distX, int distY)
       }
    }
    else if(t90_set.sys.workmode  == DOUBLE_MODE){
-        DoubleDstSet *pdoubleDstSet = fetchdoudstset();
+        pdoubleDstSet = fetchdoudstset();
         switch(which){
            case 1:
               if(distX*2<pdoubleDstSet[0].motoas)
@@ -90,6 +91,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 
 	if(t90_set.sys.workmode == SINGLE_MODE)
 	{
+      pdst_set = fetchdst_set();
 		stubs[0].basePoint.x = 0;
 		stubs[0].basePoint.y = 0;
 
@@ -99,23 +101,23 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 
 		stubs[0].type = motherStub;
 		
-		stubs[1].basePoint.x = -t90_set.dst.dst2*M_TO_MILLINM;
-		stubs[1].basePoint.y = -t90_set.dst.dst1*M_TO_MILLINM;
+		stubs[1].basePoint.x = -pdst_set->dst2*M_TO_MILLINM;
+		stubs[1].basePoint.y = -pdst_set->dst1*M_TO_MILLINM;
 
 //		stubs[1].isValid = 1;
 
 		stubs[1].type = safetySignStub;
 		
 		stubs[2].basePoint.x = 0;
-		stubs[2].basePoint.y = -t90_set.dst.dst3*M_TO_MILLINM;
+		stubs[2].basePoint.y = -pdst_set->dst3*M_TO_MILLINM;
 
 
 //		stubs[2].isValid = 1;
 
 		stubs[2].type = safetySignStub;
 		
-		stubs[3].basePoint.x =  t90_set.dst.dst4*M_TO_MILLINM;
-		stubs[3].basePoint.y = -t90_set.dst.dst5*M_TO_MILLINM;
+		stubs[3].basePoint.x =  pdst_set->dst4*M_TO_MILLINM;
+		stubs[3].basePoint.y = -pdst_set->dst5*M_TO_MILLINM;
 
 		stubs[3].type = safetySignStub;
 		
@@ -134,9 +136,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 
 	}
 	else if(t90_set.sys.workmode == DOUBLE_MODE)
-	{
-
-      DoubleDstSet *pdoubleDstSet;
+	{      
       pdoubleDstSet = fetchdoudstset();
 		stubs[0].basePoint.x = 0;
 		stubs[0].basePoint.y = 0;
@@ -211,13 +211,38 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 
 void Stub_setValidity(int which, Bool validity)
 {
+   
    if(which > 0  &&  which < 4){
       stubs[which].isValid  = validity;
       if(validity == FALSE){
-         switch(which){
-            case 1: t90_set.dst.dst1 = DEFAULT_DST1; t90_set.dst.dst2 = DEFAULT_DST2; break;
-            case 2: t90_set.dst.dst3 = DEFAULT_DST3;  break;
-            case 3: t90_set.dst.dst4 = DEFAULT_DST4; t90_set.dst.dst5 = DEFAULT_DST5; break;
+         if(t90_set.sys.workmode == SINGLE_MODE)
+         {
+            pdst_set = fetchdst_set();
+            switch(which){
+               case 1: pdst_set->dst1 = DEFAULT_DST1; pdst_set->dst2 = DEFAULT_DST2; break;
+               case 2: pdst_set->dst3 = DEFAULT_DST3;  break;
+               case 3: pdst_set->dst4 = DEFAULT_DST4; pdst_set->dst5 = DEFAULT_DST5; break;
+            }
+         }else if(t90_set.sys.workmode)
+         {
+            pdoubleDstSet = fetchdoudstset();
+            switch(which){
+               case 1: 
+                  pdoubleDstSet[0].motoas = DEFAULT_DOUDST3; 
+                  pdoubleDstSet[0].motostub = DEFAULT_DOUDST1;
+                  pdoubleDstSet[0].stubtostub = DEFAULT_DOUDST2;
+                  break;
+               case 2: 
+                  pdoubleDstSet[1].motoas = DEFAULT_DOUDST3; 
+                  pdoubleDstSet[1].motostub = DEFAULT_DOUDST4;
+                  pdoubleDstSet[1].stubtostub = DEFAULT_DOUDST2;  
+                  break;
+               case 3: 
+                  pdoubleDstSet[2].motoas = DEFAULT_DOUDST3; 
+                  pdoubleDstSet[2].motostub = DEFAULT_DOUDST1;
+                  pdoubleDstSet[2].stubtostub = DEFAULT_DOUDST2; 
+                  break;
+            }
          }
       }
    }
