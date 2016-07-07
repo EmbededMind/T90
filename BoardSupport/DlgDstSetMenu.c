@@ -100,6 +100,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
         case GUI_KEY_RIGHT:
             
              id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
+printf("plug = 0x%x\n", plug);
              if(plug & (0x01<<id*2))
              {
                  flag_prevfocus = 1;

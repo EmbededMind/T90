@@ -183,18 +183,18 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                   myMsg.Data.v  = agentsys_set.nightmode;
                   WM_BroadcastMessage(&myMsg);
                }
-							 if(t90_set.sys.unit != agentsys_set.unit)
-							 {
-								 myMsg.MsgId = USER_MSG_UNIT;
-								 myMsg.Data.v = agentsys_set.unit;
-								 myMsg.hWin = invdAlarmSetWin;
-								 WM_SendMessage(invdAlarmSetWin, &myMsg);
-							 }
-							 if(t90_set.sys.workmode != agentsys_set.workmode)
-							 {
-								 t90_set.sys.workmode = agentsys_set.workmode;
-								 StubRefresh();
-							 }
+                   if(t90_set.sys.unit != agentsys_set.unit)
+                   {
+                      myMsg.MsgId = USER_MSG_UNIT;
+                      myMsg.Data.v = agentsys_set.unit;
+                      myMsg.hWin = invdAlarmSetWin;
+                      WM_SendMessage(invdAlarmSetWin, &myMsg);
+                   }
+                   if(t90_set.sys.workmode != agentsys_set.workmode)
+                   {
+                      t90_set.sys.workmode = agentsys_set.workmode;
+                      StubRefresh();
+                   }
                memcpy(&t90_set.sys, &agentsys_set, sizeof(t90_set.sys));
                T90_Store();
             }

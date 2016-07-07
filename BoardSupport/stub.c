@@ -88,7 +88,6 @@ void Stub_setParam(int which, int distX, int distY)
 
 void StubRefresh()   //根据设置的距离计算桩点的坐标
 {
-
 	if(t90_set.sys.workmode == SINGLE_MODE)
 	{
       pdst_set = fetchdst_set();
@@ -147,25 +146,19 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[1].basePoint.x = -(pdoubleDstSet[0].stubtostub - pdoubleDstSet[0].motoas) * M_TO_MILLINM / 2;
 		stubs[1].basePoint.y = -sqrt(-stubs[1].basePoint.x * stubs[1].basePoint.x 
                              + pdoubleDstSet[0].motostub * pdoubleDstSet[0].motostub*M_TO_MILLINM*M_TO_MILLINM);
-//      stubs[1].basePoint.x=-100;
-//      stubs[1].basePoint.y=-100;
-//		stubs[1].isValid = 1;
+
 		stubs[1].type = safetySignStub;
 		
 		stubs[2].basePoint.x = pdoubleDstSet[1].motoas * M_TO_MILLINM/ 2;
 		stubs[2].basePoint.y = -sqrt(pdoubleDstSet[1].motostub * pdoubleDstSet[1].motostub*M_TO_MILLINM*M_TO_MILLINM 
                              - stubs[2].basePoint.x * stubs[2].basePoint.x);
-//      stubs[2].basePoint.x=100;
-//      stubs[2].basePoint.y=-200;
-//		stubs[2].isValid = 1;
+
 		stubs[2].type = safetySignStub;
 		
 		stubs[3].basePoint.x = (pdoubleDstSet[2].stubtostub + pdoubleDstSet[2].motoas)*M_TO_MILLINM/2;
 		stubs[3].basePoint.y = -sqrt(pdoubleDstSet[2].motostub * pdoubleDstSet[2].motostub 
                              - (pdoubleDstSet[2].stubtostub - pdoubleDstSet[2].motoas) * (pdoubleDstSet[2].stubtostub - pdoubleDstSet[2].motoas) / 4)*M_TO_MILLINM;
-//		stubs[3].basePoint.x=300;
-//      stubs[3].basePoint.y=-100;
-//      stubs[3].isValid = 1;
+
 		stubs[3].type = safetySignStub;
 		
       if(pdoubleDstSet[0].motoas>=pdoubleDstSet[1].motoas)

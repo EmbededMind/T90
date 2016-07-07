@@ -8,6 +8,8 @@
 #include "layout_dst_set.h"
 #include "HSD_DIMENSION_EX.h"
 #include "stub.h"
+#include "lpc177x_8x_uart.h"
+
 
 #define ID_EX_DIM_0      (GUI_ID_USER + 0x10)
 #define ID_EX_DIM_1      (GUI_ID_USER + 0x11)
@@ -23,7 +25,7 @@
 #define MAXSTUBTOSTUB     3000
 
 WM_HWIN doubleShipDstSetWin;
-
+extern uint16_t msg_crc(uint8_t *ptr,uint8_t num);
 
 static const GUI_RECT drawArea  = {50, 50, DST_SET_WIDTH-50, DST_SET_HEIGHT-50};
 static const GUI_RECT tipStrArea = {50, DST_SET_HEIGHT-50 +2 , DST_SET_WIDTH -50, DST_SET_HEIGHT -50 +32};
@@ -242,8 +244,53 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
       case USER_MSG_REPLY:
            if(pMsg->Data.v == REPLY_OK)
            {
+              uint16_t dist  = 0;
+              uint8_t buf[18]  = {0};
+              int which = 0;
+              int flg;
+              flg = 0;
+             
+              buf[0]  = 0x24;
+              buf[1]  = 0x31;
+              if(tempDouDstSet[0].motostub != preDouDstSet[0].motostub || tempDouDstSet[0].stubtostub != preDouDstSet[0].stubtostub 
+                 || tempDouDstSet[0].motoas != preDouDstSet[0].motoas)
+              {
+                 flg = 1;
+                 which =1;
+              }else if(tempDouDstSet[1].motostub != preDouDstSet[1].motostub || tempDouDstSet[1].stubtostub != preDouDstSet[1].stubtostub
+                        || tempDouDstSet[1].motoas != preDouDstSet[1].motoas)
+              {
+                 flg = 1;
+                 which = 2;              
+              }else if(tempDouDstSet[2].motostub != preDouDstSet[2].motostub || tempDouDstSet[2].stubtostub != preDouDstSet[2].stubtostub
+                      || tempDouDstSet[2].motoas != preDouDstSet[2].motoas)
+              {
+                 flg = 1;
+                 which = 3;             
+              }
               memcpy(preDouDstSet,tempDouDstSet,sizeof(tempDouDstSet));
               t90_set.motoas = preDouDstSet[whichFig].motoas;
+              StubRefresh();
+              if(flg)
+              {
+                 dist = -stubs[which].basePoint.y*MILLINM_TO_M;
+printf("stubs[%d].basepoint.y=%d\n",which,stubs[which].basePoint.y*MILLINM_TO_M);
+printf("y_dist =0x%x\n",dist);
+                 buf[2] = dist>>8;
+                 buf[3] = dist&0xff;
+                 
+                 dist = stubs[which].basePoint.x*MILLINM_TO_M;
+printf("stubs[%d],basepoint.x=%d\n",which,stubs[which].basePoint.x*MILLINM_TO_M);
+printf("x_dist =0x%x\n",dist);
+                 buf[5] = dist>>8;
+                 buf[6] = dist&0xff;
+                 buf[7] = which;
+                 
+                 dist = msg_crc(buf, 16);
+                 buf[16] = dist>>8;
+                 buf[17] = dist&0xff;
+                 UART_Send(UART_2, buf, 18, BLOCKING);             
+              }
            }
            else
            {
@@ -266,9 +313,10 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
               sprintf(pStrBuf, "%d", tempDouDstSet[1].motostub);
               HSD_DIMENSION_EX_SetValText(hExDim[3], pStrBuf);
               sprintf(pStrBuf, "%d", tempDouDstSet[2].motostub);
-              HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);          
+              HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);
+              StubRefresh();              
            }
-           StubRefresh();
+           
            WM_SetFocus(dstSetMenuDlg);
       break;
       case USER_MSG_DST_SET:

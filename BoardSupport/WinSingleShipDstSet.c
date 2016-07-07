@@ -380,52 +380,52 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 	 case USER_MSG_REPLY:
 				if(pMsg->Data.v == REPLY_OK)
 				{
-//      uint16_t dist  = 0;
-//      uint8_t buf[18]  = {0};
-//      
-//      buf[0]  = 0x24;
-//      buf[1]  = 0x31;
+               uint16_t dist  = 0;
+               uint8_t buf[18]  = {0};
+               
+               buf[0]  = 0x24;
+               buf[1]  = 0x31;
 
-//      if(agentdst_set.dst3 != t90_set.dst.dst3){
-//         dist  = agentdst_set.dst3;
-//         buf[2]  = dist>>8;
-//         buf[3]  = dist&0xff;
-//         buf[7]  = 2;
-//         dist  = msg_crc(buf, 16);
-//         buf[16]  = dist>>8;
-//         buf[17]  = dist&0xff;
-//         UART_Send(UART_2, buf, 18, BLOCKING);
-//      }  
-//      
-//      if(agentdst_set.dst4!= t90_set.dst.dst4  || agentdst_set.dst5 != t90_set.dst.dst5){
-//         dist  = agentdst_set.dst5;
-//         buf[2]  = dist>>8;
-//         buf[3]  = dist&0xff;
-//         buf[4]  = 1;
-//         dist  = agentdst_set.dst4;
-//         buf[5]  = dist>>8;
-//         buf[6]  = dist&0xff;
-//         buf[7]  = 3;
-//         dist  = msg_crc(buf, 16);
-//         buf[16]  = dist>>8;
-//         buf[17]  = dist&0xff;
-//         UART_Send(UART_2, buf, 18, BLOCKING);
-//      }       
-//      
-//      if(agentdst_set.dst1 != t90_set.dst.dst1  ||  agentdst_set.dst2 != t90_set.dst.dst2){
-//         dist  = agentdst_set.dst1;
-//         buf[2]  = dist>>8;
-//         buf[3]  = dist&0xff;
-//         buf[4]  = 0;
-//         dist  = agentdst_set.dst2;
-//         buf[5]  = dist>>8;
-//         buf[6]  = dist&0xff;
-//         buf[7]  = 1;
-//         dist  = msg_crc(buf, 16);
-//         buf[16]  = dist>>8;
-//         buf[17]  = dist&0xff;
-//         UART_Send(UART_2, buf, 18, BLOCKING);
-//      }
+            if(agentdst_set.dst3 != dst_set.dst3){
+               dist  = agentdst_set.dst3;
+               buf[2]  = dist>>8;
+               buf[3]  = dist&0xff;
+               buf[7]  = 2;
+               dist  = msg_crc(buf, 16);
+               buf[16]  = dist>>8;
+               buf[17]  = dist&0xff;
+               UART_Send(UART_2, buf, 18, BLOCKING);
+            }  
+            
+            if(agentdst_set.dst4!= dst_set.dst4 || agentdst_set.dst5 != dst_set.dst5){
+               dist  = agentdst_set.dst5;
+               buf[2]  = dist>>8;
+               buf[3]  = dist&0xff;
+               buf[4]  = 1;
+               dist  = agentdst_set.dst4;
+               buf[5]  = dist>>8;
+               buf[6]  = dist&0xff;
+               buf[7]  = 3;
+               dist  = msg_crc(buf, 16);
+               buf[16]  = dist>>8;
+               buf[17]  = dist&0xff;
+               UART_Send(UART_2, buf, 18, BLOCKING);
+            }       
+            
+            if(agentdst_set.dst1 != dst_set.dst1  ||  agentdst_set.dst2 != dst_set.dst2){
+               dist  = agentdst_set.dst1;
+               buf[2]  = dist>>8;
+               buf[3]  = dist&0xff;
+               buf[4]  = 0;
+               dist  = agentdst_set.dst2;
+               buf[5]  = dist>>8;
+               buf[6]  = dist&0xff;
+               buf[7]  = 1;
+               dist  = msg_crc(buf, 16);
+               buf[16]  = dist>>8;
+               buf[17]  = dist&0xff;
+               UART_Send(UART_2, buf, 18, BLOCKING);
+            }
 
       
 					 memcpy(&dst_set, &agentdst_set, sizeof(agentdst_set));
