@@ -59,7 +59,7 @@ void Stub_setParam(int which, int distX, int distY)
            break;
            case 2:
               pdoubleDstSet[1].motoas = t90_set.motoas;
-              pdoubleDstSet[1].motostub = sqrt(distX*distX+distY*distY);         
+              pdoubleDstSet[1].motostub = sqrt(distX*distX+distY*distY);                                  
            break;
            case 3:
               if(distX>pdoubleDstSet[2].motoas/2)

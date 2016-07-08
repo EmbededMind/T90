@@ -82,10 +82,6 @@ typedef struct Dst_Set
 	int dst3;
 	int dst4;
 	int dst5;
-//   int dst6; ///   Distance of mothership to brother ship
-// int dst7; ///   Distance of fishing net end points
-// int dst8; ///   Distance of left end point  to motherhip
-// int dst9; ///   Distance of net middle dot to mothership
 } Dst_Set;
 
 
@@ -93,15 +89,7 @@ typedef struct Dst_Set
  *
  *
  */
-//typedef struct
-//{
-//   int dst1;
-//   int dst2;
-//   int dst3;
-//   int dst4;
-//   int dst5;
-//   int dst6;
-//} DouDstSet;
+
 
 
 
@@ -188,7 +176,7 @@ void T90_Reset(void);
 
 DoubleDstSet* fetchdoudstset();
 Dst_Set* fetchdst_set();
-int fetchplug();
+//int fetchplug();
 #endif
 
 
