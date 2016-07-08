@@ -93,15 +93,15 @@ typedef struct Dst_Set
  *
  *
  */
-typedef struct
-{
-   int dst1;
-   int dst2;
-   int dst3;
-   int dst4;
-   int dst5;
-   int dst6;
-} DouDstSet;
+//typedef struct
+//{
+//   int dst1;
+//   int dst2;
+//   int dst3;
+//   int dst4;
+//   int dst5;
+//   int dst6;
+//} DouDstSet;
 
 
 
