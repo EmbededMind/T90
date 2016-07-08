@@ -33,6 +33,7 @@
 #define Refresh_Task_PRIO        9
 #define Play_Task_PRIO           11
 
+
 /* 定义任务堆栈大小 */
 #define USER_TASK_STACK_SIZE 2048
 #define TOUCH_TASK_STACK_SIZE 256
@@ -50,7 +51,8 @@ static	OS_STK	Insert_Task_Stack[TOUCH_TASK_STACK_SIZE];
 static	OS_STK	Refresh_Task_Stack[KEY_TASK_STACK_SIZE];
 
 
-static OS_STK Play_Task_Statck[PLAY_TAST_STACK_SIZE];
+static OS_STK Play_Task_Stack[PLAY_TAST_STACK_SIZE];
+
 
 OS_EVENT *  pMSBOX;
 //static  OS_STK_DATA UI_Task_Stack_Use;
@@ -447,6 +449,8 @@ void _Play_Task(void* p_arg)
 }
  
  
+ 
+
 void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
 {
   INT8U err;
@@ -512,10 +516,10 @@ printf("init motoas=%d\n",t90_set.motoas);
                        
   OSTaskCreateExt(     _Play_Task,
                        (void*)0,
-                       (OS_STK*)&Play_Task_Statck[PLAY_TAST_STACK_SIZE-1],
+                       (OS_STK*)&Play_Task_Stack[PLAY_TAST_STACK_SIZE-1],
                        Play_Task_PRIO,
                        Play_Task_PRIO,
-                       (OS_STK*)&Play_Task_Statck[0],
+                       (OS_STK*)&Play_Task_Stack[0],
                        PLAY_TAST_STACK_SIZE,
                        (void*)0,
                        OS_TASK_OPT_STK_CHK+OS_TASK_OPT_STK_CLR );
