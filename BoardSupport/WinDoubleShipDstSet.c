@@ -40,10 +40,10 @@ static WM_HWIN hFigs[3];
 
 
 
-static DoubleDstSet tempDouDstSet[3];
-static DoubleDstSet preDouDstSet[3];
+static DoubleDst_SetOne tempDouDstSet[3];
+static DoubleDst_SetOne preDouDstSet[3];
 
-DoubleDstSet* fetchdoudstset(){
+DoubleDst_SetOne* fetchdoudstset(){
    return preDouDstSet;   
 }
 

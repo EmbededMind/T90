@@ -21,7 +21,26 @@ unsigned long SYS_Time;
 T90_Set t90_set = {
 
       DEFAULT_MOTOAS,
-
+   {
+      DEFAULT_DST1,
+      DEFAULT_DST2,
+      DEFAULT_DST3,
+      DEFAULT_DST4,
+      DEFAULT_DST5,},
+   {
+      {
+         DEFAULT_DOUDST3,
+         DEFAULT_DOUDST1,
+         DEFAULT_DOUDST2,},
+      {
+         DEFAULT_DOUDST3,
+         DEFAULT_DOUDST4,
+         DEFAULT_DOUDST2},
+      {
+         DEFAULT_DOUDST3,
+         DEFAULT_DOUDST1,
+         DEFAULT_DOUDST2},
+   },
 	{
 		DEFAULT_INVD_DST, 	
 		DEFAULT_DANGER_SOG_X10,   

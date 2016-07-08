@@ -24,14 +24,14 @@ static const GUI_RECT drawArea  = {50, 50, DST_SET_WIDTH-50, DST_SET_HEIGHT-50};
 
 static const GUI_RECT tipStrArea = {50, DST_SET_HEIGHT-50 +2, DST_SET_WIDTH-50, DST_SET_HEIGHT-50 +32};
 
-static Dst_Set agentdst_set;
-static Dst_Set dst_set;
+static SingleDst_Set agentdst_set;
+static SingleDst_Set dst_set;
 
 static HSD_STICKFIGURE_Handle hStickFigures[3];
 static HSD_DIMENSION_Handle hDimensions[5];
 
 static const SetWinColor *pColors = setWinColors;
-Dst_Set* fetchdst_set()
+SingleDst_Set* fetchdst_set()
 {
    return &dst_set;
 }

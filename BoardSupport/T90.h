@@ -63,10 +63,7 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_VOLUM      1
 #define DEFAULT_BRIGHT     4
 
-#define UP    0
-#define DOWN  1
-#define LEFT  2
-#define RIGHT 3
+
 
 
 
@@ -75,23 +72,28 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 
 
  */
-typedef struct Dst_Set
+typedef struct SingleDst_Set
 {
 	int dst1;
 	int dst2;
 	int dst3;
 	int dst4;
 	int dst5;
-} Dst_Set;
+} SingleDst_Set;
 
+typedef struct 
+{
+   uint16_t motoas;
+   uint16_t motostub;
+   uint16_t stubtostub;
+}DoubleDst_SetOne;
 
-/**À´Õ–æ‡¿Î…Ë÷√≤Œ ˝
- *
- *
- */
-
-
-
+typedef struct
+{
+   DoubleDst_SetOne safety1_dst_set;   
+   DoubleDst_SetOne safety2_dst_set;
+   DoubleDst_SetOne safety3_dst_set;
+}DoubleDst_Set;
 
 typedef struct Alarm_Set
 {
@@ -114,15 +116,14 @@ typedef struct System_Set
 	int reset;
 } System_Set;
 	
-
 typedef struct T90_Set
 {
    int motoas;
+   SingleDst_Set singledst_set;
+   DoubleDst_Set doubledst_set;
 	Alarm_Set alarm;
 	System_Set sys;
 } T90_Set;
-
-
 
 typedef enum {
    PGEvent_None  = 0,
@@ -146,17 +147,7 @@ typedef struct T90_PlugEvent
    long mmsi[3];
 }T90_PlugEvent;
 
-typedef struct 
-{
-   uint16_t motoas;
-   uint16_t motostub;
-   uint16_t stubtostub;
-}DoubleDstSet;
-
 extern T90_Set t90_set;
-
-
-
 extern boat mothership;
 extern int MS_isSpeeding;
 extern int MS_isMin_SOG;
@@ -174,8 +165,8 @@ Bool T90_Load(void);
 void T90_Store(void);
 void T90_Reset(void);
 
-DoubleDstSet* fetchdoudstset();
-Dst_Set* fetchdst_set();
+DoubleDst_SetOne* fetchdoudstset();
+SingleDst_Set* fetchdst_set();
 //int fetchplug();
 #endif
 
