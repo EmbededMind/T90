@@ -48,6 +48,7 @@ void Stub_setParam(int which, int distX, int distY)
            case 1:
               if(distX*2<pdoubleDstSet[0].motoas)
               {
+                 pdoubleDstSet[0].motoas = t90_set.motoas;
                  pdoubleDstSet[0].motostub = sqrt(distX*distX+distY*distY);
                  pdoubleDstSet[0].stubtostub = pdoubleDstSet[0].motoas - 2*distX;
               }
@@ -57,11 +58,13 @@ void Stub_setParam(int which, int distX, int distY)
               }
            break;
            case 2:
-              pdoubleDstSet[1].motostub = sqrt(distX*distX+distY*distY);         
+              pdoubleDstSet[1].motoas = t90_set.motoas;
+              pdoubleDstSet[1].motostub = sqrt(distX*distX+distY*distY);                         
            break;
            case 3:
               if(distX>pdoubleDstSet[2].motoas/2)
               {
+                 pdoubleDstSet[2].motoas = t90_set.motoas;
                  pdoubleDstSet[2].motostub = sqrt(distY*distY + (pdoubleDstSet[2].motoas-distX)*(pdoubleDstSet[2].motoas-distX));
                  pdoubleDstSet[2].stubtostub = pdoubleDstSet[2].motoas-2*(pdoubleDstSet[2].motoas - distX);
               }

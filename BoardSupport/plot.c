@@ -40,7 +40,7 @@ void DrawShipFamily(int flag)     //ۭԬۍвȫҪӔ̻ܰć֮ݤքlП
 	Point pixelTmp1, pixelTmp2;
 	StubNode *pIndex = pStubHead;
 	
- GUI_POINT shipe[3];
+   GUI_POINT shipe[3];
  
 	ms_zoom = ms_zoom>5 ? 5 : ms_zoom;
 	net_zoom = net_zoom>5 ? 5 : net_zoom;

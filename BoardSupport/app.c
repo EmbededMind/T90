@@ -685,29 +685,9 @@ void detectPlugEvent()
                deleteBoat(gPlugBoats[2]);
             }
          }
-//      }
-      
-//      memset(&plugEvent, 0, sizeof(plugEvent));
+
       plugEvent.whichPort  = 0;    
-//      plugEvent.eventType  = PGEvent_None;
       StubRefresh();  
-      
-//   }
-//   else if(plugEvent.eventType == PGEvent_Pull){
-//      if(plugEvent.whichPort & 0x01){
-//         Stub_setValidity(1, FALSE);
-//      }
-//      if(plugEvent.whichPort & 0x02){
-//         Stub_setValidity(2, FALSE);
-//      }
-//      if(plugEvent.whichPort & 0x04){
-//         Stub_setValidity(3, FALSE);
-//      }
-//      isDstSetChanged  = TRUE;
-//      plugEvent.whichPort  = 0;    
-//      plugEvent.eventType  = PGEvent_None;
-//      StubRefresh();  
-//   }
 }
 
 

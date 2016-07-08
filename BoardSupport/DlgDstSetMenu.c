@@ -17,9 +17,10 @@
 
 WM_HWIN dstSetMenuDlg;
 
+extern T90_PlugEvent plugEvent;
 static WM_HWIN buttons[3]; 
 
-static int plug;
+//static int plug;
 
 static  const MenuColor *pColors = subMenuColors;
 
@@ -34,10 +35,10 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
    {BUTTON_CreateIndirect, "safety sign 2", GUI_ID_BUTTON2, 0, SUB_MENU_ITEM_HEIGHT*3+SUB_MENU_ITEM_MARGIN*4, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0}
 };
 
-int fetchplug()
-{
-   return plug;
-}
+//int fetchplug()
+//{
+//   return plug;
+//}
 static void myButtonCallback(WM_MESSAGE* pMsg)
 {
 	int id;
@@ -49,7 +50,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 			 {
            id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
            flag_prevfocus  = 0;
-           if(plug & (0x01<<(id*2)))
+           if(plugEvent.status & (0x01<<(id*2)))
            {
               BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusBkColor);
               BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
@@ -100,8 +101,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
         case GUI_KEY_RIGHT:
             
              id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-printf("plug = 0x%x\n", plug);
-             if(plug & (0x01<<id*2))
+//printf("plug = 0x%x\n", plug);
+             if(plugEvent.status & (0x01<<id*2))
              {
                  flag_prevfocus = 1;
                 if(t90_set.sys.workmode == SINGLE_MODE  )
@@ -183,9 +184,9 @@ printf("plug = 0x%x\n", plug);
 static void myDialogCallback(WM_MESSAGE* pMsg)
 {
    switch(pMsg->MsgId){
-      case USER_MSG_PLUG:
-         plug = pMsg->Data.v;
-         break;
+//      case USER_MSG_PLUG:
+//         plug = pMsg->Data.v;
+//         break;
       case USER_MSG_SKIN:
         pColors = &(subMenuColors[pMsg->Data.v]);	
       

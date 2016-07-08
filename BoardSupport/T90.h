@@ -188,7 +188,7 @@ void T90_Reset(void);
 
 DoubleDstSet* fetchdoudstset();
 Dst_Set* fetchdst_set();
-int fetchplug();
+//int fetchplug();
 #endif
 
 
