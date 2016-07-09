@@ -124,7 +124,6 @@ OS_EVENT * Updater;
 
 ///--消息队列的定义部分---
 OS_EVENT *QSem;//定义消息队列指针
-OS_EVENT *ComQSem;
 void *MsgQeueTb[MSG_QUEUE_TABNUM];//定义消息指针数组，队列长度为10
 void *ComQeueTab[5];
 OS_MEM   *PartitionPt;//定义内存分区指针
@@ -185,9 +184,7 @@ int N_boat = 0;
 
 void SysTick_Init(void);
 
-void detectPlugEvent(void);
 
-void sendPulse();
 
 void UI_Task(void *p_arg)/*描述(Description):	任务UI_Task*/
 {      
@@ -246,7 +243,6 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
       
 //      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
-      sendPulse();
       
       OSTimeDlyHMSM(0,0,5,0);
    }
@@ -539,7 +535,7 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   Updater    = OSMutexCreate(6,&myErr_2);
   QSem = OSQCreate(&MsgQeueTb[0],MSG_QUEUE_TABNUM); //创建消息队列，10条消息
 
-  ComQSem  = OSQCreate(&ComQeueTab[0], 5);
+//  ComQSem  = OSQCreate(&ComQeueTab[0], 5);
   CommMBox = OSMboxCreate(0);
 
   
@@ -701,105 +697,6 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
 /************************************* End *************************************/
 
 
-
-void detectPlugEvent()
-{
-      if(isDstSetChanged == 0){
-         return ;
-      }
-      isDstSetChanged   = 0;
-      isDstSetNeedUpdate++;
-         
-         if(plugEvent.status & 0x01){
-            Stub_setValidity(1, TRUE);
-            if(gPlugBoats[0] != plugEvent.mmsi[0] && gPlugBoats[1] != plugEvent.mmsi[0] && gPlugBoats[2] != plugEvent.mmsi[0]){
-               gPlugBoats[0]  = plugEvent.mmsi[0];
-               setCategory(gPlugBoats[0], TYPE_SAFETY);
-            }
-         }
-         else{
-            Stub_setValidity(1, FALSE);
-            if(gPlugBoats[0] > 0){
-               deleteBoat(gPlugBoats[0]);
-            }           
-         }
-         if(plugEvent.status & 0x04){ 
-            Stub_setValidity(2, TRUE);
-            if(gPlugBoats[0] != plugEvent.mmsi[1] && gPlugBoats[1] != plugEvent.mmsi[1] && gPlugBoats[2] != plugEvent.mmsi[1]){
-               gPlugBoats[1]  = plugEvent.mmsi[1];
-               setCategory(gPlugBoats[1], TYPE_SAFETY);
-            }
-         }
-        else{
-           Stub_setValidity(2, FALSE);
-           if(gPlugBoats[1] > 0){
-              deleteBoat(gPlugBoats[1]);
-           }
-        }        
-         if(plugEvent.status & 0x10){
-            Stub_setValidity(3, TRUE); 
-            if(gPlugBoats[0] != plugEvent.mmsi[2] && gPlugBoats[1] != plugEvent.mmsi[2] && gPlugBoats[2] != plugEvent.mmsi[2]){
-               gPlugBoats[2]  = plugEvent.mmsi[2];
-               setCategory(gPlugBoats[2], TYPE_SAFETY);
-            }            
-         }
-         else{
-            Stub_setValidity(3, FALSE);
-            if(gPlugBoats[2] > 0){            
-               deleteBoat(gPlugBoats[2]);
-            }
-         }
-
-      plugEvent.whichPort  = 0;    
-      StubRefresh();  
-}
-
-
-uint16_t msg_crc(uint8_t *ptr,uint8_t num)
-{
-   uint16_t crc=0xffff;
-   uint8_t i;
-   uint16_t gx=0x1021;
-   
-   while(num--)
-   {
-    for(i=0x01;i!=0;i<<=1)
-    {
-     if((crc&0x8000)!=0)
-     {
-      crc<<=1;
-      crc^=gx;
-     }
-     else
-     {
-      crc<<=1;
-     }
-     if(((*ptr)&i)!=0) 
-     {
-      crc^=gx;
-     }
-    }
-    ptr++;
-   }
-   return ~crc;
-}
-
-
-void sendPulse()
-{
-   uint8_t buf[18]  ={0};
-   uint16_t i  = 0;
-   
-   buf[0]  = 0x24;
-   buf[1]  = 0x5a;
-   
-   i  = msg_crc(buf, 16);
-   
-   buf[16]  = i >> 8;
-   buf[17]  = i & 0xff;
-   
-   UART_Send(UART_2, buf, 18, BLOCKING);
-}
 
 
 

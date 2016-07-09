@@ -25,7 +25,6 @@
 #define MAXSTUBTOSTUB     3000
 
 WM_HWIN doubleShipDstSetWin;
-extern uint16_t msg_crc(uint8_t *ptr,uint8_t num);
 
 static const GUI_RECT drawArea  = {50, 50, DST_SET_WIDTH-50, DST_SET_HEIGHT-50};
 static const GUI_RECT tipStrArea = {50, DST_SET_HEIGHT-50 +2 , DST_SET_WIDTH -50, DST_SET_HEIGHT -50 +32};
@@ -279,14 +278,7 @@ printf("y_dist =0x%x\n",dist);
                  dist = stubs[which].basePoint.x*MILLINM_TO_M;
 printf("stubs[%d],basepoint.x=%d\n",which,stubs[which].basePoint.x*MILLINM_TO_M);
 printf("x_dist =0x%x\n",dist);
-                 buf[5] = dist>>8;
-                 buf[6] = dist&0xff;
-                 buf[7] = which;
-                 
-                 dist = msg_crc(buf, 16);
-                 buf[16] = dist>>8;
-                 buf[17] = dist&0xff;
-                 UART_Send(UART_2, buf, 18, BLOCKING);             
+        
               }
            }
            else
