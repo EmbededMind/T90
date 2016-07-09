@@ -25,7 +25,10 @@ extern T90_PlugEvent plugEvent;
 
 extern uint8_t SND[4][6];
 extern int isKeyTrigged;
-//extern OS_EVENT * pMSBOX;
+
+extern OS_EVENT * CommMBox;
+
+
 
 volatile Bool Doubleclick  = FALSE;
 volatile Bool isReleasedDet  = FALSE;
@@ -154,41 +157,12 @@ void UART2_IRQHandler(void)
    else if ((tmp == UART_IIR_INTID_RDA) || (tmp == UART_IIR_INTID_CTI))	// Receive Data Available or Character time-out
    {	 
        UART_Receive(UART_2, pRecBuf++, 1, NONE_BLOCKING);
-       if(pRecBuf-recBuf >= 18){
-          pRecBuf  = recBuf;
-          
-       if(recBuf[CMD_BYTE] == 0x01){  
-          isDstSetChanged++;
-          plugEvent.status  = 0;
-          if(recBuf[2] == 0){
-             plugEvent.whichPort  |= 0x01;
-             plugEvent.status  &= (~0x01) ;
-             
-          }
-          else{
-             plugEvent.status  |= 0x01;
-           
-          }
-          if(recBuf[3] == 0){
-             plugEvent.whichPort  |= 0x02;
-             plugEvent.status  &= (~0x04);
 
-          }
-          else{
-             plugEvent.status  |= 0x04;
-             
-          }
-          if(recBuf[4] == 0){
-             plugEvent.whichPort  |= 0x04;
-             plugEvent.status  &= (~0x10);
-            
-          }
-          else{
-             plugEvent.status  |=  0x10;
-             
-          }
-       }
-       }
+       
+       /// CRC
+       
+       OSMboxPost(CommMBox, (void*)recBuf);
+
    }
    else if(tmp == UART_IIR_INTID_THRE){
       printf("uart2 send\n");

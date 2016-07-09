@@ -21,6 +21,7 @@
 #include "snap.h"
 #include "transform.h"
 #include "stub.h"
+#include "comm.h"
 
 //#ifndef test_test
 //	#define test_test
@@ -58,7 +59,9 @@ static OS_STK Play_Task_Stack[PLAY_TAST_STACK_SIZE];
 static OS_STK Comm_Task_Stack[COMM_TASK_STACK_SIZE];
 
 
-//OS_EVENT *  pMSBOX;
+
+OS_EVENT *  CommMBox;
+
 //static  OS_STK_DATA UI_Task_Stack_Use;
 //static  OS_STK_DATA Insert_Task_Stack_Use;
 //static  OS_STK_DATA Refresh_Task_Stack_Use;
@@ -121,7 +124,9 @@ OS_EVENT * Updater;
 
 ///--消息队列的定义部分---
 OS_EVENT *QSem;//定义消息队列指针
+OS_EVENT *ComQSem;
 void *MsgQeueTb[MSG_QUEUE_TABNUM];//定义消息指针数组，队列长度为10
+void *ComQeueTab[5];
 OS_MEM   *PartitionPt;//定义内存分区指针
 // #pragma arm section rwdata = "SD_RAM2", zidata = "SD_RAM2"
 uint8_t  Partition[MSG_QUEUE_TABNUM][100];
@@ -454,8 +459,51 @@ void _Play_Task(void* p_arg)
 
 void Comm_Task(void * p_arg) 
 {
+   INT8U err;
+   uint8_t* pFrame;
+   
+   uint8_t  pulseNoAckCnt  = 0;
+   uint8_t  dataNoAckCnt   = 0;
+   
    while(1)
    {
+      
+      Comm_sendPulse();
+      pFrame  = (uint8_t*)OSMboxPend(CommMBox, 1000, &err);
+      
+      if(err == OS_ERR_NONE){
+         /** 判断ACK类型，取得三个端口的状态 */
+         if(pFrame[1] == 0x5a){
+            pulseNoAckCnt  = 0;
+            printf("pulse ack ok\n");
+         }
+      }
+      else{
+         pulseNoAckCnt++;
+         if(pulseNoAckCnt > 3){
+            pulseNoAckCnt  = 0;
+            printf("pulse ack timeout more than 3 times\n");
+            /// Ack err
+         }
+      }
+      
+      pFrame  = Comm_fetchNextFrame();
+      if(pFrame){
+         Comm_sendFrame(pFrame);
+         pFrame  = (uint8_t*)OSMboxPend(CommMBox, 1000, &err);{
+            if(err == OS_ERR_NONE){
+               dataNoAckCnt  = 0;
+               printf("data ack ok\n");
+            }
+            else{
+               dataNoAckCnt++;
+               if(dataNoAckCnt > 3){
+                  dataNoAckCnt  = 0;
+                  printf("data ack timeout more than 3 times\n");
+               }
+            }
+         }
+      }
       OSTimeDlyHMSM(0, 0, 1, 0);
    }
 }
@@ -490,7 +538,10 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   Refresher  = OSMutexCreate(6,&myErr);
   Updater    = OSMutexCreate(6,&myErr_2);
   QSem = OSQCreate(&MsgQeueTb[0],MSG_QUEUE_TABNUM); //创建消息队列，10条消息
-//  pMSBOX = OSMboxCreate(0);
+
+  ComQSem  = OSQCreate(&ComQeueTab[0], 5);
+  CommMBox = OSMboxCreate(0);
+
   
   PartitionPt=OSMemCreate(Partition,MSG_QUEUE_TABNUM,100,&err);
   
