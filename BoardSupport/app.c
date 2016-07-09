@@ -539,7 +539,7 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   Updater    = OSMutexCreate(6,&myErr_2);
   QSem = OSQCreate(&MsgQeueTb[0],MSG_QUEUE_TABNUM); //创建消息队列，10条消息
 
-  ComQSem  = OSQCreate(&ComQeueTab[0], 5);
+//  ComQSem  = OSQCreate(&ComQeueTab[0], 5);
   CommMBox = OSMboxCreate(0);
 
   
