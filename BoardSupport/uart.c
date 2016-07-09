@@ -25,7 +25,7 @@ extern T90_PlugEvent plugEvent;
 
 extern uint8_t SND[4][6];
 extern int isKeyTrigged;
-extern OS_EVENT * pMSBOX;
+//extern OS_EVENT * pMSBOX;
 
 volatile Bool Doubleclick  = FALSE;
 volatile Bool isReleasedDet  = FALSE;
@@ -155,78 +155,11 @@ void UART2_IRQHandler(void)
    {	 
        UART_Receive(UART_2, pRecBuf++, 1, NONE_BLOCKING);
        if(pRecBuf-recBuf >= 18){
-//          UART_Send(UART_0, recBuf, 18, BLOCKING);
           pRecBuf  = recBuf;
           
-          if(recBuf[CMD_BYTE]==0x32){
-          
-             uint16_t tmpDst  = 0;
-             long   tmpMMSI  = 0;
-//             plugEvent.whichPort  = 0;
-             isDstSetChanged++;
-             switch(recBuf[NUM_BYTE]){
-             
-                case 1:
-                     plugEvent.whichPort  |= 0x01;
-//                     plugEvent.eventType  = PGEvent_Data;
-                     tmpDst  = recBuf[DST_X_BYTE];
-                     tmpDst  = tmpDst<<8 | recBuf[DST_X_BYTE+1];
-                     plugEvent.dist_1  = tmpDst;
-                     tmpDst  = recBuf[DST_Y_BYTE];
-                     tmpDst  = tmpDst<<8 | recBuf[DST_Y_BYTE+1];
-                     plugEvent.dist_2  = tmpDst;
-                     plugEvent.status  |= 0x01;
-                     tmpMMSI  = recBuf[8];
-                     tmpMMSI  = tmpMMSI << 8 | recBuf[9];
-                     tmpMMSI  = tmpMMSI << 8 | recBuf[10];
-                     tmpMMSI  = tmpMMSI << 8 | recBuf[11];
-                     plugEvent.mmsi[0]  = tmpMMSI;
-printf("1 mmsi:%ld\n", plugEvent.mmsi[0]);                     
-                     break;
-                case 2:
-                     plugEvent.whichPort  |= 0x02;
-//                     plugEvent.eventType  = PGEvent_Data;
-                     tmpDst  = recBuf[DST_Y_BYTE];
-                     tmpDst  = tmpDst<<8 | recBuf[DST_Y_BYTE+1];
-                     plugEvent.dist_4  = tmpDst;
-                     plugEvent.status  |= 0x04;
-                     tmpMMSI  = recBuf[8];
-                     tmpMMSI  = tmpMMSI << 8 | recBuf[9];
-                     tmpMMSI  = tmpMMSI << 8 | recBuf[10];
-                     tmpMMSI  = tmpMMSI << 8 | recBuf[11];
-                     plugEvent.mmsi[1]  = tmpMMSI;
-printf("2 mmsi:%ld\n", plugEvent.mmsi[1]); 
-                     break;
-                case 3:
-                     plugEvent.whichPort  |= 0x04;
-//                     plugEvent.eventType  = PGEvent_Data;
-                     tmpDst  = recBuf[DST_X_BYTE];
-                     tmpDst  = tmpDst<<8 | recBuf[DST_X_BYTE+1];
-                     plugEvent.dist_5  = tmpDst;
-                     tmpDst  = recBuf[DST_Y_BYTE];
-                     tmpDst  = tmpDst<<8 | recBuf[DST_Y_BYTE+1];
-                     plugEvent.dist_6  = tmpDst;
-                     plugEvent.status  |= 0x10;
-                     tmpMMSI  = recBuf[8];
-                     tmpMMSI  = tmpMMSI << 8 | recBuf[9];
-                     tmpMMSI  = tmpMMSI << 8 | recBuf[10];
-                     tmpMMSI  = tmpMMSI << 8 | recBuf[11];
-//                     plugEvent.mmsi = *(long*)&recBuf[8];
-                     plugEvent.mmsi[2]  = tmpMMSI;
-printf("3 mmsi:%ld\n", plugEvent.mmsi[2]); 
-                     break;
-               default:
-         
-                     break;
-             }
-          
-       }
-       else if(recBuf[CMD_BYTE] == 0x01){  
+       if(recBuf[CMD_BYTE] == 0x01){  
           isDstSetChanged++;
           plugEvent.status  = 0;
-//          memset(&plugEvent, 0, sizeof(PlugEventType));          
-           
-//          plugEvent.eventType  = PGEvent_Pull;
           if(recBuf[2] == 0){
              plugEvent.whichPort  |= 0x01;
              plugEvent.status  &= (~0x01) ;
@@ -254,9 +187,6 @@ printf("3 mmsi:%ld\n", plugEvent.mmsi[2]);
              plugEvent.status  |=  0x10;
              
           }
-
-printf("post mbox\n");
-          OSMboxPost(pMSBOX,&plugEvent);
        }
        }
    }

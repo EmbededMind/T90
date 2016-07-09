@@ -41,11 +41,9 @@ static WM_HWIN hFigs[3];
 
 
 static DoubleDst_SetOne tempDouDstSet[3];
-static DoubleDst_SetOne preDouDstSet[3];
 
-DoubleDst_SetOne* fetchdoudstset(){
-   return preDouDstSet;   
-}
+
+
 
 static void myDimCallback(WM_MESSAGE* pMsg)
 {
@@ -182,7 +180,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                    }
                    break;
               case GUI_KEY_BACKSPACE:
-                   if(Mem_isEqual(preDouDstSet, tempDouDstSet, sizeof(tempDouDstSet)))
+                   if(Mem_isEqual(&t90_set.doubledst_set, tempDouDstSet, sizeof(tempDouDstSet)))
                    {
                        WM_SetFocus(dstSetMenuDlg);
                    }
@@ -219,7 +217,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
    
    switch(pMsg->MsgId){
       case USER_MSG_DST_UPDATE:
-           memcpy(tempDouDstSet,preDouDstSet,sizeof(preDouDstSet));
+           memcpy(tempDouDstSet,&t90_set.doubledst_set,sizeof(tempDouDstSet));
       
            sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].motoas);
            HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
@@ -252,24 +250,23 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
              
               buf[0]  = 0x24;
               buf[1]  = 0x31;
-              if(tempDouDstSet[0].motostub != preDouDstSet[0].motostub || tempDouDstSet[0].stubtostub != preDouDstSet[0].stubtostub 
-                 || tempDouDstSet[0].motoas != preDouDstSet[0].motoas)
+              if(tempDouDstSet[0].motostub != t90_set.doubledst_set.safety1_dst_set.motoas || tempDouDstSet[0].stubtostub != t90_set.doubledst_set.safety1_dst_set.stubtostub 
+                 || tempDouDstSet[0].motoas != t90_set.doubledst_set.safety1_dst_set.motoas)
               {
                  flg = 1;
                  which =1;
-              }else if(tempDouDstSet[1].motostub != preDouDstSet[1].motostub || tempDouDstSet[1].stubtostub != preDouDstSet[1].stubtostub
-                        || tempDouDstSet[1].motoas != preDouDstSet[1].motoas)
+              }else if(tempDouDstSet[1].motostub != t90_set.doubledst_set.safety2_dst_set.motostub || tempDouDstSet[1].stubtostub != t90_set.doubledst_set.safety2_dst_set.stubtostub
+                        || tempDouDstSet[1].motoas != t90_set.doubledst_set.safety2_dst_set.motoas)
               {
                  flg = 1;
                  which = 2;              
-              }else if(tempDouDstSet[2].motostub != preDouDstSet[2].motostub || tempDouDstSet[2].stubtostub != preDouDstSet[2].stubtostub
-                      || tempDouDstSet[2].motoas != preDouDstSet[2].motoas)
+              }else if(tempDouDstSet[2].motostub != t90_set.doubledst_set.safety3_dst_set.motostub || tempDouDstSet[2].stubtostub != t90_set.doubledst_set.safety3_dst_set.stubtostub
+                      || tempDouDstSet[2].motoas != t90_set.doubledst_set.safety3_dst_set.motoas)
               {
                  flg = 1;
                  which = 3;             
               }
-              memcpy(preDouDstSet,tempDouDstSet,sizeof(tempDouDstSet));
-              t90_set.motoas = preDouDstSet[whichFig].motoas;
+              memcpy(&t90_set.doubledst_set,tempDouDstSet,sizeof(tempDouDstSet));
               StubRefresh();
               if(flg)
               {
@@ -294,7 +291,7 @@ printf("x_dist =0x%x\n",dist);
            }
            else
            {
-              memcpy(tempDouDstSet,preDouDstSet,sizeof(preDouDstSet));
+              memcpy(tempDouDstSet,&t90_set.doubledst_set,sizeof(tempDouDstSet));
       
               sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].motoas);
               HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
@@ -379,7 +376,7 @@ printf("x_dist =0x%x\n",dist);
            tempDouDstSet[2].motostub = DEFAULT_DOUDST1;
            tempDouDstSet[2].stubtostub = DEFAULT_DOUDST2;
            tempDouDstSet[2].motoas = DEFAULT_DOUDST3;
-           memcpy(preDouDstSet,tempDouDstSet,sizeof(tempDouDstSet));
+           memcpy(&t90_set.doubledst_set,tempDouDstSet,sizeof(tempDouDstSet));
            
            pColors  = &setWinColors[t90_set.sys.nightmode];
            

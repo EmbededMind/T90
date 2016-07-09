@@ -20,7 +20,6 @@ unsigned long SYS_Time;
 
 T90_Set t90_set = {
 
-      DEFAULT_MOTOAS,
    {
       DEFAULT_DST1,
       DEFAULT_DST2,
@@ -76,20 +75,20 @@ void printT90_Set(T90_Set * p)
 	
 
 
-	 printf("Invd_dst        %d\r\n", p->alarm.invd_dst);
-	 printf("Danger_sog      %d\r\n", p->alarm.danger_sog);
-	 printf("Min_sog         %d\r\n", p->alarm.min_sog);
-	 printf("Max_sog         %d\r\n", p->alarm.max_sog);
-	 printf("Nation          %X\r\n", p->alarm.nation);
+	printf("Invd_dst        %d\r\n", p->alarm.invd_dst);
+	printf("Danger_sog      %d\r\n", p->alarm.danger_sog);
+	printf("Min_sog         %d\r\n", p->alarm.min_sog);
+	printf("Max_sog         %d\r\n", p->alarm.max_sog);
+	printf("Nation          %X\r\n", p->alarm.nation);
 	
-	 printf("Workmode        %s-%d\r\n", p->sys.workmode?"double":"single", p->sys.workmode);
-	 printf("Launch          %s-%d\r\n", p->sys.launch?"on":"off", p->sys.launch);
+	printf("Workmode        %s-%d\r\n", p->sys.workmode?"double":"single", p->sys.workmode);
+	printf("Launch          %s-%d\r\n", p->sys.launch?"on":"off", p->sys.launch);
    printf("Nightmode       %s-%d\r\n", p->sys.nightmode?"Night":"Day",p->sys.nightmode);
    printf("Snd -- volum    %d\r\n",    p->sys.volum);
    printf("Brightness      %d\r\n",    p->sys.bright);
    printf("Unit            %s-%d\r\n", p->sys.unit?"nm":"km",p->sys.unit);
 	
-	 printf("\r\n");
+	printf("\r\n");
 }
 
 
@@ -142,7 +141,7 @@ Bool T90_Load()
    if(!checkT90_Set())
    {
 //      T90_Store();
-		 T90_Reset();
+		T90_Reset();
 //printf("after fix:\r\n");   
 //      printT90_Set(&t90_set);
       flag  = FALSE;
@@ -189,13 +188,13 @@ void T90_Reset(void)
 	
 	t90_set.sys.workmode  = NONE_MODE;
 	t90_set.sys.launch    = OFF;
-  t90_set.sys.nightmode = DAY;
-  t90_set.sys.bright    = DEFAULT_BRIGHT;
-  t90_set.sys.volum     = DEFAULT_VOLUM;
-  t90_set.sys.unit      = NM;
+   t90_set.sys.nightmode = DAY;
+   t90_set.sys.bright    = DEFAULT_BRIGHT;
+   t90_set.sys.volum     = DEFAULT_VOLUM;
+   t90_set.sys.unit      = NM;
 	t90_set.sys.update    = OFF;
 	
-  T90_Store();
+   T90_Store();
 
 //  printT90_Set(&t90_set);
 }

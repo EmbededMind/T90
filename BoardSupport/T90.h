@@ -95,6 +95,8 @@ typedef struct
    DoubleDst_SetOne safety3_dst_set;
 }DoubleDst_Set;
 
+
+
 typedef struct Alarm_Set
 {
 	int invd_dst;
@@ -118,12 +120,12 @@ typedef struct System_Set
 	
 typedef struct T90_Set
 {
-   int motoas;
    SingleDst_Set singledst_set;
-   DoubleDst_Set doubledst_set;
+   DoubleDst_Set doubledst_set;    
 	Alarm_Set alarm;
 	System_Set sys;
 } T90_Set;
+
 
 typedef enum {
    PGEvent_None  = 0,
@@ -165,8 +167,7 @@ Bool T90_Load(void);
 void T90_Store(void);
 void T90_Reset(void);
 
-DoubleDst_SetOne* fetchdoudstset();
-SingleDst_Set* fetchdst_set();
+
 //int fetchplug();
 #endif
 

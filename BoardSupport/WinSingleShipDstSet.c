@@ -25,16 +25,12 @@ static const GUI_RECT drawArea  = {50, 50, DST_SET_WIDTH-50, DST_SET_HEIGHT-50};
 static const GUI_RECT tipStrArea = {50, DST_SET_HEIGHT-50 +2, DST_SET_WIDTH-50, DST_SET_HEIGHT-50 +32};
 
 static SingleDst_Set agentdst_set;
-static SingleDst_Set dst_set;
 
 static HSD_STICKFIGURE_Handle hStickFigures[3];
 static HSD_DIMENSION_Handle hDimensions[5];
 
 static const SetWinColor *pColors = setWinColors;
-SingleDst_Set* fetchdst_set()
-{
-   return &dst_set;
-}
+
 static void dimensionCallback(WM_MESSAGE* pMsg)
 {
 	WM_MESSAGE myMsg;
@@ -203,7 +199,7 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                      break;
 					 
            case GUI_KEY_BACKSPACE:
-                  if(Mem_isEqual(&dst_set, &agentdst_set, sizeof(agentdst_set)))
+                  if(Mem_isEqual(&t90_set.singledst_set, &agentdst_set, sizeof(agentdst_set)))
                   {
                      WM_SetFocus(dstSetMenuDlg);
                   }
@@ -274,22 +270,22 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
    */
   case USER_MSG_DST_UPDATE:
 //PRINT("case user msg dst update");  
-       sprintf(pStrBuf, "%d", dst_set.dst1);
+       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst1);
        HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
        
-       sprintf(pStrBuf, "%d", dst_set.dst2);
+       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst2);
        HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
        
-       sprintf(pStrBuf, "%d", dst_set.dst3);
+       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst3);
        HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
        
-       sprintf(pStrBuf, "%d", dst_set.dst4);
+       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst4);
        HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
        
-       sprintf(pStrBuf, "%d", dst_set.dst5);
+       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst5);
        HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
        
-       memcpy(&agentdst_set, &dst_set, sizeof(agentdst_set));
+       memcpy(&agentdst_set, &t90_set.singledst_set, sizeof(agentdst_set));
        break;
     
    case WM_CREATE:
@@ -299,7 +295,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         agentdst_set.dst3 = 500;
         agentdst_set.dst4 = 25;
         agentdst_set.dst5 = 400;
-        memcpy(&dst_set,&agentdst_set,sizeof(dst_set));
+        memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(t90_set.singledst_set));
    
         pColors = &setWinColors[t90_set.sys.nightmode];
         hStickFigures[0]  = HSD_STICKFIGURE_CreateEx(DST_SET_WIDTH/2-100-8, 291, 16, 20, pMsg->hWin, WM_CF_SHOW, 0, ID_SF_0);
@@ -318,7 +314,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         HSD_DIMENSION_SetValColor(hDimensions[0], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
         HSD_DIMENSION_SetValColor(hDimensions[0], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
         HSD_DIMENSION_SetArrowLineColor(hDimensions[0], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
-        sprintf(pStrBuf,"%d",dst_set.dst1);
+        sprintf(pStrBuf,"%d",t90_set.singledst_set.dst1);
         HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
         HSD_DIMENSION_SetUnitText(hDimensions[0], "米");
         WM_SetHasTrans(hDimensions[0]);
@@ -331,7 +327,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         HSD_DIMENSION_SetValColor(hDimensions[1], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
         HSD_DIMENSION_SetValColor(hDimensions[1], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
         HSD_DIMENSION_SetArrowLineColor(hDimensions[1], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
-        sprintf(pStrBuf,"%d",dst_set.dst2);
+        sprintf(pStrBuf,"%d",t90_set.singledst_set.dst2);
         HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
         HSD_DIMENSION_SetUnitText(hDimensions[1], "米");
         WM_SetHasTrans(hDimensions[1]);  
@@ -344,7 +340,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         HSD_DIMENSION_SetValColor(hDimensions[4], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
         HSD_DIMENSION_SetValColor(hDimensions[4], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
         HSD_DIMENSION_SetArrowLineColor(hDimensions[4], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
-        sprintf(pStrBuf,"%d",dst_set.dst5);
+        sprintf(pStrBuf,"%d",t90_set.singledst_set.dst5);
         HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
         HSD_DIMENSION_SetUnitText(hDimensions[4], "米");
         WM_SetHasTrans(hDimensions[4]);  
@@ -357,7 +353,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         HSD_DIMENSION_SetValColor(hDimensions[3], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
         HSD_DIMENSION_SetValColor(hDimensions[3], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
         HSD_DIMENSION_SetArrowLineColor(hDimensions[3], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
-        sprintf(pStrBuf,"%d",dst_set.dst4);
+        sprintf(pStrBuf,"%d",t90_set.singledst_set.dst4);
         HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
         HSD_DIMENSION_SetUnitText(hDimensions[3], "米");
         WM_SetHasTrans(hDimensions[3]);
@@ -370,7 +366,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         HSD_DIMENSION_SetValColor(hDimensions[2], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
         HSD_DIMENSION_SetValColor(hDimensions[2], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
         HSD_DIMENSION_SetArrowLineColor(hDimensions[2], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
-        sprintf(pStrBuf,"%d",dst_set.dst3);
+        sprintf(pStrBuf,"%d",t90_set.singledst_set.dst3);
         HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
         HSD_DIMENSION_SetUnitText(hDimensions[2], "米");
         WM_SetHasTrans(hDimensions[2]);    
@@ -386,7 +382,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                buf[0]  = 0x24;
                buf[1]  = 0x31;
 
-            if(agentdst_set.dst3 != dst_set.dst3){
+            if(agentdst_set.dst3 != t90_set.singledst_set.dst3){
                dist  = agentdst_set.dst3;
                buf[2]  = dist>>8;
                buf[3]  = dist&0xff;
@@ -397,7 +393,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                UART_Send(UART_2, buf, 18, BLOCKING);
             }  
             
-            if(agentdst_set.dst4!= dst_set.dst4 || agentdst_set.dst5 != dst_set.dst5){
+            if(agentdst_set.dst4!= t90_set.singledst_set.dst4 || agentdst_set.dst5 != t90_set.singledst_set.dst5){
                dist  = agentdst_set.dst5;
                buf[2]  = dist>>8;
                buf[3]  = dist&0xff;
@@ -412,7 +408,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                UART_Send(UART_2, buf, 18, BLOCKING);
             }       
             
-            if(agentdst_set.dst1 != dst_set.dst1  ||  agentdst_set.dst2 != dst_set.dst2){
+            if(agentdst_set.dst1 != t90_set.singledst_set.dst1  ||  agentdst_set.dst2 != t90_set.singledst_set.dst2){
                dist  = agentdst_set.dst1;
                buf[2]  = dist>>8;
                buf[3]  = dist&0xff;
@@ -426,9 +422,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                buf[17]  = dist&0xff;
                UART_Send(UART_2, buf, 18, BLOCKING);
             }
-
-      
-					 memcpy(&dst_set, &agentdst_set, sizeof(agentdst_set));
+                memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
 //					 T90_Store();
 
 
@@ -436,7 +430,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				}
 				else
 				{
-               memcpy(&agentdst_set,&dst_set,sizeof(dst_set));
+               memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(t90_set.singledst_set));
 					sprintf(pStrBuf,"%d",agentdst_set.dst1);
 					HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
 					sprintf(pStrBuf,"%d",agentdst_set.dst2);

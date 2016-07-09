@@ -58,7 +58,7 @@ static OS_STK Play_Task_Stack[PLAY_TAST_STACK_SIZE];
 static OS_STK Comm_Task_Stack[COMM_TASK_STACK_SIZE];
 
 
-OS_EVENT *  pMSBOX;
+//OS_EVENT *  pMSBOX;
 //static  OS_STK_DATA UI_Task_Stack_Use;
 //static  OS_STK_DATA Insert_Task_Stack_Use;
 //static  OS_STK_DATA Refresh_Task_Stack_Use;
@@ -233,8 +233,7 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
    while(1)
    {
 //      int i = 1;
-      OSMutexPend(Refresher, 0, &myErr);     
-      detectPlugEvent();      
+      OSMutexPend(Refresher, 0, &myErr);           
       updateTimeStamp();    
       check();
       OSMutexPost(Refresher);
@@ -472,7 +471,6 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   
 
   T90_Init();
-printf("init motoas=%d\n",t90_set.motoas);
   GPDMA_Init();
   
 //  UART2_DMA_Init();
@@ -492,7 +490,7 @@ printf("init motoas=%d\n",t90_set.motoas);
   Refresher  = OSMutexCreate(6,&myErr);
   Updater    = OSMutexCreate(6,&myErr_2);
   QSem = OSQCreate(&MsgQeueTb[0],MSG_QUEUE_TABNUM); //创建消息队列，10条消息
-  pMSBOX = OSMboxCreate(0);
+//  pMSBOX = OSMboxCreate(0);
   
   PartitionPt=OSMemCreate(Partition,MSG_QUEUE_TABNUM,100,&err);
   
@@ -660,11 +658,8 @@ void detectPlugEvent()
       }
       isDstSetChanged   = 0;
       isDstSetNeedUpdate++;
-//   if(plugEvent.eventType == PGEvent_Data){
-//      if(plugEvent.whichPort & 0x01){
          
          if(plugEvent.status & 0x01){
-            Stub_setParam(1, plugEvent.dist_1, plugEvent.dist_2);
             Stub_setValidity(1, TRUE);
             if(gPlugBoats[0] != plugEvent.mmsi[0] && gPlugBoats[1] != plugEvent.mmsi[0] && gPlugBoats[2] != plugEvent.mmsi[0]){
                gPlugBoats[0]  = plugEvent.mmsi[0];
@@ -677,10 +672,7 @@ void detectPlugEvent()
                deleteBoat(gPlugBoats[0]);
             }           
          }
-//      }
-//      if(plugEvent.whichPort & 0x02){
-         if(plugEvent.status & 0x04){
-            Stub_setParam(2, 0, plugEvent.dist_4); 
+         if(plugEvent.status & 0x04){ 
             Stub_setValidity(2, TRUE);
             if(gPlugBoats[0] != plugEvent.mmsi[1] && gPlugBoats[1] != plugEvent.mmsi[1] && gPlugBoats[2] != plugEvent.mmsi[1]){
                gPlugBoats[1]  = plugEvent.mmsi[1];
@@ -693,10 +685,7 @@ void detectPlugEvent()
               deleteBoat(gPlugBoats[1]);
            }
         }        
-//      }
-//      if(plugEvent.whichPort & 0x04){
          if(plugEvent.status & 0x10){
-            Stub_setParam(3, plugEvent.dist_5, plugEvent.dist_6);
             Stub_setValidity(3, TRUE); 
             if(gPlugBoats[0] != plugEvent.mmsi[2] && gPlugBoats[1] != plugEvent.mmsi[2] && gPlugBoats[2] != plugEvent.mmsi[2]){
                gPlugBoats[2]  = plugEvent.mmsi[2];

@@ -20,7 +20,7 @@
 //extern unsigned char isChecked;
 extern unsigned char  isDstSetChanged;
 extern unsigned char isDstSetNeedUpdate;
-extern OS_EVENT* pMSBOX; 
+//extern OS_EVENT* pMSBOX; 
 
 WM_HWIN handle;
 
@@ -136,13 +136,12 @@ void MainTask(void)
 //      printf("bfstatus = %x\n",plugEvent->status);
 //      int *i;
 //printf("oldi=%d\n",*i);
-      plugEvent = OSMboxAccept(pMSBOX);
+//      plugEvent = OSMboxAccept(pMSBOX);
 //      i = OSMboxAccept(&MSBOX);
 //printf("newi=%d\n",*i);
       
       if(plugEvent != NULL)
       {
-         printf("afstatus = %x\n",plugEvent->status);
  
 //         if(plugEvent->status)
 //         {
