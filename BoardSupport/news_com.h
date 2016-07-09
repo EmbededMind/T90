@@ -7,7 +7,7 @@ static uint16_t newscom[10][18];
 
 typedef struct NewsCom
 {
-	uint16_t newsCom[18];
+	uint16_t (*newsCom)[18];
    enum NewsState newsState;	
 	struct NewsCom *next;
 }NewsCom;
