@@ -485,6 +485,7 @@ void Comm_Task(void * p_arg)
       
       pFrame  = Comm_fetchNextFrame();
       if(pFrame){
+LOL:
          Comm_sendFrame(pFrame);
          pFrame  = (uint8_t*)OSMboxPend(CommMBox, 1000, &err);{
             if(err == OS_ERR_NONE){
@@ -496,6 +497,9 @@ void Comm_Task(void * p_arg)
                if(dataNoAckCnt > 3){
                   dataNoAckCnt  = 0;
                   printf("data ack timeout more than 3 times\n");
+               }
+               else{
+                  goto LOL;
                }
             }
          }
