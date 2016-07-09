@@ -12,7 +12,7 @@ void newsComInit()
    for(i = 0; i < 17; i++)
    {
       p->newsState = nonews;
-//      p->newsCom = newscom[i];
+      p->newsCom = &newscom[i];
       p->next = malloc(sizeof(NewsCom));
       pnext = p->next;
       p = pnext;      
