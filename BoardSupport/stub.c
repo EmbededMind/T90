@@ -12,8 +12,8 @@
 Stub stubs[STUB_NUM_MAX];
 StubNode *pStubHead = NULL;
 
-static DoubleDstSet *pdoubleDstSet;
-static Dst_Set *pdst_set;
+static DoubleDst_SetOne *pdoubleDstSet;
+static SingleDst_Set *pdst_set;
 static void PrintStubInfo(void);
 static void FillStubInfo(void);
 static void FillStubNodes(void);

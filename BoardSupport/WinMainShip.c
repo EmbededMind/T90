@@ -8,7 +8,7 @@
 #include "Check.h"
 #include "t90font.h"
 #include "DispSOGNums.h"
-
+#include "snap.h"
 
 extern boat mothership;
 
@@ -84,7 +84,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //									WM_BringToTop(alarmMonitorWin);
 //									WM_SetFocus(alarmMonitorWin);
 //									cursorOnStub = 0;
-                           cursorOnStub = getcursor(UP);                   
+                           cursorOnStub = getcursor(UP-1);                   
 									WM_Paint(mainShipWin);
 									break;
 						 
@@ -92,7 +92,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                            if(plugEvent.status&(0x01<<2))
                            {
 //									   cursorOnStub = 2;
-                              cursorOnStub = getcursor(DOWN);
+                              cursorOnStub = getcursor(DOWN-1);
 									   WM_Paint(mainShipWin);
                            }
 									break;
@@ -101,7 +101,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                            if(plugEvent.status&(0x01<<0))
                            {
 //									   cursorOnStub = 1;
-                              cursorOnStub = getcursor(LEFT);                              
+                              cursorOnStub = getcursor(LEFT-1);                              
 									   WM_Paint(mainShipWin);
                            }
            
@@ -111,7 +111,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                            if(plugEvent.status&(0x01<<4))
                            {
 //									   cursorOnStub = 3;
-                              cursorOnStub = getcursor(RIGHT);                              
+                              cursorOnStub = getcursor(RIGHT-1);                              
 									   WM_Paint(mainShipWin);
                            }
 									break;
