@@ -108,8 +108,9 @@ int isKeyTrigged  = 0;
 T90_PlugEvent plugEvent;
 
 ///
-unsigned char  isDstSetChanged  = 0;
-unsigned char  isDstSetNeedUpdate  = 0;
+//unsigned char  isDstSetChanged  = 0;
+//unsigned char  isDstSetNeedUpdate  = 0;
+uint8_t ipcMsg  = 0;
 
 long gPlugBoats[3];
 
@@ -239,7 +240,14 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
       updateTimeStamp();    
       check();
       OSMutexPost(Refresher);
-
+      if(ipcMsg & 0x80){
+         Stub_setValidity(1, portStatus[0]);
+         Stub_setValidity(2, portStatus[1]);
+         Stub_setValidity(3, portStatus[2]);
+         StubRefresh();
+         
+         ipcMsg  &= (~0x80);
+      }
       
 //      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
@@ -465,21 +473,28 @@ void Comm_Task(void * p_arg)
    {
       
       Comm_sendPulse();
-      pFrame  = (uint8_t*)OSMboxPend(CommMBox, 1000, &err);
+      pFrame  = (uint8_t*)OSMboxPend(CommMBox, 100, &err);
       
       if(err == OS_ERR_NONE){
          /** 判断ACK类型，取得三个端口的状态 */
          if(pFrame[1] == 0x5a){
             pulseNoAckCnt  = 0;
             printf("pulse ack ok\n");
+
+            if(pFrame[2] != portStatus[0]  ||  pFrame[3] != portStatus[1]  ||  pFrame[4] != portStatus[2]){
+               ipcMsg  |= 0x80;                 
+               printf("port status changed\n");               
+            }
          }
       }
       else{
-         pulseNoAckCnt++;
-         if(pulseNoAckCnt > 3){
-            pulseNoAckCnt  = 0;
-            printf("pulse ack timeout more than 3 times\n");
-            /// Ack err
+         if(pulseNoAckCnt <= 3){         
+            pulseNoAckCnt++;
+            if(pulseNoAckCnt >= 3){
+               printf("pulse ack timeout more than 3 times\n");
+               ipcMsg  |= 0x40;
+               /// Ack err
+            }
          }
       }
       
@@ -487,16 +502,18 @@ void Comm_Task(void * p_arg)
       if(pFrame){
 LOL:
          Comm_sendFrame(pFrame);
-         pFrame  = (uint8_t*)OSMboxPend(CommMBox, 1000, &err);{
+         pFrame  = (uint8_t*)OSMboxPend(CommMBox, 100, &err);{
             if(err == OS_ERR_NONE){
                dataNoAckCnt  = 0;
                printf("data ack ok\n");
+               ipcMsg  |= 0x20;
             }
             else{
                dataNoAckCnt++;
                if(dataNoAckCnt > 3){
                   dataNoAckCnt  = 0;
                   printf("data ack timeout more than 3 times\n");
+                  ipcMsg  |= 0x10;
                }
                else{
                   goto LOL;

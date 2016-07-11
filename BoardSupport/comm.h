@@ -2,6 +2,8 @@
 #define _COMM_H
 #include <lpc_types.h>
 
+
+uint16_t Comm_getCRC(uint8_t* ptr, uint8_t num);
 void Comm_sendPulse(void);
 void Comm_addFrame( uint8_t whichPort, uint16_t offset_x, uint16_t offset_y );
 uint8_t* Comm_fetchNextFrame(void);

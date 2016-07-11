@@ -18,8 +18,9 @@
 //extern unsigned char isSub0Inited;
 //extern unsigned char isSub2Inited;
 //extern unsigned char isChecked;
-extern unsigned char  isDstSetChanged;
-extern unsigned char isDstSetNeedUpdate;
+//extern unsigned char  isDstSetChanged;
+//extern unsigned char isDstSetNeedUpdate;
+extern uint8_t ipcMsg;
 //extern OS_EVENT* pMSBOX; 
 
 WM_HWIN handle;
@@ -196,15 +197,32 @@ void MainTask(void)
 //         WM_SendMessage(myMsg.hWin, &myMsg);
 //      }
       
-      if(isDstSetNeedUpdate){
-         isDstSetNeedUpdate  = 0;
-         if(t90_set.sys.workmode == SINGLE_MODE)
-         {
-            WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
+//      if(isDstSetNeedUpdate){
+//         isDstSetNeedUpdate  = 0;
+//         if(t90_set.sys.workmode == SINGLE_MODE)
+//         {
+//            WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
+//         }
+//         else
+//         {
+//            WM_SendMessageNoPara(doubleShipDstSetWin, USER_MSG_DST_UPDATE);
+//         }
+//      }
+      if(ipcMsg){
+         /// Data ack ok
+         if(ipcMsg & 0x20){
+            
+            ipcMsg &= (~0x20);
          }
-         else
-         {
-            WM_SendMessageNoPara(doubleShipDstSetWin, USER_MSG_DST_UPDATE);
+         /// Data ack timeout
+         else if(ipcMsg & 0x10){
+            
+            ipcMsg  &= (~0x10);
+         }
+         
+         if(ipcMsg & 0x40){
+            
+            ipcMsg  &= (~0x40);
          }
       }
       GUI_Delay(200);      
