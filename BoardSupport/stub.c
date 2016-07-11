@@ -33,7 +33,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[1].basePoint.x = -t90_set.singledst_set.dst2*M_TO_MILLINM;
 		stubs[1].basePoint.y = -t90_set.singledst_set.dst1*M_TO_MILLINM;
 
-//		stubs[1].isValid = 1;
+		stubs[1].isValid = 1;
 
 		stubs[1].type = safetySignStub;
 		
@@ -41,7 +41,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[2].basePoint.y = -t90_set.singledst_set.dst3*M_TO_MILLINM;
 
 
-//		stubs[2].isValid = 1;
+		stubs[2].isValid = 1;
 
 		stubs[2].type = safetySignStub;
 		
@@ -53,7 +53,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[4].isValid = FALSE;
   
 
-//		stubs[3].isValid = 1;
+		stubs[3].isValid = 1;
 		stubs[3].type = safetySignStub;
 		
 		stubs[4].isValid = 0;
@@ -100,9 +100,9 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[4].isValid = TRUE;
 		stubs[4].isValid = 1;
 		stubs[4].type = aidedStub;
-//      stubs[1].isValid  = 0;
-//      stubs[2].isValid  = 0;
-//      stubs[3].isValid  = 0;
+      stubs[1].isValid  = 1;
+      stubs[2].isValid  = 1;
+      stubs[3].isValid  = 1;
 	}
 	FillStubNodes();
 	FillStubInfo();

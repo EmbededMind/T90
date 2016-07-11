@@ -49,8 +49,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 break;
 			
 			case WM_TIMER:
-printf("sf1.motostub= %d\n",t90_set.doubledst_set.safety1_dst_set.motostub);
-printf("sf2.motostub= %d\n",t90_set.doubledst_set.safety2_dst_set.motostub);
 					 if(CHECK_GetAlarmState())
 					 {
 						 WM_DeleteTimer(timer);

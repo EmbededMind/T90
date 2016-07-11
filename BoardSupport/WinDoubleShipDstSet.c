@@ -9,7 +9,7 @@
 #include "HSD_DIMENSION_EX.h"
 #include "stub.h"
 #include "lpc177x_8x_uart.h"
-
+#include "comm.h"
 
 #define ID_EX_DIM_0      (GUI_ID_USER + 0x10)
 #define ID_EX_DIM_1      (GUI_ID_USER + 0x11)
@@ -241,45 +241,12 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
       case USER_MSG_REPLY:
            if(pMsg->Data.v == REPLY_OK)
            {
-              uint16_t dist  = 0;
-              uint8_t buf[18]  = {0};
-              int which = 0;
-              int flg;
-              flg = 0;
-             
-              buf[0]  = 0x24;
-              buf[1]  = 0x31;
-              if(tempDouDstSet[0].motostub != t90_set.doubledst_set.safety1_dst_set.motoas || tempDouDstSet[0].stubtostub != t90_set.doubledst_set.safety1_dst_set.stubtostub 
-                 || tempDouDstSet[0].motoas != t90_set.doubledst_set.safety1_dst_set.motoas)
-              {
-                 flg = 1;
-                 which =1;
-              }else if(tempDouDstSet[1].motostub != t90_set.doubledst_set.safety2_dst_set.motostub || tempDouDstSet[1].stubtostub != t90_set.doubledst_set.safety2_dst_set.stubtostub
-                        || tempDouDstSet[1].motoas != t90_set.doubledst_set.safety2_dst_set.motoas)
-              {
-                 flg = 1;
-                 which = 2;              
-              }else if(tempDouDstSet[2].motostub != t90_set.doubledst_set.safety3_dst_set.motostub || tempDouDstSet[2].stubtostub != t90_set.doubledst_set.safety3_dst_set.stubtostub
-                      || tempDouDstSet[2].motoas != t90_set.doubledst_set.safety3_dst_set.motoas)
-              {
-                 flg = 1;
-                 which = 3;             
-              }
+
               memcpy(&t90_set.doubledst_set,tempDouDstSet,sizeof(tempDouDstSet));
+              T90_Store();
               StubRefresh();
-              if(flg)
-              {
-                 dist = -stubs[which].basePoint.y*MILLINM_TO_M;
-printf("stubs[%d].basepoint.y=%d\n",which,stubs[which].basePoint.y*MILLINM_TO_M);
-printf("y_dist =0x%x\n",dist);
-                 buf[2] = dist>>8;
-                 buf[3] = dist&0xff;
-                 
-                 dist = stubs[which].basePoint.x*MILLINM_TO_M;
-printf("stubs[%d],basepoint.x=%d\n",which,stubs[which].basePoint.x*MILLINM_TO_M);
-printf("x_dist =0x%x\n",dist);
-        
-              }
+              Comm_addFrame(whichFig,abs(stubs[whichFig].basePoint.x*MILLINM_TO_M),abs(stubs[whichFig].basePoint.y*MILLINM_TO_M));
+
            }
            else
            {

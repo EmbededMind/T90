@@ -10,6 +10,7 @@
 #include "t90font.h"
 #include "stub.h"
 #include "lpc177x_8x_uart.h"
+#include "comm.h"
 
 #define SF_NUM  3
 #define DMS_NUM 5
@@ -27,6 +28,8 @@ static SingleDst_Set agentdst_set;
 
 static HSD_STICKFIGURE_Handle hStickFigures[3];
 static HSD_DIMENSION_Handle hDimensions[5];
+
+static int whichFig = 0;
 
 static const SetWinColor *pColors = setWinColors;
 
@@ -242,7 +245,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
        }
        if(pMsg->Data.v != -1)
        {
-          HSD_STICKFIGURE_SetPenColor(hStickFigures[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor); 
+          HSD_STICKFIGURE_SetPenColor(hStickFigures[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor);
+          whichFig = pMsg->Data.v;          
        }
        break;
 
@@ -375,29 +379,21 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 	 case USER_MSG_REPLY:
 				if(pMsg->Data.v == REPLY_OK)
 				{
-               uint16_t dist  = 0;
-               uint8_t buf[18]  = {0};
-               
-               buf[0]  = 0x24;
-               buf[1]  = 0x31;
-
-            if(agentdst_set.dst3 != t90_set.singledst_set.dst3){
-               dist  = agentdst_set.dst3;
-
-            }  
-            
-            if(agentdst_set.dst4!= t90_set.singledst_set.dst4 || agentdst_set.dst5 != t90_set.singledst_set.dst5){
-               dist  = agentdst_set.dst5;
-
-            }       
-            
-            if(agentdst_set.dst1 != t90_set.singledst_set.dst1  ||  agentdst_set.dst2 != t90_set.singledst_set.dst2){
-               dist  = agentdst_set.dst1;
-
-            }
+              
                 memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
-//					 T90_Store();
-
+					 T90_Store();
+                if(whichFig == 1)
+                {
+                   Comm_addFrame(whichFig, t90_set.singledst_set.dst2, t90_set.singledst_set.dst1);
+                }
+                else if(whichFig == 2)
+                {
+                   Comm_addFrame(whichFig, 0, t90_set.singledst_set.dst3);               
+                }
+                else if(whichFig == 3)
+                {
+                   Comm_addFrame(whichFig, t90_set.singledst_set.dst4, t90_set.singledst_set.dst5);
+                }
 
 					
 				}
