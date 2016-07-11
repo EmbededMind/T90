@@ -12,6 +12,7 @@
 #include "sound.h"
 #include "T90.h"
 #include "stub.h"
+#include "comm.h"
 
 #define NUM_BYTE     7
 #define DST_X_BYTE   5 
@@ -147,6 +148,7 @@ void UART0_IRQHandler(void)
 void UART2_IRQHandler(void)
 {
    uint8_t tmpc;
+   uint16_t crcVal  = 0;
    uint32_t  tmp, tmp1;
    tmp = ((LPC_UART2->IIR) & UART_IIR_BITMASK) & UART_IIR_INTID_MASK;
    if (tmp == UART_IIR_INTID_RLS)	// Receive Line Status
@@ -158,10 +160,13 @@ void UART2_IRQHandler(void)
    {	 
        UART_Receive(UART_2, pRecBuf++, 1, NONE_BLOCKING);
 
+       crcVal  = recBuf[16] ;
+       crcVal  = (crcVal << 8) | recBuf[17];
        
-       /// CRC
        
-       OSMboxPost(CommMBox, (void*)recBuf);
+       if(crcVal == Comm_getCRC(recBuf, 16)){
+          OSMboxPost(CommMBox, (void*)recBuf);
+       }
 
    }
    else if(tmp == UART_IIR_INTID_THRE){

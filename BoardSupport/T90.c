@@ -18,6 +18,8 @@ int monitorState  = ON;
 unsigned long SYS_Date;
 unsigned long SYS_Time;
 
+uint8_t portStatus[3]  = {0, 0, 0};
+
 T90_Set t90_set = {
 
    {
