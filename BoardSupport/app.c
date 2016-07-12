@@ -477,7 +477,7 @@ void Comm_Task(void * p_arg)
       
       if(err == OS_ERR_NONE){
          /** 判断ACK类型，取得三个端口的状态 */
-         if(pFrame[1] == 0x5a){
+         if(pFrame[1] == 0x51){   /// 判断是否是来自于T81的消息
             pulseNoAckCnt  = 0;
             printf("pulse ack ok\n");
 
