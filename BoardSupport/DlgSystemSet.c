@@ -212,6 +212,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
             
             WM_SetFocus(slideres[0]);
             WM_SetFocus(mainMenuDlg);
+            ToastCreate("work mode changed", &GUI_Font16B_ASCII, TOAST_OK, 2000);
             break;
        
        case WM_NOTIFY_PARENT:       
@@ -319,6 +320,7 @@ static void sldListener(WM_MESSAGE * pMsg)
                       WM_BringToTop(confirmWin);
                       WM_SetFocus(confirmWin);                    
                    }
+                   
                    break;
                                  
               default:
@@ -335,9 +337,8 @@ static void sldListener(WM_MESSAGE * pMsg)
 
 static void _OnWorkModeChanged(WM_MESSAGE * pMsg, int val)
 {
-   agentsys_set.workmode = val;
-   ToastCreate("work mode changed", &GUI_Font16B_ASCII, 0, 2000);
-   
+      agentsys_set.workmode = val;
+         
 }
 
 static void _OnLaunchChanged(WM_MESSAGE * pMsg, int val)
@@ -441,6 +442,7 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
                       WM_BringToTop(confirmWin);
                       WM_SetFocus(WM_GetDialogItem (confirmWin,GUI_ID_BUTTON0));                    
                    }
+                   
                    break;
                    
              default:
