@@ -181,6 +181,15 @@ void MainTask(void)
 //            WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
          }
          
+        if(ipcMsg & 0x80){
+            Stub_setValidity(1, portStatus[0]);
+            Stub_setValidity(2, portStatus[1]);
+            Stub_setValidity(3, portStatus[2]);
+            StubRefresh();
+            
+            ipcMsg  &= (~0x80);
+         }
+         
          if(ipcMsg & 0x40){
             
             ipcMsg  &= (~0x40);  //握手超时

@@ -240,14 +240,6 @@ void Refresh_Task(void *p_arg)//»ŒŒÒRefresh_Task
       updateTimeStamp();    
       check();
       OSMutexPost(Refresher);
-      if(ipcMsg & 0x80){
-         Stub_setValidity(1, portStatus[0]);
-         Stub_setValidity(2, portStatus[1]);
-         Stub_setValidity(3, portStatus[2]);
-         StubRefresh();
-         
-         ipcMsg  &= (~0x80);
-      }
       
 //      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
