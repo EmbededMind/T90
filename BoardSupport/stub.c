@@ -325,23 +325,23 @@ printf("A1 = %d\n",A1);
          pIndex->pNext->pStub->crossPoint.x = (C1 * B2 - C2 * B1) / (B1 * A2 - B2 * A1);
 
       }
-printf("pIndex->pStub->tang1.point.x = %d\n",pIndex->pStub->tang1.point.x);
-printf("pIndex->pStub->tang1.point.y = %d\n",pIndex->pStub->tang1.point.y);
-printf("pIndex->pNext->pStub->tang2.point.x = %d\n",pIndex->pNext->pStub->tang2.point.x);
-printf("pIndex->pNext->pStub->tang2.point.y = %d\n",pIndex->pNext->pStub->tang2.point.y);
-printf("pIndex->pNext->pStub->tang1.point.x = %d\n",pIndex->pNext->pStub->tang1.point.x);
-printf("pIndex->pNext->pStub->tang1.point.y = %d\n",pIndex->pNext->pStub->tang1.point.y);
-printf("pIndex->pNext->pNext->pStub->tang2.point.x = %d\n",pIndex->pNext->pNext->pStub->tang2.point.x);
-printf("pIndex->pNext->pNext->pStub->tang2.point.y = %d\n",pIndex->pNext->pNext->pStub->tang2.point.y);         
-         
-printf("A1 = %d\n",A1);
-printf("B1 = %d\n",B1);
-printf("C1 = %d\n",C1);
-printf("A2 = %d\n",A2);
-printf("B2 = %d\n",B2);
-printf("C2 = %d\n",C2);
-printf("y = %d\n",pIndex->pNext->pStub->crossPoint.y);
-printf("x = %d\n",pIndex->pNext->pStub->crossPoint.x);
+//printf("pIndex->pStub->tang1.point.x = %d\n",pIndex->pStub->tang1.point.x);
+//printf("pIndex->pStub->tang1.point.y = %d\n",pIndex->pStub->tang1.point.y);
+//printf("pIndex->pNext->pStub->tang2.point.x = %d\n",pIndex->pNext->pStub->tang2.point.x);
+//printf("pIndex->pNext->pStub->tang2.point.y = %d\n",pIndex->pNext->pStub->tang2.point.y);
+//printf("pIndex->pNext->pStub->tang1.point.x = %d\n",pIndex->pNext->pStub->tang1.point.x);
+//printf("pIndex->pNext->pStub->tang1.point.y = %d\n",pIndex->pNext->pStub->tang1.point.y);
+//printf("pIndex->pNext->pNext->pStub->tang2.point.x = %d\n",pIndex->pNext->pNext->pStub->tang2.point.x);
+//printf("pIndex->pNext->pNext->pStub->tang2.point.y = %d\n",pIndex->pNext->pNext->pStub->tang2.point.y);         
+//         
+//printf("A1 = %d\n",A1);
+//printf("B1 = %d\n",B1);
+//printf("C1 = %d\n",C1);
+//printf("A2 = %d\n",A2);
+//printf("B2 = %d\n",B2);
+//printf("C2 = %d\n",C2);
+//printf("y = %d\n",pIndex->pNext->pStub->crossPoint.y);
+//printf("x = %d\n",pIndex->pNext->pStub->crossPoint.x);
       //////////////////////////////
       pIndex = pStubHead->pNext->pNext->pNext;
 

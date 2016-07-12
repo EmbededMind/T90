@@ -212,19 +212,20 @@ void MainTask(void)
          /// Data ack ok
          if(ipcMsg & 0x20){
             
-            ipcMsg &= (~0x20);
+            ipcMsg &= (~0x20);   //数据应答
          }
          /// Data ack timeout
          else if(ipcMsg & 0x10){
             
-            ipcMsg  &= (~0x10);
+            ipcMsg  &= (~0x10);  //数据超时
          }
          
          if(ipcMsg & 0x40){
             
-            ipcMsg  &= (~0x40);
+            ipcMsg  &= (~0x40);  //握手超时
          }
       }
+//      WM_SendMessageNoPara(, USER_MSG_DST_UPDATE);
       GUI_Delay(200);      
    }
 
