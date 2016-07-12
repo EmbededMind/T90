@@ -28,6 +28,7 @@ WM_HWIN handle;
 
 GUI_MEMDEV_Handle hMute;
 
+
 void MainTask(void)
 {
    WM_MESSAGE myMsg;
@@ -133,7 +134,8 @@ void MainTask(void)
 
 //DLG_testCustomedWidgetCreate();
    while(1)
-   {    
+   {
+      WM_MESSAGE pMsg;      
       if(ipcMsg){
          /// Data ack ok
          if(ipcMsg & 0x20){
@@ -142,7 +144,17 @@ void MainTask(void)
             ToastCreate("data ok", &GUI_Font16B_ASCII, NULL, 2000);
             if(t90_set.sys.workmode == SINGLE_MODE)
             {
-               WM_SendMessage();
+               pMsg.hWin = singleShipDstSetWin;
+               pMsg.MsgId = USER_MSG_DATA_ACK_RESULT;
+               pMsg.Data.v = DATA_ACK_OK;               
+               WM_SendMessage(singleShipDstSetWin, &pMsg);
+            }
+            else
+            {
+               pMsg.hWin = doubleShipDstSetWin;
+               pMsg.MsgId = USER_MSG_DATA_ACK_RESULT;
+               pMsg.Data.v = DATA_ACK_OK;               
+               WM_SendMessage(singleShipDstSetWin, &pMsg);
             }
          }
          /// Data ack timeout
@@ -150,6 +162,23 @@ void MainTask(void)
             
             ipcMsg  &= (~0x10);  //数据超时
             ToastCreate("data time out", &GUI_Font16B_ASCII, NULL, 2000);
+            if(t90_set.sys.workmode == SINGLE_MODE)
+            {
+               pMsg.hWin = singleShipDstSetWin;
+               pMsg.MsgId = USER_MSG_DATA_ACK_RESULT;
+               pMsg.Data.v = DATA_ACK_TIME_OUT;               
+               WM_SendMessage(pMsg.hWin, &pMsg);
+               
+            }
+            else if(t90_set.sys.workmode == DOUBLE_MODE)
+            {
+               pMsg.hWin = doubleShipDstSetWin;
+               pMsg.MsgId = USER_MSG_DATA_ACK_RESULT;
+               pMsg.Data.v = DATA_ACK_TIME_OUT;               
+               WM_SendMessage(pMsg.hWin, &pMsg);
+               
+            }
+//            WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
          }
          
          if(ipcMsg & 0x40){
@@ -158,7 +187,15 @@ void MainTask(void)
             ToastCreate("handle ask time out", &GUI_Font16B_ASCII, TOAST_OK, 2000);
          }
       }
-//      WM_SendMessageNoPara(, USER_MSG_DST_UPDATE);
+//      if(t90_set.sys.workmode == SINGLE_MODE)
+//       {
+//          WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
+//       }
+//       else
+//       {
+//          WM_SendMessageNoPara(doubleShipDstSetWin, USER_MSG_DST_UPDATE);
+//       }
+      
       GUI_Delay(200);      
    }
 

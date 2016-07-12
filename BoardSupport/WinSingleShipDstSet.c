@@ -237,8 +237,32 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 	 int i;
    
    switch(pMsg->MsgId){
-		 
+	 
+    case USER_MSG_DATA_ACK_RESULT:
+           if(pMsg->Data.v)
+           {
+              memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
+				  T90_Store();
+           }
+           else 
+           {
+              memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(agentdst_set));
+               sprintf(pStrBuf,"%d",agentdst_set.dst1);
+               HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
+               sprintf(pStrBuf,"%d",agentdst_set.dst2);
+               HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
+               sprintf(pStrBuf,"%d",agentdst_set.dst3);
+               HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
+               sprintf(pStrBuf,"%d",agentdst_set.dst4);
+               HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
+               sprintf(pStrBuf,"%d",agentdst_set.dst5);
+               HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
+               StubRefresh();
+           }
+            StubRefresh();
+        break;           
 	 case USER_MSG_DST_SET:
+       printf("case USER_MSG_DST_SET:%d\n", pMsg->Data.v);       
        for(i = 0; i < SF_NUM; i++)  //clear
        {
           HSD_STICKFIGURE_SetPenColor(hStickFigures[i], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
@@ -378,24 +402,33 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				
 	 case USER_MSG_REPLY:
 				if(pMsg->Data.v == REPLY_OK)
-				{
-              
-                memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
-					 T90_Store();
-                if(whichFig == 1)
+				{    
+
+            
+                if(whichFig == 0)
                 {
-                   Comm_addFrame(whichFig, t90_set.singledst_set.dst2, t90_set.singledst_set.dst1);
+                   Comm_addFrame(whichFig, agentdst_set.dst2, agentdst_set.dst1);
+                }
+                else if(whichFig == 1)
+                {
+                   Comm_addFrame(whichFig, 0, agentdst_set.dst3);               
                 }
                 else if(whichFig == 2)
                 {
-                   Comm_addFrame(whichFig, 0, t90_set.singledst_set.dst3);               
-                }
-                else if(whichFig == 3)
-                {
-                   Comm_addFrame(whichFig, t90_set.singledst_set.dst4, t90_set.singledst_set.dst5);
+                   Comm_addFrame(whichFig, agentdst_set.dst4, agentdst_set.dst5);
                 }
 
-					
+                sprintf(pStrBuf,"%d",t90_set.singledst_set.dst1);
+					 HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
+			 		 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst2);
+				 	 HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
+			 		 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst3);
+					 HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
+ printf("case reply ok\n");
+					 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst4);
+					 HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
+					 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst5);
+					 HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);                
 				}
 				else
 				{
@@ -410,8 +443,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
 					sprintf(pStrBuf,"%d",agentdst_set.dst5);
 					HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
+               
 				}
-            StubRefresh();
 				WM_SetFocus(dstSetMenuDlg);
 				break;
         

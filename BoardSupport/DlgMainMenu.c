@@ -37,6 +37,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 	 static int flag_prevfocus = 0;
    switch(pMsg->MsgId){
       case WM_SET_FOCUS:
+        printf("mainMenuDlg"); 
            if(pMsg->Data.v){
               flag_prevfocus = 0;
               for(i = 0; i < 3; i++)                      //all buttons reset to unfocussed state,

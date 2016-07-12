@@ -21,6 +21,7 @@ typedef struct {
    uint8_t                     btnFlags;
    uint8_t                     isAlive;
    WM_HWIN                     hWin;
+   WM_HWIN                     hToast;
    GUI_RECT                    winRect;
 }Toast;
 
@@ -28,7 +29,6 @@ typedef struct {
 static Toast myToast;
 static WM_HWIN hBtns[2];
 static WM_HTIMER myToastTimer;
-static WM_HWIN hToast ;
 
 static void myButtonCallback(WM_MESSAGE* pMsg)
 {
@@ -37,7 +37,10 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            if( ((WM_KEY_INFO*)pMsg->Data.p)->Key == GUI_KEY_ENTER)    {
               WM_DeleteWindow(WM_GetParent(pMsg->hWin));
               WM_SetFocus(myToast.hWin);
+              myToast.btnFlags  = 0;
+              myToast.hWin   = 0;
               hBtns[0]  = 0;
+              myToast.hToast  = 0;
            }
            break;
       
@@ -51,7 +54,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 static void myWindowCallback(WM_MESSAGE* pMsg)
 {
    GUI_RECT clientRect;
-   
+   int xSize;
+   int ySize;
    switch(pMsg->MsgId){
       case WM_CREATE:     
            if(myToast.btnFlags & TOAST_OK){
@@ -66,6 +70,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
               BUTTON_SetText(hBtns[0],"OK");
               WM_SetCallback(hBtns[0], &myButtonCallback);
               WM_SetFocus(hBtns[0]);
+               WM_ShowWindow(hBtns[0]);
            }
            
            else if(myToast.btnFlags == 0){
@@ -75,13 +80,25 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            
       case WM_TIMER:
            WM_DeleteWindow(pMsg->hWin);
-//           WM_SetFocus(myToast.hWin);
+
+           if(myToast.btnFlags != 0){
+              WM_SetFocus(myToast.hWin);
+              myToast.btnFlags  = 0;
+           }          
            myToastTimer  = 0;
+           myToast.hToast  = 0;
            break;
            
       case WM_PAINT:
-           GUI_SetBkColor(GUI_WHITE);
-           GUI_Clear();
+         
+
+
+           
+           xSize = WM_GetWindowSizeX(pMsg->hWin);
+           ySize = WM_GetWindowSizeY(pMsg->hWin);
+//           GUI_SetBkColor(GUI_WHITE);
+           GUI_DrawGradientRoundedV(0, 0, xSize-1, ySize-1,10,GUI_WHITE,GUI_WHITE);
+           GUI_SetTextMode(GUI_TEXTMODE_TRANS);
            WM_GetClientRect(&clientRect);
            GUI_SetColor(GUI_BLACK);
            GUI_SetFont(myToast.pFont);
@@ -97,8 +114,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 
 void ToastCreate(const char* text, const GUI_FONT GUI_UNI_PTR* pFont ,uint8_t btnFlags, uint16_t liveTime)
 {
-
-
     uint16_t winWidth  = 0;
     uint16_t winHeight = 0;
     
@@ -106,10 +121,15 @@ void ToastCreate(const char* text, const GUI_FONT GUI_UNI_PTR* pFont ,uint8_t bt
     myToast.pFont  = pFont;
     myToast.btnFlags  = btnFlags;
     myToast.liveTime  = liveTime;
-   if(btnFlags)
-       myToast.hWin = WM_GetFocussedWindow();    
+
+    
+    if(myToast.hToast)
+       return ;
+       
+
     GUI_SetFont(pFont);   
     if(btnFlags){
+       myToast.hWin = WM_GetFocussedWindow(); 
        if(btnFlags & TOAST_OK){
           winHeight = BTN_HEIGHT +BTN_MARGIN *2;
        }
@@ -128,14 +148,16 @@ void ToastCreate(const char* text, const GUI_FONT GUI_UNI_PTR* pFont ,uint8_t bt
     myToast.winRect.x1  = winWidth;
     myToast.winRect.y1  = winHeight;
     
-    hToast  = WM_CreateWindow(SCREEN_HCENTER - winWidth/2,
+    myToast.hToast  = WM_CreateWindow(SCREEN_HCENTER - winWidth/2,
                               SCREEN_VCENTER - winHeight/2,
                               winWidth,
                               winHeight,
                               WM_CF_SHOW,
                               &myWindowCallback, 
                               0);
-    WM_SetStayOnTop(hToast,1);
+    WM_SetHasTrans(myToast.hToast);
+    WM_SetStayOnTop(myToast.hToast,1);
+    
 }
 
 

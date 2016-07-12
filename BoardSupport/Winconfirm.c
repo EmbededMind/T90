@@ -89,12 +89,12 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
     //
     // Initialization of 'Text'
     //
-		   TEXT_CreateEx (0,   40,  400, 40, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
+		 TEXT_CreateEx (0,   40,  400, 40, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
        dlgTextContent = WM_GetDialogItem(pMsg->hWin, ID_TEXT_CONTENT);
-		   TEXT_SetTextAlign(dlgTextContent,TEXT_CF_HCENTER);
+		 TEXT_SetTextAlign(dlgTextContent,TEXT_CF_HCENTER);
        TEXT_SetFont(dlgTextContent, &GUI_Font_T90_30);
 			 
-			 TEXT_SetTextColor (dlgTextContent,pColors->textColor);
+		 TEXT_SetTextColor (dlgTextContent,pColors->textColor);
 
        break;
 	

@@ -30,7 +30,7 @@ uint16_t Comm_getCRC(uint8_t* ptr, uint8_t num)
             crc  <<= 1;
          }
          
-         if( ((*ptr)&1) != 0){
+         if( ((*ptr)&i) != 0){
             crc  ^= gx;
          }
       }
@@ -51,7 +51,7 @@ void Comm_sendPulse()
    
    static uint8_t pulseFrame[18]  = {0x24, 0x5a, 0x00, 0x00, 0x00, 0x00,
                                      0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                     0x00, 0x00, 0x00, 0x00, 0x95, 0xf5};
+                                     0x00, 0x00, 0x00, 0x00, 0x5D, 0x2C};
    
 
    
@@ -93,7 +93,7 @@ void Comm_addFrame( uint8_t whichPort, uint16_t offset_x, uint16_t offset_y )
    flags  |= (0x01<<cursor);
    
    cursor  = (cursor+1) % 5;
-   
+printf("add frame\n");   
 //   UART_Send(UART_2, frameTab[cursor], 18, BLOCKING);
 }
 

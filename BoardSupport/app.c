@@ -490,7 +490,7 @@ void Comm_Task(void * p_arg)
       else{
          if(pulseNoAckCnt <= 3){         
             pulseNoAckCnt++;
-            if(pulseNoAckCnt >= 3){
+            if(pulseNoAckCnt == 4){
                printf("pulse ack timeout more than 3 times\n");
                ipcMsg  |= 0x40;
                /// Ack err
@@ -500,6 +500,7 @@ void Comm_Task(void * p_arg)
       
       pFrame  = Comm_fetchNextFrame();
       if(pFrame){
+         printf("featch frame\n");
 LOL:
          Comm_sendFrame(pFrame);
          pFrame  = (uint8_t*)OSMboxPend(CommMBox, 100, &err);{

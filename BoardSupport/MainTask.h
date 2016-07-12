@@ -48,5 +48,10 @@
 #define GUI_KEY_TRACE_DISABLE     31
 
 
+#define PULSE_ACK_OK       1
+#define PULSE_ACK_TIME_OUT 0
+#define DATA_ACK_OK        1
+#define DATA_ACK_TIME_OUT  0
+
 
 #endif

@@ -145,8 +145,8 @@ void DrawAlarmLine(int zoom)   //ۭѨޯП   zoomú̵؅҈}
 				pIndex->pStub->tang1.angle += 360;
 			}         
 			GUI_SetLineStyle(GUI_LS_SOLID);
-         printf("%d\n",pIndex->pStub->tang2.angle);
-         printf("%d\n",pIndex->pStub->tang1.angle);
+//         printf("%d\n",pIndex->pStub->tang2.angle);
+//         printf("%d\n",pIndex->pStub->tang1.angle);
          if(pIndex->pStub->tang1.angle - pIndex->pStub->tang2.angle < 180)
          {
 			   GUI_DrawArc(pIndex->pStub->basePoint.x*TO_PIXEL + motherShipPixel.x, -pIndex->pStub->basePoint.y*TO_PIXEL + motherShipPixel.y, 
