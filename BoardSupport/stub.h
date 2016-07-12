@@ -42,6 +42,7 @@ typedef struct Stub
 	Point basePoint;
 	Tangency tang1;
 	Tangency tang2;
+   Point crossPoint;
 	Bool isValid;
 	StubType type;
 } Stub;
