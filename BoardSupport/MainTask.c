@@ -14,6 +14,7 @@
 #include "t90font.h"
 #include "stub.h"
 #include "ucos_ii.h"
+#include "HSD_Toast.h"
 
 //extern unsigned char isSub0Inited;
 //extern unsigned char isSub2Inited;
@@ -138,16 +139,23 @@ void MainTask(void)
          if(ipcMsg & 0x20){
             
             ipcMsg &= (~0x20);   //数据应答
+            ToastCreate("data ok", &GUI_Font16B_ASCII, NULL, 2000);
+            if(t90_set.sys.workmode == SINGLE_MODE)
+            {
+               WM_SendMessage();
+            }
          }
          /// Data ack timeout
          else if(ipcMsg & 0x10){
             
             ipcMsg  &= (~0x10);  //数据超时
+            ToastCreate("data time out", &GUI_Font16B_ASCII, NULL, 2000);
          }
          
          if(ipcMsg & 0x40){
             
             ipcMsg  &= (~0x40);  //握手超时
+            ToastCreate("handle ask time out", &GUI_Font16B_ASCII, TOAST_OK, 2000);
          }
       }
 //      WM_SendMessageNoPara(, USER_MSG_DST_UPDATE);

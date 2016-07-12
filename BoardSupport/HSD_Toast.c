@@ -75,7 +75,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            
       case WM_TIMER:
            WM_DeleteWindow(pMsg->hWin);
-           WM_SetFocus(myToast.hWin);
+//           WM_SetFocus(myToast.hWin);
            myToastTimer  = 0;
            break;
            
@@ -106,7 +106,8 @@ void ToastCreate(const char* text, const GUI_FONT GUI_UNI_PTR* pFont ,uint8_t bt
     myToast.pFont  = pFont;
     myToast.btnFlags  = btnFlags;
     myToast.liveTime  = liveTime;
-    myToast.hWin = WM_GetFocussedWindow();    
+   if(btnFlags)
+       myToast.hWin = WM_GetFocussedWindow();    
     GUI_SetFont(pFont);   
     if(btnFlags){
        if(btnFlags & TOAST_OK){

@@ -212,7 +212,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
             
             WM_SetFocus(slideres[0]);
             WM_SetFocus(mainMenuDlg);
-            ToastCreate("work mode changed", &GUI_Font16B_ASCII, TOAST_OK, 2000);
+
             break;
        
        case WM_NOTIFY_PARENT:       
