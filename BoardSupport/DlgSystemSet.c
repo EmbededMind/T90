@@ -15,6 +15,7 @@
 #include "t90font.h"
 #include "stub.h"
 
+#include "HSD_Toast.h"
 #include "layout_system_set.h"
 
 
@@ -335,6 +336,8 @@ static void sldListener(WM_MESSAGE * pMsg)
 static void _OnWorkModeChanged(WM_MESSAGE * pMsg, int val)
 {
    agentsys_set.workmode = val;
+   ToastCreate("work mode changed", &GUI_Font16B_ASCII, 0, 2000);
+   
 }
 
 static void _OnLaunchChanged(WM_MESSAGE * pMsg, int val)

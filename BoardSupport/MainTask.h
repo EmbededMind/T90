@@ -18,7 +18,8 @@
 #define USER_MSG_MNT_SWT   (WM_USER + 0x11)
 #define USER_MSG_DST_SET   (WM_USER + 0x12)
 #define USER_MSG_DST_UPDATE (WM_USER + 0x13)
-#define USER_MSG_PLUG      (WM_USER + 0x14)
+#define USER_MSG_PULSE_ACK_RESULT  (WM_USER + 0x14)
+#define USER_MSG_DATA_ACK_RESULT   (WM_USER + 0x15)
 
 
 #define STORE_SETTING   1
