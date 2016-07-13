@@ -111,9 +111,9 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            agentsys_set.nightmode =  t90_set.sys.nightmode;
            agentsys_set.volum     =  t90_set.sys.volum;
            agentsys_set.bright    =  t90_set.sys.bright;
-					 agentsys_set.unit      =  t90_set.sys.unit;
-					 agentsys_set.update    =  t90_set.sys.update;
-					 agentsys_set.reset     =  t90_set.sys.reset;
+            agentsys_set.unit      =  t90_set.sys.unit;
+            agentsys_set.update    =  t90_set.sys.update;
+            agentsys_set.reset     =  t90_set.sys.reset;
                  
            pColors  = &(setDlgColors[t90_set.sys.nightmode]);
 		
