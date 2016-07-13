@@ -90,10 +90,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            break;
            
       case WM_PAINT:
-         
-
-
-           
            xSize = WM_GetWindowSizeX(pMsg->hWin);
            ySize = WM_GetWindowSizeY(pMsg->hWin);
 //           GUI_SetBkColor(GUI_WHITE);
