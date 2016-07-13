@@ -50,7 +50,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 			 {
            id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
            flag_prevfocus  = 0;
-           if(plugEvent.status & (0x01<<(id*2)))
+           if(portStatus[id])
            {
               BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusBkColor);
               BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
@@ -101,21 +101,23 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
         case GUI_KEY_RIGHT:
             
              id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-            
-             flag_prevfocus = 1;
-             if(t90_set.sys.workmode == SINGLE_MODE  )
-             {		
-                WM_SetFocus(WM_GetDialogItem(singleShipDstSetWin,ID_DMS_0+id*2));
-             }   
-             else if(t90_set.sys.workmode == DOUBLE_MODE ){
-                WM_MESSAGE myMsg;
-                myMsg.hWin  = doubleShipDstSetWin;
-                myMsg.Data.v  = id;
-                myMsg.MsgId  = USER_MSG_FOCUS;
-                WM_SendMessage(myMsg.hWin, &myMsg);
-             }
-                
              
+             if(portStatus[id]){
+        
+                flag_prevfocus = 1;
+                if(t90_set.sys.workmode == SINGLE_MODE  )
+                {		
+                   WM_SetFocus(WM_GetDialogItem(singleShipDstSetWin,ID_DMS_0+id*2));
+                }   
+                else if(t90_set.sys.workmode == DOUBLE_MODE ){
+                   WM_MESSAGE myMsg;
+                   myMsg.hWin  = doubleShipDstSetWin;
+                   myMsg.Data.v  = id;
+                   myMsg.MsgId  = USER_MSG_FOCUS;
+                   WM_SendMessage(myMsg.hWin, &myMsg);
+                }
+             }   
+              
              break;
 		  case GUI_KEY_UP:
              GUI_StoreKeyMsg(GUI_KEY_BACKTAB, 1);

@@ -37,23 +37,17 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 	 static int flag_prevfocus = 0;
    switch(pMsg->MsgId){
       case WM_SET_FOCUS:
-        printf("mainMenuDlg\n"); 
+
            if(pMsg->Data.v){
-              
-printf("get focus\n");
               flag_prevfocus = 0;
-//              for(i = 0; i < 3; i++)                      //all buttons reset to unfocussed state,
-//              {
-//                 
-//                printf("btn[%d]\n", i);
-//                HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
-//                HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
-//              }
- printf("going to set focused btn\n");             
+              for(i = 0; i < 3; i++)                      //all buttons reset to unfocussed state,
+              {
+                HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
+                HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
+              }            
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btFocusBkColor);  //then, set the focussed button's backcolor.
-printf("set focused btn done\n");
               id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-              printf("id:%d\n", id);
+
               switch(id){
               case 0:
                    if(t90_set.sys.workmode == SINGLE_MODE){
@@ -77,7 +71,6 @@ printf("set focused btn done\n");
            }
            else
            {	
-              printf("lose focus\n");
               if(flag_prevfocus)																						//if previous focussed
               {
                  HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btPrevFocusBkColor);   
@@ -90,14 +83,13 @@ printf("set focused btn done\n");
               }
            }
            HSD_BUTTON_Callback(pMsg);
-           printf("proc focus done\n");
            break;
            
       case WM_KEY:          
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
-						     case GUI_KEY_PWM_INC:       
-								        WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-								        break;
+                 case GUI_KEY_PWM_INC:       
+                          WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                          break;
            case GUI_KEY_RIGHT:
                 id  = WM_GetId(pMsg->hWin)-GUI_ID_BUTTON0;
                 flag_prevfocus = 1;

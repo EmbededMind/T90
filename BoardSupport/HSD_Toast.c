@@ -36,7 +36,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
       case WM_KEY:
            if( ((WM_KEY_INFO*)pMsg->Data.p)->Key == GUI_KEY_ENTER)    {
               WM_DeleteWindow(WM_GetParent(pMsg->hWin));
-              printf("hToast:%ld\n", myToast.hWin);              
+              
               WM_SetFocus(myToast.hWin);
               myToast.btnFlags  = 0;
               myToast.hWin   = 0;

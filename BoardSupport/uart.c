@@ -159,18 +159,20 @@ void UART2_IRQHandler(void)
    else if ((tmp == UART_IIR_INTID_RDA) || (tmp == UART_IIR_INTID_CTI))	// Receive Data Available or Character time-out
    {	 
        UART_Receive(UART_2, pRecBuf++, 1, NONE_BLOCKING);
-
-       crcVal  = recBuf[16] ;
-       crcVal  = (crcVal << 8) | recBuf[17];
-       
-       
-       if(crcVal == Comm_getCRC(recBuf, 16)){
-          OSMboxPost(CommMBox, (void*)recBuf);
+       if(pRecBuf-recBuf >=18){
+          crcVal  = recBuf[16] ;
+          crcVal  = (crcVal << 8) | recBuf[17];
+          
+          
+          if(crcVal == Comm_getCRC(recBuf, 16)){
+             OSMboxPost(CommMBox, (void*)recBuf);
+          }
+          pRecBuf  = recBuf;
        }
 
    }
    else if(tmp == UART_IIR_INTID_THRE){
-      printf("uart2 send\n");
+
    }
 }
 

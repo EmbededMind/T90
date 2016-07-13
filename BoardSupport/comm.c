@@ -93,8 +93,7 @@ void Comm_addFrame( uint8_t whichPort, uint16_t offset_x, uint16_t offset_y )
    flags  |= (0x01<<cursor);
    
    cursor  = (cursor+1) % 5;
-printf("add frame\n");   
-//   UART_Send(UART_2, frameTab[cursor], 18, BLOCKING);
+
 }
 
 
@@ -104,7 +103,7 @@ uint8_t* Comm_fetchNextFrame(void)
    for(i=0; i<5; i++){
       if(flags & (0x01<<i)){
          flags &= (~(0x01<<i));
-         return frameTab[i];
+         return &(frameTab[i][0]);
       }
    }
    
@@ -112,11 +111,6 @@ uint8_t* Comm_fetchNextFrame(void)
 }
 
 
-//void Comm_sendFrame(uint8_t* pData)
-//{
-//   static uint8_t frameBuf[18]  = {0x24, 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  0x00, 0x00};
-//   
-//   frameBuf[2]  = pData
-//}
+
 
 

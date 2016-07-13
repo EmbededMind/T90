@@ -16,11 +16,7 @@
 #include "ucos_ii.h"
 #include "HSD_Toast.h"
 
-//extern unsigned char isSub0Inited;
-//extern unsigned char isSub2Inited;
-//extern unsigned char isChecked;
-//extern unsigned char  isDstSetChanged;
-//extern unsigned char isDstSetNeedUpdate;
+
 extern uint8_t ipcMsg;
 //extern OS_EVENT* pMSBOX; 
 
@@ -101,8 +97,7 @@ void MainTask(void)
 		
 		confirmWin = WIN_ConfirmCreate();
 		
-//INFO("mainShipWin:%ld", mainShipWin);		
-//INFO("alarmMonitorWin:%ld", alarmMonitorWin);
+
 
 
 		if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖
@@ -124,8 +119,7 @@ void MainTask(void)
       WM_MESSAGE pMsg;      
       if(ipcMsg){
          /// Data ack ok
-         if(ipcMsg & 0x20){
-printf("data ack ok\n");            
+         if(ipcMsg & 0x20){           
             ipcMsg &= (~0x20);   //数据应答
             ToastCreate("data ok", &GUI_Font16B_ASCII, NULL, 2000);
             if(t90_set.sys.workmode == SINGLE_MODE)
@@ -140,12 +134,12 @@ printf("data ack ok\n");
                pMsg.hWin = doubleShipDstSetWin;
                pMsg.MsgId = USER_MSG_DATA_ACK_RESULT;
                pMsg.Data.v = DATA_ACK_OK;               
-               WM_SendMessage(singleShipDstSetWin, &pMsg);
+               WM_SendMessage(doubleShipDstSetWin, &pMsg);
             }
          }
          /// Data ack timeout
          else if(ipcMsg & 0x10){
-printf("data ack timeout\n");            
+           
             ipcMsg  &= (~0x10);  //数据超时
             ToastCreate("data time out", &GUI_Font16B_ASCII, NULL, 2000);
             if(t90_set.sys.workmode == SINGLE_MODE)
@@ -167,30 +161,15 @@ printf("data ack timeout\n");
             WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
          }
          
-//        if(ipcMsg & 0x80){
-//printf("port status have changed\n");           
-//            Stub_setValidity(1, portStatus[0]);
-//            Stub_setValidity(2, portStatus[1]);
-//            Stub_setValidity(3, portStatus[2]);
-//            StubRefresh();
-//            
-//            ipcMsg  &= (~0x80);
-//         }
-//         
-//         if(ipcMsg & 0x40){
-//printf("t81 offline\n");            
-//            ipcMsg  &= (~0x40);  //握手超时
-//            ToastCreate("handle ask time out", &GUI_Font16B_ASCII, TOAST_OK, 2000);
-//         }
+
+         
+         if(ipcMsg & 0x40){
+           
+            ipcMsg  &= (~0x40);  //握手超时
+            ToastCreate("handle ask time out", &GUI_Font16B_ASCII, TOAST_OK, 2000);
+         }
       }
-//      if(t90_set.sys.workmode == SINGLE_MODE)
-//       {
-//          WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
-//       }
-//       else
-//       {
-//          WM_SendMessageNoPara(doubleShipDstSetWin, USER_MSG_DST_UPDATE);
-//       }
+
       
       GUI_Delay(200);      
    }

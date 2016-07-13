@@ -383,7 +383,7 @@ int add_18(struct message_18 * p_msg)
    if(buf->Boat.user_id == gPlugBoats[0] || buf->Boat.user_id == gPlugBoats[1] || buf->Boat.user_id == gPlugBoats[2]){
       buf->Boat.category  |= TYPE_SAFETY;
       buf->isInvader  = 0;
-printf("find plug boat:%09ld\n", buf->Boat.user_id);        
+       
    }
 
    else if(buf->Boat.category == 0  &&  p_msg->SOG >= HIGH_SPEED)
@@ -510,7 +510,7 @@ int add_24A(struct message_24_partA * p_msg)
    if(buf->Boat.user_id == gPlugBoats[0] || buf->Boat.user_id == gPlugBoats[1] || buf->Boat.user_id == gPlugBoats[2]){
       buf->Boat.category  |= TYPE_SAFETY;
       buf->isInvader  = 0;
-printf("find plug boat:%09ld\n", buf->Boat.user_id);      
+     
    }
    
    for(i=0;i<20;i++)
@@ -608,7 +608,7 @@ int add_24B(type_of_ship * p_msg)
    
    if(buf->Boat.user_id == gPlugBoats[0] || buf->Boat.user_id == gPlugBoats[1] || buf->Boat.user_id == gPlugBoats[2]){
       buf->Boat.category  |= TYPE_SAFETY;
-printf("find plug boat:%09ld\n", p_msg->user_id);      
+      
    }
  
    if(    p_msg->vender_id[0] == 8
@@ -732,7 +732,7 @@ void deleteBoat(long mmsi)
    
    while(pCur){
       if(pCur->Boat.user_id == mmsi){
-printf("delete plug boat:%ld\n", mmsi);         
+        
          if(pCur == pHeader){
             pHeader  = pCur->pNext;
             pCur->pNext->pPrev  = NULL;
@@ -765,7 +765,7 @@ void setCategory(long mmsi, uint8_t category)
       if(SimpBerthes[i].pBerth->Boat.user_id == mmsi){
          SimpBerthes[i].pBerth->Boat.category  |= category;
          SimpBerthes[i].pBerth->isInvader  = 0;
-printf("set cate:%ld\n", mmsi);         
+         
          return ;
       }
    }

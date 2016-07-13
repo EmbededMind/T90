@@ -241,12 +241,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
     case USER_MSG_DATA_ACK_RESULT:
            if(pMsg->Data.v)
            {
-              memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
-				  T90_Store();
-           }
-           else 
-           {
-              memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(agentdst_set));
+             
                sprintf(pStrBuf,"%d",agentdst_set.dst1);
                HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
                sprintf(pStrBuf,"%d",agentdst_set.dst2);
@@ -257,16 +252,23 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
                sprintf(pStrBuf,"%d",agentdst_set.dst5);
                HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
-               StubRefresh();
+              memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
+				  T90_Store(); 
+              StubRefresh();
            }
-            StubRefresh();
+           else 
+           {
+             
+              memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(agentdst_set));
+           }
+            
         break;           
 	 case USER_MSG_DST_SET:
-       printf("case USER_MSG_DST_SET:%d\n", pMsg->Data.v);       
-//       for(i = 0; i < SF_NUM; i++)  //clear
-//       {
-//          HSD_STICKFIGURE_SetPenColor(hStickFigures[i], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
-//       }
+      
+       for(i = 0; i < SF_NUM; i++)  //clear
+       {
+          HSD_STICKFIGURE_SetPenColor(hStickFigures[i], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
+       }
        if(pMsg->Data.v != -1)
        {
           HSD_STICKFIGURE_SetPenColor(hStickFigures[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor);
@@ -295,25 +297,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
    * @author: SealedGhost  2016/6.7
    * 
    */
-  case USER_MSG_DST_UPDATE:
-//PRINT("case user msg dst update");  
-       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst1);
-       HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
-       
-       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst2);
-       HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
-       
-       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst3);
-       HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
-       
-       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst4);
-       HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
-       
-       sprintf(pStrBuf, "%d", t90_set.singledst_set.dst5);
-       HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
-       
-       memcpy(&agentdst_set, &t90_set.singledst_set, sizeof(agentdst_set));
-       break;
+
     
    case WM_CREATE:
    
@@ -402,20 +386,18 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				
 	 case USER_MSG_REPLY:
 				if(pMsg->Data.v == REPLY_OK)
-				{    
-
-            
+				{                
                 if(whichFig == 0)
                 {
-                   Comm_addFrame(whichFig, agentdst_set.dst2, agentdst_set.dst1);
+                   Comm_addFrame(whichFig+1, agentdst_set.dst2, agentdst_set.dst1);
                 }
                 else if(whichFig == 1)
                 {
-                   Comm_addFrame(whichFig, 0, agentdst_set.dst3);               
+                   Comm_addFrame(whichFig+1, 0, agentdst_set.dst3);               
                 }
                 else if(whichFig == 2)
                 {
-                   Comm_addFrame(whichFig, agentdst_set.dst4, agentdst_set.dst5);
+                   Comm_addFrame(whichFig+2, agentdst_set.dst4, agentdst_set.dst5);
                 }
 
                 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst1);
@@ -424,7 +406,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 	 HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
 			 		 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst3);
 					 HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
- printf("case reply ok\n");
+
 					 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst4);
 					 HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
 					 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst5);

@@ -243,7 +243,15 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
       
 //      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
- printf("refresh\n");     
+        if(ipcMsg & 0x80){
+          
+            Stub_setValidity(1, portStatus[0]);
+            Stub_setValidity(2, portStatus[1]);
+            Stub_setValidity(3, portStatus[2]);
+            StubRefresh();
+            
+            ipcMsg  &= (~0x80);
+         }    
       OSTimeDlyHMSM(0,0,5,0);
    }
 }
@@ -471,14 +479,14 @@ void Comm_Task(void * p_arg)
          /** 判断ACK类型，取得三个端口的状态 */
          if(pFrame[1] == 0x51){   /// 判断是否是来自于T81的消息
             pulseNoAckCnt  = 0;
-            printf("pulse ack ok\n");
+
 
             if(pFrame[2] != portStatus[0]  ||  pFrame[3] != portStatus[1]  ||  pFrame[4] != portStatus[2]){
                portStatus[0]  = pFrame[2];
                portStatus[1]  = pFrame[3];
                portStatus[2]  = pFrame[4];
                ipcMsg  |= 0x80;                 
-               printf("port status changed\n");               
+               
             }
          }
       }
@@ -486,7 +494,7 @@ void Comm_Task(void * p_arg)
          if(pulseNoAckCnt <= 3){         
             pulseNoAckCnt++;
             if(pulseNoAckCnt == 4){
-               printf("pulse ack timeout more than 3 times\n");
+
                ipcMsg  |= 0x40;
                /// Ack err
             }
@@ -495,27 +503,27 @@ void Comm_Task(void * p_arg)
       
       pFrame  = Comm_fetchNextFrame();
       if(pFrame){
-         printf("featch frame\n");
+
 LOL:
          Comm_sendFrame(pFrame);
-         pFrame  = (uint8_t*)OSMboxPend(CommMBox, 100, &err);{
+            OSMboxPend(CommMBox, 200, &err);
             if(err == OS_ERR_NONE){
                dataNoAckCnt  = 0;
-               printf("data ack ok\n");
+
                ipcMsg  |= 0x20;
             }
             else{
                dataNoAckCnt++;
                if(dataNoAckCnt > 3){
                   dataNoAckCnt  = 0;
-                  printf("data ack timeout more than 3 times\n");
+
                   ipcMsg  |= 0x10;
                }
                else{
-//                  goto LOL;
+                  goto LOL;
                }
             }
-         }
+         
       }
       OSTimeDlyHMSM(0, 0, 1, 0);
    }

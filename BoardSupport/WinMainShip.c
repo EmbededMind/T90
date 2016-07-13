@@ -64,7 +64,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		 
       case WM_CREATE:
            pColor = &homeColors[t90_set.sys.nightmode];
-      printf("WM_CREATE\n");
+
            _onPaint1();
            break;
 			
@@ -75,7 +75,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 								 break;
 						 case GUI_KEY_MENU:
-                      printf("MENU\n");
+
 									WM_DeleteTimer(timer);
 									WM_BringToTop(mainMenuDlg);
 									WM_SetFocus(mainMenuDlg);
