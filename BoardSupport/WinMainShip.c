@@ -86,36 +86,30 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //									WM_BringToTop(alarmMonitorWin);
 //									WM_SetFocus(alarmMonitorWin);
 //									cursorOnStub = 0;
-                           cursorOnStub = getcursor(UP);                   
+                           cursorOnStub = getcursor(UP);                                             
 									WM_Paint(mainShipWin);
 									break;
 						 
 						 case GUI_KEY_DOWN:
-                           if(plugEvent.status&(0x01<<2))
-                           {
-//									   cursorOnStub = 2;
+
                               cursorOnStub = getcursor(DOWN);
 									   WM_Paint(mainShipWin);
-                           }
+                           
 									break;
 						 
 						 case GUI_KEY_LEFT:
-                           if(plugEvent.status&(0x01<<0))
-                           {
-//									   cursorOnStub = 1;
+
                               cursorOnStub = getcursor(LEFT);                              
 									   WM_Paint(mainShipWin);
-                           }
+                           
            
 									break;
 												 
 						 case GUI_KEY_RIGHT:
-                           if(plugEvent.status&(0x01<<4))
-                           {
-//									   cursorOnStub = 3;
+
                               cursorOnStub = getcursor(RIGHT);                              
 									   WM_Paint(mainShipWin);
-                           }
+                           
 									break;
 						 
 //						 case GUI_KEY_MONITORING:
@@ -500,6 +494,7 @@ static void _onPaint2(void)
 int getcursor(int position)
 {
    int i, which,diff;
+   
    diff = 99999;
    which = cursorOnStub;
    
