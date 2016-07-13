@@ -143,21 +143,21 @@ void DrawAlarmLine(int zoom)   //ۭѨޯП   zoomú̵؅҈}
 			if(pIndex->pStub->tang2.angle > pIndex->pStub->tang1.angle)
 			{
 				pIndex->pStub->tang1.angle += 360;
-			}         
-			GUI_SetLineStyle(GUI_LS_SOLID);
-//         printf("%d\n",pIndex->pStub->tang2.angle);
-//         printf("%d\n",pIndex->pStub->tang1.angle);
-         if(pIndex->pStub->tang1.angle - pIndex->pStub->tang2.angle < 180)
-         {
-			   GUI_DrawArc(pIndex->pStub->basePoint.x*TO_PIXEL + motherShipPixel.x, -pIndex->pStub->basePoint.y*TO_PIXEL + motherShipPixel.y, 
+			}
+			         
+
+			GUI_DrawArc(pIndex->pStub->basePoint.x*TO_PIXEL + motherShipPixel.x, -pIndex->pStub->basePoint.y*TO_PIXEL + motherShipPixel.y, 
+								/*	(t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, (t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, */
 									(r*TO_PIXEL)/zoom, (r*TO_PIXEL)/zoom,
 									pIndex->pStub->tang2.angle, pIndex->pStub->tang1.angle);
-			}
-          GUI_DrawLine(((pIndex->pStub->tang1.point.x-pIndex->pStub->basePoint.x)/zoom+pIndex->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
+			GUI_DrawLine(((pIndex->pStub->tang1.point.x-pIndex->pStub->basePoint.x)/zoom+pIndex->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
 									-((pIndex->pStub->tang1.point.y-pIndex->pStub->basePoint.y)/zoom+pIndex->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y,
 									 ((pIndex->pNext->pStub->tang2.point.x-pIndex->pNext->pStub->basePoint.x)/zoom+pIndex->pNext->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
 									-((pIndex->pNext->pStub->tang2.point.y-pIndex->pNext->pStub->basePoint.y)/zoom+pIndex->pNext->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y);
-//    
+			pIndex = pIndex->pNext;
+		}
+		while(pIndex != pStubHead);
+	
 //         if(pIndex->pStub->tang1.angle - pIndex->pStub->tang2.angle < 180)
 //         {
 //            if(pIndex->pNext->pStub->tang1.angle - pIndex->pNext->pStub->tang2.angle < 180)
@@ -183,9 +183,7 @@ void DrawAlarmLine(int zoom)   //ۭѨޯП   zoomú̵؅҈}
 //            }
 //               
 //         }
-            pIndex = pIndex->pNext;
-		}
-		while(pIndex != pStubHead);
+
 	}
 }
 
