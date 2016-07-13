@@ -37,17 +37,23 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 	 static int flag_prevfocus = 0;
    switch(pMsg->MsgId){
       case WM_SET_FOCUS:
-        printf("mainMenuDlg"); 
+        printf("mainMenuDlg\n"); 
            if(pMsg->Data.v){
-              flag_prevfocus = 0;
-              for(i = 0; i < 3; i++)                      //all buttons reset to unfocussed state,
-              {
-                HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
-                HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
-              }
               
+printf("get focus\n");
+              flag_prevfocus = 0;
+//              for(i = 0; i < 3; i++)                      //all buttons reset to unfocussed state,
+//              {
+//                 
+//                printf("btn[%d]\n", i);
+//                HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
+//                HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
+//              }
+ printf("going to set focused btn\n");             
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btFocusBkColor);  //then, set the focussed button's backcolor.
+printf("set focused btn done\n");
               id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
+              printf("id:%d\n", id);
               switch(id){
               case 0:
                    if(t90_set.sys.workmode == SINGLE_MODE){
@@ -70,7 +76,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
               }
            }
            else
-           {				 
+           {	
+              printf("lose focus\n");
               if(flag_prevfocus)																						//if previous focussed
               {
                  HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btPrevFocusBkColor);   
@@ -83,6 +90,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
               }
            }
            HSD_BUTTON_Callback(pMsg);
+           printf("proc focus done\n");
            break;
            
       case WM_KEY:          
@@ -165,26 +173,26 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 			 
        case WM_INIT_DIALOG:
 						pColors = &mainMenuColors[t90_set.sys.nightmode];
-            WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);           
+                  WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);           
             
 						buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
-            HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
-            HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
-            WM_SetCallback(buttons[0], &myButtonCallback);
+                  HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
+                  HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
+                  WM_SetCallback(buttons[0], &myButtonCallback);
 						HSD_BUTTON_SetText(buttons[0], "距离设置");
 						HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
             
 						buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
-            HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
-            HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
-            WM_SetCallback(buttons[1],&myButtonCallback);
+                  HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
+                  HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
+                  WM_SetCallback(buttons[1],&myButtonCallback);
 						HSD_BUTTON_SetText(buttons[1], "报警设置");
 						HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
             
 						buttons[2] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
-            HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
-            HSD_BUTTON_SetBkColor(buttons[2], pColors->btBkColor);
-            WM_SetCallback(buttons[2],&myButtonCallback);
+                  HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
+                  HSD_BUTTON_SetBkColor(buttons[2], pColors->btBkColor);
+                  WM_SetCallback(buttons[2],&myButtonCallback);
 						HSD_BUTTON_SetText(buttons[2], "系统设置");
 						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
             

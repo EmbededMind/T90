@@ -243,7 +243,7 @@ void Refresh_Task(void *p_arg)//»ŒŒÒRefresh_Task
       
 //      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
-      
+ printf("refresh\n");     
       OSTimeDlyHMSM(0,0,5,0);
    }
 }
@@ -275,7 +275,7 @@ void _Play_Task(void* p_arg)
         }
          else
          {
-								if(monitorState == ON) // ›†‡†ò
+						if(monitorState == ON) // ›†‡†ò
 		            {  
                    thisBulyBerth  = BULY_fetchNextPlayBerth();
                    if(thisBulyBerth){                             
@@ -474,6 +474,9 @@ void Comm_Task(void * p_arg)
             printf("pulse ack ok\n");
 
             if(pFrame[2] != portStatus[0]  ||  pFrame[3] != portStatus[1]  ||  pFrame[4] != portStatus[2]){
+               portStatus[0]  = pFrame[2];
+               portStatus[1]  = pFrame[3];
+               portStatus[2]  = pFrame[4];
                ipcMsg  |= 0x80;                 
                printf("port status changed\n");               
             }
@@ -509,7 +512,7 @@ LOL:
                   ipcMsg  |= 0x10;
                }
                else{
-                  goto LOL;
+//                  goto LOL;
                }
             }
          }

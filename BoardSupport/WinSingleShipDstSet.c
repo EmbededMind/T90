@@ -263,10 +263,10 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         break;           
 	 case USER_MSG_DST_SET:
        printf("case USER_MSG_DST_SET:%d\n", pMsg->Data.v);       
-       for(i = 0; i < SF_NUM; i++)  //clear
-       {
-          HSD_STICKFIGURE_SetPenColor(hStickFigures[i], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
-       }
+//       for(i = 0; i < SF_NUM; i++)  //clear
+//       {
+//          HSD_STICKFIGURE_SetPenColor(hStickFigures[i], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
+//       }
        if(pMsg->Data.v != -1)
        {
           HSD_STICKFIGURE_SetPenColor(hStickFigures[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor);

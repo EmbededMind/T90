@@ -119,27 +119,13 @@ void MainTask(void)
 			WM_SetFocus(mainShipWin);
 		}
       
-//		else if(t90_set.sys.workmode == SINGLE_MODE)
-//		{
-//         StubRefresh();
-//			WM_BringToTop(mainShipWin);
-//			WM_SetFocus(mainShipWin);
-//		}
-//		else if(t90_set.sys.workmode == DOUBLE_MODE)
-//		{
-//         StubRefresh();
-//			WM_BringToTop(doubleShipWin);
-//			WM_SetFocus(doubleShipWin);
-//		}
-
-//DLG_testCustomedWidgetCreate();
    while(1)
    {
       WM_MESSAGE pMsg;      
       if(ipcMsg){
          /// Data ack ok
          if(ipcMsg & 0x20){
-            
+printf("data ack ok\n");            
             ipcMsg &= (~0x20);   //数据应答
             ToastCreate("data ok", &GUI_Font16B_ASCII, NULL, 2000);
             if(t90_set.sys.workmode == SINGLE_MODE)
@@ -159,7 +145,7 @@ void MainTask(void)
          }
          /// Data ack timeout
          else if(ipcMsg & 0x10){
-            
+printf("data ack timeout\n");            
             ipcMsg  &= (~0x10);  //数据超时
             ToastCreate("data time out", &GUI_Font16B_ASCII, NULL, 2000);
             if(t90_set.sys.workmode == SINGLE_MODE)
@@ -178,23 +164,24 @@ void MainTask(void)
                WM_SendMessage(pMsg.hWin, &pMsg);
                
             }
-//            WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
+            WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
          }
          
-        if(ipcMsg & 0x80){
-            Stub_setValidity(1, portStatus[0]);
-            Stub_setValidity(2, portStatus[1]);
-            Stub_setValidity(3, portStatus[2]);
-            StubRefresh();
-            
-            ipcMsg  &= (~0x80);
-         }
-         
-         if(ipcMsg & 0x40){
-            
-            ipcMsg  &= (~0x40);  //握手超时
-            ToastCreate("handle ask time out", &GUI_Font16B_ASCII, TOAST_OK, 2000);
-         }
+//        if(ipcMsg & 0x80){
+//printf("port status have changed\n");           
+//            Stub_setValidity(1, portStatus[0]);
+//            Stub_setValidity(2, portStatus[1]);
+//            Stub_setValidity(3, portStatus[2]);
+//            StubRefresh();
+//            
+//            ipcMsg  &= (~0x80);
+//         }
+//         
+//         if(ipcMsg & 0x40){
+//printf("t81 offline\n");            
+//            ipcMsg  &= (~0x40);  //握手超时
+//            ToastCreate("handle ask time out", &GUI_Font16B_ASCII, TOAST_OK, 2000);
+//         }
       }
 //      if(t90_set.sys.workmode == SINGLE_MODE)
 //       {
