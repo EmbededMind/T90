@@ -482,6 +482,13 @@ void Comm_Task(void * p_arg)
 
 
             if(pFrame[2] != portStatus[0]  ||  pFrame[3] != portStatus[1]  ||  pFrame[4] != portStatus[2]){
+               
+               if(portStatus[0] == 0  &&  pFrame[2] == 1)
+                  Comm_addFrame(1,abs(stubs[1].basePoint.x),abs(stubs[1].basePoint.y));
+               if(portStatus[1] == 0  &&  pFrame[3] == 1)
+                  Comm_addFrame(2,abs(stubs[2].basePoint.x),abs(stubs[2].basePoint.y));
+               if(portStatus[2] == 0  &&  pFrame[4] == 1)
+                  Comm_addFrame(3,abs(stubs[3].basePoint.x),abs(stubs[3].basePoint.y));
                portStatus[0]  = pFrame[2];
                portStatus[1]  = pFrame[3];
                portStatus[2]  = pFrame[4];

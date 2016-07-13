@@ -10,7 +10,7 @@
 
 Point motherShipPixel;
 
-int scale = 100;  //100б̘պҭքߠk
+int scale = 100;  //100��?????k
 
 extern const HomeColor* pColor;
 extern int cursorOnStub;
@@ -19,9 +19,9 @@ extern int cursorOnStub;
 static void FigureMotherShipPixel(Point center, int flag);
 static void FigureScale(int flag);
 
-//ۭԬۍѨޯП
-void DrawStubs(int flag)														//flag=0ҭʾmainShipWinַԃՋگ˽û
-																										//flag=1ҭʾalarmmonitorWinַԃՋگ˽
+//?????��
+void DrawStubs(int flag)														//flag=0??mainShipWin??????
+																										//flag=1??alarmmonitorWin?????
 {
 	int alarmLineZoom;
 //	StubRefresh();
@@ -32,9 +32,9 @@ void DrawStubs(int flag)														//flag=0ҭʾmainShipWinַԃՋگ˽û
 	DrawAlarmLine(alarmLineZoom);
 }
 
-void DrawShipFamily(int flag)     //ۭԬۍвȫҪӔ̻ܰć֮ݤքlП
+void DrawShipFamily(int flag)     //???��?????????l��
 {
-	int safetySignNum = 1;    //вȫҪѲۅ
+	int safetySignNum = 1;    //��????
 	int ms_zoom = scale/500;
 	int net_zoom = scale/300;
 	Point pixelTmp1, pixelTmp2;
@@ -69,7 +69,7 @@ void DrawShipFamily(int flag)     //ۭԬۍвȫҪӔ̻ܰć֮ݤքlП
 				GUI_DrawLine(motherShipPixel.x+(5-ms_zoom), motherShipPixel.y+(20-ms_zoom), motherShipPixel.x-(5-ms_zoom), motherShipPixel.y+(20-ms_zoom));
 				GUI_DrawLine(motherShipPixel.x-(5-ms_zoom), motherShipPixel.y+(20-ms_zoom), motherShipPixel.x-(7-ms_zoom), motherShipPixel.y);
 			}
-			else if(pIndex->pStub->type == safetySignStub)      //ɽއҪ
+			else if(pIndex->pStub->type == safetySignStub)      //???
 			{
 				pixelTmp1 = GetItemPixel(pIndex->pStub->basePoint);
 //    if(&stubs[cursorOnStub] == pIndex->pStub){
@@ -81,14 +81,14 @@ void DrawShipFamily(int flag)     //ۭԬۍвȫҪӔ̻ܰć֮ݤքlП
 //				GUI_DrawLine(pixelTmp1.x,               pixelTmp1.y-(5-net_zoom), pixelTmp1.x+(5-net_zoom), pixelTmp1.y+(5-net_zoom));
 //				GUI_DrawLine(pixelTmp1.x+(5-net_zoom), pixelTmp1.y+(5-net_zoom), pixelTmp1.x-(5-net_zoom), pixelTmp1.y+(5-net_zoom));
     GUI_SetColor(pColor->textColor);
-				if(!flag)    //Ѳۅ
+				if(!flag)    //??
 				{
 					sprintf(pStrBuf, "%02d", safetySignNum);
 					GUI_DispStringAt(pStrBuf, pixelTmp1.x - 6, pixelTmp1.y + 5);
 					safetySignNum++;
 				}
 			}
-			else if(pIndex->pStub->type == aidedStub)   //بԬ
+			else if(pIndex->pStub->type == aidedStub)   //??
 			{
 				pixelTmp1 = GetItemPixel(pIndex->pStub->basePoint);
 				GUI_DrawLine(pixelTmp1.x-(7-ms_zoom), pixelTmp1.y,                pixelTmp1.x,               pixelTmp1.y-(10-ms_zoom));  
@@ -102,7 +102,7 @@ void DrawShipFamily(int flag)     //ۭԬۍвȫҪӔ̻ܰć֮ݤքlП
 		while(pIndex != pStubHead);
 	}
 	
-	if(!flag)                                  //سӠҪע
+	if(!flag)                                  //????
 	{
 		int y_min = STUB_GetMostValue(Y_MIN);
 		y_min = -y_min;
@@ -118,7 +118,7 @@ void DrawShipFamily(int flag)     //ۭԬۍвȫҪӔ̻ܰć֮ݤքlП
 	}
 	
 	GUI_SetLineStyle(GUI_LS_DOT);
-	if(pIndex)                                //stubs֮ݤРlքѩП
+	if(pIndex)                                //stubs??��l??��
 	{
 		do
 		{
@@ -131,7 +131,7 @@ void DrawShipFamily(int flag)     //ۭԬۍвȫҪӔ̻ܰć֮ݤքlП
 	}
 }
 
-void DrawAlarmLine(int zoom)   //ۭѨޯП   zoomú̵؅҈} 
+void DrawAlarmLine(int zoom)   //???��   zoom��???} 
 {
 	StubNode *pIndex = pStubHead;
 	int r;
@@ -144,8 +144,7 @@ void DrawAlarmLine(int zoom)   //ۭѨޯП   zoomú̵؅҈}
 			{
 				pIndex->pStub->tang1.angle += 360;
 			}
-			         
-
+			GUI_SetLineStyle(GUI_LS_SOLID);
 			GUI_DrawArc(pIndex->pStub->basePoint.x*TO_PIXEL + motherShipPixel.x, -pIndex->pStub->basePoint.y*TO_PIXEL + motherShipPixel.y, 
 								/*	(t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, (t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, */
 									(r*TO_PIXEL)/zoom, (r*TO_PIXEL)/zoom,
@@ -157,37 +156,10 @@ void DrawAlarmLine(int zoom)   //ۭѨޯП   zoomú̵؅҈}
 			pIndex = pIndex->pNext;
 		}
 		while(pIndex != pStubHead);
-	
-//         if(pIndex->pStub->tang1.angle - pIndex->pStub->tang2.angle < 180)
-//         {
-//            if(pIndex->pNext->pStub->tang1.angle - pIndex->pNext->pStub->tang2.angle < 180)
-//            {
-//                      }
-//            else
-//            {
-//               GUI_DrawLine(((pIndex->pStub->tang1.point.x-pIndex->pStub->basePoint.x)/zoom+pIndex->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
-//                           -((pIndex->pStub->tang1.point.y-pIndex->pStub->basePoint.y)/zoom+pIndex->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y,
-//                           ((pIndex->pNext->pStub->crossPoint.x-pIndex->pNext->pStub->basePoint.x)/zoom+pIndex->pNext->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
-//                           -((pIndex->pNext->pStub->crossPoint.y-pIndex->pNext->pStub->basePoint.y)/zoom+pIndex->pNext->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y);
-
-//            }
-//         }
-//         else
-//         {
-//            if(pIndex->pNext->pStub->tang1.angle - pIndex->pNext->pStub->tang2.angle < 180)
-//            {
-//            }
-//            else
-//            {
-//            
-//            }
-//               
-//         }
-
 	}
 }
 
-void DrawCursor(Point pixel, int flag)  //ДʾڢҪܰהӦքхϢ
+void DrawCursor(Point pixel, int flag)  //��???????��?
 {
 	int start_x, start_y;	
 	Point point;
@@ -206,7 +178,7 @@ void DrawCursor(Point pixel, int flag)  //ДʾڢҪܰהӦքхϢ
 		sprintf(pStrBuf, "E  %s", strTmp);
 		infoWidth = GUI_GetStringDistX(pStrBuf);
 		infoHeight = strlen(pSnapLink->Boat.name) ? GUI_GetFontSizeY()*4 : GUI_GetFontSizeY()*3;
-		if(start_x+infoWidth > SCREEN_WIDTH)    //؀ֹսДʾхϢӬԶǁĻ׶Χ
+		if(start_x+infoWidth > SCREEN_WIDTH)    //???��?��???��??��
 		{
 			start_x = pixel.x - infoWidth -10;
 		}
@@ -259,7 +231,7 @@ void DrawCursor(Point pixel, int flag)  //ДʾڢҪܰהӦքхϢ
 
 
 
-Point GetItemPixel(Point itemPoint)    //փսהгքб̘ظҪ
+Point GetItemPixel(Point itemPoint)    //???��?��???
 {
 	Point itemPixel;
 	itemPixel.x =  itemPoint.x*TO_PIXEL + motherShipPixel.x;
@@ -268,9 +240,9 @@ Point GetItemPixel(Point itemPoint)    //փսהгքб̘ظҪ
 }
 
 
-static void FigureMotherShipPixel(Point center, int flag)    //݆̣ĸԬքб̘ظҪ    centerúʵ݊ѨҪДʾ׶Χքאф֣
+static void FigureMotherShipPixel(Point center, int flag)    //?????��???    center��????��??��??��?
 {
-	Point screenCenter; //֨ӥǁĻДʾȸб̘אф֣
+	Point screenCenter; //??��?��??��??��?
 	if(!flag)
 	{
 		screenCenter.x = 215;
@@ -285,8 +257,8 @@ static void FigureMotherShipPixel(Point center, int flag)    //݆̣ĸԬքб̘ظ�
 	motherShipPixel.y = screenCenter.y + center.y*TO_PIXEL;
 }
 	
-static void FigureScale(int flag)                  // ݆̣҈}ԟ  flag=0ҭʾmainShipWinַԃՋگ˽û
-																										//flag=1ҭʾalarmmonitorWinַԃՋگ˽
+static void FigureScale(int flag)                  // ???}?  flag=0??mainShipWin??????
+																										//flag=1??alarmmonitorWin?????
 {
 	int i;
 	int x_min = 0, x_max = 0, y_min = 0, y_max = 0;
@@ -363,7 +335,7 @@ static void FigureScale(int flag)                  // ݆̣҈}ԟ  flag=0ҭʾmainS
 	FigureMotherShipPixel(center, flag);
 }
 
-void DrawInvdShip(Point pixel, int course)  //course:ڽвèއ׈׆é  ۭһٶԳɫԬ
+void DrawInvdShip(Point pixel, int course)  //course:?�Ө�???��  ??????
 {
 	double _cos = cos(course*ANGLE_TO_RAD);
 	double _sin = sin(course*ANGLE_TO_RAD);
@@ -376,7 +348,7 @@ void DrawInvdShip(Point pixel, int course)  //course:ڽвèއ׈׆é  ۭһٶԳɫ�
 	GUI_DrawLine(pixel.x+7*_cos-9*_sin, pixel.y+7*_sin+9*_cos, pixel.x-7*_cos-9*_sin, pixel.y-7*_sin+9*_cos );
 }
 
-void DrawBullyShip(Point pixel, int course)    //ۭһٶٟ̙ԬܲԦ־Ԭ
+void DrawBullyShip(Point pixel, int course)    //??????????
 {
 	double _cos = cos(course*ANGLE_TO_RAD);
 	double _sin = sin(course*ANGLE_TO_RAD);
@@ -388,7 +360,7 @@ void DrawBullyShip(Point pixel, int course)    //ۭһٶٟ̙ԬܲԦ־Ԭ
 	GUI_DrawLine(pixel.x+10.5*_cos-13.5*_sin, pixel.y+10.5*_sin+13.5*_cos, pixel.x-10.5*_cos-13.5*_sin, pixel.y-10.5*_sin+13.5*_cos );
 }
 
-void DrawAllOtherShips()    //ۭ̹ԐքԬ
+void DrawAllOtherShips()    //?????
 {
 	int i;
 	Point point;
@@ -422,6 +394,7 @@ void DrawAllOtherShips()    //ۭ̹ԐքԬ
 		}
 //	}
 }
+
 
 
 
