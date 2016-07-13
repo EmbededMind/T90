@@ -301,12 +301,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
     
    case WM_CREATE:
    
-        agentdst_set.dst1 = 400;
-        agentdst_set.dst2 = 25;
-        agentdst_set.dst3 = 500;
-        agentdst_set.dst4 = 25;
-        agentdst_set.dst5 = 400;
-        memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(t90_set.singledst_set));
+
+        memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(t90_set.singledst_set));
    
         pColors = &setWinColors[t90_set.sys.nightmode];
         hStickFigures[0]  = HSD_STICKFIGURE_CreateEx(DST_SET_WIDTH/2-100-8, 291, 16, 20, pMsg->hWin, WM_CF_SHOW, 0, ID_SF_0);

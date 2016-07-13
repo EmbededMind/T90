@@ -86,7 +86,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //									WM_BringToTop(alarmMonitorWin);
 //									WM_SetFocus(alarmMonitorWin);
 //									cursorOnStub = 0;
-                           cursorOnStub = getcursor(UP-1);                   
+                           cursorOnStub = getcursor(UP);                   
 									WM_Paint(mainShipWin);
 									break;
 						 
@@ -94,7 +94,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                            if(plugEvent.status&(0x01<<2))
                            {
 //									   cursorOnStub = 2;
-                              cursorOnStub = getcursor(DOWN-1);
+                              cursorOnStub = getcursor(DOWN);
 									   WM_Paint(mainShipWin);
                            }
 									break;
@@ -103,7 +103,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                            if(plugEvent.status&(0x01<<0))
                            {
 //									   cursorOnStub = 1;
-                              cursorOnStub = getcursor(LEFT-1);                              
+                              cursorOnStub = getcursor(LEFT);                              
 									   WM_Paint(mainShipWin);
                            }
            
@@ -113,7 +113,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                            if(plugEvent.status&(0x01<<4))
                            {
 //									   cursorOnStub = 3;
-                              cursorOnStub = getcursor(RIGHT-1);                              
+                              cursorOnStub = getcursor(RIGHT);                              
 									   WM_Paint(mainShipWin);
                            }
 									break;
@@ -500,7 +500,7 @@ static void _onPaint2(void)
 int getcursor(int position)
 {
    int i, which,diff;
-   diff = 9999999;
+   diff = 99999;
    which = cursorOnStub;
    
    switch(position){

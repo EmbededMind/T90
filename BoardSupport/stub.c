@@ -457,11 +457,12 @@ int STUB_GetMostValue(char type)
 		
 int FetchMidStub()
 {
+
     int i = 0;
     int maxpoint_y = -99999;
-    for(i = 1; i < STUB_NUM; i++)
+    for(i = 1; i < STUB_NUM_MAX; i++)
     {
-        if(stubs[i].basePoint.y > maxpoint_y)
+        if(stubs[i].isValid && stubs[i].basePoint.y > maxpoint_y)
             maxpoint_y  = stubs [i].basePoint.y;        
     }
     

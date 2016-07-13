@@ -353,16 +353,8 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
    
       case WM_CREATE:
 
-           tempDouDstSet[0].motostub = DEFAULT_DOUDST1;
-           tempDouDstSet[0].stubtostub = DEFAULT_DOUDST2;
-           tempDouDstSet[0].motoas = DEFAULT_DOUDST3;
-           tempDouDstSet[1].motostub = DEFAULT_DOUDST4;
-           tempDouDstSet[1].stubtostub = DEFAULT_DOUDST1;
-           tempDouDstSet[1].motoas = DEFAULT_DOUDST3;
-           tempDouDstSet[2].motostub = DEFAULT_DOUDST1;
-           tempDouDstSet[2].stubtostub = DEFAULT_DOUDST2;
-           tempDouDstSet[2].motoas = DEFAULT_DOUDST3;
-           memcpy(&t90_set.doubledst_set,tempDouDstSet,sizeof(tempDouDstSet));
+
+           memcpy(tempDouDstSet,&t90_set.doubledst_set,sizeof(tempDouDstSet));
            
            pColors  = &setWinColors[t90_set.sys.nightmode];
            

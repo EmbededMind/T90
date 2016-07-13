@@ -4,7 +4,7 @@
 #include "layout.h"
 #include "lpc_types.h"
 
-#define STUB_NUM         4
+
 //#define STUB_NUM_SINGLE  4
 #define STUB_NUM_MAX  5
 
