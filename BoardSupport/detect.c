@@ -28,7 +28,18 @@ void detectInit()
     }
     for(i = 0; i < stubnum;i++)
     {
-				j = (i+1 == stubnum)? 0: i+1;
+		  
+        do
+        {
+           j++;
+           if(j  == stubnum)
+           {  
+              j  = 0;
+              break;
+           }
+        }
+        while(!stubs[j].isValid);
+        
         if(stubs[i].tang1.point.y*stubs[j].tang2.point.x-stubs[j].tang2.point.y*stubs[i].tang1.point.x >= 0)
         {
              pointInPolygon |= 0x00000001<<i;
@@ -56,6 +67,7 @@ Bool isCloseStub(BERTH *pBerth)
     int i = 0;    
     for(i = 0;i < stubnum;i++)
     {
+       if(stubs[i].isValid)
         if(SQUARE(pBerth->x_to_cross - stubs[i].basePoint.x) + SQUARE(pBerth->y_to_cross - stubs[i].basePoint.y) < SQUARE(t90_set .alarm.invd_dst )){
             return TRUE;
     
@@ -72,9 +84,19 @@ Bool isInPolygon(BERTH *pBerth)
     unsigned int isinpoly = 0;
     for(i = 0;i < stubnum;i++)
     {       
-        j = (i+1 == stubnum)? 0: i+1;
+         do
+        {
+           j++;
+           if(j  == stubnum)
+           {  
+              j  = 0;
+              break;
+           }
+        }
+        while(!stubs[j].isValid);
+        
         if(((stubs[i].tang1.point.x-stubs[j].tang2.point.x)*pBerth->y_to_cross + (stubs[j].tang2.point.y-stubs[i].tang1.point.y)*pBerth->x_to_cross
-            +stubs[i].tang1.point.y*stubs[((i+1) == stubnum)?0:(i+1)].tang2.point.x-stubs[j].tang2.point.y*stubs[i].tang1.point.x) > 0)
+            +stubs[i].tang1.point.y*stubs[j].tang2.point.x-stubs[j].tang2.point.y*stubs[i].tang1.point.x) > 0)
         {
             isinpoly |= 0x00000001<<i;
         }
@@ -92,10 +114,12 @@ Bool isInPolygon(BERTH *pBerth)
             isinpoly &= 0xfffffffe<<(i+16);
         }
     }
+    
     if(isinpoly == pointInPolygon)
     {    
         return TRUE;
     }
+    
     return FALSE;
 }
 
@@ -103,7 +127,7 @@ Bool isInPolygon(BERTH *pBerth)
 
 void isInvader(BERTH  *pBerth)
 {
-	pBerth->isInvader = isCloseStub(pBerth) /*|| isInPolygon(pBerth)*/;
+	pBerth->isInvader = isCloseStub(pBerth) || isInPolygon(pBerth);
 	if(pBerth->isInvader && pBerth->mntState == MNTState_None)
 	{
 		pBerth->mntState = MNTState_Triggered;

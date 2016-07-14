@@ -75,11 +75,7 @@ void MainTask(void)
 		workModeWin = WIN_WorkModeCreate(); 
 	
 		mainShipWin = WIN_SingleShipCreate();	
-//		doubleShipWin = WIN_DoubleShipCreate();
-
-  
-
-		
+//		doubleShipWin = WIN_DoubleShipCreate();	
 		alarmMonitorWin = WIN_AlarmMonitorCreate();           //创建窗口 
 		
 		mainMenuDlg = DLG_MainMenuCreate();	
@@ -98,15 +94,12 @@ void MainTask(void)
 		confirmWin = WIN_ConfirmCreate();
 		
 
-
-
 		if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖
 		{         
 			monitorState = OFF;
 			WM_BringToTop(workModeWin);
 			WM_SetFocus(workModeWin);
 		}
-
 		else
 		{
 			StubRefresh();

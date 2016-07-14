@@ -251,7 +251,8 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
             StubRefresh();
             
             ipcMsg  &= (~0x80);
-         }    
+         }  
+        printf("GG\n");
       OSTimeDlyHMSM(0,0,5,0);
    }
 }
@@ -491,6 +492,7 @@ void Comm_Task(void * p_arg)
             /// Port 1 changed!
             if(recMMSI != portStatus[0]){
                 portStatus[0]  = recMMSI;
+               ipcMsg  |= 0x80;
                Comm_addFrame(1,abs(stubs[1].basePoint.x),abs(stubs[1].basePoint.y));
             }
             
@@ -502,6 +504,7 @@ void Comm_Task(void * p_arg)
 
             if(recMMSI != portStatus[1]){
                portStatus[1]  = recMMSI;
+               ipcMsg  |= 0x80;
                Comm_addFrame(2,abs(stubs[2].basePoint.x),abs(stubs[2].basePoint.y));
             }
             
@@ -514,32 +517,19 @@ void Comm_Task(void * p_arg)
 
             if(recMMSI != portStatus[2]){
                portStatus[2]  = recMMSI;
+               ipcMsg  |= 0x80;
                Comm_addFrame(3,abs(stubs[3].basePoint.x),abs(stubs[3].basePoint.y));
-            }
-            
-            ipcMsg  |= 0x80;  
-            
-//            if(pFrame[2] != portStatus[0]  ||  pFrame[3] != portStatus[1]  ||  pFrame[4] != portStatus[2]){
-//               
-//               if(portStatus[0] == 0  &&  pFrame[2] == 1)
-//                  Comm_addFrame(1,abs(stubs[1].basePoint.x),abs(stubs[1].basePoint.y));
-//               if(portStatus[1] == 0  &&  pFrame[3] == 1)
-//                  Comm_addFrame(2,abs(stubs[2].basePoint.x),abs(stubs[2].basePoint.y));
-//               if(portStatus[2] == 0  &&  pFrame[4] == 1)
-//                  Comm_addFrame(3,abs(stubs[3].basePoint.x),abs(stubs[3].basePoint.y));
-//               portStatus[0]  = pFrame[2];
-//               portStatus[1]  = pFrame[3];
-//               portStatus[2]  = pFrame[4];
-//               ipcMsg  |= 0x80;                 
-//               
-//            }
+            }            
          }
       }
       else{
          if(pulseNoAckCnt <= 3){         
             pulseNoAckCnt++;
             if(pulseNoAckCnt == 4){
-
+//               ipcMsg  |= 0x80;
+//               portStatus[0]  = 0;
+//               portStatus[1]  = 0;
+//               portStatus[2]  = 0;
                ipcMsg  |= 0x40;
                /// Ack err
             }
@@ -611,14 +601,14 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   
   PartitionPt=OSMemCreate(Partition,MSG_QUEUE_TABNUM,100,&err);
   
-  OSTaskCreateExt(     UI_Task, 
-                       (void *)0,
-                       (OS_STK *)&UI_Task_Stack[USER_TASK_STACK_SIZE-1],  
-                       UI_Task_PRIO, UI_Task_PRIO, 
-                       (OS_STK *)&UI_Task_Stack[0], 
-                       USER_TASK_STACK_SIZE,
-                       (void*)0, 
-                       OS_TASK_OPT_STK_CHK+OS_TASK_OPT_STK_CLR );/* 创建任务 UI_Task */
+//  OSTaskCreateExt(     UI_Task, 
+//                       (void *)0,
+//                       (OS_STK *)&UI_Task_Stack[USER_TASK_STACK_SIZE-1],  
+//                       UI_Task_PRIO, UI_Task_PRIO, 
+//                       (OS_STK *)&UI_Task_Stack[0], 
+//                       USER_TASK_STACK_SIZE,
+//                       (void*)0, 
+//                       OS_TASK_OPT_STK_CHK+OS_TASK_OPT_STK_CLR );/* 创建任务 UI_Task */
                        
   OSTaskCreateExt(     Insert_Task,
                        (void *)0,
