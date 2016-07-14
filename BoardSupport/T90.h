@@ -24,7 +24,7 @@ extern unsigned long SYS_Date;
 extern unsigned long SYS_Time;
 
 extern int monitorState;
-extern uint8_t portStatus[3];
+extern long portStatus[3];
 
 extern int N_boat;
 extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];

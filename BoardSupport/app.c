@@ -112,7 +112,7 @@ T90_PlugEvent plugEvent;
 //unsigned char  isDstSetNeedUpdate  = 0;
 uint8_t ipcMsg  = 0;
 
-long gPlugBoats[3];
+long portStatus[3];
 
 unsigned char isChecked  = 0;
 
@@ -245,9 +245,9 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
       isChecked  = 1;
         if(ipcMsg & 0x80){
           
-            Stub_setValidity(1, portStatus[0]);
-            Stub_setValidity(2, portStatus[1]);
-            Stub_setValidity(3, portStatus[2]);
+           Stub_setValidity(1, portStatus[0]?1:0);
+           Stub_setValidity(2, portStatus[1]?1:0);
+           Stub_setValidity(3, portStatus[2]?1:0);
             StubRefresh();
             
             ipcMsg  &= (~0x80);
@@ -478,23 +478,61 @@ void Comm_Task(void * p_arg)
       if(err == OS_ERR_NONE){
          /** 判断ACK类型，取得三个端口的状态 */
          if(pFrame[1] == 0x51){   /// 判断是否是来自于T81的消息
+            
+            long recMMSI  = 0;
+            
             pulseNoAckCnt  = 0;
 
-
-            if(pFrame[2] != portStatus[0]  ||  pFrame[3] != portStatus[1]  ||  pFrame[4] != portStatus[2]){
-               
-               if(portStatus[0] == 0  &&  pFrame[2] == 1)
-                  Comm_addFrame(1,abs(stubs[1].basePoint.x),abs(stubs[1].basePoint.y));
-               if(portStatus[1] == 0  &&  pFrame[3] == 1)
-                  Comm_addFrame(2,abs(stubs[2].basePoint.x),abs(stubs[2].basePoint.y));
-               if(portStatus[2] == 0  &&  pFrame[4] == 1)
-                  Comm_addFrame(3,abs(stubs[3].basePoint.x),abs(stubs[3].basePoint.y));
-               portStatus[0]  = pFrame[2];
-               portStatus[1]  = pFrame[3];
-               portStatus[2]  = pFrame[4];
-               ipcMsg  |= 0x80;                 
-               
+            recMMSI  = pFrame[2];  
+            recMMSI  = recMMSI<<8|pFrame[3]; 
+            recMMSI  = recMMSI<<8|pFrame[4];
+            recMMSI  = recMMSI<<8|pFrame[5];
+            
+            /// Port 1 changed!
+            if(recMMSI != portStatus[0]){
+                portStatus[0]  = recMMSI;
+               Comm_addFrame(1,abs(stubs[1].basePoint.x),abs(stubs[1].basePoint.y));
             }
+            
+            /// Port 2 changed!
+            recMMSI  = pFrame[6];  
+            recMMSI  = recMMSI<<8|pFrame[7]; 
+            recMMSI  = recMMSI<<8|pFrame[8];
+            recMMSI  = recMMSI<<8|pFrame[9];
+
+            if(recMMSI != portStatus[1]){
+               portStatus[1]  = recMMSI;
+               Comm_addFrame(2,abs(stubs[2].basePoint.x),abs(stubs[2].basePoint.y));
+            }
+            
+            
+            /// Port 3 changed!
+            recMMSI  = pFrame[10];  
+            recMMSI  = recMMSI<<8|pFrame[11]; 
+            recMMSI  = recMMSI<<8|pFrame[12];
+            recMMSI  = recMMSI<<8|pFrame[13];
+
+            if(recMMSI != portStatus[2]){
+               portStatus[2]  = recMMSI;
+               Comm_addFrame(3,abs(stubs[3].basePoint.x),abs(stubs[3].basePoint.y));
+            }
+            
+            ipcMsg  |= 0x80;  
+            
+//            if(pFrame[2] != portStatus[0]  ||  pFrame[3] != portStatus[1]  ||  pFrame[4] != portStatus[2]){
+//               
+//               if(portStatus[0] == 0  &&  pFrame[2] == 1)
+//                  Comm_addFrame(1,abs(stubs[1].basePoint.x),abs(stubs[1].basePoint.y));
+//               if(portStatus[1] == 0  &&  pFrame[3] == 1)
+//                  Comm_addFrame(2,abs(stubs[2].basePoint.x),abs(stubs[2].basePoint.y));
+//               if(portStatus[2] == 0  &&  pFrame[4] == 1)
+//                  Comm_addFrame(3,abs(stubs[3].basePoint.x),abs(stubs[3].basePoint.y));
+//               portStatus[0]  = pFrame[2];
+//               portStatus[1]  = pFrame[3];
+//               portStatus[2]  = pFrame[4];
+//               ipcMsg  |= 0x80;                 
+//               
+//            }
          }
       }
       else{
