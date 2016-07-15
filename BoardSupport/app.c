@@ -601,14 +601,14 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
   
   PartitionPt=OSMemCreate(Partition,MSG_QUEUE_TABNUM,100,&err);
   
-//  OSTaskCreateExt(     UI_Task, 
-//                       (void *)0,
-//                       (OS_STK *)&UI_Task_Stack[USER_TASK_STACK_SIZE-1],  
-//                       UI_Task_PRIO, UI_Task_PRIO, 
-//                       (OS_STK *)&UI_Task_Stack[0], 
-//                       USER_TASK_STACK_SIZE,
-//                       (void*)0, 
-//                       OS_TASK_OPT_STK_CHK+OS_TASK_OPT_STK_CLR );/* 创建任务 UI_Task */
+  OSTaskCreateExt(     UI_Task, 
+                       (void *)0,
+                       (OS_STK *)&UI_Task_Stack[USER_TASK_STACK_SIZE-1],  
+                       UI_Task_PRIO, UI_Task_PRIO, 
+                       (OS_STK *)&UI_Task_Stack[0], 
+                       USER_TASK_STACK_SIZE,
+                       (void*)0, 
+                       OS_TASK_OPT_STK_CHK+OS_TASK_OPT_STK_CLR );/* 创建任务 UI_Task */
                        
   OSTaskCreateExt(     Insert_Task,
                        (void *)0,
