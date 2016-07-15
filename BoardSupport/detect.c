@@ -30,24 +30,35 @@ void detectInit()
 	 {
 		  stubNumMax = STUB_NUM_MAX_D;
 	 }
-    for(i = 0; i < stubNumMax;i++)
+    for(i = 0; i < stubNumMax; i++)
     {
 			
        if(stubs[i].isValid)
 		 {
-			  j = i+1;
-			  do{
-				 if(stubs[j].isValid == 1)
-				 {
-					 break;
-				 }
-				 else
-				 {
-					 j++;
-				 }
-			  }while(j == stubNumMax);
-			  if(j==stubNumMax)
-					 j = 0;
+          if(i == stubNumMax - 1)
+          {
+              j = 0;
+          }
+          else
+          {
+              for(j = i+1; j < stubNumMax; j++)
+              {
+                  if(stubs[j].isValid)
+                  {
+ printf("isValid");
+                      break;
+                  }
+                  else
+                  {
+                      if(j == stubNumMax)
+                      {
+                          j = 0;
+printf("isValid");
+                          break;
+                      }
+                  }
+              }
+           }
 			  if(stubs[i].tang1.point.y*stubs[j].tang2.point.x-stubs[j].tang2.point.y*stubs[i].tang1.point.x >= 0)
 			  {
 					 pointInPolygon |= 0x00000001<<i;
@@ -58,7 +69,7 @@ void detectInit()
 			  }
 			  
 			 
-			  if(-(stubs[i].tang1.point.x-stubs[j].tang2.point.x)+stubs[i].tang1.point.y*stubs[i].tang2.point.x-stubs[i].tang2.point.y*stubs[i].tang1.point.x > 0)
+			  if(-(stubs[i].tang1.point.x-stubs[j].tang2.point.x)+stubs[i].tang1.point.y*stubs[i].tang2.point.x-stubs[i].tang2.point.y*stubs[i].tang1.point.x >= 0)
 			  {
 					pointInPolygon |= 0x00000001<<(i+16);
 			  }
@@ -95,19 +106,28 @@ Bool isInPolygon(BERTH *pBerth)
 //        j = (i+1 == stubNumMax)? 0: i+1;
       if(stubs[i].isValid)
       {
-         j = i+1;
-         do{
-          if(stubs[j].isValid == 1)
+        if(i == stubNumMax - 1)
           {
-             break;
+              j = 0;
           }
           else
           {
-             j++;
-          }
-         }while(j == stubNumMax);
-         if(j==stubNumMax)
-             j = 0;
+              for(j = i+1; j < stubNumMax; j++)
+              {
+                  if(stubs[j].isValid)
+                  {
+                      break;
+                  }
+                  else
+                  {
+                      if(j == stubNumMax)
+                      {
+                          j = 0;
+                          break;
+                      }
+                  }
+              }
+           }
          if(((stubs[i].tang1.point.x-stubs[j].tang2.point.x)*pBerth->y_to_cross + (stubs[j].tang2.point.y-stubs[i].tang1.point.y)*pBerth->x_to_cross
             +stubs[i].tang1.point.y*stubs[j].tang2.point.x-stubs[j].tang2.point.y*stubs[i].tang1.point.x) > 0)
          {
