@@ -268,7 +268,7 @@ void _Play_Task(void* p_arg)
    uint8_t playList  = 1;  
    BULY_BERTH* thisBulyBerth  = NULL;
    BERTH * thisinvdBerth = NULL; 
-   
+printf("play task\n");   
    ISD_Wait_PWRUp();    
    ISD_SetVolumn(t90_set.sys.volum);
    MUSIC_RESET;
@@ -276,15 +276,18 @@ void _Play_Task(void* p_arg)
    ISD_PWRDn();      
    while(1)
    {
+printf("line %d\n",__LINE__);
        
         if(FetchSTime() == 0)
         {
               MUSIC_ADD(SND_ID_STOF);
+printf("line %d\n",__LINE__);
         }
          else
          {
 						if(monitorState == ON) // Ý à ˜
-		            {  
+		            {
+printf("line %d\n",__LINE__);                     
                    thisBulyBerth  = BULY_fetchNextPlayBerth();
                    if(thisBulyBerth){                             
                    if((thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //ÓæÕþ´¬
@@ -309,6 +312,7 @@ void _Play_Task(void* p_arg)
                                    break;
                        }                                  
                    angle = getAngleOfShip(thisBulyBerth->pBoatLink);
+                       
                    if(angle>=0 && angle<360)
                         {
                              SND_ParseNum(angle*1000,aNums);
@@ -456,8 +460,9 @@ void _Play_Task(void* p_arg)
                  } /// End. execute play 
              /// End . if(monitorState == FALSE)    
             OSTimeDlyHMSM(0, 0, 3, 0);
+printf("line %d\n",__LINE__);
      } /// 'End'. while(1).In fact this will not happen
-  
+ 
 }
  
 

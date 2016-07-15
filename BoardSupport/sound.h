@@ -22,7 +22,7 @@
 #define SND_ID_TEN   12
 #define SND_ID_HAND  13
 #define SND_ID_WLCM  14   
-#define SND_ID_INVD  15   //invader
+#define SND_ID_INVD  15    //invader
 #define SND_ID_MHS   16		//watch out ,speeding
 #define SND_ID_STOF  17    //stop off
 #define SND_ID_DST   18

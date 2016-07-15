@@ -31,6 +31,7 @@ void MainTask(void)
    GUI_MEMDEV_Handle hMem0;
 //INFO("MainTask Start");
 
+printf("maintask\n");
    GUI_Init();
 	//创建字体
    GUI_UC_SetEncodeUTF8();	

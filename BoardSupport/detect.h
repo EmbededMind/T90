@@ -3,7 +3,6 @@
 #include "boat_struct.h"
 
 
-
 void detect(void);
 void detectInit(void);
 

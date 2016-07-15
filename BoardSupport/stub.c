@@ -106,7 +106,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 	}
 	FillStubNodes();
 	FillStubInfo();
-	detectInit();
+//	detectInit();
 //	PrintStubInfo();
 }
 

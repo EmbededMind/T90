@@ -131,7 +131,7 @@ void check()
 //	SNAP_Refresh();
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
-  CHECK_STRefresh();
+   CHECK_STRefresh();
 //INFO("highspeed num:%d",validCnt);
 //	BULY_dump();
 }
