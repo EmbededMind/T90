@@ -393,7 +393,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                 }
                 else if(whichFig == 2)
                 {
-                   Comm_addFrame(whichFig+2, agentdst_set.dst4, agentdst_set.dst5);
+                   Comm_addFrame(whichFig+1, agentdst_set.dst4, agentdst_set.dst5);
                 }
 
                 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst1);

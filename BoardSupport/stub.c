@@ -9,7 +9,7 @@
 #include "transform.h"
 
 
-Stub stubs[STUB_NUM_MAX];
+Stub stubs[STUB_NUM_MAX_D];
 StubNode *pStubHead = NULL;
 
 
@@ -172,7 +172,7 @@ static void FillStubNodes(void)
 			free(pIndex);
 		}
 	}                 //É¾³ýÍê³É
-	for(i = 0; i < STUB_NUM_MAX; i++)
+	for(i = 0; i < STUB_NUM_MAX_D; i++)
 	{
 		if(stubs[i].isValid)
 		{
@@ -460,7 +460,7 @@ int FetchMidStub()
 
     int i = 0;
     int maxpoint_y = -99999;
-    for(i = 1; i < STUB_NUM_MAX; i++)
+    for(i = 1; i < STUB_NUM_MAX_D; i++)
     {
         if(stubs[i].isValid && stubs[i].basePoint.y > maxpoint_y)
             maxpoint_y  = stubs [i].basePoint.y;        

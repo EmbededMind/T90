@@ -6,7 +6,8 @@
 
 
 //#define STUB_NUM_SINGLE  4
-#define STUB_NUM_MAX  5
+#define STUB_NUM_MAX_D 5
+#define STUB_NUM_MAX_S 4
 
 #define PI               3.1416
 #define RAD_TO_ANGLE     180/PI
@@ -53,7 +54,7 @@ typedef struct StubNode
 	struct StubNode *pNext;
 } StubNode;
 
-extern Stub stubs[STUB_NUM_MAX];
+extern Stub stubs[STUB_NUM_MAX_D];
 
 
 extern StubNode *pStubHead;

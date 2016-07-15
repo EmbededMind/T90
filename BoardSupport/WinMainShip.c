@@ -500,7 +500,7 @@ int getcursor(int position)
    
    switch(position){
       case UP:
-         for(i = 0; i < STUB_NUM_MAX; i++)
+         for(i = 0; i < STUB_NUM_MAX_D; i++)
          {
             if((stubs[i].isValid == TRUE) && (stubs[i].basePoint.y > stubs[cursorOnStub].basePoint.y))
             {
@@ -513,7 +513,7 @@ int getcursor(int position)
          }
          break;
       case DOWN:
-         for(i = 0; i < STUB_NUM_MAX; i++)
+         for(i = 0; i < STUB_NUM_MAX_D; i++)
          {
             if((stubs[i].isValid == TRUE) && (stubs[i].basePoint.y < stubs[cursorOnStub].basePoint.y))
             {
@@ -526,7 +526,7 @@ int getcursor(int position)
          }
          break;
       case LEFT:
-         for(i = 0; i < STUB_NUM_MAX; i++)
+         for(i = 0; i < STUB_NUM_MAX_D; i++)
          {
             if((stubs[i].isValid == TRUE) && (stubs[i].basePoint.x < stubs[cursorOnStub].basePoint.x))
             {
@@ -539,7 +539,7 @@ int getcursor(int position)
          }
          break;
       case RIGHT:
-         for(i = 0; i < STUB_NUM_MAX; i++)
+         for(i = 0; i < STUB_NUM_MAX_D; i++)
          {
             if((stubs[i].isValid == TRUE) && (stubs[i].basePoint.x > stubs[cursorOnStub].basePoint.x))
             {
