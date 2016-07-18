@@ -135,27 +135,79 @@ void DrawAlarmLine(int zoom)   //???§±   zoom¨²???}
 {
 	StubNode *pIndex = pStubHead;
 	int r;
+   Point points,pointe;
+   
 	if(pIndex)
 	{
+//printf("/////////////////\n");
 		r = sqrt(pIndex->pStub->tang1.point.x*pIndex->pStub->tang1.point.x + pIndex->pStub->tang1.point.y*pIndex->pStub->tang1.point.y);
+//      do{
+//         if(IsLineSegmCross(pIndex->pPrev->pStub->tang1.point, pIndex->pStub->tang2.point, pIndex->pStub->tang1.point, pIndex->pNext->pStub->tang2.point))
+//         {
+//            pIndex->pStub->isCross = 1;
+//         }
+//         else
+//         {
+//            pIndex->pStub->isCross = 0;
+//         } 
+//printf("%d\n",pIndex->pStub->isCross);
+//          pIndex = pIndex->pNext;         
+//      }while(pIndex != pStubHead);
+//      do{
+//         printf("%d\n",pIndex->pNext->pStub->isCross);
+//         pIndex = pIndex->pNext;
+//      }while(pIndex != pStubHead);
+      
 		do
 		{
-			if(pIndex->pStub->tang2.angle > pIndex->pStub->tang1.angle)
-			{
-				pIndex->pStub->tang1.angle += 360;
-			}
-			GUI_SetLineStyle(GUI_LS_SOLID);
-			GUI_DrawArc(pIndex->pStub->basePoint.x*TO_PIXEL + motherShipPixel.x, -pIndex->pStub->basePoint.y*TO_PIXEL + motherShipPixel.y, 
-								/*	(t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, (t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, */
-									(r*TO_PIXEL)/zoom, (r*TO_PIXEL)/zoom,
-									pIndex->pStub->tang2.angle, pIndex->pStub->tang1.angle);
-			GUI_DrawLine(((pIndex->pStub->tang1.point.x-pIndex->pStub->basePoint.x)/zoom+pIndex->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
-									-((pIndex->pStub->tang1.point.y-pIndex->pStub->basePoint.y)/zoom+pIndex->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y,
-									 ((pIndex->pNext->pStub->tang2.point.x-pIndex->pNext->pStub->basePoint.x)/zoom+pIndex->pNext->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
-									-((pIndex->pNext->pStub->tang2.point.y-pIndex->pNext->pStub->basePoint.y)/zoom+pIndex->pNext->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y);
+//         if(!pIndex->pStub->isCross)
+//         {
+            if(pIndex->pStub->tang2.angle > pIndex->pStub->tang1.angle)
+            {
+               pIndex->pStub->tang1.angle += 360;
+            }
+            GUI_SetLineStyle(GUI_LS_SOLID);
+      
+            GUI_DrawArc(pIndex->pStub->basePoint.x*TO_PIXEL + motherShipPixel.x, -pIndex->pStub->basePoint.y*TO_PIXEL + motherShipPixel.y, 
+                           /*	(t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, (t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, */
+                              (r*TO_PIXEL)/zoom, (r*TO_PIXEL)/zoom,
+                              pIndex->pStub->tang2.angle, pIndex->pStub->tang1.angle);
+//			}
 			pIndex = pIndex->pNext;
 		}
 		while(pIndex != pStubHead);
+      do
+      {
+//         if(pIndex->pStub->isCross)
+//         {
+//            points.x = pIndex->pStub->crossPoint.x;
+//            points.y = pIndex->pStub->crossPoint.y;
+//         }
+//         else
+//         {
+//            points.x = pIndex->pStub->tang1.point.x;
+//            points.y = pIndex->pStub->tang1.point.y;
+//         }
+//         if(pIndex->pNext->pStub->isCross)
+//         {
+//            pointe.x = pIndex->pNext->pStub->crossPoint.x;
+//            pointe.y = pIndex->pNext->pStub->crossPoint.y;
+//         }
+//         else
+//         {
+//            pointe.x = pIndex->pNext->pStub->tang2.point.x;
+//            pointe.x = pIndex->pNext->pStub->tang2.point.y;
+//         }
+//         GUI_DrawLine(((points.x-pIndex->pStub->basePoint.x)/zoom+pIndex->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
+//									-((points.y-pIndex->pStub->basePoint.y)/zoom+pIndex->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y,
+//									 ((pointe.x-pIndex->pNext->pStub->basePoint.x)/zoom+pIndex->pNext->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
+//									-((pointe.y-pIndex->pNext->pStub->basePoint.y)/zoom+pIndex->pNext->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y);
+         GUI_DrawLine(((pIndex->pStub->tang1.point.x-pIndex->pStub->basePoint.x)/zoom+pIndex->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
+									-((pIndex->pStub->tang1.point.y-pIndex->pStub->basePoint.y)/zoom+pIndex->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y,
+									 ((pIndex->pNext->pStub->tang2.point.x-pIndex->pNext->pStub->basePoint.x)/zoom+pIndex->pNext->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
+									-((pIndex->pNext->pStub->tang2.point.y-pIndex->pNext->pStub->basePoint.y)/zoom+pIndex->pNext->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y);
+         pIndex = pIndex->pNext;
+      }while(pIndex != pStubHead);
 	}
 }
 

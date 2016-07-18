@@ -101,7 +101,10 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            GUI_SetFont(myToast.pFont);
            GUI_DispStringAt(myToast.text, clientRect.x0+TEXT_MARGIN, (clientRect.y0+clientRect.y1) /2 -GUI_GetFontDistY()/2);
            break;
-           
+      case WM_SET_FOCUS:
+           if(!pMsg->Data.v)
+              WM_DeleteWindow(pMsg->hWin);
+           break;
     default:
            WM_DefaultProc(pMsg);
            break;

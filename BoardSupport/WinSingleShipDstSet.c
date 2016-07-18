@@ -252,9 +252,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
                sprintf(pStrBuf,"%d",agentdst_set.dst5);
                HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
-              memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
-				  T90_Store(); 
-              StubRefresh();
+               memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
+				   T90_Store(); 
+               StubRefresh();
            }
            else 
            {

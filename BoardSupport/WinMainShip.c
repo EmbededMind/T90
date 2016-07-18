@@ -268,6 +268,8 @@ static void _onPaint1(void)
 	GUI_SetColor(pColor->textColor);
 	DrawStubs(0);
 	DrawCursor(motherShipPixel, 0);
+   GUI_SetColor(GUI_BLACK);
+	GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
 }
 
 
@@ -488,7 +490,9 @@ static void _onPaint2(void)
 
 	 GUI_SetColor(pColor->textColor);
 	 DrawStubs(0);
-	 DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);  
+	 DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);
+    GUI_SetColor(GUI_BLACK);
+	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);    
 }
 
 int getcursor(int position)

@@ -46,12 +46,14 @@ typedef struct Stub
    Point crossPoint;
 	Bool isValid;
 	StubType type;
+   Bool isCross;
 } Stub;
 
 typedef struct StubNode
 {
 	Stub *pStub;
 	struct StubNode *pNext;
+   struct StubNode *pPrev;
 } StubNode;
 
 extern Stub stubs[STUB_NUM_MAX_D];
@@ -74,7 +76,7 @@ int STUB_GetMostValue(char type);
 
 int FetchMidStub(void);
 
-
+int IsLineSegmCross(Point pointa,Point pointb,Point pointc,Point pointd);
 
 
 

@@ -13,55 +13,55 @@
  *
  */
 static unsigned int pointInPolygon = 0;
-static unsigned int stubNumMax;
 
-int getAllPointYMax()
-{
-   int i,max=-999;
-   for(i = 0; i < STUB_NUM_MAX_D; i++)
-   {
-      if(stubs[i].isValid)
-      {
-         if(stubs[i].basePoint.y > max)
-         {
-            max = stubs[i].basePoint.y;
-         }
-         if(stubs[i].tang1.point.y > max)
-         {
-            max = stubs[i].tang1.point.y;
-         }
-         if(stubs[i].tang2.point.y > max)
-         {
-            max = stubs[i].tang2.point.y;
-         }
-      }
-   }
-   return max;
-}
 
-int getAllPointYMin()
-{
-   int i, min = 999;
-   for(i = 0; i < STUB_NUM_MAX_D; i++)
-   {
-      if(stubs[i].isValid)
-      {
-         if(stubs[i].basePoint.y < min)
-         {
-            min = stubs[i].basePoint.y;
-         }
-         if(stubs[i].tang1.point.y < min)
-         {
-            min = stubs[i].tang1.point.y;
-         }
-         if(stubs[i].tang2.point.y < min)
-         {
-            min = stubs[i].tang2.point.y;
-         }      
-      }         
-   }
-   return min;
-}
+//int getAllPointYMax()
+//{
+//   int i,max=-999;
+//   for(i = 0; i < STUB_NUM_MAX_D; i++)
+//   {
+//      if(stubs[i].isValid)
+//      {
+//         if(stubs[i].basePoint.y > max)
+//         {
+//            max = stubs[i].basePoint.y;
+//         }
+//         if(stubs[i].tang1.point.y > max)
+//         {
+//            max = stubs[i].tang1.point.y;
+//         }
+//         if(stubs[i].tang2.point.y > max)
+//         {
+//            max = stubs[i].tang2.point.y;
+//         }
+//      }
+//   }
+//   return max;
+//}
+
+//int getAllPointYMin()
+//{
+//   int i, min = 999;
+//   for(i = 0; i < STUB_NUM_MAX_D; i++)
+//   {
+//      if(stubs[i].isValid)
+//      {
+//         if(stubs[i].basePoint.y < min)
+//         {
+//            min = stubs[i].basePoint.y;
+//         }
+//         if(stubs[i].tang1.point.y < min)
+//         {
+//            min = stubs[i].tang1.point.y;
+//         }
+//         if(stubs[i].tang2.point.y < min)
+//         {
+//            min = stubs[i].tang2.point.y;
+//         }      
+//      }         
+//   }
+//   return min;
+//}
 int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
 {
    if(x1 + (pBerth->y_to_cross-y1)*(x2-x1)/(y2-y1) <= pBerth->x_to_cross)
@@ -76,41 +76,23 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
    if(pointa.y == pointb.y)
    {
       if(pBerth->y_to_cross == pointa.y)
-      {
-         if(pBerth->x_to_cross > MINNUM(pointa.x,pointb.x))
-         {
-            return 1;
-         }
-         return 0;         
+      {   
+            return 1;               
       }
-      return 0;      
    }
-   else if(pointa.x == pointb.x)
+   else 
    {
-      if(pBerth->y_to_cross > MINNUM(pointa.x, pointb.x) && 
-         pBerth->y_to_cross <= MAXNUM(pointa.x, pointb.x))
-      {
-         if(pBerth->x_to_cross >= pointa.x)
-         {
-
-            return 1;
-         }
-         return 0;
-      }
-      return 0;
-   }
-   else if(pBerth->y_to_cross > MINNUM(pointa.x, pointb.x) && 
-            pBerth->y_to_cross <= MAXNUM(pointa.x, pointb.x))
-   { 
-       if(pointa.y > pointb.y)
-       {         
-          return addLeft(pBerth, pointb.x, pointb.y, pointa.x, pointa.y);
-       }
-       else
-       {         
-          return addLeft(pBerth, pointa.x, pointa.x, pointb.x, pointb.y);
-       }
-       return 0;          
+       if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y))
+       {          
+          if(pointa.y > pointb.y)
+          {         
+             return addLeft(pBerth, pointb.x, pointb.y, pointa.x, pointa.y);
+          }
+          else
+          {         
+             return addLeft(pBerth, pointa.x, pointa.x, pointb.x, pointb.y);
+          }
+       }       
    }
    return 0;
 }
@@ -185,7 +167,7 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 Bool isCloseStub(BERTH *pBerth)
 {
     int i = 0;    
-    for(i = 0;i < stubNumMax;i++)
+    for(i = 0;i < STUB_NUM_MAX_D;i++)
     { 
 	    if(stubs[i].isValid)	 
 			  if(SQUARE(pBerth->x_to_cross - stubs[i].basePoint.x) + SQUARE(pBerth->y_to_cross - stubs[i].basePoint.y) < SQUARE(t90_set .alarm.invd_dst )){
@@ -201,21 +183,18 @@ Bool isInPolygon(BERTH *pBerth)
    int i, j;
    int flg=0;
    
-   max = getAllPointYMax();
-   min = getAllPointYMin();
-   if(pBerth->y_to_cross > min && pBerth->y_to_cross < max)
-   {
+
       for(i = 0; i < STUB_NUM_MAX_D; i++)
       {
          if(stubs[i].isValid)
          {
-            if(i == stubNumMax - 1)
+            if(i == STUB_NUM_MAX_D - 1)
             {
               j = 0;
             }
             else
             {
-              for(j = i+1; j < stubNumMax; j++)
+              for(j = i+1; j < STUB_NUM_MAX_D; j++)
               {
                   if(stubs[j].isValid)
                   {
@@ -223,7 +202,7 @@ Bool isInPolygon(BERTH *pBerth)
                   }
                   else
                   {
-                      if(j == stubNumMax)
+                      if(j == STUB_NUM_MAX_D)
                       {
                           j = 0;
                           break;
@@ -235,8 +214,7 @@ Bool isInPolygon(BERTH *pBerth)
             flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[j].tang2.point);
          }
       }
-   }
-printf("flg = %d",flg);
+   
    if(flg%2)
    {
       return 1;
@@ -307,7 +285,7 @@ printf("flg = %d",flg);
 
 void isInvader(BERTH  *pBerth)
 {
-	pBerth->isInvader = isCloseStub(pBerth) /*|| isInPolygon(pBerth)*/;
+	pBerth->isInvader = isCloseStub(pBerth) || isInPolygon(pBerth);
 	if(pBerth->isInvader && pBerth->mntState == MNTState_None)
 	{
 		pBerth->mntState = MNTState_Triggered;
@@ -321,14 +299,14 @@ void isInvader(BERTH  *pBerth)
 
 void detect()
 {
-    int i = 0;
-//     detectInit ();
+     int i = 0;
+
 	  for(i = 0; i < N_boat; i++)          //clear
 	  {
 		    SimpBerthes[i].pBerth->isInvader = 0;
 	  }
 	  
-//   if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
+     if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
      for(i = 0;i < N_boat;i++)
      {
          if(SimpBerthes[i].Dist < (t90_set.alarm.invd_dst+500)*7/4  &&  (SimpBerthes[i].pBerth->Boat.category&TYPE_SAFETY) == 0){

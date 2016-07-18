@@ -59,9 +59,9 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[4].isValid = 0;
   
   
-//  stubs[1].isValid  = 0;
-//  stubs[2].isValid  = 0;
-//  stubs[3].isValid  = 0;
+//  stubs[1].isValid  = 1;
+//  stubs[2].isValid  = 1;
+//  stubs[3].isValid  = 1;
 
 	}
 	else if(t90_set.sys.workmode == DOUBLE_MODE)
@@ -100,6 +100,8 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[4].isValid = TRUE;
 		stubs[4].isValid = 1;
 		stubs[4].type = aidedStub;
+      
+      
 //      stubs[1].isValid  = 1;
 //      stubs[2].isValid  = 1;
 //      stubs[3].isValid  = 1;
@@ -193,6 +195,14 @@ static void FillStubNodes(void)
 	}
 	if(pIndex)
 		pIndex->pNext = pStubHead;
+   pIndex = pStubHead;
+   if(pIndex)
+   {
+      do{
+         pIndex->pNext->pPrev = pIndex;
+         pIndex = pIndex->pNext;
+      }while(pIndex != pStubHead);
+   }
 }
 
 Point GetRelativePoint(Point point1, Point point2)   //两点的相对坐标
@@ -235,15 +245,19 @@ static void PrintStubInfo()
 static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
 {
 	int dist;
+   Point pointa,pointb,pointc,pointd;
+   int numValid = 0;
 	Point point;
 	StubNode *pIndex = pStubHead;
    int A1, A2, B1, B2, C1, C2;
    A1 = A2 = B1 = B2 = C1 = C2 = 0;
    
+   
 	if(pIndex)
 	{
 		do
 		{
+         numValid++;
 			point = GetRelativePoint(pIndex->pStub->basePoint, pIndex->pNext->pStub->basePoint);
 
 			dist = GetDistance(pIndex->pStub->basePoint, pIndex->pNext->pStub->basePoint);
@@ -260,122 +274,34 @@ static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
 			pIndex = pIndex->pNext;        
 		}
 		while(pIndex != pStubHead);
+
+         pIndex = pStubHead;
+         do
+         {
+            pointa.x = pIndex->pPrev->pStub->tang1.point.x;
+            pointa.y = pIndex->pPrev->pStub->tang1.point.y;
+            pointb.x = pIndex->pStub->tang2.point.x;
+            pointb.y = pIndex->pStub->tang2.point.y;
+            pointc.x = pIndex->pStub->tang1.point.x;
+            pointc.y = pIndex->pStub->tang1.point.y;
+            pointd.x = pIndex->pNext->pStub->tang2.point.x;
+            pointd.y = pIndex->pNext->pStub->tang2.point.y;
+            
+           	A1 = pointb.y - pointa.y;
+	         B1 = pointa.x - pointb.x;
+	         C1 = pointa.y * pointb.x - pointa.x * pointb.y;
+	         A2 = pointd.y - pointc.y;
+	         B2 = pointc.x - pointd.x;
+	         C2 = pointc.y + pointd.x - pointc.x * pointd.y;
+            if(B1*A2 - B2*A1)
+            {
+               pIndex->pStub->crossPoint.x = (C1 * B2 - C2 * B1) / (B1 * A2 - B2 * A1);
+               pIndex->pStub->crossPoint.y = (C2 * A1 - C1 * A2) / (B1 * A2 - B2 * A1);           
+            }
+         }while(pIndex != pStubHead);
+        
 	}
 
-   
-//   if(numValide >= 4)
-//   {
-//      //////////////////////////////
-//      pIndex = pStubHead;
-
-
-//         A1 = pIndex->pStub->tang1.point.x - pIndex->pNext->pStub->tang2.point.x;
-//         B1 = pIndex->pNext->pStub->tang2.point.y - pIndex->pStub->tang1.point.y;
-//         C1 = pIndex->pStub->tang1.point.y * pIndex->pNext->pStub->tang2.point.x - pIndex->pStub->tang1.point.x * pIndex->pNext->pStub->tang2.point.y;
-
-//         A2 = pIndex->pNext->pStub->tang1.point.x - pIndex->pNext->pNext->pStub->tang2.point.x;
-//         B2 = pIndex->pNext->pNext->pStub->tang2.point.y - pIndex->pNext->pStub->tang1.point.y;
-//         C2 = pIndex->pNext->pStub->tang1.point.y * pIndex->pNext->pNext->pStub->tang2.point.x - pIndex->pNext->pStub->tang1.point.x * pIndex->pNext->pNext->pStub->tang2.point.y;
-//      
-//      if(B1*A2 - B2*A1)
-//      {
-//         pIndex->pNext->pStub->crossPoint.y = (C2 * A1 - C1 * A2) / (B1 * A2 - B2 * A1);
-//         pIndex->pNext->pStub->crossPoint.x = (C1 * B2 - C2 * B1) / (B1 * A2 - B2 * A1);
-
-//      }
-//      /////////////////////////////
-//      pIndex = pStubHead->pNext;
-
-//         A1 = pIndex->pStub->tang1.point.x - pIndex->pNext->pStub->tang2.point.x;
-//         B1 = pIndex->pNext->pStub->tang2.point.y - pIndex->pStub->tang1.point.y;
-//         C1 = pIndex->pStub->tang1.point.y * pIndex->pNext->pStub->tang2.point.x - pIndex->pStub->tang1.point.x * pIndex->pNext->pStub->tang2.point.y;
-
-//         A2 = pIndex->pNext->pStub->tang1.point.x - pIndex->pNext->pNext->pStub->tang2.point.x;
-//         B2 = pIndex->pNext->pNext->pStub->tang2.point.y - pIndex->pNext->pStub->tang1.point.y;
-//         C2 = pIndex->pNext->pStub->tang1.point.y * pIndex->pNext->pNext->pStub->tang2.point.x - pIndex->pNext->pStub->tang1.point.x * pIndex->pNext->pNext->pStub->tang2.point.y;
-
-//      if(B1*A2 - B2*A1)
-//      {
-//         pIndex->pNext->pStub->crossPoint.y = (C2 * A1 - C1 * A2) / (B1 * A2 - B2 * A1);
-//         pIndex->pNext->pStub->crossPoint.x = (C1 * B2 - C2 * B1) / (B1 * A2 - B2 * A1);
-
-//      }
-//      ///////////////////////
-//      pIndex = pStubHead->pNext->pNext;
-//      
-
-//         A1 = pIndex->pStub->tang1.point.x - pIndex->pNext->pStub->tang2.point.x;
-//printf("A1 = %d\n",A1);
-//         B1 = pIndex->pNext->pStub->tang2.point.y - pIndex->pStub->tang1.point.y;
-//         C1 = pIndex->pStub->tang1.point.y * pIndex->pNext->pStub->tang2.point.x - pIndex->pStub->tang1.point.x * pIndex->pNext->pStub->tang2.point.y;
-
-//         A2 = pIndex->pNext->pStub->tang1.point.x - pIndex->pNext->pNext->pStub->tang2.point.x;
-//         B2 = pIndex->pNext->pNext->pStub->tang2.point.y - pIndex->pNext->pStub->tang1.point.y;
-//         C2 = pIndex->pNext->pStub->tang1.point.y * pIndex->pNext->pNext->pStub->tang2.point.x - pIndex->pNext->pStub->tang1.point.x * pIndex->pNext->pNext->pStub->tang2.point.y;
-//   
-//      if(B1*A2 - B2*A1)
-//      {
-//         
-//         pIndex->pNext->pStub->crossPoint.y = (C2 * A1 - C1 * A2) / (B1 * A2 - B2 * A1);
-//         pIndex->pNext->pStub->crossPoint.x = (C1 * B2 - C2 * B1) / (B1 * A2 - B2 * A1);
-
-//      }
-////printf("pIndex->pStub->tang1.point.x = %d\n",pIndex->pStub->tang1.point.x);
-////printf("pIndex->pStub->tang1.point.y = %d\n",pIndex->pStub->tang1.point.y);
-////printf("pIndex->pNext->pStub->tang2.point.x = %d\n",pIndex->pNext->pStub->tang2.point.x);
-////printf("pIndex->pNext->pStub->tang2.point.y = %d\n",pIndex->pNext->pStub->tang2.point.y);
-////printf("pIndex->pNext->pStub->tang1.point.x = %d\n",pIndex->pNext->pStub->tang1.point.x);
-////printf("pIndex->pNext->pStub->tang1.point.y = %d\n",pIndex->pNext->pStub->tang1.point.y);
-////printf("pIndex->pNext->pNext->pStub->tang2.point.x = %d\n",pIndex->pNext->pNext->pStub->tang2.point.x);
-////printf("pIndex->pNext->pNext->pStub->tang2.point.y = %d\n",pIndex->pNext->pNext->pStub->tang2.point.y);         
-////         
-////printf("A1 = %d\n",A1);
-////printf("B1 = %d\n",B1);
-////printf("C1 = %d\n",C1);
-////printf("A2 = %d\n",A2);
-////printf("B2 = %d\n",B2);
-////printf("C2 = %d\n",C2);
-////printf("y = %d\n",pIndex->pNext->pStub->crossPoint.y);
-////printf("x = %d\n",pIndex->pNext->pStub->crossPoint.x);
-//      //////////////////////////////
-//      pIndex = pStubHead->pNext->pNext->pNext;
-
-//         A1 = pIndex->pStub->tang1.point.x - pIndex->pNext->pStub->tang2.point.x;
-//         B1 = pIndex->pNext->pStub->tang2.point.y - pIndex->pStub->tang1.point.y;
-//         C1 = pIndex->pStub->tang1.point.y * pIndex->pNext->pStub->tang2.point.x - pIndex->pStub->tang1.point.x * pIndex->pNext->pStub->tang2.point.y;
-
-//         A2 = pIndex->pNext->pStub->tang1.point.x - pIndex->pNext->pNext->pStub->tang2.point.x;
-//         B2 = pIndex->pNext->pNext->pStub->tang2.point.y - pIndex->pNext->pStub->tang1.point.y;
-//         C2 = pIndex->pNext->pStub->tang1.point.y * pIndex->pNext->pNext->pStub->tang2.point.x - pIndex->pNext->pStub->tang1.point.x * pIndex->pNext->pNext->pStub->tang2.point.y;
-
-//      if(B1*A2 - B2*A1)
-//      {
-//         pIndex->pNext->pStub->crossPoint.y = (C2 * A1 - C1 * A2) / (B1 * A2 - B2 * A1);
-//         pIndex->pNext->pStub->crossPoint.x = (C1 * B2 - C2 * B1) / (B1 * A2 - B2 * A1);
-
-//      }
-//      
-//   }
-//printf("pIndex->pStub->tang1.point.x = %d\n",pIndex->pStub->tang1.point.x);
-//printf("pIndex->pStub->tang1.point.y = %d\n",pIndex->pStub->tang1.point.y);
-//printf("pIndex->pNext->pStub->tang1.point.x = %d\n",pIndex->pNext->pStub->tang2.point.x);
-//printf("pIndex->pNext->pStub->tang2.point.y = %d\n",pIndex->pNext->pStub->tang2.point.y);
-//printf("pIndex->pNext->pNext->pStub->tang2.point.x = %d\n",pIndex->pNext->pNext->pStub->tang2.point.x);
-//printf("pIndex->pNext->pNext->pStub->tang2.point.y = %d\n",pIndex->pNext->pNext->pStub->tang2.point.y);         
-//         
-//printf("A1 = %d\n",A1);
-//printf("B1 = %d\n",B1);
-//printf("C1 = %d\n",C1);
-//printf("A2 = %d\n",A2);
-//printf("B2 = %d\n",B2);
-//printf("C2 = %d\n",C2);
-//printf("y = %d\n",pIndex->pNext->pStub->crossPoint.y);
-//printf("x = %d\n",pIndex->pNext->pStub->crossPoint.x);
-//         pIndex = pIndex->pNext;
-//      }while(pIndex != pStubHead);
-   
-   
-   
 }
 
 
@@ -469,7 +395,35 @@ int FetchMidStub()
     return maxpoint_y/2;
 }
 
+int IsLineCrossTwoPoint(int A, int B, int C, Point point1, Point point2)
+{
+	if ((point1.x * A + point1.y * B + C) * (point2.x * A + point2.y * B + C) < 0)
+	{
+		return 1;
+	}
+	return 0;
+}
 
+int IsLineSegmCross(Point pointa, Point pointb, Point pointc, Point pointd)
+{
+	int flga, flgb;
+	int A1, B1, C1, A2, B2, C2;
+
+	A1 = pointb.y - pointa.y;
+	B1 = pointa.x - pointb.x;
+	C1 = pointa.y * pointb.x - pointa.x * pointb.y;
+	A2 = pointd.y - pointc.y;
+	B2 = pointc.x - pointd.x;
+	C2 = pointc.y + pointd.x - pointc.x * pointd.y;
+
+	if (IsLineCrossTwoPoint(A1, B1, C1, pointc, pointd) && IsLineCrossTwoPoint(A2, B2, C2, pointa, pointb))
+	{
+		return 1;
+	}
+	return 0;
+
+
+}
 
 
 

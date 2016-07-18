@@ -159,7 +159,7 @@ printf("maintask\n");
                WM_SendMessage(pMsg.hWin, &pMsg);
                
             }
-            WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
+//            WM_SendMessageNoPara(singleShipDstSetWin, USER_MSG_DST_UPDATE);
          }
          
 

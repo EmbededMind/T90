@@ -276,18 +276,17 @@ printf("play task\n");
    ISD_PWRDn();      
    while(1)
    {
-printf("line %d\n",__LINE__);
+
        
         if(FetchSTime() == 0)
         {
               MUSIC_ADD(SND_ID_STOF);
-printf("line %d\n",__LINE__);
+
         }
          else
          {
 						if(monitorState == ON) // Ý à ˜
-		            {
-printf("line %d\n",__LINE__);                     
+		            {                 
                    thisBulyBerth  = BULY_fetchNextPlayBerth();
                    if(thisBulyBerth){                             
                    if((thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //ÓæÕþ´¬
@@ -460,7 +459,6 @@ printf("line %d\n",__LINE__);
                  } /// End. execute play 
              /// End . if(monitorState == FALSE)    
             OSTimeDlyHMSM(0, 0, 3, 0);
-printf("line %d\n",__LINE__);
      } /// 'End'. while(1).In fact this will not happen
  
 }
