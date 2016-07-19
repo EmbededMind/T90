@@ -23,6 +23,7 @@ static const HomeColor *pColor = homeColors;
  *   @param [in] pMsg 消息指针
  */
 static void myButtonCallback(WM_MESSAGE* pMsg){
+   WM_MESSAGE myMsg;
 
    switch(pMsg->MsgId){
 //      case WM_SET_FOCUS:
@@ -33,14 +34,29 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
       
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
-							case GUI_KEY_PWM_INC:       
-									 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-									 break;
+               case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+              
+               case GUI_KEY_SINGLE:
                case GUI_KEY_LEFT:
                     if(pMsg->hWin == buttons[1]){
                        WM_SetFocus(buttons[0]);
                     }
                     break;
+               case GUI_KEY_DOUBLE:
                case GUI_KEY_RIGHT:								
                     if(pMsg->hWin == buttons[0]){
                        WM_SetFocus(buttons[1]);
@@ -60,7 +76,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 										WM_BringToTop(mainShipWin);
 										WM_SetFocus(mainShipWin);
 										T90_Store();
-                    monitorState = ON;
+                              monitorState = ON;
 										StubRefresh();
 										WM_SendMessageNoPara(systemSetDlg, WM_INIT_DIALOG);
                     break;

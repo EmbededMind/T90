@@ -17,7 +17,6 @@ WM_HWIN mainMenuDlg;
 
 static WM_HWIN buttons[3];
 
-
 static const MenuColor *pColors = mainMenuColors;
 
 
@@ -32,10 +31,12 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
 
 
 static void myButtonCallback(WM_MESSAGE* pMsg){
+   WM_MESSAGE myMsg;
    int id  = 0;
 	 int i;
 	 static int flag_prevfocus = 0;
    switch(pMsg->MsgId){
+
       case WM_SET_FOCUS:
 
            if(pMsg->Data.v){
@@ -83,10 +84,53 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
               }
            }
            HSD_BUTTON_Callback(pMsg);
+           
            break;
            
       case WM_KEY:          
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
+              case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);
+                        WM_InvalidateWindow(doubleShipDstSetWin);              
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);
+                        WM_InvalidateWindow(doubleShipDstSetWin);               
+                        break;
+              case GUI_KEY_SINGLE:
+                         id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
+                         if(id == 0)
+                         {                            
+                            WM_BringToTop(singleShipDstSetWin);                 
+                         }
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);                        
+                         break;
+              case GUI_KEY_DOUBLE:
+                         id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
+                         if(id == 0)
+                         {                            
+                            WM_BringToTop(doubleShipDstSetWin);                
+                         }                                             
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
                  case GUI_KEY_PWM_INC:       
                           WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                           break;

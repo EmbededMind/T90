@@ -34,8 +34,7 @@ extern uint8_t  Partition[MSG_QUEUE_TABNUM][100];
 /// If key pressed , isKeyTrigged will be TRUE. Your apps must set iskeyTrigged FALSe after using it.
 extern int isKeyTrigged;    
 
-/// If new plug event detected, var 'plugEvent' contain msg about that.
-extern T90_PlugEvent plugEvent;  
+/// If new plug event detected, var 'plugEvent' contain msg about that. 
 
 extern unsigned char isDstSetChanged;             
 /*-------------------------- Local Variables --------------------------------------*/

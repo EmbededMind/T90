@@ -99,7 +99,6 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 //      stubs[4].basePoint.x = pdoubleDstSet[4].motoas*M_TO_MILLINM;
 //      stubs[4].basePoint.y=0;
 		stubs[4].isValid = TRUE;
-		stubs[4].isValid = 1;
 		stubs[4].type = aidedStub;
       stubs[4].StubNum = 4;
       

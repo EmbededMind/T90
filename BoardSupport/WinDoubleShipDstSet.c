@@ -25,7 +25,7 @@
 #define MAXSTUBTOSTUB     3000
 
 WM_HWIN doubleShipDstSetWin;
-
+void _paint(WM_HWIN pMsg);
 static const GUI_RECT drawArea  = {50, 50, DST_SET_WIDTH-50, DST_SET_HEIGHT-50};
 static const GUI_RECT tipStrArea = {50, DST_SET_HEIGHT-50 +2 , DST_SET_WIDTH -50, DST_SET_HEIGHT -50 +32};
 
@@ -54,6 +54,45 @@ static void myDimCallback(WM_MESSAGE* pMsg)
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key)
            {
+              case GUI_KEY_SINGLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         WM_BringToTop(singleShipDstSetWin);
+                         WM_SetFocus(singleShipDstSetWin);
+                         break;
+                     case GUI_KEY_DOUBLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg); 
+                                              
+                         break;
+              case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);
+                        _paint(doubleShipDstSetWin);
+                          
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);
+                       _paint(doubleShipDstSetWin);              
+                        break; 
+              
+              case GUI_KEY_PWM_INC:       
+							  WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                       break;
               case GUI_KEY_UP:
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
@@ -205,9 +244,9 @@ static void myDimCallback(WM_MESSAGE* pMsg)
    }
 }
 
-/** @brief ˫�о������ô��ڵĻص�
+/** @brief 双托距离设置窗口的回调
  *
- *  @param [in] pMsg  ��Ϣָ��
+ *  @param [in] pMsg  消息指针
  */
 static void myWindowcallback(WM_MESSAGE * pMsg)
 {
@@ -254,7 +293,14 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            if(pMsg->Data.v == REPLY_OK)
            {
               StubRefresh();
-              Comm_addFrame(whichFig+1,stubs[whichFig+1].basePoint.x*MILLINM_TO_M,abs(stubs[whichFig+1].basePoint.y*MILLINM_TO_M));
+              if(t90_set.sys.motherpos == DEFAULT_LEFT)
+              {                 
+                 Comm_addFrame(whichFig+1,stubs[whichFig+1].basePoint.x*MILLINM_TO_M,abs(stubs[whichFig+1].basePoint.y*MILLINM_TO_M));
+              }
+              else
+              {
+                 Comm_addFrame(whichFig+1,(stubs[whichFig+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[whichFig+1].basePoint.y*MILLINM_TO_M));
+              }
               
               memcpy(preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));
               sprintf(pStrBuf, "%d", preDouDstSet[whichFig].motoas);
@@ -466,50 +512,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            break;
            
      case WM_PAINT:
-          {
-             GUI_RECT r;
-             int xPos_M; 
-             int yPos_M;
-             int xPos_A;
-             int yPos_A;
-             
-             WM_GetClientRectEx(pMsg->hWin,&r);              
-             GUI_SetBkColor(pColors->bkColor);
-             GUI_ClearRectEx(&r);
-             
-             GUI_SetColor(pColors->textColor);
-             xPos_M  = drawArea.x0 + (drawArea.x1 - drawArea.x0)/5;
-             yPos_M  = drawArea.y0;
-             GUI_DrawLine(xPos_M, yPos_M, xPos_M+16, yPos_M +16);
-             GUI_DrawVLine(xPos_M+16, yPos_M+17, yPos_M+60);
-             GUI_DrawHLine(yPos_M+60, xPos_M-15, xPos_M+15);
-             GUI_DrawVLine(xPos_M-16, yPos_M+17, yPos_M+60);
-             GUI_DrawLine(xPos_M-16, yPos_M+16, xPos_M, yPos_M);
-             
-             xPos_A  = drawArea.x1 - (drawArea.x1 - drawArea.x0)/5;
-             yPos_A  = drawArea.y0;
-             GUI_DrawLine(xPos_A, yPos_A, xPos_A+16, yPos_A +16);
-             GUI_DrawVLine(xPos_A+16, yPos_A+17, yPos_A+60);
-             GUI_DrawHLine(yPos_A+60, xPos_A-15, xPos_A+15);
-             GUI_DrawVLine(xPos_A-16, yPos_A+17, yPos_A+60);
-             GUI_DrawLine(xPos_A-16, yPos_A+16, xPos_A, yPos_A);
-             
-             GUI_SetLineStyle(GUI_LS_DOT);
-            
-             GUI_DrawLine(xPos_M, yPos_M+61, (xPos_M+xPos_A)/2, drawArea.y1-50);
-             
-             GUI_DrawLine(xPos_A, yPos_A+61, (xPos_M+xPos_A)/2, drawArea.y1-50);
-             
-             GUI_DrawLine(297, 111, 336, 125);
-             GUI_DrawLine(204, 372, 243, 386);
-             
-             GUI_DrawLine(111, 111,  72, 125);
-             GUI_DrawLine(149, 222, 110, 236);
-             
-             GUI_DrawLine(297, 111, 269, 101);
-             GUI_DrawLine(254, 222, 226, 212);
-             GUI_DrawRectEx(&drawArea);
-          }
+          _paint(pMsg->hWin);
           break;
            
      default:
@@ -519,7 +522,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
 
 }
 
-/** ˫�а�ȫ��������ô��ڴ���
+/** 双托安全标距离设置窗口创建
  *
  *
  */
@@ -531,7 +534,72 @@ WM_HWIN  WIN_doubleShipDstSetCreate(void)
                              WM_CF_SHOW, myWindowcallback,  0);
 }
 
+void _paint(WM_HWIN pMsg)
+{
+   GUI_RECT r;
+    int xPos_M; 
+    int yPos_M;
+    int xPos_A;
+    int yPos_A;
+    
+    WM_GetClientRectEx(pMsg,&r);              
+    GUI_SetBkColor(pColors->bkColor);
+    GUI_ClearRectEx(&r);
+    
+    GUI_SetColor(pColors->textColor);
+    
+    xPos_M  = drawArea.x0 + (drawArea.x1 - drawArea.x0)/5;
+    yPos_M  = drawArea.y0;
+    xPos_A  = drawArea.x1 - (drawArea.x1 - drawArea.x0)/5;
+    yPos_A  = drawArea.y0;
+    if(t90_set.sys.motherpos == DEFAULT_RIGHT)
+    {
+       xPos_M  = drawArea.x1 - (drawArea.x1 - drawArea.x0)/5;               
+       xPos_A  = drawArea.x0 + (drawArea.x1 - drawArea.x0)/5;        
+    }
+    GUI_DrawLine(xPos_M, yPos_M, xPos_M+16, yPos_M +16);
+    GUI_DrawVLine(xPos_M+16, yPos_M+17, yPos_M+60);
+    GUI_DrawHLine(yPos_M+60, xPos_M-15, xPos_M+15);
+    GUI_DrawVLine(xPos_M-16, yPos_M+17, yPos_M+60);
+    GUI_DrawLine(xPos_M-16, yPos_M+16, xPos_M, yPos_M);
+    GUI_SetFont(&GUI_Font_T90_24);
+    GUI_SetColor(pColors->textColor);
+    GUI_DispStringAt("本", xPos_M-8, yPos_M+12);
+    GUI_DispStringAt("船", xPos_M-8, yPos_M+10+GUI_GetFontSizeY());
+    
+    
+    GUI_DrawLine(xPos_A, yPos_A, xPos_A+16, yPos_A +16);
+    GUI_DrawVLine(xPos_A+16, yPos_A+17, yPos_A+60);
+    GUI_DrawHLine(yPos_A+60, xPos_A-15, xPos_A+15);
+    GUI_DrawVLine(xPos_A-16, yPos_A+17, yPos_A+60);
+    GUI_DrawLine(xPos_A-16, yPos_A+16, xPos_A, yPos_A);
+    
+    GUI_SetLineStyle(GUI_LS_DOT);           
+    GUI_DrawLine(xPos_M, yPos_M+61, (xPos_M+xPos_A)/2, drawArea.y1-50);
+    
+    GUI_DrawLine(xPos_A, yPos_A+61, (xPos_M+xPos_A)/2, drawArea.y1-50);
+    
+    GUI_DrawLine(297, 111, 336, 125);
+    GUI_DrawLine(204, 372, 243, 386);
+    
+    GUI_DrawLine(111, 111,  72, 125);
+    GUI_DrawLine(149, 222, 110, 236);
+    
+    GUI_DrawLine(297, 111, 269, 101);
+    GUI_DrawLine(254, 222, 226, 212);
+    GUI_SetColor(pColors->textColor);
+   GUI_SetFont(&GUI_Font_T90_24);
+   GUI_DispStringAt("使用",50, DST_SET_HEIGHT-50 +2);
+   GUI_SetColor(pColors->focusBkColor);
+   GUI_DispString(" 咗祐 ");
+   GUI_SetColor(pColors->textColor);
+   GUI_DispString("选择选项，使用");
+   GUI_SetColor(pColors->focusBkColor);
+   GUI_DispString("  卞  ");
+   GUI_SetColor(pColors->textColor);
+   GUI_DispString("选择数字。");
 
+}
 
 
  

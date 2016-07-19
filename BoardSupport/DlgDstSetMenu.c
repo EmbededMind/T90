@@ -17,7 +17,6 @@
 
 WM_HWIN dstSetMenuDlg;
 
-extern T90_PlugEvent plugEvent;
 static WM_HWIN buttons[3]; 
 
 //static int plug;
@@ -54,11 +53,14 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            {
               BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusBkColor);
               BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
+              BUTTON_SetFrameColor(pMsg->hWin,pColors->btFocusBkColor);
+
            }
            else
            {
               BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btPrevFocusBkColor);
               BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
+              BUTTON_SetFrameColor(pMsg->hWin,pColors->btPrevFocusBkColor);            
            }
            
            if(t90_set.sys.workmode == SINGLE_MODE)
@@ -81,13 +83,13 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            {
               BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btPrevFocusBkColor);
               BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btFocusTextColor);
-              BUTTON_SetFrameColor(pMsg->hWin,pColors->btPrevFocusBkColor);
+
            }
            else
            {
               BUTTON_SetBkColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btBkColor);
               BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors->btTextColor);
-              BUTTON_SetFrameColor(pMsg->hWin,pColors->btBkColor);
+
            }
         }
         BUTTON_Callback(pMsg);
@@ -95,6 +97,41 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            
    case WM_KEY:
         switch( ((WM_KEY_INFO*)(pMsg->Data.p))->Key){
+           case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);
+                        WM_InvalidateWindow(doubleShipDstSetWin);            
+                        break;
+              
+           case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg); 
+                        WM_InvalidateWindow(doubleShipDstSetWin);               
+                        break;
+           case GUI_KEY_SINGLE:
+                         WM_BringToTop(singleShipDstSetWin);              
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
+           case GUI_KEY_DOUBLE:  
+                         WM_BringToTop(doubleShipDstSetWin);                      
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
         case GUI_KEY_PWM_INC:       
              WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
              break;
@@ -126,7 +163,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
         case GUI_KEY_DOWN:
              GUI_StoreKeyMsg(GUI_KEY_TAB, 1);
              break;
-        
+         
         case GUI_KEY_BACKSPACE:
              WM_SetFocus(buttons[0]);
              WM_SetFocus(mainMenuDlg);
@@ -196,59 +233,65 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         BUTTON_SetTextColor(buttons[0], BUTTON_CI_UNPRESSED, pColors->btTextColor);
         BUTTON_SetTextColor(buttons[0], BUTTON_CI_PRESSED,   pColors->btTextColor);
         BUTTON_SetFocusColor(buttons[0], pColors->btFocusBkColor);
-        BUTTON_SetFrameColor(buttons[0],pColors->btFocusBkColor);
+
         
         BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED, pColors->btBkColor);
         BUTTON_SetTextColor(buttons[1], BUTTON_CI_UNPRESSED, pColors->btTextColor);
         BUTTON_SetTextColor(buttons[1], BUTTON_CI_PRESSED,   pColors->btTextColor);
         BUTTON_SetFocusColor(buttons[1], pColors->btFocusBkColor);
-        BUTTON_SetFrameColor(buttons[1],pColors->btFocusBkColor);
+
         
         BUTTON_SetBkColor(buttons[2], BUTTON_CI_UNPRESSED, pColors->btBkColor);
         BUTTON_SetTextColor(buttons[2], BUTTON_CI_UNPRESSED, pColors->btTextColor);
         BUTTON_SetTextColor(buttons[2], BUTTON_CI_PRESSED,   pColors->btTextColor);     
         BUTTON_SetFocusColor(buttons[2], pColors->btFocusBkColor);
-        BUTTON_SetFrameColor(buttons[2],pColors->btFocusBkColor);
+
         break;
 		 case WM_INIT_DIALOG:
        
         pColors = &subMenuColors[t90_set.sys.nightmode];
         
         WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);
-      
+       
         buttons[0]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
         WM_SetCallback(buttons[0], &myButtonCallback);
         BUTTON_SetBkColor(buttons[0], BUTTON_CI_UNPRESSED, pColors->btBkColor);
         BUTTON_SetBkColor(buttons[0], BUTTON_CI_PRESSED,   pColors->btFocusBkColor);
+
         BUTTON_SetTextColor(buttons[0], BUTTON_CI_UNPRESSED, pColors->btTextColor);
         BUTTON_SetTextAlign(buttons[0], GUI_TA_HCENTER | GUI_TA_VCENTER);
         BUTTON_SetTextColor(buttons[0], BUTTON_CI_PRESSED, pColors->btFocusTextColor);
         BUTTON_SetFocusColor(buttons[0], pColors->btFocusBkColor);
         BUTTON_SetFont(buttons[0], &GUI_Font_T90_30); 
         BUTTON_SetText(buttons[0], "01号安全标");
+//        WM_HideWindow(buttons[0]);
         
         buttons[1]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
         WM_SetCallback(buttons[1], &myButtonCallback);
         BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED, pColors->btBkColor);
         BUTTON_SetBkColor(buttons[1], BUTTON_CI_PRESSED,   pColors->btFocusBkColor);
+
         BUTTON_SetTextColor(buttons[1], BUTTON_CI_UNPRESSED, pColors->btTextColor);
         BUTTON_SetTextColor(buttons[1], BUTTON_CI_PRESSED, pColors->btFocusTextColor);
         BUTTON_SetTextAlign(buttons[1], GUI_TA_HCENTER | GUI_TA_VCENTER);
         BUTTON_SetFocusColor(buttons[0], pColors->btFocusBkColor);
         BUTTON_SetFont(buttons[1], &GUI_Font_T90_30); 
         BUTTON_SetText(buttons[1], "02号安全标");
-        BUTTON_SetFocussable(buttons[1], 1);
+//        BUTTON_SetFocussable(buttons[1], 1);
+//        WM_HideWindow(buttons[1]);
         
         buttons[2]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
         WM_SetCallback(buttons[2], &myButtonCallback);
         BUTTON_SetBkColor(buttons[2], BUTTON_CI_UNPRESSED, pColors->btBkColor);
         BUTTON_SetBkColor(buttons[2], BUTTON_CI_PRESSED,   pColors->btFocusBkColor);
+        
         BUTTON_SetTextColor(buttons[2], BUTTON_CI_UNPRESSED, pColors->btTextColor);
         BUTTON_SetTextColor(buttons[2], BUTTON_CI_PRESSED, pColors->btFocusTextColor);
         BUTTON_SetTextAlign(buttons[2], GUI_TA_HCENTER | GUI_TA_VCENTER);
         BUTTON_SetFocusColor(buttons[2], pColors->btFocusBkColor);
         BUTTON_SetFont(buttons[2], &GUI_Font_T90_30); 
         BUTTON_SetText(buttons[2], "03号安全标");
+//        WM_HideWindow(buttons[2]);
         break; 
 
 		 case WM_PAINT:			 

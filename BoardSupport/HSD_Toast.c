@@ -4,13 +4,15 @@
 #include "layout.h"
 #include "HSD_Toast.h"
 #include <lpc_types.h>
+#include "T90.h"
+#include "t90font.h"
 
 #define BTN_WIDTH   80
 #define BTN_HEIGHT  40
 
 #define BTN_MARGIN  10
 #define TEXT_MARGIN  5
-
+extern const ConfirmWinColor confirmWinColors[2];
 extern Bool toast_flg;
 
 typedef struct {
@@ -59,20 +61,25 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
    int xSize;
    int ySize;
    switch(pMsg->MsgId){
-      case WM_CREATE:     
+      case WM_CREATE:
+                     
            if(myToast.btnFlags & TOAST_OK){
               hBtns[0]  = BUTTON_CreateEx(myToast.winRect.x1 -BTN_WIDTH -BTN_MARGIN,
                                           BTN_MARGIN,
                                           BTN_WIDTH,       BTN_HEIGHT,
                                           pMsg->hWin, WM_CF_SHOW,  0,   GUI_ID_BUTTON0);
 
-              BUTTON_SetFont(hBtns[0],&GUI_Font16_1);
-              BUTTON_SetBkColor(hBtns[0],BUTTON_CI_UNPRESSED,GUI_GRAY);
-              BUTTON_SetTextColor(hBtns[0],BUTTON_CI_UNPRESSED,GUI_RED);
-              BUTTON_SetText(hBtns[0],"OK");
+              BUTTON_SetFont(hBtns[0],&GUI_Font_T90_30);
               WM_SetCallback(hBtns[0], &myButtonCallback);
               WM_SetFocus(hBtns[0]);
-               WM_ShowWindow(hBtns[0]);
+              WM_ShowWindow (hBtns[0]);
+              BUTTON_SetText(hBtns[0], "确定");
+              BUTTON_SetFont(hBtns[0], &GUI_Font_T90_30);
+	    
+	
+              BUTTON_SetBkColor(hBtns[0],BUTTON_BI_UNPRESSED,confirmWinColors[t90_set.sys.workmode].btFocusBkColor);
+              BUTTON_SetTextColor(hBtns[0],BUTTON_BI_UNPRESSED,confirmWinColors[t90_set.sys.workmode].btFocusTextColor);
+              WM_ShowWindow(hBtns[0]);
            }
            
            else if(myToast.btnFlags == 0){
@@ -91,16 +98,16 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            myToast.hToast  = 0;
            break;
            
-      case WM_PAINT:
+      case WM_PAINT: 
            xSize = WM_GetWindowSizeX(pMsg->hWin);
            ySize = WM_GetWindowSizeY(pMsg->hWin);
-//           GUI_SetBkColor(GUI_WHITE);
-           GUI_DrawGradientRoundedV(0, 0, xSize-1, ySize-1,10,GUI_WHITE,GUI_WHITE);
+           GUI_DrawGradientRoundedV(0, 0, xSize-1, ySize-1,10, confirmWinColors[t90_set.sys.nightmode].bkTopColor,confirmWinColors[t90_set.sys.nightmode].bkTopColor);
            GUI_SetTextMode(GUI_TEXTMODE_TRANS);
            WM_GetClientRect(&clientRect);
-           GUI_SetColor(GUI_BLACK);
+           GUI_SetColor(confirmWinColors[t90_set.sys.nightmode].btTextColor);
            GUI_SetFont(myToast.pFont);
            GUI_DispStringAt(myToast.text, clientRect.x0+TEXT_MARGIN, (clientRect.y0+clientRect.y1) /2 -GUI_GetFontDistY()/2);
+           
            break;
 //      case WM_SET_FOCUS:
 //           if(!pMsg->Data.v)

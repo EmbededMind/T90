@@ -181,39 +181,47 @@ Bool isInPolygon(BERTH *pBerth)
 {
    int max, min;
    int i, j;
-   int flg=0;
+   int flg = 0;
+   int num;
    
-
-      for(i = 0; i < STUB_NUM_MAX_D; i++)
+   if(t90_set.sys.workmode == SINGLE_MODE)
+   {
+      num = 4;
+   }else if(t90_set.sys.workmode == DOUBLE_MODE)
+   {
+      num = 5;
+   }
+   
+   for(i = 0; i < num; i++)
+   {
+      if(stubs[i].isValid)
       {
-         if(stubs[i].isValid)
+         if(i == num - 1)
          {
-            if(i == STUB_NUM_MAX_D - 1)
-            {
-              j = 0;
-            }
-            else
-            {
-              for(j = i+1; j < STUB_NUM_MAX_D; j++)
-              {
-                  if(stubs[j].isValid)
-                  {
-                      break;
-                  }
-                  else
-                  {
-                      if(j == STUB_NUM_MAX_D)
-                      {
-                          j = 0;
-                          break;
-                      }
-                  }
-              }
-            }
-            flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[i].tang2.point);
-            flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[j].tang2.point);
+           j = 0;
          }
+         else
+         {
+           for(j = i+1; j < num; j++)
+           {
+               if(stubs[j].isValid)
+               {
+                   break;
+               }
+               else
+               {
+                   if(j == num)
+                   {
+                       j = 0;
+                       break;
+                   }
+               }
+           }
+         }
+         flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[i].tang2.point);
+         flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[j].tang2.point);
       }
+   }
    
    if(flg%2)
    {

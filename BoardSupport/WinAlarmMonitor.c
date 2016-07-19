@@ -31,6 +31,7 @@ static const HomeColor *pColor = homeColors;
  */
 
 static void myWindowCallback(WM_MESSAGE* pMsg){
+   WM_MESSAGE myMsg;
 
    switch(pMsg->MsgId){
 		 case USER_MSG_SKIN:			    
@@ -71,6 +72,37 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 			
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
+              case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+              case GUI_KEY_SINGLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
+                  case GUI_KEY_DOUBLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
 						 case GUI_KEY_PWM_INC:       
                    WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                    break;
@@ -103,13 +135,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 									WM_SetFocus(mainMenuDlg);
 									break;
 						 
-//						 case GUI_KEY_MONITORING:
-//									monitorState = ON;
-//									mntLabelTimeCnt = MNT_LABEL_TIME;
-//									WM_Paint(alarmMonitorWin);
-//									break;
 						 
-						 case GUI_KEY_CANCEL:
+						 case GUI_KEY_SOUNDOFF:
 							    monitorState = monitorState == ON? OFF: ON;
 //									mntLabelTimeCnt = MNT_LABEL_TIME;
 									WM_Paint(alarmMonitorWin);							

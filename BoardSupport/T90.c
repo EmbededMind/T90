@@ -58,7 +58,8 @@ T90_Set t90_set = {
 		DEFAULT_BRIGHT,
 		NM,
 		OFF,
-		OFF            }
+		OFF,
+      DEFAULT_LEFT   }
 };
 
 

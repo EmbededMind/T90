@@ -22,7 +22,7 @@
 extern unsigned char isDstSetChanged;            
 
 /// If new plug event detected, var 'plugEvent' contain msg about that.
-extern T90_PlugEvent plugEvent;  
+  
 
 extern uint8_t SND[4][6];
 extern int isKeyTrigged;

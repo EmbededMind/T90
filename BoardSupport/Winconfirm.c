@@ -68,7 +68,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        WM_ShowWindow (buttons[0]);
        BUTTON_SetText(buttons[0], "确定");
        BUTTON_SetFont(buttons[0], &GUI_Font_T90_30);
-			 WM_SetCallback(buttons[0], &myButton);
+	    WM_SetCallback(buttons[0], &myButton);
 	
        BUTTON_SetBkColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btBkColor);
        BUTTON_SetTextColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btTextColor);

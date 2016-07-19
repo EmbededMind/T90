@@ -43,11 +43,11 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define ON       1
 
 #define DEFAULT_MOTOAS 2000
-#define DEFAULT_DST1   1200
-#define DEFAULT_DST2   100
-#define DEFAULT_DST3   1500
-#define DEFAULT_DST4   100
-#define DEFAULT_DST5   1200
+#define DEFAULT_DST1   400
+#define DEFAULT_DST2   25
+#define DEFAULT_DST3   500
+#define DEFAULT_DST4   25
+#define DEFAULT_DST5   400
 
 #define DEFAULT_DOUDST1 1000
 #define DEFAULT_DOUDST2 1500
@@ -60,6 +60,9 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_MIN_SOG_X10      15
 #define DEFAULT_MAX_SOG_X10      55
 #define DEFAULT_NATION           0x00
+#define DEFAULT_LEFT             0
+#define DEFAULT_RIGHT            1
+
 
 #define DEFAULT_VOLUM      1
 #define DEFAULT_BRIGHT     4
@@ -117,6 +120,7 @@ typedef struct System_Set
 	int unit;
 	int update;
 	int reset;
+   int motherpos;
 } System_Set;
 	
 typedef struct T90_Set
@@ -127,28 +131,6 @@ typedef struct T90_Set
 	System_Set sys;
 } T90_Set;
 
-
-typedef enum {
-   PGEvent_None  = 0,
-   PGEvent_Pull  = 1,
-   PGEvent_Insert  = 2,
-   PGEvent_Ack  = 4,
-   PGEvent_Data  = 8
-} PlugEventType;
-
-typedef struct T90_PlugEvent
-{
-   unsigned char whichPort;
-   unsigned char status;
-   PlugEventType eventType;
-   int dist_1;
-   int dist_2;
-   int dist_3;
-   int dist_4;
-   int dist_5;
-   int dist_6;
-   long mmsi[3];
-}T90_PlugEvent;
 
 extern T90_Set t90_set;
 extern boat mothership;

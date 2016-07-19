@@ -41,6 +41,36 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
       
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
+               case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+               case GUI_KEY_SINGLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
+                  case GUI_KEY_DOUBLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
 							 case GUI_KEY_PWM_INC:       
                     WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                     break;
@@ -164,11 +194,11 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //         GUI_DispStringAt("使用   选择选项，使用   选择数字。",50, ALARM_SET_HEIGHT-30-32);
          GUI_DispStringAt("使用",50, ALARM_SET_HEIGHT-30-32);
          GUI_SetColor(pColors->focusBkColor);
-         GUI_DispString("  卞  ");
+         GUI_DispString(" 咗祐 ");
          GUI_SetColor(pColors->textColor);
          GUI_DispString("选择选项，使用");
          GUI_SetColor(pColors->focusBkColor);
-         GUI_DispString(" 咗祐 ");
+         GUI_DispString("  卞  ");
          GUI_SetColor(pColors->textColor);
          GUI_DispString("选择数字。");
 //         GUI_SetLineStyle(GUI_LS_SOLID);

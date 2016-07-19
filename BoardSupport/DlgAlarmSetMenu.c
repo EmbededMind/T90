@@ -35,6 +35,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
 
 static void myButtonCallback(WM_MESSAGE* pMsg)
 {
+   WM_MESSAGE myMsg;
 	int id;
 	static int flag_prevfocus = 0;
    switch(pMsg->MsgId){
@@ -80,6 +81,37 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            
    case WM_KEY:
         switch( ((WM_KEY_INFO*)(pMsg->Data.p))->Key){
+           case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+           case GUI_KEY_SINGLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
+                  case GUI_KEY_DOUBLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
 				case GUI_KEY_PWM_INC:       
 						 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 						 break;

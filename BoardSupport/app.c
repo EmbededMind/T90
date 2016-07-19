@@ -105,7 +105,7 @@ int isKeyTrigged  = 0;
 ///                                  _   _
 /// 标记是否有新的插入事件(不要想歪  \ @ / )
 ///                                   ''' 
-T90_PlugEvent plugEvent;
+
 
 ///
 //unsigned char  isDstSetChanged  = 0;
@@ -267,20 +267,14 @@ void _Play_Task(void* p_arg)
    int angle;   
    uint8_t playList  = 1;  
    BULY_BERTH* thisBulyBerth  = NULL;
-   BERTH * thisinvdBerth = NULL; 
-printf("play task\n");   
-   ISD_Wait_PWRUp();
-printf("%d\n",__LINE__);   
+   BERTH * thisinvdBerth = NULL;   
+   ISD_Wait_PWRUp();  
    ISD_SetVolumn(t90_set.sys.volum);
    MUSIC_RESET;
-printf("%d\n",__LINE__);
    ISD_Play(SND_ID_WLCM);
    ISD_PWRDn();      
    while(1)
-   {
-printf("%d\n",__LINE__);
-
-       
+   {      
         if(FetchSTime() == 0)
         {
               MUSIC_ADD(SND_ID_STOF);

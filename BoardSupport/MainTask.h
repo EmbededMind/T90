@@ -20,6 +20,8 @@
 #define USER_MSG_DST_UPDATE (WM_USER + 0x13)
 #define USER_MSG_PULSE_ACK_RESULT  (WM_USER + 0x14)
 #define USER_MSG_DATA_ACK_RESULT   (WM_USER + 0x15)
+#define USER_MSG_WORKMODE  (WM_USER + 0x16)
+#define USER_MSG_MOTHERPOS (WM_USER + 0x17)
 
 
 #define STORE_SETTING   1
@@ -28,15 +30,15 @@
 #define REPLY_CANCEL    4
 #define ADD_MONITED     5
 #define SYS_SETTING     6
-#define SYS_RESET      7
+#define SYS_RESET       7
 
 #define GUI_KEY_RELEASE           4
 #define GUI_KEY_MENU              5
-#define GUI_KEY_LARGE             6
-#define GUI_KEY_REDUCE            7
-#define GUI_KEY_MONITORING        11
-#define GUI_KEY_CANCEL            12
-#define GUI_KEY_CENTER            14
+#define GUI_KEY_SOUNDOFF          6
+#define GUI_KEY_SINGLE            7    //single mode
+#define GUI_KEY_MOLEFT            11   //Ä¸´¬ÔÚ×ó
+#define GUI_KEY_MORIGHT           12   //Ä¸´¬ÔÚÓÒ
+#define GUI_KEY_DOUBLE            14   //double mode
 
 #define GUI_KEY_MNT_ENABLE        15
 #define GUI_KEY_MNT_DISABLE       20

@@ -20,12 +20,12 @@ static WM_HTIMER timer;
 
 const HomeColor *pColor = homeColors;
 
-extern T90_PlugEvent plugEvent;
+
 
 static void _onPaint1(void);
 static void _onPaint2(void);
 
-
+static int tmpCursor;
 static int cursorOnStub;
 extern long portStatus[3];
 
@@ -42,6 +42,8 @@ int getcursor(int position);
  */
 static void myWindowCallback(WM_MESSAGE* pMsg)
 {
+   
+   WM_MESSAGE myMsg;
 	GUI_RECT r;
    switch(pMsg->MsgId){
 
@@ -75,6 +77,37 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 	
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
+              case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break; 
+                  case GUI_KEY_SINGLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
+                  case GUI_KEY_DOUBLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
 						case GUI_KEY_PWM_INC:
 								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 								 break;
@@ -121,7 +154,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //									WM_Paint(mainShipWin);
 //									break;
 //						 
-						 case GUI_KEY_CANCEL:
+						 case GUI_KEY_SOUNDOFF:
 									monitorState = monitorState == ON? OFF: ON;
 									WM_Paint(mainShipWin);
 									break;
@@ -136,8 +169,22 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 GUI_SetBkColor(pColor->bkColor);
 				   WM_GetClientRect(&r);
 					 GUI_ClearRectEx(&r);
-			
-					 if(cursorOnStub == 0 )
+                 tmpCursor = cursorOnStub;
+                if(t90_set.sys.workmode == DOUBLE_MODE)
+                {
+                   if(cursorOnStub == 0 || cursorOnStub == 4)
+                   {
+                      if(t90_set.sys.motherpos == DEFAULT_LEFT)
+                      {
+                         tmpCursor = cursorOnStub;
+                      }
+                      else
+                      {
+                         tmpCursor = cursorOnStub == 4? 0:4;
+                      }
+                   }
+                }
+					 if(tmpCursor == 0 )
 					 {
 					    _onPaint1();
 					 }
@@ -159,7 +206,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			case WM_SET_FOCUS:                
 					 if(pMsg->Data.v)
 					 {                  
-						 cursorOnStub = 0;
+//						 cursorOnStub = 0;
 //						 timeCnt = 0;
 						 GUI_CURSOR_Show();
 						 timer  = WM_CreateTimer(pMsg->hWin, 0, 500, 0);
@@ -271,7 +318,9 @@ static void _onPaint1(void)
 	 
 	GUI_SetColor(pColor->textColor);
 	DrawStubs(0);
-	DrawCursor(motherShipPixel, 0);
+//	DrawCursor(motherShipPixel, 0);
+printf("cursorOnStub = %d\n",cursorOnStub);
+   DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);
    GUI_SetColor(GUI_BLACK);
 	GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
 }
@@ -279,6 +328,7 @@ static void _onPaint1(void)
 
 static void _onPaint2(void)
 {
+   
    int i  = 0;
    BERTH* pBerth  = NULL;
    GUI_RECT Rect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+117,BBS2_ABOVE_Y+20+40};
@@ -367,8 +417,11 @@ static void _onPaint2(void)
 	 GUI_DispStringAt("距离船尾：",  BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*2);
 	 GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+35+40*2);
 	 
-	 switch(cursorOnStub)
+    
+    
+	 switch(tmpCursor)
 	 {
+       
 
 		 case 1:
         GUI_SetColor(pColor->numColor);
@@ -494,6 +547,7 @@ static void _onPaint2(void)
 
 	 GUI_SetColor(pColor->textColor);
 	 DrawStubs(0);
+printf("cursorOnStub = %d\n",cursorOnStub);
 	 DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);
     GUI_SetColor(GUI_BLACK);
 	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);    

@@ -43,6 +43,37 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 		case WM_KEY:
 			switch(((WM_KEY_INFO*)(pMsg->Data.p))->Key)
 			{
+            case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+            case GUI_KEY_SINGLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
+                  case GUI_KEY_DOUBLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
 				case GUI_KEY_PWM_INC:       
 						 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 						 break;
@@ -140,7 +171,7 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
             GUI_SetColor(pColors->focusSliderColor);
             GUI_DispString(" 咗祐 ");
             GUI_SetColor(pColors->textColor);
-            GUI_DispString("选择数字。");
+            GUI_DispString("切换开关。");
 //			GUI_DrawRect(30, ALARM_SET_HEIGHT-62, ALARM_SET_WIDTH-30, ALARM_SET_HEIGHT-30);
 			GUI_SetFont(&GUI_Font_T90_30);
 			GUI_SetColor(pColors->textColor);

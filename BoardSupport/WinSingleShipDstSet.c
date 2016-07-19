@@ -42,71 +42,104 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key)
 			       	{
-				         	case GUI_KEY_PWM_INC:       
+                     case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);
+                          
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+                     case GUI_KEY_SINGLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                        
+                         break;
+                     case GUI_KEY_DOUBLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg); 
+                         WM_BringToTop(doubleShipDstSetWin);
+                         WM_SetFocus(doubleShipDstSetWin);                     
+                         break;
+				         case GUI_KEY_PWM_INC:       
 							            WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-                   break;
-              case GUI_KEY_UP:
+                       break;
+                 case GUI_KEY_UP:
                    id  = WM_GetId(pMsg->hWin) - ID_DMS_0;
                    
                    switch(id){
                       case 0:
-                           if(agentdst_set.dst1 < 3000){
-                              agentdst_set.dst1  += 50;
-                              agentdst_set.dst1  -= (agentdst_set.dst1 %50);
+                           if(agentdst_set.dst1 < 2000){
+                              agentdst_set.dst1  += 20;
+                              agentdst_set.dst1  -= (agentdst_set.dst1 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst1);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst1  = 3000;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "3000");
+                              agentdst_set.dst1  = 2000;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "2000");
                            }
                            break;
                       case 1:
-                           if(agentdst_set.dst2 < 3000){
-                              agentdst_set.dst2  += 50;
-                              agentdst_set.dst2  -= (agentdst_set.dst2 %50);
+                           if(agentdst_set.dst2 < 500){
+                              agentdst_set.dst2  += 5;
+                              agentdst_set.dst2  -= (agentdst_set.dst2 %5);
                               sprintf(pStrBuf, "%d", agentdst_set.dst2);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst2  = 3000;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "3000");
+                              agentdst_set.dst2  = 500;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "500");
                            }
                            break;
                       case 2:
-                           if(agentdst_set.dst3  < 3000){
-                              agentdst_set.dst3  += 50;
-                              agentdst_set.dst3  -= (agentdst_set.dst3 %50);
+                           if(agentdst_set.dst3  < 2000){
+                              agentdst_set.dst3  += 20;
+                              agentdst_set.dst3  -= (agentdst_set.dst3 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst3);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst3  = 3000;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "3000");
+                              agentdst_set.dst3  = 2000;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "2000");
                            }
                            break;
                       case 3:
-                           if(agentdst_set.dst4 < 3000){
-                              agentdst_set.dst4  += 50;
-                              agentdst_set.dst4  -= (agentdst_set.dst4 %50);
+                           if(agentdst_set.dst4 < 500){
+                              agentdst_set.dst4  += 5;
+                              agentdst_set.dst4  -= (agentdst_set.dst4 %5);
                               sprintf(pStrBuf, "%d", agentdst_set.dst4);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst4  = 3000;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "3000");
+                              agentdst_set.dst4  = 500;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "500");
                            }
                            break;
                       case 4:
-                           if(agentdst_set.dst5 < 3000){
-                              agentdst_set.dst5  += 50;
-                              agentdst_set.dst5  -= (agentdst_set.dst5 %50);
+                           if(agentdst_set.dst5 < 2000){
+                              agentdst_set.dst5  += 20;
+                              agentdst_set.dst5  -= (agentdst_set.dst5 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst5);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst5  = 3000;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "3000");
+                              agentdst_set.dst5  = 2000;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "2000");
                            }
                            break;
                    }	 
@@ -116,63 +149,63 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                    id  = WM_GetId(pMsg->hWin) - ID_DMS_0;      
                    switch(id){
                       case 0:
-                           if(agentdst_set.dst1 > 99){
-                              agentdst_set.dst1 -= 50;
-                              agentdst_set.dst1 -= (agentdst_set.dst1 %50);
+                           if(agentdst_set.dst1 > 39){
+                              agentdst_set.dst1 -= 20;
+                              agentdst_set.dst1 -= (agentdst_set.dst1 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst1);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst1  = 50;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "50");
+                              agentdst_set.dst1  = 20;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "20");
                            }
                            break;
                       case 1:
-                           if(agentdst_set.dst2 > 99){
-                              agentdst_set.dst2  -= 50;
-                              agentdst_set.dst2  -= (agentdst_set.dst2 %50);
+                           if(agentdst_set.dst2 > 9){
+                              agentdst_set.dst2  -= 5;
+                              agentdst_set.dst2  -= (agentdst_set.dst2 %5);
                               sprintf(pStrBuf, "%d", agentdst_set.dst2);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst2  = 50;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "50");
+                              agentdst_set.dst2  = 5;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "5");
                            }
                            break;
                       case 2:
-                           if(agentdst_set.dst3  > 99){
-                              agentdst_set.dst3  -= 50;
-                              agentdst_set.dst3  -= (agentdst_set.dst3 %50);
+                           if(agentdst_set.dst3  > 39){
+                              agentdst_set.dst3  -= 20;
+                              agentdst_set.dst3  -= (agentdst_set.dst3 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst3);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst3  = 50;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "50");
+                              agentdst_set.dst3  = 20;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "20");
                            }
                            break;
                       case 3:
-                           if(agentdst_set.dst4 > 99){
-                              agentdst_set.dst4  -= 50;
-                              agentdst_set.dst4  -= (agentdst_set.dst4 %50);
+                           if(agentdst_set.dst4 > 9){
+                              agentdst_set.dst4  -= 5;
+                              agentdst_set.dst4  -= (agentdst_set.dst4 %5);
                               sprintf(pStrBuf, "%d", agentdst_set.dst4);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst4  = 50;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "50");
+                              agentdst_set.dst4  = 5;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "5");
                            }
                            break;
                       case 4:
-                           if(agentdst_set.dst5 > 99){
-                              agentdst_set.dst5  -= 50;
-                              agentdst_set.dst5  -= (agentdst_set.dst5 %50);
+                           if(agentdst_set.dst5 > 39){
+                              agentdst_set.dst5  -= 20;
+                              agentdst_set.dst5  -= (agentdst_set.dst5 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst5);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst5  = 50;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "50");
+                              agentdst_set.dst5  = 20;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "20");
                            }
                            break;
                    }      
@@ -402,7 +435,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 	 HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
 			 		 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst3);
 					 HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
-
 					 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst4);
 					 HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
 					 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst5);
@@ -432,14 +464,13 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         GUI_ClearRectEx(&clientRect);
         GUI_SetColor(pColors->textColor);
         GUI_SetFont(&GUI_Font_T90_24);
-//        GUI_DrawRectEx(&tipStrArea);
         GUI_DispStringAt("使用",50, DST_SET_HEIGHT-50 +2);
         GUI_SetColor(pColors->focusBkColor);
-        GUI_DispString("  卞  ");
+        GUI_DispString(" 咗祐 ");
         GUI_SetColor(pColors->textColor);
         GUI_DispString("选择选项，使用");
         GUI_SetColor(pColors->focusBkColor);
-        GUI_DispString(" 咗祐 ");
+        GUI_DispString("  卞  ");
         GUI_SetColor(pColors->textColor);
         GUI_DispString("选择数字。");
    
@@ -464,7 +495,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            GUI_SetLineStyle(GUI_LS_DOT);
            GUI_SetColor(pColors->textColor);
            GUI_DispStringAt("本", orgX-8, orgY+12);
-		         GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
+		     GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
            GUI_DrawLine(drawArea.x0, orgY+60, orgX-17, orgY+60);
            GUI_DrawLine(orgX+17, orgY+60, drawArea.x1, orgY+60);
            

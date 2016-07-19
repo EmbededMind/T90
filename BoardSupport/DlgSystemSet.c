@@ -14,6 +14,7 @@
 #include "xt_isd.h"
 #include "t90font.h"
 #include "stub.h"
+#include "comm.h"
 
 #include "HSD_Toast.h"
 #include "layout_system_set.h"
@@ -80,11 +81,49 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
    int i;
       
    switch(pMsg->MsgId)
-   {   
+   {  
+      case USER_MSG_MOTHERPOS:
+           t90_set.sys.motherpos = pMsg->Data.v;
+           memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
+           T90_Store();
+           break;
+      case USER_MSG_WORKMODE:
+           HSD_SLIDER_SetValue(slideres[0],pMsg->Data.v);
+           t90_set.sys.workmode = HSD_SLIDER_GetValue(slideres[0]);
+           T90_Store();
+           memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
+           StubRefresh();
+           if(t90_set.sys.workmode == SINGLE_MODE)
+           {
+              for(i = 0; i < 3; i++)
+              {
+                  Comm_addFrame(i+1,stubs[i+1].basePoint.y*MILLINM_TO_M,abs(stubs[i+1].basePoint.x)*MILLINM_TO_M);
+              }
+           }
+           else
+           {              
+              if(t90_set.sys.motherpos == DEFAULT_LEFT)
+              {
+                 for(i = 0; i < 3; i++)
+                 {
+                    Comm_addFrame(i+1,(stubs[i+1].basePoint.y - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.x)*MILLINM_TO_M);
+                 }
+              }
+              else
+              {
+                 for(i = 0; i < 3; i++)
+                 {
+                    Comm_addFrame(i+1,(stubs[i+1].basePoint.y),abs(stubs[i+1].basePoint.x));
+                 }
+              }             
+           }
+           break;      
       case USER_MSG_DIM:   
            HSD_SLIDER_Loop(slideres[4]);
            t90_set.sys.bright = HSD_SLIDER_GetValue(slideres[4]);
            T90_Store();
+           memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
+           StubRefresh();
            break;
 //      case USER_MSG_MNT_SWT:
 //           
@@ -300,6 +339,38 @@ static void sldListener(WM_MESSAGE * pMsg)
            pInfo  = (WM_KEY_INFO*)(pMsg->Data.p);
            switch(pInfo->Key)
            {
+              
+              case GUI_KEY_MOLEFT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_LEFT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        myMsg.hWin = systemSetDlg;
+                        myMsg.hWinSrc = pMsg->hWin;
+                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+                        myMsg.Data.v = DEFAULT_RIGHT;
+                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        break;               
+              case GUI_KEY_SINGLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = SINGLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
+                  case GUI_KEY_DOUBLE:                        
+                         myMsg.hWin = systemSetDlg;
+                         myMsg.hWinSrc = pMsg->hWin;
+                         myMsg.MsgId = USER_MSG_WORKMODE;
+                         myMsg.Data.v = DOUBLE_MODE;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                         
+                         break;
               case GUI_KEY_PWM_INC:       
                    WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                    break;
