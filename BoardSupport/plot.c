@@ -34,7 +34,6 @@ void DrawStubs(int flag)														//flag=0??mainShipWin??????
 
 void DrawShipFamily(int flag)     //???§Ó?????????l§±
 {
-	int safetySignNum = 1;    //§Ó????
 	int ms_zoom = scale/500;
 	int net_zoom = scale/300;
 	Point pixelTmp1, pixelTmp2;
@@ -83,9 +82,8 @@ void DrawShipFamily(int flag)     //???§Ó?????????l§±
     GUI_SetColor(pColor->textColor);
 				if(!flag)    //??
 				{
-					sprintf(pStrBuf, "%02d", safetySignNum);
-					GUI_DispStringAt(pStrBuf, pixelTmp1.x - 6, pixelTmp1.y + 5);
-					safetySignNum++;
+					sprintf(pStrBuf, "%02d", pIndex->pStub->StubNum);
+					GUI_DispStringAt(pStrBuf, pixelTmp1.x - 6, pixelTmp1.y + 5);					
 				}
 			}
 			else if(pIndex->pStub->type == aidedStub)   //??

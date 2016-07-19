@@ -11,7 +11,7 @@
 #define BTN_MARGIN  10
 #define TEXT_MARGIN  5
 
-
+extern Bool toast_flg;
 
 typedef struct {
 
@@ -35,6 +35,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
    switch(pMsg->MsgId){
       case WM_KEY:
            if( ((WM_KEY_INFO*)pMsg->Data.p)->Key == GUI_KEY_ENTER)    {
+              toast_flg = FALSE;
               WM_DeleteWindow(WM_GetParent(pMsg->hWin));
               
               WM_SetFocus(myToast.hWin);
@@ -101,10 +102,10 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            GUI_SetFont(myToast.pFont);
            GUI_DispStringAt(myToast.text, clientRect.x0+TEXT_MARGIN, (clientRect.y0+clientRect.y1) /2 -GUI_GetFontDistY()/2);
            break;
-      case WM_SET_FOCUS:
-           if(!pMsg->Data.v)
-              WM_DeleteWindow(pMsg->hWin);
-           break;
+//      case WM_SET_FOCUS:
+//           if(!pMsg->Data.v)
+//              WM_DeleteWindow(pMsg->hWin);
+//           break;
     default:
            WM_DefaultProc(pMsg);
            break;

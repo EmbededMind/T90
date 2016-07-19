@@ -43,12 +43,12 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define ON       1
 
 #define DEFAULT_MOTOAS 2000
-#define DEFAULT_DST1   400
-#define DEFAULT_DST2   25
-#define DEFAULT_DST3   500
-#define DEFAULT_DST4   25
-#define DEFAULT_DST5   400
-#define DEFAULT_DST6   100
+#define DEFAULT_DST1   1200
+#define DEFAULT_DST2   100
+#define DEFAULT_DST3   1500
+#define DEFAULT_DST4   100
+#define DEFAULT_DST5   1200
+
 #define DEFAULT_DOUDST1 1000
 #define DEFAULT_DOUDST2 1500
 #define DEFAULT_DOUDST3 2000

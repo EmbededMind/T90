@@ -72,13 +72,22 @@ void Comm_sendFrame(uint8_t* pFrame)
  * @input [in] offset_y   Y·½ÏòÆ«ÒÆ
  *
  */
-void Comm_addFrame( uint8_t whichPort, uint16_t offset_x, uint16_t offset_y )
+void Comm_addFrame( uint8_t whichPort, int offset_x, uint16_t offset_y )
 {
    uint16_t crcRes  = 0;
    
    
    frameTab[cursor][2]  = offset_y >> 8;
    frameTab[cursor][3]  = offset_y & 0xff;
+   
+   if(offset_x >= 0)
+   {
+      frameTab[cursor][4] = 1;
+   }
+   else
+   {
+      frameTab[cursor][4] = 0;
+   }
    
    frameTab[cursor][5]  = offset_x >> 8;
    frameTab[cursor][6]  = offset_x & 0xff;

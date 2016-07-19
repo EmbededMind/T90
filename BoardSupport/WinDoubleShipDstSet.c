@@ -254,7 +254,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            if(pMsg->Data.v == REPLY_OK)
            {
               StubRefresh();
-              Comm_addFrame(whichFig+1,abs(stubs[whichFig+1].basePoint.x*MILLINM_TO_M),abs(stubs[whichFig+1].basePoint.y*MILLINM_TO_M));
+              Comm_addFrame(whichFig+1,stubs[whichFig+1].basePoint.x*MILLINM_TO_M,abs(stubs[whichFig+1].basePoint.y*MILLINM_TO_M));
               
               memcpy(preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));
               sprintf(pStrBuf, "%d", preDouDstSet[whichFig].motoas);

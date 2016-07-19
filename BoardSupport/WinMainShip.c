@@ -11,6 +11,7 @@
 #include "snap.h"
 
 extern boat mothership;
+extern Bool toast_flg;
 
 /** @brief 单拖模式窗口的句柄 */
 WM_HWIN mainShipWin;
@@ -51,9 +52,12 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			case WM_TIMER:
 					 if(CHECK_GetAlarmState())
 					 {
-						 WM_DeleteTimer(timer);
-						 WM_BringToTop(alarmMonitorWin);
-						 WM_SetFocus(alarmMonitorWin);
+                   if(toast_flg == FALSE)
+                   {
+                      WM_DeleteTimer(timer);
+                      WM_BringToTop(alarmMonitorWin);
+                      WM_SetFocus(alarmMonitorWin);
+                   }
 					 }					 
 					 timeCnt++;
 //					 if(timeCnt == 1)

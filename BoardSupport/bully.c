@@ -242,7 +242,6 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
 
 unsigned char BULY_parseNation(long id)
 {
-#ifdef P_AM128A
    int i  = 0;
    int tmp  = id /1000000;
 //INFO("parseMMSI:%09ld--%d", id,tmp);  
@@ -264,7 +263,6 @@ unsigned char BULY_parseNation(long id)
          }
       }
    }
-#endif   
    return 0;
 }
 

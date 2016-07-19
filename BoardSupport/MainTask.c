@@ -16,7 +16,7 @@
 #include "ucos_ii.h"
 #include "HSD_Toast.h"
 
-
+Bool toast_flg = FALSE;
 extern uint8_t ipcMsg;
 //extern OS_EVENT* pMSBOX; 
 
@@ -167,6 +167,7 @@ printf("maintask\n");
          if(ipcMsg & 0x40){
            
             ipcMsg  &= (~0x40);  //握手超时
+            toast_flg = TRUE;
             ToastCreate("handle ask time out", &GUI_Font16B_ASCII, TOAST_OK, 2000);
          }
       }

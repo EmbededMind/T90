@@ -29,14 +29,15 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[0].isValid = 1;
 
 		stubs[0].type = motherStub;
-		
+		stubs[0].StubNum = 0;
+      
 		stubs[1].basePoint.x = -t90_set.singledst_set.dst2*M_TO_MILLINM;
 		stubs[1].basePoint.y = -t90_set.singledst_set.dst1*M_TO_MILLINM;
 
 //		stubs[1].isValid = 1;
 
 		stubs[1].type = safetySignStub;
-		
+		stubs[1].StubNum = 1;
 		stubs[2].basePoint.x = 0;
 		stubs[2].basePoint.y = -t90_set.singledst_set.dst3*M_TO_MILLINM;
 
@@ -44,12 +45,12 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 //		stubs[2].isValid = 1;
 
 		stubs[2].type = safetySignStub;
-		
+		stubs[2].StubNum = 2;
 		stubs[3].basePoint.x =  t90_set.singledst_set.dst4*M_TO_MILLINM;
 		stubs[3].basePoint.y = -t90_set.singledst_set.dst5*M_TO_MILLINM;
 
 		stubs[3].type = safetySignStub;
-		
+		stubs[3].StubNum = 3;
 		stubs[4].isValid = FALSE;
   
 
@@ -57,7 +58,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[3].type = safetySignStub;
 		
 		stubs[4].isValid = 0;
-  
+      stubs[4].StubNum = 4;
   
 //  stubs[1].isValid  = 1;
 //  stubs[2].isValid  = 1;
@@ -71,27 +72,27 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[0].basePoint.y = 0;
 		stubs[0].isValid = 1;
 		stubs[0].type = motherStub;
-		
+		stubs[0].StubNum = 0;
       
 		stubs[1].basePoint.x = -(t90_set.doubledst_set.safety1_dst_set.stubtostub - t90_set.doubledst_set.safety1_dst_set.motoas) * M_TO_MILLINM / 2;
 		stubs[1].basePoint.y = -sqrt(-stubs[1].basePoint.x * stubs[1].basePoint.x + 
                          t90_set.doubledst_set.safety1_dst_set.motostub * t90_set.doubledst_set.safety1_dst_set.motostub*M_TO_MILLINM*M_TO_MILLINM);
 
 		stubs[1].type = safetySignStub;
-		
+		stubs[1].StubNum = 1;
 		stubs[2].basePoint.x = t90_set.doubledst_set.safety2_dst_set.motoas * M_TO_MILLINM/ 2;
 		stubs[2].basePoint.y = -sqrt(t90_set.doubledst_set.safety2_dst_set.motostub * t90_set.doubledst_set.safety2_dst_set.motostub*M_TO_MILLINM*M_TO_MILLINM 
                              - stubs[2].basePoint.x * stubs[2].basePoint.x);
 
 		stubs[2].type = safetySignStub;
-		
+		stubs[2].StubNum = 2;
 		stubs[3].basePoint.x = (t90_set.doubledst_set.safety3_dst_set.stubtostub + t90_set.doubledst_set.safety3_dst_set.motoas)*M_TO_MILLINM/2;
 		stubs[3].basePoint.y = -sqrt(t90_set.doubledst_set.safety3_dst_set.motostub * t90_set.doubledst_set.safety3_dst_set.motostub 
         - (t90_set.doubledst_set.safety3_dst_set.stubtostub - t90_set.doubledst_set.safety3_dst_set.motoas) * 
         (t90_set.doubledst_set.safety3_dst_set.stubtostub - t90_set.doubledst_set.safety3_dst_set.motoas) / 4)*M_TO_MILLINM;
 
 		stubs[3].type = safetySignStub;
-		
+		stubs[3].StubNum = 3;
       stubs[4].basePoint.x = t90_set.doubledst_set.safety2_dst_set.motoas*M_TO_MILLINM;
 		stubs[4].basePoint.y = 0;
 		stubs[4].basePoint.y = 0;
@@ -100,7 +101,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[4].isValid = TRUE;
 		stubs[4].isValid = 1;
 		stubs[4].type = aidedStub;
-      
+      stubs[4].StubNum = 4;
       
 //      stubs[1].isValid  = 1;
 //      stubs[2].isValid  = 1;

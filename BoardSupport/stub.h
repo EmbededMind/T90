@@ -47,6 +47,7 @@ typedef struct Stub
 	Bool isValid;
 	StubType type;
    Bool isCross;
+   int StubNum;
 } Stub;
 
 typedef struct StubNode
