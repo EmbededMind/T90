@@ -468,7 +468,7 @@ void Comm_Task(void * p_arg)
    
    uint8_t  pulseNoAckCnt  = 0;
    uint8_t  dataNoAckCnt   = 0;
-   
+   StubRefresh();
    while(1)
    {
       

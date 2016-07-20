@@ -240,6 +240,8 @@ WM_HWIN WIN_SingleShipCreate(void){
 
 static void _onPaint1(void)
 {
+   GUI_SetColor(pColor->textColor);
+   DrawStubs(0);
    /** Paint BBS background */
    GUI_DrawGradientRoundedV( BBS1_ABOVE_X,                         /// x0
                              BBS1_ABOVE_Y,                         /// y0
@@ -248,6 +250,7 @@ static void _onPaint1(void)
                              BBS1_RADIUS, pColor->bbsTopColor, pColor->bbsBottomColor); 
 
    /** Paint BBS context */ 
+   
    GUI_SetTextMode(GUI_TM_TRANS);          
    GUI_SetColor(pColor->textColor);
    GUI_SetFont(&GUI_Font_T90_40);
@@ -317,9 +320,8 @@ static void _onPaint1(void)
 //   GUI_DispStringAt(pStrBuf, 20, 20);
 	 
 	GUI_SetColor(pColor->textColor);
-	DrawStubs(0);
+//	DrawStubs(0);
 //	DrawCursor(motherShipPixel, 0);
-printf("cursorOnStub = %d\n",cursorOnStub);
    DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);
    GUI_SetColor(GUI_BLACK);
 	GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
@@ -332,6 +334,8 @@ static void _onPaint2(void)
    int i  = 0;
    BERTH* pBerth  = NULL;
    GUI_RECT Rect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+117,BBS2_ABOVE_Y+20+40};
+   GUI_SetColor(pColor->textColor);
+   DrawStubs(0);
    /** Paint BBS background */
    GUI_DrawGradientRoundedV( BBS2_ABOVE_X,                         /// x0
                              BBS2_ABOVE_Y,                         /// y0
@@ -424,129 +428,139 @@ static void _onPaint2(void)
        
 
 		 case 1:
-        GUI_SetColor(pColor->numColor);
-        GUI_SetFont(GUI_FONT_24B_1);
-        for(i=0; i<N_boat; i++){
-           if(portStatus[0] == SimpBerthes[i].pBerth->Boat.user_id){
-              pBerth  = SimpBerthes[i].pBerth;
-              break;
+           GUI_SetColor(pColor->numColor);
+           GUI_SetFont(GUI_FONT_24B_1);
+           for(i=0; i<N_boat; i++){
+              if(portStatus[0] == SimpBerthes[i].pBerth->Boat.user_id){
+                 pBerth  = SimpBerthes[i].pBerth;
+                 break;
+              }
            }
-        }
-        
-        if(pBerth){
-           GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-           sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
-           GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
-        }
-
-        sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.y)*MILLINM_TO_M);
-        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-        sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.x)*MILLINM_TO_M);
-        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
-        GUI_SetFont(&GUI_Font_T90_30);
-        GUI_SetColor(pColor->textColor);
-        if(t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x)
-           GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
-        else
-           GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
-        GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
-        break;
-		 case 2:
-        GUI_SetColor(pColor->numColor);
-        GUI_SetFont(GUI_FONT_24B_1);
-        
-        
-         for(i=0; i<N_boat; i++){
-           if(portStatus[1] == SimpBerthes[i].pBerth->Boat.user_id){
-              pBerth  = SimpBerthes[i].pBerth;
-              break;
+           
+           if(pBerth){
+              GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+              sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+              GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
            }
-        }
-        
-        if(pBerth){
-           GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-           sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
-           GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
-        }   
 
-        sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.y)*MILLINM_TO_M);
-        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-
-        if(t90_set.sys.workmode == DOUBLE_MODE)
-        {
-           sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.x)*MILLINM_TO_M);
+           sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.y)*MILLINM_TO_M);
+           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+           sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.x)*MILLINM_TO_M);
            GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
            GUI_SetFont(&GUI_Font_T90_30);
            GUI_SetColor(pColor->textColor);
-           if(t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x)
+           if(t90_set.sys.workmode == DOUBLE_MODE)
+           {
+              if((t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x) > 0)
+                 GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+              else
+                 GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+           }
+           else
+           {
+              GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+           }
+           GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
+           break;
+		 case 2:
+           GUI_SetColor(pColor->numColor);
+           GUI_SetFont(GUI_FONT_24B_1);
+           
+           
+            for(i=0; i<N_boat; i++){
+              if(portStatus[1] == SimpBerthes[i].pBerth->Boat.user_id){
+                 pBerth  = SimpBerthes[i].pBerth;
+                 break;
+              }
+           }
+           
+           if(pBerth){
+              GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+              sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+              GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
+           }   
+
+           sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.y)*MILLINM_TO_M);
+           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+
+           if(t90_set.sys.workmode == DOUBLE_MODE)
+           {
+              sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.x)*MILLINM_TO_M);
+              GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+              GUI_SetFont(&GUI_Font_T90_30);
+              GUI_SetColor(pColor->textColor);
+              if((t90_set.sys.motherpos?  stubs[2].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[2].basePoint.x) > 0)
+                 GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+              else
+                 GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+              GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
+           }
+           break;
+		 case 3:
+           GUI_SetColor(pColor->numColor);
+           GUI_SetFont(GUI_FONT_24B_1);
+           
+            for(i=0; i<N_boat; i++){
+              if(portStatus[2] == SimpBerthes[i].pBerth->Boat.user_id){
+                 pBerth  = SimpBerthes[i].pBerth;
+                 break;
+              }
+           }
+           
+           if(pBerth){
+              GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+              sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+              GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
+           }
+           sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.y)*MILLINM_TO_M);
+           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+           sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.x)*MILLINM_TO_M);
+           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+           GUI_SetFont(&GUI_Font_T90_30);
+           GUI_SetColor(pColor->textColor);
+           if((t90_set.sys.motherpos?  stubs[3].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[3].basePoint.x) > 0)
               GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
            else
               GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
            GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
-        }
-        break;
-		 case 3:
-        GUI_SetColor(pColor->numColor);
-        GUI_SetFont(GUI_FONT_24B_1);
-        
-         for(i=0; i<N_boat; i++){
-           if(portStatus[2] == SimpBerthes[i].pBerth->Boat.user_id){
-              pBerth  = SimpBerthes[i].pBerth;
-              break;
-           }
-        }
-        
-        if(pBerth){
-           GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-           sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
-           GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
-        }
-        sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.y)*MILLINM_TO_M);
-        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-        sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.x)*MILLINM_TO_M);
-        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
-        GUI_SetFont(&GUI_Font_T90_30);
-        GUI_SetColor(pColor->textColor);
-        if(t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x)
-           GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
-        else
-           GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
-        GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
-    			 break;
+                break;
        case 4:
-          GUI_SetColor(pColor->numColor);
-        GUI_SetFont(GUI_FONT_24B_1);
-        
-         for(i=0; i<N_boat; i++){
-           if(portStatus[2] == SimpBerthes[i].pBerth->Boat.user_id){
-              pBerth  = SimpBerthes[i].pBerth;
-              break;
+           GUI_SetColor(pColor->numColor);
+           GUI_SetFont(GUI_FONT_24B_1);
+           
+            for(i=0; i<N_boat; i++){
+              if(portStatus[2] == SimpBerthes[i].pBerth->Boat.user_id){
+                 pBerth  = SimpBerthes[i].pBerth;
+                 break;
+              }
            }
-        }
-        
-        if(pBerth){
-           GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-           sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
-           GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
-        }
-        sprintf(pStrBuf, "%4d", abs(stubs[4].basePoint.y)*MILLINM_TO_M);
-        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-        sprintf(pStrBuf, "%4d", abs(stubs[4].basePoint.x)*MILLINM_TO_M);
-        GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
-        GUI_SetFont(&GUI_Font_T90_30);
-        GUI_SetColor(pColor->textColor);
-        if(t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x)
-           GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
-        else
-           GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
-        GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
-        break;
+           
+           if(pBerth){
+              GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
+              sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+              GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
+           }
+           sprintf(pStrBuf, "%4d", abs(stubs[4].basePoint.y)*MILLINM_TO_M);
+           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
+           sprintf(pStrBuf, "%4d", abs(stubs[4].basePoint.x)*MILLINM_TO_M);
+           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+           GUI_SetFont(&GUI_Font_T90_30);
+           GUI_SetColor(pColor->textColor);
+           if((t90_set.sys.motherpos?  stubs[4].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[4].basePoint.x) > 0)
+              GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+           else
+              GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
+           GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
+           break;
+       default :
+         printf("tmpCursor error\n"); 
+          break;
 	 }
 	 GUI_SetFont(&GUI_Font_T90_24);
 
 
 	 GUI_SetColor(pColor->textColor);
-	 DrawStubs(0);
+//	 DrawStubs(0);
 	 DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);
     GUI_SetColor(GUI_BLACK);
 	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);    

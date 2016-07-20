@@ -81,8 +81,15 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            {
               HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
               HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
-           }            
-           HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btFocusBkColor);
+           }
+           if(portStatus[id])
+           {              
+              HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btFocusBkColor);
+           }
+           else
+           {
+              HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btPrevFocusBkColor);
+           }
            
 
         }     
