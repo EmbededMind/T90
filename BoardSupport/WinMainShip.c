@@ -445,7 +445,7 @@ static void _onPaint2(void)
         GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
         GUI_SetFont(&GUI_Font_T90_30);
         GUI_SetColor(pColor->textColor);
-        if(stubs[1].basePoint.x)
+        if(t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x)
            GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
         else
            GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
@@ -478,7 +478,7 @@ static void _onPaint2(void)
            GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
            GUI_SetFont(&GUI_Font_T90_30);
            GUI_SetColor(pColor->textColor);
-           if(stubs[1].basePoint.x)
+           if(t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x)
               GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
            else
               GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
@@ -507,7 +507,7 @@ static void _onPaint2(void)
         GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
         GUI_SetFont(&GUI_Font_T90_30);
         GUI_SetColor(pColor->textColor);
-        if(stubs[1].basePoint.x)
+        if(t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x)
            GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
         else
            GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
@@ -535,7 +535,7 @@ static void _onPaint2(void)
         GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
         GUI_SetFont(&GUI_Font_T90_30);
         GUI_SetColor(pColor->textColor);
-        if(stubs[1].basePoint.x)
+        if(t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x)
            GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
         else
            GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
@@ -547,7 +547,6 @@ static void _onPaint2(void)
 
 	 GUI_SetColor(pColor->textColor);
 	 DrawStubs(0);
-printf("cursorOnStub = %d\n",cursorOnStub);
 	 DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);
     GUI_SetColor(GUI_BLACK);
 	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);    

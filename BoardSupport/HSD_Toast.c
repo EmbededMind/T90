@@ -74,11 +74,11 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
               WM_SetFocus(hBtns[0]);
               WM_ShowWindow (hBtns[0]);
               BUTTON_SetText(hBtns[0], "确定");
-              BUTTON_SetFont(hBtns[0], &GUI_Font_T90_30);
+
 	    
 	
-              BUTTON_SetBkColor(hBtns[0],BUTTON_BI_UNPRESSED,confirmWinColors[t90_set.sys.workmode].btFocusBkColor);
-              BUTTON_SetTextColor(hBtns[0],BUTTON_BI_UNPRESSED,confirmWinColors[t90_set.sys.workmode].btFocusTextColor);
+              BUTTON_SetBkColor(hBtns[0],BUTTON_BI_UNPRESSED,confirmWinColors[t90_set.sys.nightmode].btFocusBkColor);
+              BUTTON_SetTextColor(hBtns[0],BUTTON_BI_UNPRESSED,confirmWinColors[t90_set.sys.nightmode].btFocusTextColor);
               WM_ShowWindow(hBtns[0]);
            }
            
@@ -104,7 +104,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            GUI_DrawGradientRoundedV(0, 0, xSize-1, ySize-1,10, confirmWinColors[t90_set.sys.nightmode].bkTopColor,confirmWinColors[t90_set.sys.nightmode].bkTopColor);
            GUI_SetTextMode(GUI_TEXTMODE_TRANS);
            WM_GetClientRect(&clientRect);
-           GUI_SetColor(confirmWinColors[t90_set.sys.nightmode].btTextColor);
+           GUI_SetColor(confirmWinColors[t90_set.sys.nightmode].textColor);
            GUI_SetFont(myToast.pFont);
            GUI_DispStringAt(myToast.text, clientRect.x0+TEXT_MARGIN, (clientRect.y0+clientRect.y1) /2 -GUI_GetFontDistY()/2);
            
