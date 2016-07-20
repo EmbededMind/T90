@@ -457,13 +457,21 @@ static void _onPaint2(void)
 
            sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.y)*MILLINM_TO_M);
            GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-           sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.x)*MILLINM_TO_M);
-           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+           if(t90_set.sys.motherpos)
+           {
+              sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M);
+              GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+           }
+           else
+           {
+              sprintf(pStrBuf, "%4d", abs(stubs[1].basePoint.x)*MILLINM_TO_M);
+              GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+           }
            GUI_SetFont(&GUI_Font_T90_30);
            GUI_SetColor(pColor->textColor);
            if(t90_set.sys.workmode == DOUBLE_MODE)
            {
-              if((t90_set.sys.motherpos?  stubs[1].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[1].basePoint.x) > 0)
+              if((t90_set.sys.motherpos?  stubs[1].basePoint.x-stubs[4].basePoint.x:stubs[1].basePoint.x) > 0)
                  GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
               else
                  GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
@@ -497,11 +505,19 @@ static void _onPaint2(void)
 
            if(t90_set.sys.workmode == DOUBLE_MODE)
            {
-              sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.x)*MILLINM_TO_M);
-              GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+              if(t90_set.sys.motherpos)
+              {
+                 sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M);
+                 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+              }
+              else
+              {
+                 sprintf(pStrBuf, "%4d", abs(stubs[2].basePoint.x)*MILLINM_TO_M);
+                 GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+              }
               GUI_SetFont(&GUI_Font_T90_30);
               GUI_SetColor(pColor->textColor);
-              if((t90_set.sys.motherpos?  stubs[2].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[2].basePoint.x) > 0)
+              if((t90_set.sys.motherpos?  stubs[2].basePoint.x-stubs[4].basePoint.x:stubs[2].basePoint.x) > 0)
                  GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
               else
                  GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
@@ -526,11 +542,20 @@ static void _onPaint2(void)
            }
            sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.y)*MILLINM_TO_M);
            GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
-           sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.x)*MILLINM_TO_M);
-           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+           if(t90_set.sys.motherpos)
+           {
+              sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M);
+              GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+           }
+           else
+           {
+              sprintf(pStrBuf, "%4d", abs(stubs[3].basePoint.x)*MILLINM_TO_M);
+              GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
+           }
            GUI_SetFont(&GUI_Font_T90_30);
            GUI_SetColor(pColor->textColor);
-           if((t90_set.sys.motherpos?  stubs[3].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[3].basePoint.x) > 0)
+
+           if((t90_set.sys.motherpos?  stubs[3].basePoint.x-stubs[4].basePoint.x:stubs[3].basePoint.x) > 0)
               GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
            else
               GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
@@ -558,7 +583,7 @@ static void _onPaint2(void)
            GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+45+40*3);
            GUI_SetFont(&GUI_Font_T90_30);
            GUI_SetColor(pColor->textColor);
-           if((t90_set.sys.motherpos?  stubs[4].basePoint.x-t90_set.doubledst_set.safety2_dst_set.motoas:stubs[4].basePoint.x) > 0)
+           if((t90_set.sys.motherpos?  stubs[4].basePoint.x-stubs[4].basePoint.x:stubs[4].basePoint.x) > 0)
               GUI_DispStringAt("右舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
            else
               GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);

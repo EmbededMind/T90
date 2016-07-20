@@ -85,18 +85,15 @@ typedef struct SingleDst_Set
 	int dst5;
 } SingleDst_Set;
 
-typedef struct 
-{
-   uint16_t motoas;
-   uint16_t motostub;
-   uint16_t stubtostub;
-}DoubleDst_SetOne;
+
 
 typedef struct
 {
-   DoubleDst_SetOne safety1_dst_set;   
-   DoubleDst_SetOne safety2_dst_set;
-   DoubleDst_SetOne safety3_dst_set;
+   int safety1_to_mo;   
+   int safety2_to_mo;
+   int safety3_to_mo;
+   int mo_to_as;
+   int net_port;
 }DoubleDst_Set;
 
 

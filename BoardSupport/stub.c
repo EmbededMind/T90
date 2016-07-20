@@ -74,26 +74,26 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[0].type = motherStub;
 		stubs[0].StubNum = 0;
       
-		stubs[1].basePoint.x = -(t90_set.doubledst_set.safety1_dst_set.stubtostub - t90_set.doubledst_set.safety1_dst_set.motoas) * M_TO_MILLINM / 2;
+		stubs[1].basePoint.x = -(t90_set.doubledst_set.net_port - t90_set.doubledst_set.mo_to_as) * M_TO_MILLINM / 2;
 		stubs[1].basePoint.y = -sqrt(-stubs[1].basePoint.x * stubs[1].basePoint.x + 
-                         t90_set.doubledst_set.safety1_dst_set.motostub * t90_set.doubledst_set.safety1_dst_set.motostub*M_TO_MILLINM*M_TO_MILLINM);
+                         t90_set.doubledst_set.safety1_to_mo * t90_set.doubledst_set.safety1_to_mo*M_TO_MILLINM*M_TO_MILLINM);
 
 		stubs[1].type = safetySignStub;
 		stubs[1].StubNum = 1;
-		stubs[2].basePoint.x = t90_set.doubledst_set.safety2_dst_set.motoas * M_TO_MILLINM/ 2;
-		stubs[2].basePoint.y = -sqrt(t90_set.doubledst_set.safety2_dst_set.motostub * t90_set.doubledst_set.safety2_dst_set.motostub*M_TO_MILLINM*M_TO_MILLINM 
+		stubs[2].basePoint.x = t90_set.doubledst_set.mo_to_as * M_TO_MILLINM/ 2;
+		stubs[2].basePoint.y = -sqrt(t90_set.doubledst_set.safety2_to_mo * t90_set.doubledst_set.safety2_to_mo*M_TO_MILLINM*M_TO_MILLINM 
                              - stubs[2].basePoint.x * stubs[2].basePoint.x);
 
 		stubs[2].type = safetySignStub;
 		stubs[2].StubNum = 2;
-		stubs[3].basePoint.x = (t90_set.doubledst_set.safety3_dst_set.stubtostub + t90_set.doubledst_set.safety3_dst_set.motoas)*M_TO_MILLINM/2;
-		stubs[3].basePoint.y = -sqrt(t90_set.doubledst_set.safety3_dst_set.motostub * t90_set.doubledst_set.safety3_dst_set.motostub 
-        - (t90_set.doubledst_set.safety3_dst_set.stubtostub - t90_set.doubledst_set.safety3_dst_set.motoas) * 
-        (t90_set.doubledst_set.safety3_dst_set.stubtostub - t90_set.doubledst_set.safety3_dst_set.motoas) / 4)*M_TO_MILLINM;
+		stubs[3].basePoint.x = (t90_set.doubledst_set.net_port + t90_set.doubledst_set.mo_to_as)*M_TO_MILLINM/2;
+		stubs[3].basePoint.y = -sqrt(t90_set.doubledst_set.safety3_to_mo * t90_set.doubledst_set.safety3_to_mo 
+        - (t90_set.doubledst_set.net_port - t90_set.doubledst_set.mo_to_as) * 
+        (t90_set.doubledst_set.net_port - t90_set.doubledst_set.mo_to_as) / 4)*M_TO_MILLINM;
 
 		stubs[3].type = safetySignStub;
 		stubs[3].StubNum = 3;
-      stubs[4].basePoint.x = t90_set.doubledst_set.safety2_dst_set.motoas*M_TO_MILLINM;
+      stubs[4].basePoint.x = t90_set.doubledst_set.mo_to_as*M_TO_MILLINM;
 		stubs[4].basePoint.y = 0;
 		stubs[4].basePoint.y = 0;
 //      stubs[4].basePoint.x = pdoubleDstSet[4].motoas*M_TO_MILLINM;
@@ -131,19 +131,19 @@ void Stub_setValidity(int which, Bool validity)
          {
             switch(which){
                case 1: 
-                  t90_set.doubledst_set.safety1_dst_set.motoas = DEFAULT_DOUDST3; 
-                  t90_set.doubledst_set.safety1_dst_set.motostub = DEFAULT_DOUDST1;
-                  t90_set.doubledst_set.safety1_dst_set.stubtostub = DEFAULT_DOUDST2;
+                  t90_set.doubledst_set.mo_to_as = DEFAULT_DOUDST3; 
+                  t90_set.doubledst_set.safety1_to_mo = DEFAULT_DOUDST1;
+                  t90_set.doubledst_set.net_port = DEFAULT_DOUDST2;
                   break;
                case 2: 
-                  t90_set.doubledst_set.safety2_dst_set.motoas = DEFAULT_DOUDST3; 
-                  t90_set.doubledst_set.safety2_dst_set.motostub = DEFAULT_DOUDST4;
-                  t90_set.doubledst_set.safety2_dst_set.stubtostub = DEFAULT_DOUDST2;  
+                  t90_set.doubledst_set.mo_to_as = DEFAULT_DOUDST3; 
+                  t90_set.doubledst_set.safety2_to_mo = DEFAULT_DOUDST4;
+                  t90_set.doubledst_set.net_port = DEFAULT_DOUDST2;  
                   break;
                case 3: 
-                  t90_set.doubledst_set.safety3_dst_set.motoas = DEFAULT_DOUDST3; 
-                  t90_set.doubledst_set.safety3_dst_set.motostub = DEFAULT_DOUDST1;
-                  t90_set.doubledst_set.safety3_dst_set.stubtostub = DEFAULT_DOUDST2; 
+                  t90_set.doubledst_set.mo_to_as = DEFAULT_DOUDST3; 
+                  t90_set.doubledst_set.safety3_to_mo = DEFAULT_DOUDST1;
+                  t90_set.doubledst_set.net_port = DEFAULT_DOUDST2; 
                   break;
             }
          }

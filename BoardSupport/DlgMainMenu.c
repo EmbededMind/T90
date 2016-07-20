@@ -97,6 +97,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                            myMsg.MsgId = USER_MSG_MOTHERPOS;
                            myMsg.Data.v = DEFAULT_LEFT;
                            WM_SendMessage(myMsg.hWin, &myMsg);
+                           WM_InvalidateWindow(doubleShipDstSetWin);
                         }                           
                         break;
               
@@ -108,6 +109,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                            myMsg.MsgId = USER_MSG_MOTHERPOS;
                            myMsg.Data.v = DEFAULT_RIGHT;
                            WM_SendMessage(myMsg.hWin, &myMsg);
+                           WM_InvalidateWindow(doubleShipDstSetWin);
                         }   
                         break; 
                   case GUI_KEY_SINGLE:
@@ -118,6 +120,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                             myMsg.MsgId = USER_MSG_WORKMODE;
                             myMsg.Data.v = SINGLE_MODE;
                             WM_SendMessage(myMsg.hWin, &myMsg);
+                            WM_BringToTop(singleShipDstSetWin);
                          }
                          
                          break;
@@ -129,6 +132,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                             myMsg.MsgId = USER_MSG_WORKMODE;
                             myMsg.Data.v = DOUBLE_MODE;
                             WM_SendMessage(myMsg.hWin, &myMsg);
+                            WM_BringToTop(doubleShipDstSetWin);
                          }
                          
                          break;

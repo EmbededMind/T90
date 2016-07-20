@@ -497,7 +497,7 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
            switch(pKeyInfo->Key)
            {
               case GUI_KEY_RIGHT:
-              case GUI_KEY_ENTER:
+//              case GUI_KEY_ENTER:
                    myMsg.hWin      = WM_GetClientWindow(confirmWin);            
                    myMsg.hWinSrc   = pMsg->hWin;
                    myMsg.MsgId     = USER_MSG_CHOOSE;

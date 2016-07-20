@@ -30,18 +30,13 @@ T90_Set t90_set = {
       DEFAULT_DST4,
       DEFAULT_DST5,},
    {
-      {
-         DEFAULT_DOUDST3,
-         DEFAULT_DOUDST1,
-         DEFAULT_DOUDST2,},
-      {
-         DEFAULT_DOUDST3,
-         DEFAULT_DOUDST4,
-         DEFAULT_DOUDST2},
-      {
-         DEFAULT_DOUDST3,
-         DEFAULT_DOUDST1,
-         DEFAULT_DOUDST2},
+      DEFAULT_DOUDST1,
+      DEFAULT_DOUDST4,
+      DEFAULT_DOUDST1,
+      
+      DEFAULT_DOUDST3,
+      DEFAULT_DOUDST2,
+      
    },
 	{
 		DEFAULT_INVD_DST, 	
@@ -61,7 +56,41 @@ T90_Set t90_set = {
 		OFF,
       DEFAULT_LEFT   }
 };
+T90_Set reset_t90_set = {
 
+   {
+      DEFAULT_DST1,
+      DEFAULT_DST2,
+      DEFAULT_DST3,
+      DEFAULT_DST4,
+      DEFAULT_DST5,},
+   {
+      DEFAULT_DOUDST1,
+      DEFAULT_DOUDST4,
+      DEFAULT_DOUDST1,
+      
+      DEFAULT_DOUDST3,
+      DEFAULT_DOUDST2,
+      
+   },
+	{
+		DEFAULT_INVD_DST, 	
+		DEFAULT_DANGER_SOG_X10,   
+		DEFAULT_MIN_SOG_X10,     
+		DEFAULT_MAX_SOG_X10,      
+		DEFAULT_NATION },	
+	
+	{
+		NONE_MODE,
+		OFF,
+		DAY,
+		DEFAULT_VOLUM,
+		DEFAULT_BRIGHT,
+		NM,
+		OFF,
+		OFF,
+      DEFAULT_LEFT   }
+};
 
 int MS_isSpeeding = 0;      //MS:mothership 
 int MS_isMin_SOG = 0;
@@ -198,6 +227,7 @@ void T90_Reset(void)
    t90_set.sys.unit      = NM;
 	t90_set.sys.update    = OFF;
 	
+   memcpy(&t90_set,&reset_t90_set,sizeof(t90_set));
    T90_Store();
 
 //  printT90_Set(&t90_set);
