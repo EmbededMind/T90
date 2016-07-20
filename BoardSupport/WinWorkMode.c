@@ -35,19 +35,25 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
                case GUI_KEY_MOLEFT:
+                  if(t90_set.sys.motherpos == DEFAULT_RIGHT)
+                  {
                         myMsg.hWin = systemSetDlg;
                         myMsg.hWinSrc = pMsg->hWin;
                         myMsg.MsgId = USER_MSG_MOTHERPOS;
                         myMsg.Data.v = DEFAULT_LEFT;
-                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        WM_SendMessage(myMsg.hWin, &myMsg);
+                  }                     
                         break;
               
               case GUI_KEY_MORIGHT:
+                 if(t90_set.sys.motherpos == DEFAULT_LEFT)
+                 {
                         myMsg.hWin = systemSetDlg;
                         myMsg.hWinSrc = pMsg->hWin;
                         myMsg.MsgId = USER_MSG_MOTHERPOS;
                         myMsg.Data.v = DEFAULT_RIGHT;
-                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        WM_SendMessage(myMsg.hWin, &myMsg);
+                 }                    
                         break;
               
                case GUI_KEY_SINGLE:

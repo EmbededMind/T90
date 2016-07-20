@@ -44,34 +44,46 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 			switch(((WM_KEY_INFO*)(pMsg->Data.p))->Key)
 			{
             case GUI_KEY_MOLEFT:
-                        myMsg.hWin = systemSetDlg;
-                        myMsg.hWinSrc = pMsg->hWin;
-                        myMsg.MsgId = USER_MSG_MOTHERPOS;
-                        myMsg.Data.v = DEFAULT_LEFT;
-                        WM_SendMessage(myMsg.hWin, &myMsg);                 
+                        if(t90_set.sys.motherpos == DEFAULT_RIGHT)
+                        {
+                           myMsg.hWin = systemSetDlg;
+                           myMsg.hWinSrc = pMsg->hWin;
+                           myMsg.MsgId = USER_MSG_MOTHERPOS;
+                           myMsg.Data.v = DEFAULT_LEFT;
+                           WM_SendMessage(myMsg.hWin, &myMsg);
+                        }                           
                         break;
               
               case GUI_KEY_MORIGHT:
-                        myMsg.hWin = systemSetDlg;
-                        myMsg.hWinSrc = pMsg->hWin;
-                        myMsg.MsgId = USER_MSG_MOTHERPOS;
-                        myMsg.Data.v = DEFAULT_RIGHT;
-                        WM_SendMessage(myMsg.hWin, &myMsg);                 
-                        break;
-            case GUI_KEY_SINGLE:                        
-                         myMsg.hWin = systemSetDlg;
-                         myMsg.hWinSrc = pMsg->hWin;
-                         myMsg.MsgId = USER_MSG_WORKMODE;
-                         myMsg.Data.v = SINGLE_MODE;
-                         WM_SendMessage(myMsg.hWin, &myMsg);
+                        if(t90_set.sys.motherpos == DEFAULT_LEFT)
+                        {
+                           myMsg.hWin = systemSetDlg;
+                           myMsg.hWinSrc = pMsg->hWin;
+                           myMsg.MsgId = USER_MSG_MOTHERPOS;
+                           myMsg.Data.v = DEFAULT_RIGHT;
+                           WM_SendMessage(myMsg.hWin, &myMsg);
+                        }   
+                        break; 
+                  case GUI_KEY_SINGLE:
+                         if(t90_set.sys.workmode == DOUBLE_MODE)
+                         {                            
+                            myMsg.hWin = systemSetDlg;
+                            myMsg.hWinSrc = pMsg->hWin;
+                            myMsg.MsgId = USER_MSG_WORKMODE;
+                            myMsg.Data.v = SINGLE_MODE;
+                            WM_SendMessage(myMsg.hWin, &myMsg);
+                         }
                          
                          break;
-                  case GUI_KEY_DOUBLE:                        
-                         myMsg.hWin = systemSetDlg;
-                         myMsg.hWinSrc = pMsg->hWin;
-                         myMsg.MsgId = USER_MSG_WORKMODE;
-                         myMsg.Data.v = DOUBLE_MODE;
-                         WM_SendMessage(myMsg.hWin, &myMsg);
+                  case GUI_KEY_DOUBLE:
+                         if(t90_set.sys.workmode == SINGLE_MODE)
+                         {
+                            myMsg.hWin = systemSetDlg;
+                            myMsg.hWinSrc = pMsg->hWin;
+                            myMsg.MsgId = USER_MSG_WORKMODE;
+                            myMsg.Data.v = DOUBLE_MODE;
+                            WM_SendMessage(myMsg.hWin, &myMsg);
+                         }
                          
                          break;
 				case GUI_KEY_PWM_INC:       
