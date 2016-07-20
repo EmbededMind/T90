@@ -122,7 +122,7 @@ printf("maintask\n");
          /// Data ack ok
          if(ipcMsg & 0x20){           
             ipcMsg &= (~0x20);   //数据应答
-            ToastCreate("数据写入成功", &GUI_Font16B_ASCII, NULL, 2000);
+            ToastCreate("数据写入成功! ", &GUI_Font_T90_30, NULL, 2000);
             if(t90_set.sys.workmode == SINGLE_MODE)
             {
                pMsg.hWin = singleShipDstSetWin;
@@ -142,7 +142,7 @@ printf("maintask\n");
          else if(ipcMsg & 0x10){
            
             ipcMsg  &= (~0x10);  //数据超时
-            ToastCreate("数据写入失败", &GUI_Font16B_ASCII, NULL, 2000);
+            ToastCreate("数据写入失败! ", &GUI_Font_T90_30, NULL, 2000);
             if(t90_set.sys.workmode == SINGLE_MODE)
             {
                pMsg.hWin = singleShipDstSetWin;
@@ -168,7 +168,7 @@ printf("maintask\n");
            
             ipcMsg  &= (~0x40);  //握手超时
             toast_flg = TRUE;
-            ToastCreate("连接失败", &GUI_Font16B_ASCII, TOAST_OK, 2000);
+            ToastCreate("连接超时! ", &GUI_Font_T90_30, TOAST_OK, 2000);
          }
       }
 
