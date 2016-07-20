@@ -169,6 +169,7 @@ printf("maintask\n");
             ipcMsg  &= (~0x40);  //握手超时
             toast_flg = TRUE;
             ToastCreate("连接超时! ", &GUI_Font_T90_30, TOAST_OK, 2000);
+//            ToastCreate("1 ", &GUI_Font_T90_30, TOAST_OK, 2000);
          }
       }
 

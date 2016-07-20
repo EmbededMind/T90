@@ -135,7 +135,7 @@ void ToastCreate(const char* text, const GUI_FONT GUI_UNI_PTR* pFont ,uint8_t bt
        return ;
        
 
-    GUI_SetFont(pFont);   
+//    GUI_SetFont(pFont);   
     if(btnFlags){
        myToast.hWin = WM_GetFocussedWindow(); 
        if(btnFlags & TOAST_OK){
