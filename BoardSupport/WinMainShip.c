@@ -460,7 +460,7 @@ static void _onPaint2(void)
    GUI_DrawVLine(BBS2_ABOVE_X+191, BBS2_ABOVE_Y+25, BBS2_ABOVE_Y+BBS2_ABOVE_HEIGHT-20);
 
 
-  GUI_DrawGradientRoundedV( BBS2_BELOW_X,                         /// x0
+   GUI_DrawGradientRoundedV( BBS2_BELOW_X,                         /// x0
                              BBS2_BELOW_Y,                         /// y0
                              BBS2_BELOW_X + BBS2_BELOW_WIDTH-1,             /// x1
                              BBS2_BELOW_Y + BBS2_BELOW_HEIGHT-1,            /// y1
