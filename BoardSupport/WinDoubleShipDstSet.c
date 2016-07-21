@@ -365,26 +365,26 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            
            WM_SetFocus(dstSetMenuDlg);
       break;
-//      case USER_MSG_DST_SET:
-//       
-//          for(i = 0; i < 3; i++)  //clear
-//          {
-//             HSD_STICKFIGURE_SetPenColor(hFigs[i], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
-//          }
-//          if(pMsg->Data.v != -1)
-//          {
-//             HSD_STICKFIGURE_SetPenColor(hFigs[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor);
-//             prevwhichFig = whichFig;
-//             whichFig = pMsg->Data.v;
-//             sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].motoas);
-//             HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
-//             if(whichFig != 1)
-//             {
-//                sprintf(pStrBuf, "%d", tempDouDstSet[whichFig].stubtostub);
-//                HSD_DIMENSION_EX_SetValText(hExDim[1], pStrBuf);  
-//             }                
-//          }
-//          break;
+      case USER_MSG_DST_SET:
+       
+          for(i = 0; i < 3; i++)  //clear
+          {
+             HSD_STICKFIGURE_SetPenColor(hFigs[i], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
+          }
+          if(pMsg->Data.v != -1)
+          {
+             HSD_STICKFIGURE_SetPenColor(hFigs[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor);
+             prevwhichFig = whichFig;
+             whichFig = pMsg->Data.v;
+             sprintf(pStrBuf, "%d", tempDouDstSet.mo_to_as);
+             HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
+             if(whichFig != 1)
+             {
+                sprintf(pStrBuf, "%d", tempDouDstSet.net_port);
+                HSD_DIMENSION_EX_SetValText(hExDim[1], pStrBuf);  
+             }                
+          }
+          break;
       case USER_MSG_SKIN:
        pColors = &(setWinColors[pMsg->Data.v]);	
        

@@ -130,6 +130,7 @@ typedef struct T90_Set
 
 
 extern T90_Set t90_set;
+extern T90_Set reset_t90_set;
 extern boat mothership;
 extern int MS_isSpeeding;
 extern int MS_isMin_SOG;

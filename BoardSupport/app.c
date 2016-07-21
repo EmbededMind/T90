@@ -478,20 +478,32 @@ void Comm_Task(void * p_arg)
       if(err == OS_ERR_NONE){
          /** 判断ACK类型，取得三个端口的状态 */
          if(pFrame[1] == 0x51){   /// 判断是否是来自于T81的消息
-            
+           
             long recMMSI  = 0;
             
             pulseNoAckCnt  = 0;
-
+//printf("%d\n",stubs[1].basePoint.x*MILLINM_TO_M);         
+//printf("%d\n",stubs[1].basePoint.y*MILLINM_TO_M);
+//printf("%d\n",stubs[2].basePoint.x*MILLINM_TO_M);
+//printf("%d\n",stubs[2].basePoint.y*MILLINM_TO_M);
+//printf("%d\n",stubs[3].basePoint.x*MILLINM_TO_M);
+//printf("%d\n",stubs[3].basePoint.y*MILLINM_TO_M); 
             recMMSI  = pFrame[2];  
             recMMSI  = recMMSI<<8|pFrame[3]; 
             recMMSI  = recMMSI<<8|pFrame[4];
             recMMSI  = recMMSI<<8|pFrame[5];
             
             /// Port 1 changed!
-            if(recMMSI != portStatus[0]){
+            if(recMMSI != portStatus[0] && recMMSI){
                 portStatus[0]  = recMMSI;
-               Comm_addFrame(1,stubs[1].basePoint.x,abs(stubs[1].basePoint.y));
+               if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+               {
+                  Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M);
+               }
+               else
+               {
+                  Comm_addFrame(1,(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M);
+               }
             }
             
             /// Port 2 changed!
@@ -500,9 +512,16 @@ void Comm_Task(void * p_arg)
             recMMSI  = recMMSI<<8|pFrame[8];
             recMMSI  = recMMSI<<8|pFrame[9];
 
-            if(recMMSI != portStatus[1]){
-               portStatus[1]  = recMMSI;
-               Comm_addFrame(2,stubs[2].basePoint.x,abs(stubs[2].basePoint.y));
+            if(recMMSI != portStatus[1] && recMMSI){
+               portStatus[1]  = recMMSI;               
+               if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+               {
+                  Comm_addFrame(2,stubs[2].basePoint.x*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M);
+               }
+               else
+               {
+                  Comm_addFrame(2,(stubs[2].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M);
+               }
             }
             
             
@@ -512,9 +531,16 @@ void Comm_Task(void * p_arg)
             recMMSI  = recMMSI<<8|pFrame[12];
             recMMSI  = recMMSI<<8|pFrame[13];
 
-            if(recMMSI != portStatus[2]){
+            if(recMMSI != portStatus[2] && recMMSI){
                portStatus[2]  = recMMSI;
-               Comm_addFrame(3,stubs[3].basePoint.x,abs(stubs[3].basePoint.y));
+               if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+               {
+                  Comm_addFrame(3,stubs[3].basePoint.x*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M);
+               }
+               else
+               {
+                  Comm_addFrame(3,(stubs[3].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M);
+               }
             }
             
             ipcMsg  |= 0x80;  
@@ -595,10 +621,7 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
 	
   SPI1_Int();
 
-  ISD_Init();
-  
-
-  
+  ISD_Init();  
   OSInit();  
   SysTick_Init();/* 初始化SysTick定时器 */
   Refresher  = OSMutexCreate(6,&myErr);

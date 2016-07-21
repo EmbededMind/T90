@@ -86,6 +86,20 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            t90_set.sys.motherpos = pMsg->Data.v;
            memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
            T90_Store();
+           if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+           {
+              for(i = 0; i < 3; i++)
+              {
+                  Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M);
+              }
+           }
+           else
+           {                            
+              for(i = 0; i < 3; i++)
+              {
+                  Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+              }                         
+           }
            break;
       case USER_MSG_WORKMODE:
            HSD_SLIDER_SetValue(slideres[0],pMsg->Data.v);
@@ -93,29 +107,19 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            T90_Store();
            memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
            StubRefresh();
-           if(t90_set.sys.workmode == SINGLE_MODE)
+           if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
            {
               for(i = 0; i < 3; i++)
               {
-                  Comm_addFrame(i+1,stubs[i+1].basePoint.y*MILLINM_TO_M,abs(stubs[i+1].basePoint.x)*MILLINM_TO_M);
+                  Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M);
               }
            }
            else
-           {              
-              if(t90_set.sys.motherpos == DEFAULT_LEFT)
+           {                            
+              for(i = 0; i < 3; i++)
               {
-                 for(i = 0; i < 3; i++)
-                 {
-                    Comm_addFrame(i+1,(stubs[i+1].basePoint.y - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.x)*MILLINM_TO_M);
-                 }
-              }
-              else
-              {
-                 for(i = 0; i < 3; i++)
-                 {
-                    Comm_addFrame(i+1,(stubs[i+1].basePoint.y),abs(stubs[i+1].basePoint.x));
-                 }
-              }             
+                 Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+              }                         
            }
            break;      
       case USER_MSG_DIM:   
@@ -580,6 +584,7 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
               HSD_SLIDER_SetValue(slideres[7], 0);
               
               NVIC_SystemReset();
+              
               
            } 
 

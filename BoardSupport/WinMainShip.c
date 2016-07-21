@@ -69,8 +69,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 break;
 		 
       case WM_CREATE:
-           pColor = &homeColors[t90_set.sys.nightmode];
-
+           pColor = &homeColors[t90_set.sys.nightmode];           
            _onPaint1();
            break;
 			
@@ -85,6 +84,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                            myMsg.MsgId = USER_MSG_MOTHERPOS;
                            myMsg.Data.v = DEFAULT_LEFT;
                            WM_SendMessage(myMsg.hWin, &myMsg);
+                           if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
+                           {
+                              cursorOnStub = 4;
+                           }
+                           else
+                           {
+                              cursorOnStub = 0;
+                           }
+                           
                         }                           
                         break;
               
@@ -96,6 +104,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                            myMsg.MsgId = USER_MSG_MOTHERPOS;
                            myMsg.Data.v = DEFAULT_RIGHT;
                            WM_SendMessage(myMsg.hWin, &myMsg);
+                           if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
+                           {
+                              cursorOnStub = 4;
+                           }
+                           else
+                           {
+                              cursorOnStub = 0;
+                           }
                         }   
                         break; 
                   case GUI_KEY_SINGLE:
@@ -106,6 +122,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                             myMsg.MsgId = USER_MSG_WORKMODE;
                             myMsg.Data.v = SINGLE_MODE;
                             WM_SendMessage(myMsg.hWin, &myMsg);
+                            if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
+                           {
+                              cursorOnStub = 4;
+                           }
+                           else
+                           {
+                              cursorOnStub = 0;
+                           }
                          }
                          
                          break;
@@ -117,6 +141,14 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                             myMsg.MsgId = USER_MSG_WORKMODE;
                             myMsg.Data.v = DOUBLE_MODE;
                             WM_SendMessage(myMsg.hWin, &myMsg);
+                            if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
+                           {
+                              cursorOnStub = 4;
+                           }
+                           else
+                           {
+                              cursorOnStub = 0;
+                           }
                          }
                          
                          break;
@@ -215,7 +247,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 }
            break;
 			
-			case WM_SET_FOCUS:                
+			case WM_SET_FOCUS:
+                if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
+                {
+                   cursorOnStub = 4;
+                }
+                else
+                {
+                   cursorOnStub = 0;
+                }
 					 if(pMsg->Data.v)
 					 {                  
 //						 cursorOnStub = 0;
@@ -369,7 +409,7 @@ static void _onPaint2(void)
    pStrBuf[3]  = 194;
    pStrBuf[4]  = 176;
    pStrBuf[5]  = '\0';
-   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+150, BBS2_ABOVE_Y+15);
+   GUI_DispStringAt(pStrBuf, BBS2_ABOVE_X+150, BBS2_ABOVE_Y+23);
    GUI_SetFont(&GUI_Font_T90_20);
    GUI_DispStringAt("节" , BBS2_ABOVE_X+173, BBS2_ABOVE_Y+80);
 

@@ -87,8 +87,9 @@ void Comm_addFrame( uint8_t whichPort, int offset_x, uint16_t offset_y )
    else
    {
       frameTab[cursor][4] = 0;
+      offset_x = -offset_x;
    }
-   
+      
    frameTab[cursor][5]  = offset_x >> 8;
    frameTab[cursor][6]  = offset_x & 0xff;
    

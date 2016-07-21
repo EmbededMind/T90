@@ -226,9 +226,9 @@ void T90_Reset(void)
    t90_set.sys.volum     = DEFAULT_VOLUM;
    t90_set.sys.unit      = NM;
 	t90_set.sys.update    = OFF;
-	
-   memcpy(&t90_set,&reset_t90_set,sizeof(t90_set));
+	memcpy(&t90_set,&reset_t90_set,sizeof(t90_set));
    T90_Store();
+
 
 //  printT90_Set(&t90_set);
 }
