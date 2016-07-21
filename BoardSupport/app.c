@@ -621,7 +621,9 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
 	
   SPI1_Int();
 
-  ISD_Init();  
+  ISD_Init();
+
+   
   OSInit();  
   SysTick_Init();/* 初始化SysTick定时器 */
   Refresher  = OSMutexCreate(6,&myErr);
