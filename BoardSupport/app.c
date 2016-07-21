@@ -243,8 +243,7 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
       
 //      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
-        if(ipcMsg & 0x80){
-          
+        if(ipcMsg & 0x80){         
            Stub_setValidity(1, portStatus[0]?1:0);
            Stub_setValidity(2, portStatus[1]?1:0);
            Stub_setValidity(3, portStatus[2]?1:0);
@@ -478,17 +477,12 @@ void Comm_Task(void * p_arg)
       if(err == OS_ERR_NONE){
          /** 判断ACK类型，取得三个端口的状态 */
          if(pFrame[1] == 0x51){   /// 判断是否是来自于T81的消息
-           
+            
             long recMMSI  = 0;
             
             pulseNoAckCnt  = 0;
-//printf("%d\n",stubs[1].basePoint.x*MILLINM_TO_M);         
-//printf("%d\n",stubs[1].basePoint.y*MILLINM_TO_M);
-//printf("%d\n",stubs[2].basePoint.x*MILLINM_TO_M);
-//printf("%d\n",stubs[2].basePoint.y*MILLINM_TO_M);
-//printf("%d\n",stubs[3].basePoint.x*MILLINM_TO_M);
-//printf("%d\n",stubs[3].basePoint.y*MILLINM_TO_M); 
-            recMMSI  = pFrame[2];  
+            StubRefresh();
+            recMMSI  = pFrame[2];
             recMMSI  = recMMSI<<8|pFrame[3]; 
             recMMSI  = recMMSI<<8|pFrame[4];
             recMMSI  = recMMSI<<8|pFrame[5];

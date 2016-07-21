@@ -172,7 +172,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
             
              id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
              
-//             if(portStatus[id]){
+             if(portStatus[id]){
         
                 flag_prevfocus = 1;
                 if(t90_set.sys.workmode == SINGLE_MODE  )
@@ -186,7 +186,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                    myMsg.MsgId  = USER_MSG_FOCUS;
                    WM_SendMessage(myMsg.hWin, &myMsg);
                 }
-//             }   
+             }   
               
              break;
 //		  case GUI_KEY_UP:
