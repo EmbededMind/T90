@@ -119,35 +119,6 @@ void Stub_setValidity(int which, Bool validity)
    
    if(which > 0  &&  which < 4){
       stubs[which].isValid  = validity;
-//      if(validity == FALSE){
-//         if(t90_set.sys.workmode == SINGLE_MODE)
-//         {
-//            switch(which){
-//               case 1: t90_set.singledst_set.dst1 = DEFAULT_DST1; t90_set.singledst_set.dst2 = DEFAULT_DST2; break;
-//               case 2: t90_set.singledst_set.dst3 = DEFAULT_DST3;  break;
-//               case 3: t90_set.singledst_set.dst4 = DEFAULT_DST4; t90_set.singledst_set.dst5 = DEFAULT_DST5; break;
-//            }
-//         }else if(t90_set.sys.workmode == DOUBLE_MODE)
-//         {
-//            switch(which){
-//               case 1: 
-//                  t90_set.doubledst_set.mo_to_as = DEFAULT_DOUDST3; 
-//                  t90_set.doubledst_set.safety1_to_mo = DEFAULT_DOUDST1;
-//                  t90_set.doubledst_set.net_port = DEFAULT_DOUDST2;
-//                  break;
-//               case 2: 
-//                  t90_set.doubledst_set.mo_to_as = DEFAULT_DOUDST3; 
-//                  t90_set.doubledst_set.safety2_to_mo = DEFAULT_DOUDST4;
-//                  t90_set.doubledst_set.net_port = DEFAULT_DOUDST2;  
-//                  break;
-//               case 3: 
-//                  t90_set.doubledst_set.mo_to_as = DEFAULT_DOUDST3; 
-//                  t90_set.doubledst_set.safety3_to_mo = DEFAULT_DOUDST1;
-//                  t90_set.doubledst_set.net_port = DEFAULT_DOUDST2; 
-//                  break;
-//            }
-//         }
-//      }
    }
 }
 
