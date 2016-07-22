@@ -24,7 +24,7 @@ extern unsigned long SYS_Date;
 extern unsigned long SYS_Time;
 
 extern int monitorState;
-extern long portStatus[3];
+
 
 extern int N_boat;
 extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
@@ -128,6 +128,11 @@ typedef struct T90_Set
 	System_Set sys;
 } T90_Set;
 
+typedef struct PortStatus
+{
+   char port;
+   long MMSI;
+}PortStatus;
 
 extern T90_Set t90_set;
 extern T90_Set reset_t90_set;
@@ -135,7 +140,7 @@ extern boat mothership;
 extern int MS_isSpeeding;
 extern int MS_isMin_SOG;
 extern int MS_isMax_SOG;
-
+extern PortStatus portStatus[3];
 
 
 extern int screen_hcenter;

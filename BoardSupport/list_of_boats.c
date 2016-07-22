@@ -33,7 +33,7 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 //extern MNT_BERTH * pMntHeader;
 extern Bool INVD_deleteByMMSI(long MMSI);
 
-extern long portStatus[3];
+extern PortStatus portStatus[3];
 /*----------------------- external functions -----------------------*/
 
 
@@ -380,7 +380,7 @@ int add_18(struct message_18 * p_msg)
    buf->Boat.dist  = Dist;
    buf->Boat.time_cnt  = TIMESTAMP;
    
-   if(buf->Boat.user_id == portStatus[0] || buf->Boat.user_id == portStatus[1] || buf->Boat.user_id == portStatus[2]){
+   if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
       buf->isInvader  = 0;
        
@@ -507,7 +507,7 @@ int add_24A(struct message_24_partA * p_msg)
 //   buf->Boat.dist  = 999999;
    buf->Boat.time_cnt  = TIMESTAMP;
    
-   if(buf->Boat.user_id == portStatus[0] || buf->Boat.user_id == portStatus[1] || buf->Boat.user_id == portStatus[2]){
+   if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
       buf->isInvader  = 0;
      
@@ -606,7 +606,7 @@ int add_24B(type_of_ship * p_msg)
    buf->Boat.user_id  = p_msg->user_id;
    buf->Boat.time_cnt   = TIMESTAMP;
    
-   if(buf->Boat.user_id == portStatus[0] || buf->Boat.user_id == portStatus[1] || buf->Boat.user_id == portStatus[2]){
+   if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
       
    }

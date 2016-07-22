@@ -27,10 +27,10 @@ static void _onPaint2(void);
 
 static int tmpCursor;
 static int cursorOnStub;
-extern long portStatus[3];
+//extern long portStatus[3];
 
 static Stub *pCursorStub = &stubs[0];
-//static Point cursorPixel;
+static Point cursorPixel;
 
 static int timeCnt = 0;
 
@@ -483,7 +483,7 @@ static void _onPaint2(void)
            GUI_SetColor(pColor->numColor);
            GUI_SetFont(GUI_FONT_24B_1);
            for(i=0; i<N_boat; i++){
-              if(portStatus[0] == SimpBerthes[i].pBerth->Boat.user_id){
+              if(portStatus[0].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
                  pBerth  = SimpBerthes[i].pBerth;
                  break;
               }
@@ -528,7 +528,7 @@ static void _onPaint2(void)
            
            
             for(i=0; i<N_boat; i++){
-              if(portStatus[1] == SimpBerthes[i].pBerth->Boat.user_id){
+              if(portStatus[1].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
                  pBerth  = SimpBerthes[i].pBerth;
                  break;
               }
@@ -569,7 +569,7 @@ static void _onPaint2(void)
            GUI_SetFont(GUI_FONT_24B_1);
            
             for(i=0; i<N_boat; i++){
-              if(portStatus[2] == SimpBerthes[i].pBerth->Boat.user_id){
+              if(portStatus[2].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
                  pBerth  = SimpBerthes[i].pBerth;
                  break;
               }
@@ -606,7 +606,7 @@ static void _onPaint2(void)
            GUI_SetFont(GUI_FONT_24B_1);
            
             for(i=0; i<N_boat; i++){
-              if(portStatus[2] == SimpBerthes[i].pBerth->Boat.user_id){
+              if(portStatus[2].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
                  pBerth  = SimpBerthes[i].pBerth;
                  break;
               }

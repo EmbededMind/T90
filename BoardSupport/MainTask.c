@@ -169,6 +169,21 @@ printf("maintask\n");
             toast_flg = TRUE;
             ToastCreate("连接超时! ", &GUI_Font_T90_30, TOAST_OK, 2000);
          }
+         if(portStatus[0].port == 2)
+         {
+            toast_flg = TRUE;
+            ToastCreate("01号安全标故障 ", &GUI_Font_T90_30, TOAST_OK, 2000);
+         }
+         if(portStatus[1].port == 2)
+         {
+            toast_flg = TRUE;
+            ToastCreate("02号安全标故障 ", &GUI_Font_T90_30, TOAST_OK, 2000);
+         }
+         if(portStatus[2].port == 2)
+         {
+            toast_flg = TRUE;
+            ToastCreate("03号安全标故障 ", &GUI_Font_T90_30, TOAST_OK, 2000);
+         }
       }
 
       

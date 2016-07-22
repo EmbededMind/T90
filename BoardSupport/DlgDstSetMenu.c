@@ -82,7 +82,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
               HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
               HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
            }
-           if(portStatus[id])
+           if(portStatus[id].MMSI)
            {              
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btFocusBkColor);
            }
@@ -172,7 +172,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
             
              id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
              
-             if(portStatus[id]){
+             if(portStatus[id].MMSI){
         
                 flag_prevfocus = 1;
                 if(t90_set.sys.workmode == SINGLE_MODE  )

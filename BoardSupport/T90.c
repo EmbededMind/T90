@@ -19,7 +19,7 @@ unsigned long SYS_Date;
 unsigned long SYS_Time;
 
 
-extern long portStatus[3] ;
+extern PortStatus portStatus[3] ;
 
 T90_Set t90_set = {
 
