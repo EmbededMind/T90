@@ -444,7 +444,22 @@ void DrawAllOtherShips()    //?????
 		}
 //	}
 }
+void DrawBlueTri(Point pixelTemp)
+{
 
+   int net_zoom = scale/300;
+
+   GUI_POINT shipe[3];
+                   
+   shipe[0].x  = net_zoom -5;
+   shipe[0].y  = 5-net_zoom;
+   shipe[1].x  = 0;
+   shipe[1].y  = net_zoom -5;
+   shipe[2].x  = 5-net_zoom;
+   shipe[2].y  = 5-net_zoom;  
+   GUI_SetColor(pColor->numColor);
+   GUI_FillPolygon(shipe, 3, pixelTemp.x, pixelTemp.y);
+}
 
 
 

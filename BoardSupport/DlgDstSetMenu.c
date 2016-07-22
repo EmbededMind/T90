@@ -340,21 +340,21 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
             HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
             HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
             WM_SetCallback(buttons[0], &myButtonCallback);
-            HSD_BUTTON_SetText(buttons[0], "01号安全标");
+            HSD_BUTTON_SetText(buttons[0], "左舷分水板");
             HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
 
             buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
             HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
             HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
             WM_SetCallback(buttons[1],&myButtonCallback);
-            HSD_BUTTON_SetText(buttons[1], "02号安全标");
+            HSD_BUTTON_SetText(buttons[1], "网尾");
             HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
 
             buttons[2] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
             HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
             HSD_BUTTON_SetBkColor(buttons[2], pColors->btBkColor);
             WM_SetCallback(buttons[2],&myButtonCallback);
-            HSD_BUTTON_SetText(buttons[2], "03号安全标");
+            HSD_BUTTON_SetText(buttons[2], "右舷分水板");
             HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
 
         break; 
@@ -369,6 +369,18 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         GUI_DispStringAt("距离设置", 80, 9);
         GUI_SetColor(pColors->btBkColor);
         GUI_FillRect(0, SUB_MENU_ITEM_HEIGHT*4+SUB_MENU_ITEM_MARGIN*5, SUB_MENU_WIDTH-1, SUB_MENU_HEIGHT-1);
+        if(t90_set.sys.workmode == SINGLE_MODE)
+        {
+           HSD_BUTTON_SetText(buttons[0], "左舷分水板");
+           HSD_BUTTON_SetText(buttons[1], "网尾");
+           HSD_BUTTON_SetText(buttons[2], "右舷分水板");
+        }
+        else
+        {
+           HSD_BUTTON_SetText(buttons[0], "网口左舷");
+           HSD_BUTTON_SetText(buttons[1], "网尾");
+           HSD_BUTTON_SetText(buttons[2], "网口右舷");
+        }
         break;	
 				
 		 default:

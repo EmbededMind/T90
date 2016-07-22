@@ -382,7 +382,6 @@ static void _onPaint1(void)
 
 static void _onPaint2(void)
 {
-   
    int i  = 0;
    BERTH* pBerth  = NULL;
    GUI_RECT Rect = {BBS2_ABOVE_X+230, BBS2_ABOVE_Y+20,BBS2_ABOVE_X+230+117,BBS2_ABOVE_Y+20+40};
@@ -473,7 +472,8 @@ static void _onPaint2(void)
 	 GUI_DispStringAt("距离船尾：",  BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*2);
 	 GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+35+40*2);
 	 
-    
+    if(tmpCursor < 4)
+       DrawBlueTri(GetItemPixel(stubs[tmpCursor].basePoint));
     
 	 switch(tmpCursor)
 	 {
@@ -521,6 +521,7 @@ static void _onPaint2(void)
               GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
            }
            GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
+           
            break;
 		 case 2:
            GUI_SetColor(pColor->numColor);

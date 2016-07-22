@@ -19,7 +19,7 @@ Point GetItemPixel(Point itemPoint);
 void DrawInvdShip(Point pixel, int course);
 void DrawBullyShip(Point pixel, int course);
 void DrawAllOtherShips(void);
-
+void DrawBlueTri(Point pixelTemp);
 
 #endif
 
