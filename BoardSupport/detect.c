@@ -64,7 +64,8 @@ static unsigned int pointInPolygon = 0;
 //}
 int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
 {
-   if(x1 + (pBerth->y_to_cross-y1)*(x2-x1)/(y2-y1) <= pBerth->x_to_cross)
+   
+   if(x1 + (pBerth->y_to_cross-y1)*(x2-x1)/(y2-y1) < pBerth->x_to_cross)
    {
       return 1;
    }
@@ -73,16 +74,22 @@ int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
 
 int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 {
+   static int same_y = 99999; 
    if(pointa.y == pointb.y)
    {
-      if(pBerth->y_to_cross == pointa.y)
-      {   
-            return 1;               
-      }
+//      if(pointa.y == same_y)
+//         return 0;
+//      same_y = pointa.y;      
+//      if(pBerth->y_to_cross == pointa.y)
+//      {            
+         
+//         return 1;               
+//      }
+      return 0;
    }
    else 
    {
-       if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y))
+       if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross < MAXNUM(pointa.y,pointb.y))
        {          
           if(pointa.y > pointb.y)
           {         
@@ -218,8 +225,10 @@ Bool isInPolygon(BERTH *pBerth)
                }
            }
          }
-         flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[i].tang2.point);
-         flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[j].tang2.point);
+//         if(pBerth->y_to_cross < MAXNUM(stubs[i].tang1.point.y,stubs[i].tang2.point.y) && pBerth->y_to_cross > MINNUM(stubs[i].tang1.point.y,stubs[i].tang2.point.y))
+            flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[i].tang2.point);
+//         if(pBerth->y_to_cross < MAXNUM(stubs[i].tang1.point.y,stubs[j].tang2.point.y) && pBerth->y_to_cross < MINNUM(stubs[i].tang1.point.y,stubs[j].tang2.point.y))
+            flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[j].tang2.point);
       }
    }
    

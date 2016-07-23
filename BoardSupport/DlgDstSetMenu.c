@@ -150,6 +150,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                             myMsg.Data.v = SINGLE_MODE;
                             WM_SendMessage(myMsg.hWin, &myMsg);
                             WM_BringToTop(singleShipDstSetWin);
+                            WM_InvalidateWindow(dstSetMenuDlg);
                          }
                          
                          break;
@@ -162,6 +163,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                             myMsg.Data.v = DOUBLE_MODE;
                             WM_SendMessage(myMsg.hWin, &myMsg);
                             WM_BringToTop(doubleShipDstSetWin);
+                            WM_InvalidateWindow(dstSetMenuDlg);
                          }
                          
                          break;

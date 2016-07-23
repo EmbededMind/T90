@@ -200,7 +200,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                             }
                       break;
                       case 3:
-                             if(tempDouDstSet.safety2_to_mo  > 0){
+                             if(tempDouDstSet.safety2_to_mo  > 50){
                                 tempDouDstSet.safety2_to_mo  -= 50;
                                 tempDouDstSet.safety2_to_mo  -= (tempDouDstSet.safety2_to_mo  % 50);
                                 sprintf(pStrBuf, "%d", tempDouDstSet.safety2_to_mo );
@@ -208,7 +208,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                              }
                       break;
                       case 4:
-                             if(tempDouDstSet.safety3_to_mo > 0){
+                             if(tempDouDstSet.safety3_to_mo > 50){
                                 tempDouDstSet.safety3_to_mo -= 50;
                                 tempDouDstSet.safety3_to_mo -= (tempDouDstSet.safety3_to_mo % 50);
                                 sprintf(pStrBuf, "%d", tempDouDstSet.safety3_to_mo);
