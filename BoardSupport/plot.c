@@ -204,6 +204,10 @@ void DrawAlarmLine(int zoom)   //???П   zoomú???}
 									-((pIndex->pStub->tang1.point.y-pIndex->pStub->basePoint.y)/zoom+pIndex->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y,
 									 ((pIndex->pNext->pStub->tang2.point.x-pIndex->pNext->pStub->basePoint.x)/zoom+pIndex->pNext->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
 									-((pIndex->pNext->pStub->tang2.point.y-pIndex->pNext->pStub->basePoint.y)/zoom+pIndex->pNext->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y);
+//         GUI_DrawLine(((pIndex->pStub->tang1.point.x-pIndex->pStub->basePoint.x)/zoom+pIndex->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, //画出了tang1和tang2的线
+//									-((pIndex->pStub->tang1.point.y-pIndex->pStub->basePoint.y)/zoom+pIndex->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y,
+//									 ((pIndex->pStub->tang2.point.x-pIndex->pStub->basePoint.x)/zoom+pIndex->pStub->basePoint.x)*TO_PIXEL + motherShipPixel.x, 
+//									-((pIndex->pStub->tang2.point.y-pIndex->pStub->basePoint.y)/zoom+pIndex->pStub->basePoint.y)*TO_PIXEL + motherShipPixel.y);                  
          pIndex = pIndex->pNext;
       }while(pIndex != pStubHead);
 	}

@@ -118,7 +118,63 @@ printf("maintask\n");
    while(1)
    {
       WM_MESSAGE pMsg;      
+// printf("ipcMsg = %x\n", ipcMsg);
       if(ipcMsg){
+         if(ipcMsg & 0x01 )
+         {  
+            ipcMsg &= (~0x01);            
+            if(portStatus[0].port == 2)
+            {
+               toast_flg = TRUE;
+               ToastCreate("01号安全标故障 ", &GUI_Font_T90_30, TOAST_OK, 2000);
+            }
+            if(portStatus[0].port == 1)
+            {
+               ToastCreate("01号安全标插入 ", &GUI_Font_T90_30, NULL, 500);
+            }
+            if(portStatus[0].port == 0)
+            {
+               ToastCreate("01号安全标拔出 ", &GUI_Font_T90_30, NULL, 500);
+            }              
+         }
+         GUI_Delay(100);
+         if(ipcMsg & 0x02)
+         {
+            ipcMsg &= (~0x02);
+            if(portStatus[1].port == 2)
+            {
+               toast_flg = TRUE;
+               ToastCreate("02号安全标故障 ", &GUI_Font_T90_30, TOAST_OK, 2000);
+            }
+            if(portStatus[1].port == 1)
+            {
+               ToastCreate("02号安全标插入 ", &GUI_Font_T90_30, NULL, 500);
+            }
+            if(portStatus[1].port == 0)
+            {
+               ToastCreate("02号安全标拔出 ", &GUI_Font_T90_30, NULL, 500);
+            }
+         }
+         GUI_Delay(100);
+         
+         if(ipcMsg & 0x04)
+         {
+            ipcMsg &= (~0x04);
+            if(portStatus[2].port == 2)
+            {
+               toast_flg = TRUE;
+               ToastCreate("03号安全标故障 ", &GUI_Font_T90_30, TOAST_OK, 2000);
+            }
+            if(portStatus[2].port == 1)
+            {
+               ToastCreate("03号安全标插入 ", &GUI_Font_T90_30, NULL, 500);
+            }
+            if(portStatus[2].port == 0)
+            {
+               ToastCreate("03号安全标拔出 ", &GUI_Font_T90_30, NULL, 500);
+            }
+         }
+         GUI_Delay(100);
          /// Data ack ok
          if(ipcMsg & 0x20){           
             ipcMsg &= (~0x20);   //数据应答
@@ -169,21 +225,8 @@ printf("maintask\n");
             toast_flg = TRUE;
             ToastCreate("连接超时! ", &GUI_Font_T90_30, TOAST_OK, 2000);
          }
-         if(portStatus[0].port == 2)
-         {
-            toast_flg = TRUE;
-            ToastCreate("01号安全标故障 ", &GUI_Font_T90_30, TOAST_OK, 2000);
-         }
-         if(portStatus[1].port == 2)
-         {
-            toast_flg = TRUE;
-            ToastCreate("02号安全标故障 ", &GUI_Font_T90_30, TOAST_OK, 2000);
-         }
-         if(portStatus[2].port == 2)
-         {
-            toast_flg = TRUE;
-            ToastCreate("03号安全标故障 ", &GUI_Font_T90_30, TOAST_OK, 2000);
-         }
+         
+         
       }
 
       

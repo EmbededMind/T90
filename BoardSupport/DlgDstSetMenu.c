@@ -82,7 +82,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
               HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
               HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
            }
-           if(portStatus[id].MMSI)
+           if(portStatus[id].port == 1)
            {              
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btFocusBkColor);
            }

@@ -250,7 +250,7 @@ void Refresh_Task(void *p_arg)//»ŒŒÒRefresh_Task
      StubRefresh();
             
       
-      OSTimeDlyHMSM(0,0,3,0);
+      OSTimeDlyHMSM(0,0,5,0);
    }
 }
 
@@ -491,24 +491,24 @@ void Comm_Task(void * p_arg)
             recMMSI  = recMMSI<<8|pFrame[5];
             recPort  = (pFrame[14]>>6)&0x03;
                
-            if(recPort != portStatus[0].port && recPort){
-               
+            if(recPort != portStatus[0].port ){
+                  portStatus[0].port  = recPort;
                    portStatus[0].MMSI  = recMMSI;
-                   
-                  if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
-                  {
-                     Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M);
+                  if(recPort == 1)
+                  {                     
+                     if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+                     {
+                        Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M);
+                     }
+                     else
+                     {
+                        Comm_addFrame(1,(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M);
+                     }
                   }
-                  else
-                  {
-                     Comm_addFrame(1,(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M);
-                  }
-               
-                  
-               
+                  ipcMsg  |= 0x01;               
             }
 //            printf("port1 %d\n",recPort);
-            portStatus[0].port  = recPort;
+            
 //            if(portStatus[0].port == 1)
 //               Stub_setValidity(1,1);
 //            else
@@ -521,20 +521,24 @@ void Comm_Task(void * p_arg)
             recMMSI  = recMMSI<<8|pFrame[9];
             recPort  = (pFrame[14]>>4)&0x03;
 
-            if(recPort != portStatus[1].port && recPort){
+            if(recPort != portStatus[1].port ){
                portStatus[1].MMSI  = recMMSI;
-                              
-               if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
-               {
-                  Comm_addFrame(2,stubs[2].basePoint.x*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M);
+               portStatus[1].port  = recPort;
+               if(recPort == 1)
+               {                  
+                  if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+                  {
+                     Comm_addFrame(2,stubs[2].basePoint.x*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M);
+                  }
+                  else
+                  {
+                     Comm_addFrame(2,(stubs[2].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M);
+                  }
                }
-               else
-               {
-                  Comm_addFrame(2,(stubs[2].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M);
-               }
+               ipcMsg  |= 0x02; 
             }
 //            printf("port2 %d\n",recPort);
-            portStatus[1].port  = recPort;
+            
 //            if(portStatus[1].port == 1)
 //               Stub_setValidity(2,1);
 //            else
@@ -547,26 +551,30 @@ void Comm_Task(void * p_arg)
             recMMSI  = recMMSI<<8|pFrame[13];
             recPort  = (pFrame[14]>>2)&0x03;
 
-            if(recPort != portStatus[2].port && recPort){
+            if(recPort != portStatus[2].port ){
                portStatus[2].MMSI  = recMMSI;
-               
-               if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+               portStatus[2].port  = recPort;
+               if(recPort == 1)
                {
-                  Comm_addFrame(3,stubs[3].basePoint.x*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M);
+                  if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+                  {
+                     Comm_addFrame(3,stubs[3].basePoint.x*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M);
+                  }
+                  else
+                  {
+                     Comm_addFrame(3,(stubs[3].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M);
+                  }
                }
-               else
-               {
-                  Comm_addFrame(3,(stubs[3].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M);
-               }
+               ipcMsg  |= 0x04; 
             }
 //            printf("port3 %d\n",recPort);
-            portStatus[2].port  = recPort;
+            
 //            if(portStatus[2].port == 1)
 //               Stub_setValidity(3,1);
 //            else
 //               Stub_setValidity(3,0);
 //printf("stubs[3].isValid %d\n",stubs[3].isValid);
-            ipcMsg  |= 0x80;  
+             
             
 
          }
@@ -583,7 +591,7 @@ void Comm_Task(void * p_arg)
       }
       
       pFrame  = Comm_fetchNextFrame();
-      if(pFrame){
+      if(pFrame[1] == 0x31){
 
 LOL:
          Comm_sendFrame(pFrame);

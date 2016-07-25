@@ -107,8 +107,7 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 //      stubs[3].isValid  = 1;
 	}
 	FillStubNodes();
-	FillStubInfo();
-//	detectInit();
+	FillStubInfo();	
 //	PrintStubInfo();
 }
 

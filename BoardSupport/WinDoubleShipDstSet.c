@@ -26,8 +26,10 @@
 
 WM_HWIN doubleShipDstSetWin;
 void _paint(WM_HWIN pMsg);
+void pointyRefresh();
 static const GUI_RECT drawArea  = {50, 50, DST_SET_WIDTH-50, DST_SET_HEIGHT-50};
 static const GUI_RECT tipStrArea = {50, DST_SET_HEIGHT-50 +2 , DST_SET_WIDTH -50, DST_SET_HEIGHT -50 +32};
+static int pointy[3]; 
 
 static const SetWinColor* pColors  = setWinColors;
 
@@ -49,6 +51,8 @@ static void myDimCallback(WM_MESSAGE* pMsg)
    int i = 0;   
    int id  = 0;
    WM_MESSAGE myMsg;
+   int tmpsafety2_to_Mo;
+   
    switch(pMsg->MsgId)
    {
       case WM_KEY:
@@ -201,6 +205,8 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       break;
                       case 3:
                              if(tempDouDstSet.safety2_to_mo  > 50){
+                                tmpsafety2_to_Mo = t90_set.doubledst_set.safety2_to_mo;
+                                
                                 tempDouDstSet.safety2_to_mo  -= 50;
                                 tempDouDstSet.safety2_to_mo  -= (tempDouDstSet.safety2_to_mo  % 50);
                                 sprintf(pStrBuf, "%d", tempDouDstSet.safety2_to_mo );
@@ -320,15 +326,17 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            if(pMsg->Data.v == REPLY_OK)
            {
               StubRefresh();
-              if(t90_set.sys.motherpos == DEFAULT_LEFT)
-              {                 
-                 Comm_addFrame(whichFig+1,stubs[whichFig+1].basePoint.x*MILLINM_TO_M,abs(stubs[whichFig+1].basePoint.y*MILLINM_TO_M));
-              }
-              else
+              for(i = 0; i < 3; i++)
               {
-                 Comm_addFrame(whichFig+1,(stubs[whichFig+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[whichFig+1].basePoint.y*MILLINM_TO_M));
+                 if(t90_set.sys.motherpos == DEFAULT_LEFT)
+                 {                 
+                    Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+                 }
+                 else
+                 {
+                    Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+                 }
               }
-              
               memcpy(&preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));
               sprintf(pStrBuf, "%d", preDouDstSet.mo_to_as);
               HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
