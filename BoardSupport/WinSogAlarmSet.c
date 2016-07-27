@@ -47,7 +47,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key )
 					  {
                     case GUI_KEY_MOLEFT:
-                        if(t90_set.sys.motherpos == DEFAULT_RIGHT)
+                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
                         {
                            myMsg.hWin = systemSetDlg;
                            myMsg.hWinSrc = pMsg->hWin;
@@ -58,7 +58,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                         break;
               
               case GUI_KEY_MORIGHT:
-                        if(t90_set.sys.motherpos == DEFAULT_LEFT)
+                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
                         {
                            myMsg.hWin = systemSetDlg;
                            myMsg.hWinSrc = pMsg->hWin;

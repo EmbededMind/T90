@@ -73,7 +73,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
              case GUI_KEY_MOLEFT:
-                        if(t90_set.sys.motherpos == DEFAULT_RIGHT)
+                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
                         {
                            myMsg.hWin = systemSetDlg;
                            myMsg.hWinSrc = pMsg->hWin;

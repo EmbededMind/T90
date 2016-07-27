@@ -10,6 +10,7 @@
 #include "stub.h"
 #include "lpc177x_8x_uart.h"
 #include "comm.h"
+#include "math.h"
 
 #define ID_EX_DIM_0      (GUI_ID_USER + 0x10)
 #define ID_EX_DIM_1      (GUI_ID_USER + 0x11)
@@ -26,10 +27,10 @@
 
 WM_HWIN doubleShipDstSetWin;
 void _paint(WM_HWIN pMsg);
-void pointyRefresh();
+int pointyPretreatment();
 static const GUI_RECT drawArea  = {50, 50, DST_SET_WIDTH-50, DST_SET_HEIGHT-50};
 static const GUI_RECT tipStrArea = {50, DST_SET_HEIGHT-50 +2 , DST_SET_WIDTH -50, DST_SET_HEIGHT -50 +32};
-static int pointy[3]; 
+ 
 
 static const SetWinColor* pColors  = setWinColors;
 
@@ -52,14 +53,14 @@ static void myDimCallback(WM_MESSAGE* pMsg)
    int id  = 0;
    WM_MESSAGE myMsg;
    int tmpsafety2_to_Mo;
-   
+
    switch(pMsg->MsgId)
    {
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key)
            {
               case GUI_KEY_MOLEFT:
-                        if(t90_set.sys.motherpos == DEFAULT_RIGHT)
+                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
                         {
                            myMsg.hWin = systemSetDlg;
                            myMsg.hWinSrc = pMsg->hWin;
@@ -70,7 +71,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                         break;
               
               case GUI_KEY_MORIGHT:
-                        if(t90_set.sys.motherpos == DEFAULT_LEFT)
+                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
                         {
                            myMsg.hWin = systemSetDlg;
                            myMsg.hWinSrc = pMsg->hWin;
@@ -78,8 +79,9 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                            myMsg.Data.v = DEFAULT_RIGHT;
                            WM_SendMessage(myMsg.hWin, &myMsg);
                         }   
-                        break; 
-                  case GUI_KEY_SINGLE:
+                        break;
+                        
+              case GUI_KEY_SINGLE:
                          if(t90_set.sys.workmode == DOUBLE_MODE)
                          {                            
                             myMsg.hWin = systemSetDlg;
@@ -87,10 +89,10 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                             myMsg.MsgId = USER_MSG_WORKMODE;
                             myMsg.Data.v = SINGLE_MODE;
                             WM_SendMessage(myMsg.hWin, &myMsg);
-                         }
-                         
+                         }                        
                          break;
-                  case GUI_KEY_DOUBLE:
+                         
+              case GUI_KEY_DOUBLE:
                          if(t90_set.sys.workmode == SINGLE_MODE)
                          {
                             myMsg.hWin = systemSetDlg;
@@ -100,15 +102,19 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                             WM_SendMessage(myMsg.hWin, &myMsg);
                          }
                          
-                         break; 
-              
+                         break;
+                         
               case GUI_KEY_PWM_INC:       
 							  WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                        break;
+              
               case GUI_KEY_UP:
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
-                      case 0:                          
+                      case 0:
+                          preDouDstSet.mo_to_as += 50;
+                          if(pointyPretreatment())
+                             break;                             
                           if(tempDouDstSet.mo_to_as < MAXMOTOAS){
                              tempDouDstSet.mo_to_as += 50;
                              tempDouDstSet.mo_to_as -= (tempDouDstSet.mo_to_as %50);
@@ -122,7 +128,11 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                            }
                           
                       break;
+                           
                       case 1:
+                           preDouDstSet.net_port += 50;
+                           if(pointyPretreatment())
+                             break;
                            if(tempDouDstSet.net_port < MAXSTUBTOSTUB){
                               tempDouDstSet.net_port += 50;
                               tempDouDstSet.net_port -= (tempDouDstSet.net_port %50);
@@ -135,7 +145,11 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                               HSD_DIMENSION_EX_SetValText(hExDim[id],"3000");
                            }
                       break;
+                           
                       case 2:
+                            preDouDstSet.safety1_to_mo += 50;
+                            if(pointyPretreatment())
+                               break;
                             if(tempDouDstSet.safety1_to_mo < MAXMOTOSTUB){
                               tempDouDstSet.safety1_to_mo  += 50;
                               tempDouDstSet.safety1_to_mo  -= (tempDouDstSet.safety1_to_mo %50);
@@ -148,7 +162,11 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                                HSD_DIMENSION_EX_SetValText(hExDim[id],"3000");
                             }
                       break;
+                            
                       case 3:
+                             preDouDstSet.safety2_to_mo += 50;
+                             if(pointyPretreatment())
+                                 break;
                              if(tempDouDstSet.safety2_to_mo < MAXMOTOSTUB){
                                 tempDouDstSet.safety2_to_mo += 50;
                                 tempDouDstSet.safety2_to_mo -= (tempDouDstSet.safety2_to_mo % 50);
@@ -161,7 +179,11 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                                 HSD_DIMENSION_EX_SetValText(hExDim[id],"3000");
                              }
                       break;
+                             
                       case 4:
+                             preDouDstSet.safety3_to_mo += 50;
+                             if(pointyPretreatment())
+                                break;
                              if(tempDouDstSet.safety3_to_mo < MAXMOTOSTUB){
                                 tempDouDstSet.safety3_to_mo += 50;
                                 tempDouDstSet.safety3_to_mo -= (tempDouDstSet.safety3_to_mo % 50);
@@ -174,12 +196,17 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                                 HSD_DIMENSION_EX_SetValText(hExDim[id],"3000");
                              }
                      break;
+                             
                      }
                      break;
               case GUI_KEY_DOWN:
+                   
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
-                      case 0:                          
+                      case 0:
+                          preDouDstSet.mo_to_as -= 50;
+                          if(pointyPretreatment())
+                              break;                         
                           if(tempDouDstSet.mo_to_as > 50){
                               tempDouDstSet.mo_to_as  -= 50;
                               tempDouDstSet.mo_to_as  -= (tempDouDstSet.mo_to_as %50);
@@ -188,6 +215,9 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                               }
                       break;
                       case 1:
+                           preDouDstSet.net_port -= 50;
+                           if(pointyPretreatment())
+                              break;
                            if(tempDouDstSet.net_port > 50){
                               tempDouDstSet.net_port -= 50;
                               tempDouDstSet.net_port -= (tempDouDstSet.net_port %50);
@@ -196,14 +226,20 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                               }
                       break;
                       case 2:
+                            preDouDstSet.net_port -= 50;
+                            if(pointyPretreatment())
+                               break;
                             if(tempDouDstSet.safety1_to_mo > 50){
-                              tempDouDstSet.safety1_to_mo  -= 50;
-                              tempDouDstSet.safety1_to_mo  -= (tempDouDstSet.net_port %50);
-                              sprintf(pStrBuf, "%d", tempDouDstSet.safety1_to_mo);
-                              HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
+                               tempDouDstSet.safety1_to_mo  -= 50;
+                               tempDouDstSet.safety1_to_mo  -= (tempDouDstSet.net_port %50);
+                               sprintf(pStrBuf, "%d", tempDouDstSet.safety1_to_mo);
+                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                             }
                       break;
                       case 3:
+                             preDouDstSet.safety2_to_mo -= 50;
+                             if(pointyPretreatment())
+                                break;
                              if(tempDouDstSet.safety2_to_mo  > 50){
                                 tmpsafety2_to_Mo = t90_set.doubledst_set.safety2_to_mo;
                                 
@@ -214,6 +250,9 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                              }
                       break;
                       case 4:
+                             preDouDstSet.safety3_to_mo -= 50;
+                             if(pointyPretreatment())
+                                break;
                              if(tempDouDstSet.safety3_to_mo > 50){
                                 tempDouDstSet.safety3_to_mo -= 50;
                                 tempDouDstSet.safety3_to_mo -= (tempDouDstSet.safety3_to_mo % 50);
@@ -240,20 +279,25 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                               WM_SetFocus(hExDim[4]);
                            }
                            break;
+                           
                       case 1:
                            if(whichFig != 1){
                               WM_SetFocus(hExDim[0]);
                            }
                            break;
+                           
                       case 2:
                            WM_SetFocus(hExDim[1]);
                            break;
+                      
                       case 3:
                            WM_SetFocus(hExDim[0]);
                            break;
+                      
                       case 4:
                            WM_SetFocus(hExDim[1]);
                            break;
+                      
                    }
                    break;
               case GUI_KEY_BACKSPACE:
@@ -272,8 +316,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       WM_BringToTop(confirmWin);
                       WM_SetFocus(confirmWin);
                    }
-//                   StubRefresh();
-//                   WM_SetFocus(dstSetMenuDlg);
+
                    break;
            }
            break;     
@@ -298,8 +341,9 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
 
          if(pMsg->Data.v)
          {
-
+             
              memcpy(&t90_set.doubledst_set,&tempDouDstSet,sizeof(tempDouDstSet));
+             memcpy(&preDouDstSet,&t90_set.doubledst_set,sizeof(t90_set.doubledst_set));
              sprintf(pStrBuf, "%d", tempDouDstSet.mo_to_as);
              HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
             
@@ -329,12 +373,14 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
               for(i = 0; i < 3; i++)
               {
                  if(t90_set.sys.motherpos == DEFAULT_LEFT)
-                 {                 
-                    Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+                 {   
+                    if(stubs[i+1].isValid)                    
+                       Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
                  }
                  else
                  {
-                    Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+                    if(stubs[i+1].isValid)
+                       Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
                  }
               }
               memcpy(&preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));
@@ -632,6 +678,23 @@ void _paint(WM_HWIN pMsg)
 
 }
 
+int pointyPretreatment()
+{
+   int pointy[3];
+   pointy[0] = -sqrt(-(preDouDstSet.net_port - preDouDstSet.mo_to_as) * (preDouDstSet.net_port - preDouDstSet.mo_to_as) * M_TO_MILLINM * M_TO_MILLINM / 4 + 
+                         preDouDstSet.safety1_to_mo * preDouDstSet.safety1_to_mo*M_TO_MILLINM*M_TO_MILLINM);
+   
+   pointy[1] = -sqrt(preDouDstSet.safety2_to_mo * preDouDstSet.safety2_to_mo*M_TO_MILLINM*M_TO_MILLINM 
+                             - preDouDstSet.mo_to_as * preDouDstSet.mo_to_as * M_TO_MILLINM * M_TO_MILLINM / 4);
 
+   pointy[2] = -sqrt(preDouDstSet.safety3_to_mo * preDouDstSet.safety3_to_mo 
+        - (preDouDstSet.net_port - preDouDstSet.mo_to_as) * 
+        (preDouDstSet.net_port - preDouDstSet.mo_to_as) / 4)*M_TO_MILLINM;
+//   if(pointy[1] >= pointy[2] || pointy[1] >= pointy[0])
+//      return 0;
+//   return 1;
+   return 0;
+   
+}
  
 

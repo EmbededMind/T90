@@ -409,7 +409,7 @@ void DrawBullyShip(Point pixel, int course)    //??????????
 	
 	GUI_SetPenSize(3);
 	GUI_SetLineStyle(GUI_LS_SOLID);
-  GUI_DrawLine(pixel.x-10.5*_cos-13.5*_sin, pixel.y-10.5*_sin+13.5*_cos, pixel.x+24*_sin       , pixel.y-24*_cos);
+   GUI_DrawLine(pixel.x-10.5*_cos-13.5*_sin, pixel.y-10.5*_sin+13.5*_cos, pixel.x+24*_sin       , pixel.y-24*_cos);
 	GUI_DrawLine(pixel.x+24*_sin,        pixel.y-24*_cos,        pixel.x+10.5*_cos-13.5*_sin, pixel.y+10.5*_sin+13.5*_cos);
 	GUI_DrawLine(pixel.x+10.5*_cos-13.5*_sin, pixel.y+10.5*_sin+13.5*_cos, pixel.x-10.5*_cos-13.5*_sin, pixel.y-10.5*_sin+13.5*_cos );
 }
@@ -427,6 +427,7 @@ void DrawAllOtherShips()    //?????
 		{
 			point.x = SimpBerthes[i].pBerth->x_to_cross;
 			point.y = SimpBerthes[i].pBerth->y_to_cross;
+         
 			if((SimpBerthes[i].pBerth->Boat.category & 0x0f) == TYPE_BULLY)
 			{
 				DrawBullyShip(GetItemPixel(point), (SimpBerthes[i].pBerth->Boat.COG - mothership.COG)/10);
@@ -438,7 +439,6 @@ void DrawAllOtherShips()    //?????
 	
 //	if(monitorState == ON)
 //	{
-	
 		while(pBully)
 		{
 			point.x = pBully->pBoatLink->x_to_cross;
