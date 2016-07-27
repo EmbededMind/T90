@@ -425,7 +425,11 @@ Bool isInPolygon(BERTH *pBerth)
       newFlg = 0;
    }
    if(!newFlg)
+<<<<<<< HEAD
       return 0;
+=======
+		  return 0;
+>>>>>>> 4a3ec4db8ca1a4cd48e9ee9f174740161683a44c
    
 //    i = 0;
 //    j = 0;    

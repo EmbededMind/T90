@@ -109,6 +109,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                        break;
               
               case GUI_KEY_UP:
+								   memcpy(&preDouDstSet,&tempDouDstSet,sizeof(tempDouDstSet));
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
                       case 0:
@@ -200,7 +201,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                      }
                      break;
               case GUI_KEY_DOWN:
-                   
+                   memcpy(&preDouDstSet,&tempDouDstSet,sizeof(tempDouDstSet));
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
                       case 0:
@@ -265,6 +266,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
               
               case GUI_KEY_LEFT:
               case GUI_KEY_RIGHT:
+								   memcpy(&preDouDstSet,&t90_set.doubledst_set,sizeof(t90_set.doubledst_set));
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id)
                    {
@@ -343,7 +345,6 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
          {
              
              memcpy(&t90_set.doubledst_set,&tempDouDstSet,sizeof(tempDouDstSet));
-             memcpy(&preDouDstSet,&t90_set.doubledst_set,sizeof(t90_set.doubledst_set));
              sprintf(pStrBuf, "%d", tempDouDstSet.mo_to_as);
              HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
             
@@ -690,10 +691,10 @@ int pointyPretreatment()
    pointy[2] = -sqrt(preDouDstSet.safety3_to_mo * preDouDstSet.safety3_to_mo 
         - (preDouDstSet.net_port - preDouDstSet.mo_to_as) * 
         (preDouDstSet.net_port - preDouDstSet.mo_to_as) / 4)*M_TO_MILLINM;
-//   if(pointy[1] >= pointy[2] || pointy[1] >= pointy[0])
-//      return 0;
-//   return 1;
+   if(pointy[1] >= pointy[2] || pointy[1] >= pointy[0])
+      return 1;
    return 0;
+
    
 }
  
