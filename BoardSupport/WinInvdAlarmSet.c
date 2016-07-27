@@ -199,67 +199,68 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
          GUI_SetDrawMode(GUI_DM_NORMAL);
          GUI_SetColor(pColors->textColor);
 		
-				 
-         int orgX = (drawArea.x0 + drawArea.x1) / 2 - ALARM_RADIUS;
-         int orgY = (drawArea.y0 + ALARM_RADIUS-16);                   //母船头坐标
+			{	 
+            int orgX = (drawArea.x0 + drawArea.x1) / 2 - ALARM_RADIUS;
+            int orgY = (drawArea.y0 + ALARM_RADIUS-16);                   //母船头坐标
 
-         int subX = orgX;
-         int subY = drawArea.y1 - ALARM_RADIUS - 13;                   //拖网头坐标
+            int subX = orgX;
+            int subY = drawArea.y1 - ALARM_RADIUS - 13;                   //拖网头坐标
 
-         GUI_DrawLine(orgX, orgY, orgX+16, orgY+16);         //画母船
-         GUI_DrawVLine(orgX+16, orgY+17, orgY+60);
-         GUI_DrawHLine(orgY+60, orgX-15, orgX+15);
-         GUI_DrawVLine(orgX-16, orgY+17, orgY+60);          
-         GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);
-                      
-         GUI_SetColor(pColors->lineColor);
-         GUI_DrawArc(orgX, drawArea.y0 + ALARM_RADIUS, ALARM_RADIUS, ALARM_RADIUS, 0, 180);            //画报警边框
-         GUI_DrawArc(orgX, drawArea.y1 - ALARM_RADIUS, ALARM_RADIUS, ALARM_RADIUS, 180, 360);
-         GUI_DrawVLine(orgX-ALARM_RADIUS, drawArea.y0 + ALARM_RADIUS, drawArea.y1-ALARM_RADIUS);
-         GUI_DrawVLine(orgX+ALARM_RADIUS, drawArea.y0 + ALARM_RADIUS, drawArea.y1-ALARM_RADIUS);
+            GUI_DrawLine(orgX, orgY, orgX+16, orgY+16);         //画母船
+            GUI_DrawVLine(orgX+16, orgY+17, orgY+60);
+            GUI_DrawHLine(orgY+60, orgX-15, orgX+15);
+            GUI_DrawVLine(orgX-16, orgY+17, orgY+60);          
+            GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);
+                         
+            GUI_SetColor(pColors->lineColor);
+            GUI_DrawArc(orgX, drawArea.y0 + ALARM_RADIUS, ALARM_RADIUS, ALARM_RADIUS, 0, 180);            //画报警边框
+            GUI_DrawArc(orgX, drawArea.y1 - ALARM_RADIUS, ALARM_RADIUS, ALARM_RADIUS, 180, 360);
+            GUI_DrawVLine(orgX-ALARM_RADIUS, drawArea.y0 + ALARM_RADIUS, drawArea.y1-ALARM_RADIUS);
+            GUI_DrawVLine(orgX+ALARM_RADIUS, drawArea.y0 + ALARM_RADIUS, drawArea.y1-ALARM_RADIUS);
 
-         GUI_SetColor(pColors->textColor);
+            GUI_SetColor(pColors->textColor);
 
-         GUI_DrawLine(subX, subY,subX - 12, subY + 26);                                                  //画拖网三角形标志
-         GUI_DrawLine(subX, subY,subX + 12, subY + 26);
-         GUI_DrawLine(subX + 12, subY + 26,subX - 12, subY + 26);
+            GUI_DrawLine(subX, subY,subX - 12, subY + 26);                                                  //画拖网三角形标志
+            GUI_DrawLine(subX, subY,subX + 12, subY + 26);
+            GUI_DrawLine(subX + 12, subY + 26,subX - 12, subY + 26);
 
-         GUI_DrawLine(orgX, (orgY+40+subY)/2, orgX+ALARM_RADIUS, (orgY+40+subY)/2);                       //带箭头横线
-         GUI_DrawLine(orgX+ALARM_RADIUS/2, (orgY+40+subY)/2, orgX+ALARM_RADIUS+10, (orgY+40+subY)/2-40);
-         GUI_DrawLine(orgX+ALARM_RADIUS+10, (orgY+40+subY)/2-40, drawArea.x1-20, (orgY+40+subY)/2-40);
+            GUI_DrawLine(orgX, (orgY+40+subY)/2, orgX+ALARM_RADIUS, (orgY+40+subY)/2);                       //带箭头横线
+            GUI_DrawLine(orgX+ALARM_RADIUS/2, (orgY+40+subY)/2, orgX+ALARM_RADIUS+10, (orgY+40+subY)/2-40);
+            GUI_DrawLine(orgX+ALARM_RADIUS+10, (orgY+40+subY)/2-40, drawArea.x1-20, (orgY+40+subY)/2-40);
 
-         GUI_DrawHLine((orgY+40+subY)/2-1, orgX+4, orgX+9);                                                //左侧箭头
-         GUI_DrawHLine((orgY+40+subY)/2-2, orgX+7, orgX+9);
-         GUI_DrawHLine((orgY+40+subY)/2+1, orgX+4, orgX+9);
-         GUI_DrawHLine((orgY+40+subY)/2+2, orgX+7, orgX+9);
+            GUI_DrawHLine((orgY+40+subY)/2-1, orgX+4, orgX+9);                                                //左侧箭头
+            GUI_DrawHLine((orgY+40+subY)/2-2, orgX+7, orgX+9);
+            GUI_DrawHLine((orgY+40+subY)/2+1, orgX+4, orgX+9);
+            GUI_DrawHLine((orgY+40+subY)/2+2, orgX+7, orgX+9);
 
-         GUI_DrawHLine((orgY+40+subY)/2-1, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-4);                     //右侧箭头
-         GUI_DrawHLine((orgY+40+subY)/2-2, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-7);
-         GUI_DrawHLine((orgY+40+subY)/2+1, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-4);
-         GUI_DrawHLine((orgY+40+subY)/2+2, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-7);
+            GUI_DrawHLine((orgY+40+subY)/2-1, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-4);                     //右侧箭头
+            GUI_DrawHLine((orgY+40+subY)/2-2, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-7);
+            GUI_DrawHLine((orgY+40+subY)/2+1, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-4);
+            GUI_DrawHLine((orgY+40+subY)/2+2, orgX+ALARM_RADIUS-9, orgX+ALARM_RADIUS-7);
 
-         GUI_SetLineStyle(GUI_LS_DOT);
+            GUI_SetLineStyle(GUI_LS_DOT);
 
-         GUI_DrawLine(orgX, orgY + 60, subX, subY);                                   //中间虚线
+            GUI_DrawLine(orgX, orgY + 60, subX, subY);                                   //中间虚线
 
-         GUI_SetFont(&GUI_Font_T90_24);
-         GUI_DispStringAt("本", orgX-8, orgY+12);
-         GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
-            
-         GUI_SetFont(&GUI_Font_T90_30);
-         GUI_DispStringAt("范围：", orgX+ALARM_RADIUS+10, 158);
+            GUI_SetFont(&GUI_Font_T90_24);
+            GUI_DispStringAt("本", orgX-8, orgY+12);
+            GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
+               
+            GUI_SetFont(&GUI_Font_T90_30);
+            GUI_DispStringAt("范围：", orgX+ALARM_RADIUS+10, 158);
 
-         if(t90_set.sys.unit == NM)
-         {
-            GUI_DispStringAt("nm", drawArea.x1-55, 158);
-            sprintf(pStrBuf,"%01d.%01d",agentdst_set/1000, (agentdst_set%1000)/100);
+            if(t90_set.sys.unit == NM)
+            {
+               GUI_DispStringAt("nm", drawArea.x1-55, 158);
+               sprintf(pStrBuf,"%01d.%01d",agentdst_set/1000, (agentdst_set%1000)/100);
+            }
+            else
+            {
+               GUI_DispStringAt("km", drawArea.x1-55, 158);
+               sprintf(pStrBuf,"%01d.%01d",agentdst_set*37/20000, ((agentdst_set*37/20)%1000)/100);
+            }
+            HSD_BUTTON_SetText(button, pStrBuf);
          }
-         else
-         {
-            GUI_DispStringAt("km", drawArea.x1-55, 158);
-            sprintf(pStrBuf,"%01d.%01d",agentdst_set*37/20000, ((agentdst_set*37/20)%1000)/100);
-         }
-         HSD_BUTTON_SetText(button, pStrBuf);
          break;
 		
 		case WM_SET_FOCUS:
