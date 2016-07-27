@@ -324,25 +324,25 @@ void detectInit()
 //    }
 
 
-//   PloPoint *index;
-//   int i = 0;
+   PloPoint *index;
+   int i = 0;
    adjustPlo();
    
-//   index = pmin;
-//   do
-//   {
-//      if(index->point.y*index->next->point.x - index->next->point.y*index->point.x >= 0)
-//      {
-//          pointInPolygon |= 0x00000001<<i;
-//      }
-//      else
-//      {
-//          pointInPolygon &= 0xfffffffe<<i;
-//      }
+   index = pmin;
+   do
+   {
+      if(index->point.y*index->next->point.x - index->next->point.y*index->point.x >= 0)
+      {
+          pointInPolygon |= 0x00000001<<i;
+      }
+      else
+      {
+          pointInPolygon &= 0xfffffffe<<i;
+      }
 
-//      i++;
-//      index = index->next;
-//   }while(index != pmin);     
+      i++;
+      index = index->next;
+   }while(index != pmin);     
     
    
  }
@@ -424,7 +424,8 @@ Bool isInPolygon(BERTH *pBerth)
    {
       newFlg = 0;
    }
-   return newFlg;
+   if(!newFlg)
+      return 0;
    
 //    i = 0;
 //    j = 0;    
@@ -472,7 +473,7 @@ Bool isInPolygon(BERTH *pBerth)
 //         }
 //	    }
 //    }
- /*   index = pmin;
+    index = pmin;
     i = 0;
     do
     {
@@ -502,7 +503,7 @@ Bool isInPolygon(BERTH *pBerth)
        return 1;
     }
     return 0;
-   */
+   
 
 
 }
