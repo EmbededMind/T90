@@ -90,14 +90,16 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            {
               for(i = 0; i < 3; i++)
               {
-                  Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M);
+								  if(portStatus[i].port)
+                     Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M);
               }
            }
            else
            {                            
               for(i = 0; i < 3; i++)
               {
-                  Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+								  if(portStatus[i].port)
+                     Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
               }                         
            }
            break;
@@ -111,14 +113,16 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            {
               for(i = 0; i < 3; i++)
               {
-                  Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M);
+								 if(portStatus[i].port)
+                    Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M);
               }
            }
            else
            {                            
               for(i = 0; i < 3; i++)
               {
-                 Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+								 if(portStatus[i].port)
+                    Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
               }                         
            }
            break;      
