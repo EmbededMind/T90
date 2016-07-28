@@ -17,6 +17,7 @@ static WM_HWIN buttons[2];
 static WM_HWIN slider;
 
 static int agentdst_set;
+static int isSpON;
 
 static const SetWinColor *pColors = setWinColors;
 static const SetDlgColor *pColors_Slider = setDlgColors;
@@ -88,7 +89,22 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
                   WM_SetFocus(buttons[0]);
                break;
 				case GUI_KEY_BACKSPACE:
-					
+                  isSpON = HSD_SLIDER_GetValue(slider);
+                  if(t90_set.alarm.danger_sog == agentdst_set && (t90_set.alarm.on_off & (0x01<<1))>>1 == isSpON)
+                  {
+                     WM_SetFocus(alarmSetMenuDlg);
+                  }
+                  else
+                  {
+                     myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                     myMsg.hWinSrc  = spdingAlarmSetWin;
+                     myMsg.MsgId  = USER_MSG_CHOOSE;
+                     myMsg.Data.v  = SYS_SETTING;
+                     WM_SendMessage(myMsg.hWin, &myMsg);
+                     
+                     WM_BringToTop(confirmWin);
+                     WM_SetFocus(confirmWin);
+                  }
 				break;
 
 				default:
@@ -116,7 +132,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            }
            else{
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->bkColor);
-						  HSD_BUTTON_SetTextColor(pMsg->hWin,pColors->textColor);
+				  HSD_BUTTON_SetTextColor(pMsg->hWin,pColors->textColor);
            }
            HSD_BUTTON_Callback(pMsg);
            break;
@@ -170,7 +186,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                     WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                     break;
                case GUI_KEY_BACKSPACE:
-										if(t90_set.alarm.danger_sog == agentdst_set)
+                              isSpON = HSD_SLIDER_GetValue(slider);
+										if(t90_set.alarm.danger_sog == agentdst_set && (t90_set.alarm.on_off & (0x01<<1))>>1 == isSpON)
 										{
 											WM_SetFocus(alarmSetMenuDlg);
 										}
@@ -258,7 +275,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
     case WM_CREATE:		
 			
 				 agentdst_set = t90_set.alarm.danger_sog;
-		
+		       isSpON = (t90_set.alarm.on_off & (0x01<<1))>>1;        
+     
 				 pColors = &setWinColors[t90_set.sys.nightmode];
 		       pColors_Slider = &setDlgColors[t90_set.sys.nightmode];
          buttons[0]  = HSD_BUTTON_CreateEx(ALARM_SET_WIDTH/2-40,
@@ -299,7 +317,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 HSD_SLIDER_SetSliderColor(slider,pColors_Slider->sliderColor);
 				 HSD_SLIDER_SetFocusSliderColor(slider, pColors_Slider->focusSliderColor);
 				 HSD_SLIDER_SetFocusSlotColor(slider,pColors_Slider->focusSlotColor);
-             WM_SetCallback(slider, &mySliderCallback);   
+             WM_SetCallback(slider, &mySliderCallback);
+             HSD_SLIDER_SetValue(slider,(t90_set.alarm.on_off & (0x01<<1))>>1);             
 //				 WM_DefaultProc(pMsg);
          break;
          
@@ -351,6 +370,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					if(pMsg->Data.v == REPLY_OK)
 					{
 						 t90_set.alarm.danger_sog = agentdst_set;
+                   T90_setAlarmON_OFF(isSpON,1);
 						 T90_Store();
 					}
 					else
@@ -360,6 +380,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						sprintf(pStrBuf,"%d",t90_set.alarm.danger_sog%10);
 						HSD_BUTTON_SetText(buttons[1], pStrBuf);
 						agentdst_set = t90_set.alarm.danger_sog;
+                  isSpON = (t90_set.alarm.on_off & (0x01<<1))>>1;
+                  HSD_SLIDER_SetValue(slider,isSpON);
 					}
 					WM_SetFocus(alarmSetMenuDlg);
 					break;

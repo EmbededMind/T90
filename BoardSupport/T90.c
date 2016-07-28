@@ -43,7 +43,8 @@ T90_Set t90_set = {
 		DEFAULT_DANGER_SOG_X10,   
 		DEFAULT_MIN_SOG_X10,     
 		DEFAULT_MAX_SOG_X10,      
-		DEFAULT_NATION },	
+		DEFAULT_NATION, 
+      DEFAULT_ALARMOFF },	
 	
 	{
 		NONE_MODE,
@@ -78,7 +79,9 @@ T90_Set reset_t90_set = {
 		DEFAULT_DANGER_SOG_X10,   
 		DEFAULT_MIN_SOG_X10,     
 		DEFAULT_MAX_SOG_X10,      
-		DEFAULT_NATION },	
+		DEFAULT_NATION,
+      DEFAULT_HSPEED_X10,
+      DEFAULT_ALARMOFF   },	
 	
 	{
 		NONE_MODE,
@@ -233,5 +236,15 @@ void T90_Reset(void)
 //  printT90_Set(&t90_set);
 }
 
-
+void T90_setAlarmON_OFF(int value,int which)
+{
+   if(value)
+   {
+      t90_set.alarm.on_off |= 0x01<<which;
+   }
+   else
+   {
+      t90_set.alarm.on_off &= ~(0x01<<which);
+   }
+}
 

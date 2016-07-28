@@ -18,6 +18,7 @@ static WM_HWIN slider;
 
 static int agent_max_sog;
 static int agent_min_sog;
+static int isSOGON;
 
 static const SetWinColor *pColors = setWinColors;
 static const SetDlgColor *pColors_Slider = setDlgColors;
@@ -85,7 +86,22 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
             
                break;
 				case GUI_KEY_BACKSPACE:
-					
+					   isSOGON = HSD_SLIDER_GetValue(slider);
+                  if(t90_set.alarm.max_sog == agent_max_sog && t90_set.alarm.min_sog == agent_min_sog && (t90_set.alarm.on_off & (0x01<<2))>>2 == isSOGON)
+                  {
+                     WM_SetFocus(alarmSetMenuDlg);
+                  }
+                  else
+                  {
+                     myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                     myMsg.hWinSrc  = sogAlarmSetWin;
+                     myMsg.MsgId  = USER_MSG_CHOOSE;
+                     myMsg.Data.v  = SYS_SETTING;
+                     WM_SendMessage(myMsg.hWin, &myMsg);
+                     
+                     WM_BringToTop(confirmWin);
+                     WM_SetFocus(confirmWin);
+                  }
 				break;
 
 				default:
@@ -170,21 +186,22 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                    WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                    break;
                case GUI_KEY_BACKSPACE:
-										if(t90_set.alarm.max_sog == agent_max_sog && t90_set.alarm.min_sog == agent_min_sog)
-										{
-											WM_SetFocus(alarmSetMenuDlg);
-										}
-										else
-										{
-											myMsg.hWin  = WM_GetClientWindow(confirmWin);
-											myMsg.hWinSrc  = sogAlarmSetWin;
-											myMsg.MsgId  = USER_MSG_CHOOSE;
-											myMsg.Data.v  = SYS_SETTING;
-											WM_SendMessage(myMsg.hWin, &myMsg);
-											
-											WM_BringToTop(confirmWin);
-											WM_SetFocus(confirmWin);
-										}
+										isSOGON = HSD_SLIDER_GetValue(slider);
+                           if(t90_set.alarm.max_sog == agent_max_sog && t90_set.alarm.min_sog == agent_min_sog && (t90_set.alarm.on_off & (0x01<<2))>>2 == isSOGON)
+                           {
+                              WM_SetFocus(alarmSetMenuDlg);
+                           }
+                           else
+                           {
+                              myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                              myMsg.hWinSrc  = sogAlarmSetWin;
+                              myMsg.MsgId  = USER_MSG_CHOOSE;
+                              myMsg.Data.v  = SYS_SETTING;
+                              WM_SendMessage(myMsg.hWin, &myMsg);
+                              
+                              WM_BringToTop(confirmWin);
+                              WM_SetFocus(confirmWin);
+                           }
                     break;
 							 case GUI_KEY_UP:
 										index = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;							 
@@ -276,7 +293,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			
             agent_max_sog = t90_set.alarm.max_sog;
             agent_min_sog = t90_set.alarm.min_sog;
-
+            isSOGON = (t90_set.alarm.on_off & (0x01<<2))>>2;
+             
             pColors = &setWinColors[t90_set.sys.nightmode];
             pColors_Slider = &setDlgColors[t90_set.sys.nightmode];
 
@@ -348,7 +366,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             HSD_SLIDER_SetFocusSliderColor(slider, pColors_Slider->focusSliderColor);
             HSD_SLIDER_SetFocusSlotColor(slider,pColors_Slider->focusSlotColor);
             WM_SetCallback(slider, &mySliderCallback);
-            
+            HSD_SLIDER_SetValue(slider,(t90_set.alarm.on_off & (0x01<<2))>>2); 
 //				 WM_DefaultProc(pMsg);
          break;
          
@@ -401,6 +419,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					{
 						 t90_set.alarm.max_sog = agent_max_sog;
 						 t90_set.alarm.min_sog = agent_min_sog;
+                   T90_setAlarmON_OFF(isSOGON,2);
 						 T90_Store();
 					}
 					else
@@ -416,6 +435,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						HSD_BUTTON_SetText(buttons[2], pStrBuf);
 						sprintf(pStrBuf,"%d",agent_max_sog%10);
 						HSD_BUTTON_SetText(buttons[3], pStrBuf);
+                  isSOGON = (t90_set.alarm.on_off & (0x01<<2))>>2;
+                  HSD_SLIDER_SetValue(slider,isSOGON);
 					}
 					WM_SetFocus(alarmSetMenuDlg);
 					break;

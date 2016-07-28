@@ -151,6 +151,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 							WM_SetFocus(specialAlarmSetDlg);						
 							break;
                   case 4:
+                     WM_SetFocus(highspshipsetWin);	
                      break;
 					}
           break;

@@ -203,7 +203,7 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
    pBerth->Boat.time_cnt  = TIMESTAMP;
 
 
-   if(pBerth->Boat.category == 0  &&  p_msg->SOG >= HIGH_SPEED)
+   if(pBerth->Boat.category == 0  &&  p_msg->SOG >= t90_set.alarm.highspeed)
    {
       unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
 //		  nation = 0x10;//////////////////////////////////////////////////////////////////////////
@@ -386,7 +386,7 @@ int add_18(struct message_18 * p_msg)
        
    }
 
-   else if(buf->Boat.category == 0  &&  p_msg->SOG >= HIGH_SPEED)
+   else if(buf->Boat.category == 0  &&  p_msg->SOG >= t90_set.alarm.highspeed)
    {
       unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
 //      nation = 0x10;/////////////////////////////////////////////////////////////////////////////////////

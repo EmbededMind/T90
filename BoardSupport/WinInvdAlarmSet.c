@@ -19,6 +19,7 @@ static WM_HWIN button;
 static WM_HWIN slider;
 
 static int agentdst_set;
+static int isInvadON;
 
 static const SetWinColor *pColors = setWinColors;
 static const SetDlgColor *pColors_Slider = setDlgColors;
@@ -77,20 +78,32 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
                          }
                          
                          break;
-				case GUI_KEY_PWM_INC:       
-						 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-						 break;
+                  case GUI_KEY_PWM_INC:       
+                         WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                         break;
 
-                 
-            
-               break;
-				case GUI_KEY_BACKSPACE:
-					
-				break;
+                  case GUI_KEY_BACKSPACE:
+                        isInvadON = HSD_SLIDER_GetValue(slider);
+                        if(t90_set.alarm.invd_dst == agentdst_set && (t90_set.alarm.on_off & 0x01) == isInvadON)
+                        {
+                           WM_SetFocus(alarmSetMenuDlg);
+                        }
+                        else
+                        {
+                           myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                           myMsg.hWinSrc  = invdAlarmSetWin;
+                           myMsg.MsgId  = USER_MSG_CHOOSE;
+                           myMsg.Data.v  = SYS_SETTING;
+                           WM_SendMessage(myMsg.hWin, &myMsg);
+                           
+                           WM_BringToTop(confirmWin);
+                           WM_SetFocus(confirmWin);
+                        }
+                     break;
 
-				default:
-					HSD_SLIDER_Callback(pMsg);
-            break;
+                  default:
+                     HSD_SLIDER_Callback(pMsg);
+                     break;
 			}
 		break;
 		default:
@@ -165,7 +178,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 								   WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 								   break;
                case GUI_KEY_BACKSPACE:
-										if(t90_set.alarm.invd_dst == agentdst_set)
+                              isInvadON = HSD_SLIDER_GetValue(slider);
+										if(t90_set.alarm.invd_dst == agentdst_set && (t90_set.alarm.on_off & 0x01) == isInvadON)
 										{
 											WM_SetFocus(alarmSetMenuDlg);
 										}
@@ -256,7 +270,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
      case WM_CREATE:		
 			
 				 agentdst_set = t90_set.alarm.invd_dst;
-		
+		       isInvadON = t90_set.alarm.on_off & 0x01;
+     
 				 pColors = &setWinColors[t90_set.sys.nightmode];             
              pColors_Slider = &setDlgColors[t90_set.sys.nightmode];
      
@@ -283,7 +298,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 HSD_SLIDER_SetFocusSliderColor(slider, pColors_Slider->focusSliderColor);
 				 HSD_SLIDER_SetFocusSlotColor(slider,pColors_Slider->focusSlotColor);
              WM_SetCallback(slider, &mySliderCallback);
-             
+             HSD_SLIDER_SetValue(slider,t90_set.alarm.on_off & 0x01);
 //				 WM_DefaultProc(pMsg);
          break;
          
@@ -363,6 +378,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                GUI_DispStringAt("km", drawArea.x1-55, 198);
                sprintf(pStrBuf,"%01d.%01d",agentdst_set*37/20000, ((agentdst_set*37/20)%1000)/100);
             }
+//            HSD_SLIDER_SetValue(slider,isInvadON);
             HSD_BUTTON_SetText(button, pStrBuf);
             GUI_DispStringAt("闯入报警：", drawArea.x0, drawArea.y0 - 60);
             GUI_DispStringAt("开启", drawArea.x0+125, drawArea.y0 - 60);
@@ -381,12 +397,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					if(pMsg->Data.v == REPLY_OK)
 					{
 						 t90_set.alarm.invd_dst = agentdst_set;
+                   T90_setAlarmON_OFF(isInvadON,0);
 						 T90_Store();				
 						StubRefresh();
 					}
 					else
 					{
 						agentdst_set = t90_set.alarm.invd_dst;
+                  isInvadON = t90_set.alarm.on_off & 0x01;
+                  HSD_SLIDER_SetValue(slider,isInvadON);
 					}
 					WM_SetFocus(alarmSetMenuDlg);
 					break;

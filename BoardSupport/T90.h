@@ -62,7 +62,8 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_NATION           0x00
 #define DEFAULT_LEFT             0
 #define DEFAULT_RIGHT            1
-
+#define DEFAULT_ALARMOFF         0xff
+#define DEFAULT_HSPEED_X10       120
 
 #define DEFAULT_VOLUM      1
 #define DEFAULT_BRIGHT     4
@@ -105,6 +106,8 @@ typedef struct Alarm_Set
 	int min_sog;
 	int max_sog;
 	char nation;
+   int highspeed;
+   uint8_t on_off;
 } Alarm_Set;
 
 typedef struct System_Set
@@ -152,7 +155,7 @@ void T90_Init(void);
 Bool T90_Load(void);
 void T90_Store(void);
 void T90_Reset(void);
-
+void T90_setAlarmON_OFF(int value,int which);
 
 //int fetchplug();
 #endif

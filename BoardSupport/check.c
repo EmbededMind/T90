@@ -89,7 +89,7 @@ void CHECK_DelHighSpeed()
     
     while(pBerth)
     {
-        if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.SOG < HIGH_SPEED)
+        if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.SOG < t90_set.alarm.highspeed)
         {
             pBerth->pBoatLink->Boat.category = 0;
 						      BULY_delete(pBerth->pBoatLink);
