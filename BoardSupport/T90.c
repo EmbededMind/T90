@@ -83,7 +83,7 @@ T90_Set reset_t90_set = {
 	{
 		NONE_MODE,
 		OFF,
-		DAY,
+		NIGHT,
 		DEFAULT_VOLUM,
 		DEFAULT_BRIGHT,
 		NM,

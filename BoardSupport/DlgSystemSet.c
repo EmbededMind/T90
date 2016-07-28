@@ -46,10 +46,10 @@ static System_Set agentsys_set;
 static  void (* const ProcChanging[SLD_NUM-1])(WM_MESSAGE *, int)  = {
 	_OnWorkModeChanged,
 	_OnLaunchChanged,
-  _OnNightModeChanged, 
-  _OnVolumChanged,
-  _OnBrightChanged,
-  _OnUnitChanged,
+   _OnNightModeChanged, 
+   _OnVolumChanged,
+   _OnBrightChanged,
+   _OnUnitChanged,
 	_OnUpdateChanged
 };
 
@@ -133,9 +133,6 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
            StubRefresh();
            break;
-//      case USER_MSG_MNT_SWT:
-//           
-//           break;
       case USER_MSG_SKIN:    
            pColors  = &(setDlgColors[pMsg->Data.v]);
            
@@ -505,7 +502,6 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
            switch(pKeyInfo->Key)
            {
               case GUI_KEY_RIGHT:
-//              case GUI_KEY_ENTER:
                    myMsg.hWin      = WM_GetClientWindow(confirmWin);            
                    myMsg.hWinSrc   = pMsg->hWin;
                    myMsg.MsgId     = USER_MSG_CHOOSE;
@@ -547,23 +543,23 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
            WM_BringToTop(systemSetDlg);
            if(pMsg->Data.v == REPLY_OK )
            {
-              if(t90_set.sys.nightmode != DAY) 
+              if(t90_set.sys.nightmode != NIGHT) 
               {
                  myMsg.MsgId  = USER_MSG_SKIN;
-                 myMsg.Data.v  = DAY;
+                 myMsg.Data.v  = NIGHT;
                  WM_BroadcastMessage(&myMsg);
                  agentsys_set.nightmode  = t90_set.sys.nightmode;
               }
               
               T90_Reset();
               
-							HSD_SLIDER_SetValue(slideres[0], t90_set.sys.workmode);
+				  HSD_SLIDER_SetValue(slideres[0], t90_set.sys.workmode);
               HSD_SLIDER_SetValue(slideres[7], 0);
-							GUI_Delay(1000);
+				  GUI_Delay(1000);
 							
-							HSD_SLIDER_SetValue(slideres[1], t90_set.sys.launch);
+				  HSD_SLIDER_SetValue(slideres[1], t90_set.sys.launch);
               HSD_SLIDER_SetValue(slideres[7], 1);
-							GUI_Delay(1000);
+				  GUI_Delay(1000);
 							
               HSD_SLIDER_SetValue(slideres[2], t90_set.sys.nightmode);
               HSD_SLIDER_SetValue(slideres[7], 2);
@@ -581,7 +577,7 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
               HSD_SLIDER_SetValue(slideres[7], 5);
               GUI_Delay(1000);
 							
-							HSD_SLIDER_SetValue(slideres[6], t90_set.sys.update);
+				  HSD_SLIDER_SetValue(slideres[6], t90_set.sys.update);
               HSD_SLIDER_SetValue(slideres[7], 6);
               GUI_Delay(1000);
               

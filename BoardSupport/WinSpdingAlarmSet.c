@@ -5,19 +5,101 @@
 #include "HSD_BUTTON.h"
 #include "T90.h"
 #include "t90font.h"
+#include "HSD_SLIDER.h"
 
 #include "layout_alarm_set.h"
 
-//static const GUI_RECT drawArea = {30, 30, ALARM_SET_WIDTH-30, ALARM_SET_HEIGHT-30};
+static const GUI_RECT drawArea = {30, 120, ALARM_SET_WIDTH-30, ALARM_SET_HEIGHT-30};
 
 WM_HWIN spdingAlarmSetWin;
 
 static WM_HWIN buttons[2];
+static WM_HWIN slider;
 
 static int agentdst_set;
 
 static const SetWinColor *pColors = setWinColors;
+static const SetDlgColor *pColors_Slider = setDlgColors;
 
+/**@brief 超速报警界面滑块的回调函数
+ *  
+ *   @param [in] pMsg 消息指针
+ */
+static void mySliderCallback(WM_MESSAGE* pMsg)
+{
+	WM_MESSAGE myMsg;
+	switch(pMsg->MsgId)
+	{
+		case WM_KEY:
+			switch(((WM_KEY_INFO*)(pMsg->Data.p))->Key)
+			{
+            case GUI_KEY_MOLEFT:
+                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
+                        {
+                           myMsg.hWin = systemSetDlg;
+                           myMsg.hWinSrc = pMsg->hWin;
+                           myMsg.MsgId = USER_MSG_MOTHERPOS;
+                           myMsg.Data.v = DEFAULT_LEFT;
+                           WM_SendMessage(myMsg.hWin, &myMsg);
+                        }                           
+                        break;
+              
+              case GUI_KEY_MORIGHT:
+                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
+                        {
+                           myMsg.hWin = systemSetDlg;
+                           myMsg.hWinSrc = pMsg->hWin;
+                           myMsg.MsgId = USER_MSG_MOTHERPOS;
+                           myMsg.Data.v = DEFAULT_RIGHT;
+                           WM_SendMessage(myMsg.hWin, &myMsg);
+                        }   
+                        break; 
+                  case GUI_KEY_SINGLE:
+                         if(t90_set.sys.workmode == DOUBLE_MODE)
+                         {                            
+                            myMsg.hWin = systemSetDlg;
+                            myMsg.hWinSrc = pMsg->hWin;
+                            myMsg.MsgId = USER_MSG_WORKMODE;
+                            myMsg.Data.v = SINGLE_MODE;
+                            WM_SendMessage(myMsg.hWin, &myMsg);
+                         }
+                         
+                         break;
+                  case GUI_KEY_DOUBLE:
+                         if(t90_set.sys.workmode == SINGLE_MODE)
+                         {
+                            myMsg.hWin = systemSetDlg;
+                            myMsg.hWinSrc = pMsg->hWin;
+                            myMsg.MsgId = USER_MSG_WORKMODE;
+                            myMsg.Data.v = DOUBLE_MODE;
+                            WM_SendMessage(myMsg.hWin, &myMsg);
+                         }
+                         
+                         break;
+				case GUI_KEY_PWM_INC:       
+						 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+						 break;
+
+                 
+            case GUI_KEY_UP:
+                  WM_SetFocus(buttons[1]);
+               break;
+            case GUI_KEY_DOWN:
+                  WM_SetFocus(buttons[0]);
+               break;
+				case GUI_KEY_BACKSPACE:
+					
+				break;
+
+				default:
+					HSD_SLIDER_Callback(pMsg);
+            break;
+			}
+		break;
+		default:
+			HSD_SLIDER_Callback(pMsg);
+	}
+}
 
 /**@brief 超速报警界面按钮的回调函数
  *  
@@ -104,14 +186,19 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 											WM_SetFocus(confirmWin);
 										}
                     break;
-							 case GUI_KEY_LEFT:
-               case GUI_KEY_RIGHT:
+							 case GUI_KEY_UP:
+                              if(pMsg->hWin == buttons[0])
+											WM_SetFocus(slider);
+										else
+											WM_SetFocus(buttons[0]);
+                              break;
+                      case GUI_KEY_DOWN:
 										if(pMsg->hWin == buttons[0])
 											WM_SetFocus(buttons[1]);
 										else
-											WM_SetFocus(buttons[0]);
+											WM_SetFocus(slider);
 										break;
-							 case GUI_KEY_UP:
+							 case GUI_KEY_RIGHT:
 										id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
 										if(id==0) agentdst_set+=10;
 										if(id==1) agentdst_set+=1;
@@ -121,7 +208,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 										sprintf(pStrBuf,"%d",agentdst_set%10);
 							      HSD_BUTTON_SetText(buttons[1], pStrBuf);										
                     break;
-							 case GUI_KEY_DOWN:
+							 case GUI_KEY_LEFT:
 										id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
 							      if(id==0) agentdst_set-=10;
 										if(id==1) agentdst_set-=1;
@@ -152,12 +239,20 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		
 		case USER_MSG_SKIN:
 			   pColors = &(setWinColors[pMsg->Data.v]);	
-		
+		      pColors_Slider = &(setDlgColors[pMsg->Data.v]);
+           
 				 for(i = 0; i < 2; i++)
 				 {
 						HSD_BUTTON_SetBkColor(buttons[i], pColors->bkColor);
 						HSD_BUTTON_SetTextColor(buttons[i], pColors->textColor);
 				 }
+             
+             HSD_SLIDER_SetBkColor(slider, pColors->bkColor);
+				 HSD_SLIDER_SetFocusBkColor(slider, pColors->bkColor);
+             HSD_SLIDER_SetSlotColor(slider, pColors_Slider->slotColor);
+				 HSD_SLIDER_SetSliderColor(slider,pColors_Slider->sliderColor);
+				 HSD_SLIDER_SetFocusSliderColor(slider, pColors_Slider->focusSliderColor);
+				 HSD_SLIDER_SetFocusSlotColor(slider,pColors_Slider->focusSlotColor);
 				 break;
 		
     case WM_CREATE:		
@@ -165,7 +260,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 agentdst_set = t90_set.alarm.danger_sog;
 		
 				 pColors = &setWinColors[t90_set.sys.nightmode];
-		
+		       pColors_Slider = &setDlgColors[t90_set.sys.nightmode];
          buttons[0]  = HSD_BUTTON_CreateEx(ALARM_SET_WIDTH/2-40,
                                    ALARM_SET_HEIGHT/2-70, 
                                    70, 
@@ -193,8 +288,19 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
          HSD_BUTTON_SetBkColor(buttons[1], pColors->bkColor);
 				 HSD_BUTTON_SetTextColor(buttons[1], pColors->textColor);
 				 HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->focusTextColor);
-
-				 WM_DefaultProc(pMsg);
+             
+           slider = HSD_SLIDER_CreateEx(drawArea.x0 + 175, drawArea.y0 - 60,
+                               SLIDER_WIDTH , SLIDER_HEIGHT ,
+                               pMsg->hWin , WM_CF_SHOW, 0, GUI_ID_SLIDER0);    
+             HSD_SLIDER_SetRange(slider,0,1);
+             HSD_SLIDER_SetBkColor(slider, pColors_Slider->bkColor);
+				 HSD_SLIDER_SetFocusBkColor(slider, pColors_Slider->bkColor);
+				 HSD_SLIDER_SetSlotColor(slider, pColors_Slider->slotColor);
+				 HSD_SLIDER_SetSliderColor(slider,pColors_Slider->sliderColor);
+				 HSD_SLIDER_SetFocusSliderColor(slider, pColors_Slider->focusSliderColor);
+				 HSD_SLIDER_SetFocusSlotColor(slider,pColors_Slider->focusSlotColor);
+             WM_SetCallback(slider, &mySliderCallback);   
+//				 WM_DefaultProc(pMsg);
          break;
          
     case WM_PAINT:
@@ -229,13 +335,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 GUI_SetFont(&GUI_Font_T90_30);
 				 GUI_DispStringAt("报警航速", 50, ALARM_SET_HEIGHT/2-10);
 				 GUI_DispStringAt("节", ALARM_SET_WIDTH-70, ALARM_SET_HEIGHT/2-10);
-		
+		      GUI_DispStringAt("超速报警：", drawArea.x0, drawArea.y0 - 60);
+            GUI_DispStringAt("开启", drawArea.x0+125, drawArea.y0 - 60);
+            GUI_DispStringAt("关闭", drawArea.x0+125+SLIDER_WIDTH+50,drawArea.y0 - 60);
          break;
 		
 		case WM_SET_FOCUS:
 				 if(pMsg->Data.v)
 				 {
-						WM_SetFocus(buttons[0]);
+						WM_SetFocus(slider);
 				 }
 				 break;
 				 

@@ -21,6 +21,12 @@
 * Initial font height: 30                                            *
 * Range disabled: 0000 - FFFF                                        *
 * Read pattern file: E:\备份\备份\字体\T90菜单中字——30.txt         *
+* Edit/Shift/Down    at character 0x41 (65)                          *
+* Edit/Shift/Up      at character 0x41 (65)                          *
+* Character enabled:   0x9AD8 (39640)                                *
+* Range disabled: 0000 - FFFF                                        *
+* Read pattern file: E:\备份\备份\字体\T90菜单中字——30.txt         *
+* Character enabled:   0x9AD8 (39640)                                *
 *                                                                    *
 **********************************************************************
 */
@@ -4422,6 +4428,38 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_97F3[ 90] = { /* code 97F3 */
   ________,________,________,
   ________,________,________};
 
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_9AD8[ 90] = { /* code 9AD8 */
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,__XX____,________,
+  ________,___XX___,________,
+  _XXXXXXX,XXXXXXXX,XXXXXX__,
+  _XXXXXXX,XXXXXXXX,XXXXXX__,
+  ________,________,________,
+  ____XXXX,XXXXXXXX,XXX_____,
+  ____XXXX,XXXXXXXX,XXX_____,
+  ____XX__,________,_XX_____,
+  ____XXXX,XXXXXXXX,XXX_____,
+  ____XXXX,XXXXXXXX,XXX_____,
+  ________,________,________,
+  __XXXXXX,XXXXXXXX,XXXXX___,
+  __XXXXXX,XXXXXXXX,XXXXX___,
+  __XX____,________,___XX___,
+  __XX___X,XXXXXXXX,X__XX___,
+  __XX___X,XXXXXXXX,X__XX___,
+  __XX___X,X______X,X__XX___,
+  __XX___X,XXXXXXXX,X__XX___,
+  __XX___X,XXXXXXXX,X__XX___,
+  __XX___X,X_______,___XX___,
+  __XX____,_______X,XXXXX___,
+  __XX____,_______X,XXXX____,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________};
+
 GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_9C9C[ 90] = { /* code 9C9C */
   ________,________,________,
   ________,________,________,
@@ -4519,7 +4557,7 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_FF1F[ 90] = { /* code FF1F, FU
   ________,________,________,
   ________,________,________};
 
-GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30_CharInfo[140] = {
+GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30_CharInfo[141] = {
    {   7,   7,  1, acGUI_Font_T90_30_0020 } /* code 0020 */
   ,{   7,   7,  1, acGUI_Font_T90_30_0021 } /* code 0021 */
   ,{   5,   5,  1, acGUI_Font_T90_30_002E } /* code 002E */
@@ -4657,28 +4695,36 @@ GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30_CharInfo[140] = {
   ,{  22,  22,  3, acGUI_Font_T90_30_9759 } /* code 9759 */
   ,{  22,  22,  3, acGUI_Font_T90_30_97E9 } /* code 97E9 */
   ,{  22,  22,  3, acGUI_Font_T90_30_97F3 } /* code 97F3 */
+  ,{  22,  22,  3, acGUI_Font_T90_30_9AD8 } /* code 9AD8 */
   ,{  22,  22,  3, acGUI_Font_T90_30_9C9C } /* code 9C9C */
   ,{  22,  22,  3, acGUI_Font_T90_30_FF1A } /* code FF1A */
   ,{  22,  22,  3, acGUI_Font_T90_30_FF1F } /* code FF1F */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop127 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop128 = {
    0xFF1F /* first character */
   ,0xFF1F /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[139] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[140] /* address of first character */
   ,(GUI_CONST_STORAGE GUI_FONT_PROP *)0 /* pointer to next GUI_FONT_PROP */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop126 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop127 = {
    0xFF1A /* first character */
   ,0xFF1A /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[139] /* address of first character */
+  ,&GUI_Font_T90_30_Prop128 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop126 = {
+   0x9C9C /* first character */
+  ,0x9C9C /* last character  */
   ,&GUI_Font_T90_30_CharInfo[138] /* address of first character */
   ,&GUI_Font_T90_30_Prop127 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop125 = {
-   0x9C9C /* first character */
-  ,0x9C9C /* last character  */
+   0x9AD8 /* first character */
+  ,0x9AD8 /* last character  */
   ,&GUI_Font_T90_30_CharInfo[137] /* address of first character */
   ,&GUI_Font_T90_30_Prop126 /* pointer to next GUI_FONT_PROP */
 };

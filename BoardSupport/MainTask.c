@@ -98,7 +98,7 @@ printf("maintask\n");
 		
 		confirmWin = WIN_ConfirmCreate();
 		
-
+      highspshipsetWin = WIN_HighSpeedShipSetCreate();
 
 
 		if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖

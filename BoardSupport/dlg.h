@@ -33,6 +33,7 @@ extern WM_HWIN invdAlarmSetWin;
 extern WM_HWIN spdingAlarmSetWin;
 extern WM_HWIN sogAlarmSetWin;
 extern WM_HWIN specialAlarmSetDlg;
+extern WM_HWIN highspshipsetWin;
 
 extern WM_HWIN confirmWin;
 //extern WM_HWIN textprowin;
@@ -57,7 +58,7 @@ WM_HWIN WIN_InvdAlarmSetCreate(void);
 WM_HWIN WIN_SpdingAlarmSetCreate(void);
 WM_HWIN WIN_SogAlarmSetCreate(void);
 WM_HWIN DLG_SpecialAlarmSetCreate(void);
-
+WM_HWIN WIN_HighSpeedShipSetCreate(void);
 WM_HWIN WIN_ConfirmCreate(void);
 
 //WM_HWIN DLG_testCustomedWidgetCreate(void);

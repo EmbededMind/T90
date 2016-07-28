@@ -103,11 +103,11 @@ void CHECK_STRefresh()
 {
     if(mothership.SOG < 20)
     {
-				if(STime)   STime--;     
+	    if(STime)   STime--;     
     }
     else
     {
-        STime = STIME;
+       STime = STIME;
     }
 }
 

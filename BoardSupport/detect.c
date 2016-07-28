@@ -16,53 +16,6 @@ static unsigned int pointInPolygon = 0;
 
 static PloPoint *pmin, *pmax;
 
-//int getAllPointYMax()
-//{
-//   int i,max=-999;
-//   for(i = 0; i < STUB_NUM_MAX_D; i++)
-//   {
-//      if(stubs[i].isValid)
-//      {
-//         if(stubs[i].basePoint.y > max)
-//         {
-//            max = stubs[i].basePoint.y;
-//         }
-//         if(stubs[i].tang1.point.y > max)
-//         {
-//            max = stubs[i].tang1.point.y;
-//         }
-//         if(stubs[i].tang2.point.y > max)
-//         {
-//            max = stubs[i].tang2.point.y;
-//         }
-//      }
-//   }
-//   return max;
-//}
-
-//int getAllPointYMin()
-//{
-//   int i, min = 999;
-//   for(i = 0; i < STUB_NUM_MAX_D; i++)
-//   {
-//      if(stubs[i].isValid)
-//      {
-//         if(stubs[i].basePoint.y < min)
-//         {
-//            min = stubs[i].basePoint.y;
-//         }
-//         if(stubs[i].tang1.point.y < min)
-//         {
-//            min = stubs[i].tang1.point.y;
-//         }
-//         if(stubs[i].tang2.point.y < min)
-//         {
-//            min = stubs[i].tang2.point.y;
-//         }      
-//      }         
-//   }
-//   return min;
-//}
 
 void adjustPlo()
 {
@@ -115,10 +68,7 @@ void adjustPlo()
          }
       }       
    }
-//   printf("max x = %d\n",pmax->point.x);
-//   printf("max y = %d\n",pmax->point.y);
-//   printf("min x = %d\n",pmin->point.x);
-//   printf("min y = %d\n",pmin->point.y);
+
    for(i = 0; i < STUB_NUM_MAX_D; i++)
    {
       
@@ -211,15 +161,7 @@ jmptang1:
       }
 jmptang2:
       NULL;
-   }
-   
-//   index = pmin;
-//   do
-//   {
-//      printf("x = %d\n",index->point.x);
-//      printf("y = %d\n",index->point.y);
-//      index = index->next;
-//   }while(index != pmin);      
+   }     
 }
 int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
 {
@@ -233,21 +175,13 @@ int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
 
 int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 {
-//   static int same_y = 99999; 
    if(pointa.y == pointb.y)
    {
-//      if(pointa.y == same_y && same_y != 99999)
-//         return 0;
-//      same_y = pointa.y;      
-//      if(pBerth->y_to_cross == pointa.y)
-//      {                     
-//         return 1;               
-//      }
+
       return 0;
    }
    else 
    {
-//      same_y = 99999;
       if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y))
       {          
          if(pointa.y > pointb.y)
@@ -268,60 +202,7 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 void detectInit()
 {
    
-//    int i,j;
-//    int stubNumMax;
-//	 if(t90_set.sys.workmode == SINGLE_MODE)
-//	 {
-//		  stubNumMax = STUB_NUM_MAX_S;
-//	 }
-//	 else
-//	 {
-//		  stubNumMax = STUB_NUM_MAX_D;
-//	 }
-//    for(i = 0; i < stubNumMax; i++)
-//    {
-//			
-//       if(stubs[i].isValid)
-//		 {
-//          if(i == stubNumMax - 1)
-//          {
-//              j = 0;
-//          }
-//          else
-//          {
-//              for(j = i+1; j < stubNumMax; j++)
-//              {
-//                  if(j == stubNumMax)
-//                  {
-//                     j = 0;
-//                     break;
-//                  }
-//                  if(stubs[j].isValid)
-//                  {
-//                     break;
-//                  }
-//              }
-//           }
-//			  if(stubs[i].tang1.point.y*stubs[j].tang2.point.x-stubs[j].tang2.point.y*stubs[i].tang1.point.x >= 0)
-//			  {
-//					 pointInPolygon |= 0x00000001<<i;
-//			  }
-//			  else
-//			  {
-//					 pointInPolygon &= 0xfffffffe<<i;
-//			  }
-//			  
-//			 
-//			  if(-(stubs[i].tang1.point.x-stubs[j].tang2.point.x)+stubs[i].tang1.point.y*stubs[i].tang2.point.x-stubs[i].tang2.point.y*stubs[i].tang1.point.x >= 0)
-//			  {
-//					pointInPolygon |= 0x00000001<<(i+16);
-//			  }
-//			  else
-//			  {
-//					pointInPolygon &= 0xfffffffe<<(i+16);
-//			  }
-//        }
-//    }
+
 
 
    PloPoint *index;
@@ -366,49 +247,10 @@ Bool isInPolygon(BERTH *pBerth)
 
    unsigned int isinpoly = 0;
    Bool newFlg,oldFlg;
-//   int i, j;
-//   int flg = 0;
-//   int num;
-
-//   
-//   if(t90_set.sys.workmode == SINGLE_MODE)
-//   {
-//      num = 4;
-//   }else if(t90_set.sys.workmode == DOUBLE_MODE)
-//   {
-//      num = 5;
-//   }
-//   
-//   for(i = 0; i < num; i++)
-//   {
-//      if(stubs[i].isValid)
-//      {
-//         if(i == num - 1)
-//         {
-//           j = 0;
-//         }
-//         else
-//         {
-//           for(j = i+1; j < num; j++)
-//           {
-//               if(j == num)
-//               {
-//                  j = 0;
-//                  break;
-//               }
-//               if(stubs[j].isValid)
-//               {
-//                  break;
-//               }
-//           }
-//         }
-//         flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[i].tang2.point);
-//         flg += isCrossPointInLeft(pBerth, stubs[i].tang1.point, stubs[j].tang2.point);
-//      }
-//   }
    int flg;
    int i;
    PloPoint *index;
+   
    index = pmin;
    do
    {
@@ -426,52 +268,7 @@ Bool isInPolygon(BERTH *pBerth)
    }
    if(!newFlg)
       return 0;
-//    i = 0;
-//    j = 0;    
-//    for(i = 0;i < num;i++)
-//    {       
-//      if(stubs[i].isValid)
-//      {
-//        if(i == num - 1)
-//          {
-//              j = 0;
-//          }
-//          else
-//          {
-//              for(j = i+1; j < num; j++)
-//              {
-//                  if(j == num)
-//                  {
-//                     j = 0;
-//                     break;
-//                  }
-//                  if(stubs[j].isValid)
-//                  {
-//                     break;
-//                  }
-//                  
-//              }
-//           }
-//         if(((stubs[i].tang1.point.x-stubs[j].tang2.point.x)*pBerth->y_to_cross + (stubs[j].tang2.point.y-stubs[i].tang1.point.y)*pBerth->x_to_cross
-//            +stubs[i].tang1.point.y*stubs[j].tang2.point.x-stubs[j].tang2.point.y*stubs[i].tang1.point.x) > 0)
-//         {
-//            isinpoly |= 0x00000001<<i;
-//         }
-//         else
-//         {
-//            isinpoly &= 0xfffffffe<<i;
-//         }
-//         if(((stubs[i].tang1.point.x-stubs[i].tang2.point.x)*pBerth->y_to_cross + (stubs[i].tang2.point.y-stubs[i].tang1.point.y)*pBerth->x_to_cross
-//            +stubs[i].tang1.point.y*stubs[i].tang2.point.x-stubs[i].tang2.point.y*stubs[i].tang1.point.x) > 0)
-//         {
-//            isinpoly |= 0x00000001<<(i+16);
-//         }
-//         else
-//         {
-//            isinpoly &= 0xfffffffe<<(i+16);
-//         }
-//	    }
-//    }
+
     index = pmin;
     i = 0;
     do
@@ -516,10 +313,6 @@ void isInvader(BERTH  *pBerth)
 	{
 		pBerth->mntState = MNTState_Triggered;
 	}
-//	else if(pBerth->isInvader == 0)
-//	{
-//		pBerth->mntState = MNTState_None;
-//	}
 }
 
 
