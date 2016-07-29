@@ -403,8 +403,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             GUI_DispStringAt("节", ALARM_SET_WIDTH/2+161, ALARM_SET_HEIGHT/2-8);
 		      
             GUI_DispStringAt("航速报警：", drawArea.x0, drawArea.y0 - 60);
-            GUI_DispStringAt("开启", drawArea.x0+125, drawArea.y0 - 60);
-            GUI_DispStringAt("关闭", drawArea.x0+125+SLIDER_WIDTH+50,drawArea.y0 - 60);
+            GUI_DispStringAt("关闭", drawArea.x0+125, drawArea.y0 - 60);
+            GUI_DispStringAt("开启", drawArea.x0+125+SLIDER_WIDTH+50,drawArea.y0 - 60);
          break;
 		
 		case WM_SET_FOCUS:

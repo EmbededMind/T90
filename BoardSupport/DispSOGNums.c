@@ -9,7 +9,7 @@ static uint8_t numcode[10]={0x3f,0x0c,0x76,0x5e,0x4d,0x5b,0x7b,0x0e,0x7f,0x5f} ;
 
 void DrawNums(Point Atpoint,uint8_t numCode, int type)
 {
-    if(type)
+    if(type == 1)
     {
         if((numCode & 0x01) == 1)
             GUI_FillRect(Atpoint.x, Atpoint.y, Atpoint.x+26, Atpoint.y+49);
@@ -26,7 +26,7 @@ void DrawNums(Point Atpoint,uint8_t numCode, int type)
         if((numCode & (0x01<<6)) == 64)
             GUI_FillRect(Atpoint.x, Atpoint.y+29, Atpoint.x+79, Atpoint.y+49);
     }
-    else
+    else if(type == 0)
     {
         if((numCode & 0x01) == 1)
             GUI_FillRect(Atpoint.x, Atpoint.y, Atpoint.x+15, Atpoint.y+29);
@@ -56,7 +56,7 @@ void DispSOGNums(int x, int y, int num, int type)
 	Point atpointones;
 	atpointones.x = x;
 	atpointones.y = y;
-    if(type)
+    if(type == 1)
     {
         atpointtenth.x = atpointones .x + 148;
         atpointtenth.y = atpointones.y;
@@ -77,7 +77,7 @@ void DispSOGNums(int x, int y, int num, int type)
             DrawNums(atpointtenth,numcode[tenth],type);
         }
     }
-    else
+    else if(type == 0)
     {
         atpointtenth.x = atpointones .x + 87;
         atpointtenth.y = atpointones.y;

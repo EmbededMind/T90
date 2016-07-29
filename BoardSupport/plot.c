@@ -60,26 +60,24 @@ void DrawShipFamily(int flag)     //???§Ó?????????l§±
 	{
 		do
 		{
+         
 			if(pIndex->pStub->type == motherStub)     //mothership
 			{
+            if((t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT) || t90_set.sys.workmode == SINGLE_MODE)
+               GUI_SetPenSize(3);
 				GUI_DrawLine(motherShipPixel.x-(7-ms_zoom), motherShipPixel.y,                motherShipPixel.x,               motherShipPixel.y-(10-ms_zoom));  
 				GUI_DrawLine(motherShipPixel.x,               motherShipPixel.y-(10-ms_zoom), motherShipPixel.x+(7-ms_zoom), motherShipPixel.y );
 				GUI_DrawLine(motherShipPixel.x+(7-ms_zoom), motherShipPixel.y,                motherShipPixel.x+(5-ms_zoom), motherShipPixel.y+(20-ms_zoom));
 				GUI_DrawLine(motherShipPixel.x+(5-ms_zoom), motherShipPixel.y+(20-ms_zoom), motherShipPixel.x-(5-ms_zoom), motherShipPixel.y+(20-ms_zoom));
 				GUI_DrawLine(motherShipPixel.x-(5-ms_zoom), motherShipPixel.y+(20-ms_zoom), motherShipPixel.x-(7-ms_zoom), motherShipPixel.y);
+            GUI_SetPenSize(1);
 			}
 			else if(pIndex->pStub->type == safetySignStub)      //???
 			{
 				pixelTmp1 = GetItemPixel(pIndex->pStub->basePoint);
-//    if(&stubs[cursorOnStub] == pIndex->pStub){
-//       GUI_SetColor(pColor->numColor);
-//    }
-    GUI_FillPolygon(shipe, 3, pixelTmp1.x, pixelTmp1.y);
-//    GUI_DrawCircle(pixelTmp1.x, pixelTmp1.y, 3);
-//				GUI_DrawLine(pixelTmp1.x-(5-net_zoom), pixelTmp1.y+(5-net_zoom), pixelTmp1.x,               pixelTmp1.y-(5-net_zoom));  
-//				GUI_DrawLine(pixelTmp1.x,               pixelTmp1.y-(5-net_zoom), pixelTmp1.x+(5-net_zoom), pixelTmp1.y+(5-net_zoom));
-//				GUI_DrawLine(pixelTmp1.x+(5-net_zoom), pixelTmp1.y+(5-net_zoom), pixelTmp1.x-(5-net_zoom), pixelTmp1.y+(5-net_zoom));
-    GUI_SetColor(pColor->textColor);
+
+            GUI_FillPolygon(shipe, 3, pixelTmp1.x, pixelTmp1.y);
+            GUI_SetColor(pColor->textColor);
 				if(!flag)    //??
 				{
 					sprintf(pStrBuf, "%02d", pIndex->pStub->StubNum);
@@ -88,12 +86,15 @@ void DrawShipFamily(int flag)     //???§Ó?????????l§±
 			}
 			else if(pIndex->pStub->type == aidedStub)   //??
 			{
+            if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
+               GUI_SetPenSize(3);
 				pixelTmp1 = GetItemPixel(pIndex->pStub->basePoint);
 				GUI_DrawLine(pixelTmp1.x-(7-ms_zoom), pixelTmp1.y,                pixelTmp1.x,               pixelTmp1.y-(10-ms_zoom));  
 				GUI_DrawLine(pixelTmp1.x,               pixelTmp1.y-(10-ms_zoom), pixelTmp1.x+(7-ms_zoom), pixelTmp1.y );
 				GUI_DrawLine(pixelTmp1.x+(7-ms_zoom), pixelTmp1.y,                pixelTmp1.x+(5-ms_zoom), pixelTmp1.y+(20-ms_zoom));
 				GUI_DrawLine(pixelTmp1.x+(5-ms_zoom), pixelTmp1.y+(20-ms_zoom), pixelTmp1.x-(5-ms_zoom), pixelTmp1.y+(20-ms_zoom));
 				GUI_DrawLine(pixelTmp1.x-(5-ms_zoom), pixelTmp1.y+(20-ms_zoom), pixelTmp1.x-(7-ms_zoom), pixelTmp1.y);
+            GUI_SetPenSize(1);
 			}
 			pIndex = pIndex->pNext;
 		}
@@ -137,29 +138,12 @@ void DrawAlarmLine(int zoom)   //???§±   zoom¨²???}
    
 	if(pIndex)
 	{
-//printf("/////////////////\n");
+
 		r = sqrt(pIndex->pStub->tang1.point.x*pIndex->pStub->tang1.point.x + pIndex->pStub->tang1.point.y*pIndex->pStub->tang1.point.y);
-//      do{
-//         if(IsLineSegmCross(pIndex->pPrev->pStub->tang1.point, pIndex->pStub->tang2.point, pIndex->pStub->tang1.point, pIndex->pNext->pStub->tang2.point))
-//         {
-//            pIndex->pStub->isCross = 1;
-//         }
-//         else
-//         {
-//            pIndex->pStub->isCross = 0;
-//         } 
-//printf("%d\n",pIndex->pStub->isCross);
-//          pIndex = pIndex->pNext;         
-//      }while(pIndex != pStubHead);
-//      do{
-//         printf("%d\n",pIndex->pNext->pStub->isCross);
-//         pIndex = pIndex->pNext;
-//      }while(pIndex != pStubHead);
+
       
 		do
 		{
-//         if(!pIndex->pStub->isCross)
-//         {
             if(pIndex->pStub->tang2.angle > pIndex->pStub->tang1.angle)
             {
                pIndex->pStub->tang1.angle += 360;
@@ -167,7 +151,6 @@ void DrawAlarmLine(int zoom)   //???§±   zoom¨²???}
             GUI_SetLineStyle(GUI_LS_SOLID);
       
             GUI_DrawArc(pIndex->pStub->basePoint.x*TO_PIXEL + motherShipPixel.x, -pIndex->pStub->basePoint.y*TO_PIXEL + motherShipPixel.y, 
-                           /*	(t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, (t90_set.alarm.invd_dst*TO_PIXEL+1)/zoom, */
                               (r*TO_PIXEL)/zoom, (r*TO_PIXEL)/zoom,
                               pIndex->pStub->tang2.angle, pIndex->pStub->tang1.angle);
 //			}

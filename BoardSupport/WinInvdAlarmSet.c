@@ -199,12 +199,21 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                case GUI_KEY_RIGHT:
 										if(t90_set.sys.unit == NM)
 										{
-											agentdst_set+=100;
+                                 if(agentdst_set >= 100)
+                                 {
+											   agentdst_set+=100;
+                                 }
+                                 else
+                                 {
+                                    agentdst_set+=54;
+                                 }
 											if(agentdst_set > 9900) agentdst_set = 9900;
 										}
 										else
 										{
+                               
 											agentdst_set+=54;
+                                
 											if(agentdst_set > 5352) agentdst_set = 5352;
 										}
 										WM_Paint(invdAlarmSetWin);
@@ -213,12 +222,21 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 							 case GUI_KEY_LEFT:
 										if(t90_set.sys.unit == NM)
 										{
-											agentdst_set-=100;
+                                 if(agentdst_set > 100)
+                                 {
+											   agentdst_set-=100;
+                                 }
+                                 else
+                                 {
+                                    agentdst_set-=50;
+                                 }
 											if(agentdst_set < 0) agentdst_set = 0;
 										}
 										else
 										{
+                                
 											agentdst_set-=54;
+                                 
 											if(agentdst_set < 0) agentdst_set = 0;
 										}
 										WM_Paint(invdAlarmSetWin);
@@ -371,18 +389,22 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             if(t90_set.sys.unit == NM)
             {
                GUI_DispStringAt("nm", drawArea.x1-75, 208);
-               sprintf(pStrBuf,"%01d.%01d",agentdst_set/1000, (agentdst_set%1000)/100);
+               if(agentdst_set >= 100)
+                  sprintf(pStrBuf,"%01d.%01d",agentdst_set/1000, (agentdst_set%1000)/100);
+               else
+                  sprintf(pStrBuf,"%01d.%01d%01d",agentdst_set/1000, (agentdst_set%1000)/100,(agentdst_set%100)/10);
             }
             else
             {
-               GUI_DispStringAt("km", drawArea.x1-55, 198);
-               sprintf(pStrBuf,"%01d.%01d",agentdst_set*37/20000, ((agentdst_set*37/20)%1000)/100);
+               GUI_DispStringAt("km", drawArea.x1-75, 208);
+               
+               sprintf(pStrBuf,"%01d.%01d", (agentdst_set * MILLINM_TO_M)/1000, ((agentdst_set * MILLINM_TO_M)%1000)/100);
             }
 //            HSD_SLIDER_SetValue(slider,isInvadON);
             HSD_BUTTON_SetText(button, pStrBuf);
             GUI_DispStringAt("闯入报警：", drawArea.x0, drawArea.y0 - 60);
-            GUI_DispStringAt("开启", drawArea.x0+125, drawArea.y0 - 60);
-            GUI_DispStringAt("关闭", drawArea.x0+125+SLIDER_WIDTH+50,drawArea.y0 - 60);
+            GUI_DispStringAt("关闭", drawArea.x0+125, drawArea.y0 - 60);
+            GUI_DispStringAt("开启", drawArea.x0+125+SLIDER_WIDTH+50,drawArea.y0 - 60);
          }
          break;
 		
