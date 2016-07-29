@@ -28,10 +28,10 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
    {WINDOW_CreateIndirect,    "clientWin",    ID_WINDOW,      0, 0,                                             SUB_MENU_WIDTH,      SUB_MENU_HEIGHT,      0, 0, 0},
    
    {HSD_BUTTON_CreateIndirect, "invade",            GUI_ID_BUTTON0, 0, SUB_MENU_ITEM_HEIGHT+  SUB_MENU_ITEM_MARGIN*2, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
-   {HSD_BUTTON_CreateIndirect, "speeding",          GUI_ID_BUTTON1, 0, SUB_MENU_ITEM_HEIGHT*2+SUB_MENU_ITEM_MARGIN*3, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
-   {HSD_BUTTON_CreateIndirect, "sog range",         GUI_ID_BUTTON2, 0, SUB_MENU_ITEM_HEIGHT*3+SUB_MENU_ITEM_MARGIN*4, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
-	{HSD_BUTTON_CreateIndirect, "special",           GUI_ID_BUTTON3, 0, SUB_MENU_ITEM_HEIGHT*4+SUB_MENU_ITEM_MARGIN*5, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
-   {HSD_BUTTON_CreateIndirect, "highspeedship",     GUI_ID_BUTTON4, 0, SUB_MENU_ITEM_HEIGHT*5+SUB_MENU_ITEM_MARGIN*6, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0}, 
+   {HSD_BUTTON_CreateIndirect, "sog range",          GUI_ID_BUTTON1, 0, SUB_MENU_ITEM_HEIGHT*2+SUB_MENU_ITEM_MARGIN*3, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
+   {HSD_BUTTON_CreateIndirect, "highspeedship",         GUI_ID_BUTTON2, 0, SUB_MENU_ITEM_HEIGHT*3+SUB_MENU_ITEM_MARGIN*4, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
+	{HSD_BUTTON_CreateIndirect, "speeding",           GUI_ID_BUTTON3, 0, SUB_MENU_ITEM_HEIGHT*4+SUB_MENU_ITEM_MARGIN*5, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
+   {HSD_BUTTON_CreateIndirect, "special",     GUI_ID_BUTTON4, 0, SUB_MENU_ITEM_HEIGHT*5+SUB_MENU_ITEM_MARGIN*6, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0}, 
 };
 
 
@@ -53,16 +53,16 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 							WM_BringToTop(invdAlarmSetWin);
 							break;
 						case 1:
-							WM_BringToTop(spdingAlarmSetWin);
-							break;
-						case 2:
 							WM_BringToTop(sogAlarmSetWin);
 							break;
+						case 2:
+							WM_BringToTop(highspshipsetWin);
+							break;
 						case 3:
-							WM_BringToTop(specialAlarmSetDlg);
+							WM_BringToTop(spdingAlarmSetWin);
 							break;
                   case 4:
-                     WM_BringToTop(highspshipsetWin);;
+                     WM_BringToTop(specialAlarmSetDlg);;
                      break;
 					}
            HSD_BUTTON_SetBkColor(pMsg->hWin,pColors->btFocusBkColor);
@@ -142,16 +142,16 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 							WM_SetFocus(invdAlarmSetWin);
 							break;
 						case 1:
-							WM_SetFocus(spdingAlarmSetWin);
-							break;
-						case 2:
 							WM_SetFocus(sogAlarmSetWin);
 							break;
+						case 2:
+							WM_SetFocus(highspshipsetWin);
+							break;
 						case 3:
-							WM_SetFocus(specialAlarmSetDlg);						
+							WM_SetFocus(spdingAlarmSetWin);						
 							break;
                   case 4:
-                     WM_SetFocus(highspshipsetWin);	
+                     WM_SetFocus(specialAlarmSetDlg);	
                      break;
 					}
           break;
@@ -237,7 +237,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         HSD_BUTTON_SetTextColor(buttons[1], pColors->btTextColor);             
         HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
         HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
-        HSD_BUTTON_SetText(buttons[1], "超速报警");
+        HSD_BUTTON_SetText(buttons[1], "航速报警");
         
         buttons[2]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
         WM_SetCallback(buttons[2], &myButtonCallback);
@@ -246,7 +246,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
         HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
         HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
-        HSD_BUTTON_SetText(buttons[2], "航速报警");
+        HSD_BUTTON_SetText(buttons[2], "高速船报警");
 				
 				buttons[3]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON3);
         WM_SetCallback(buttons[3], &myButtonCallback);
@@ -255,7 +255,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         HSD_BUTTON_SetTextColor(buttons[3], pColors->btTextColor);
         HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
         HSD_BUTTON_SetTxFont(buttons[3], &GUI_Font_T90_30);
-        HSD_BUTTON_SetText(buttons[3], "特殊报警");
+        HSD_BUTTON_SetText(buttons[3], "超速报警");
         
         buttons[4]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON4);
         WM_SetCallback(buttons[4], &myButtonCallback);
@@ -264,7 +264,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         HSD_BUTTON_SetTextColor(buttons[4], pColors->btTextColor);
         HSD_BUTTON_SetTextFocusColor(buttons[4], pColors->btFocusTextColor);
         HSD_BUTTON_SetTxFont(buttons[4], &GUI_Font_T90_30);
-        HSD_BUTTON_SetText(buttons[4], "高速船报警");
+        HSD_BUTTON_SetText(buttons[4], "特殊报警");
         break;
 	 					
 	 case WM_PAINT:
