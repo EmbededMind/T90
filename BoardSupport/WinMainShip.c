@@ -377,6 +377,7 @@ static void _onPaint1(void)
    DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);
    GUI_SetColor(GUI_BLACK);
 	GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
+   GUI_FillRect(0, SCREEN_HEIGHT, 799, 479);
 }
 
 

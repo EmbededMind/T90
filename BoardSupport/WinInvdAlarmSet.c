@@ -205,7 +205,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                                  }
                                  else
                                  {
-                                    agentdst_set+=54;
+                                    agentdst_set+=50;
                                  }
 											if(agentdst_set > 9900) agentdst_set = 9900;
 										}
@@ -296,7 +296,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 GUI_SetFont(&GUI_Font_T90_30);	
              button  = HSD_BUTTON_CreateEx(drawArea.x1-115,
                                    209, 
-                                   36, 
+                                   45, 
                                    GUI_GetFontSizeY(), 
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
              WM_SetCallback(button, &myButtonCallback); 
@@ -388,7 +388,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 
             if(t90_set.sys.unit == NM)
             {
-               GUI_DispStringAt("nm", drawArea.x1-75, 208);
+               GUI_DispStringAt("nm", drawArea.x1-65, 208);
                if(agentdst_set >= 100)
                   sprintf(pStrBuf,"%01d.%01d",agentdst_set/1000, (agentdst_set%1000)/100);
                else
@@ -396,7 +396,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             }
             else
             {
-               GUI_DispStringAt("km", drawArea.x1-75, 208);
+               GUI_DispStringAt("km", drawArea.x1-65, 208);
                
                sprintf(pStrBuf,"%01d.%01d", (agentdst_set * MILLINM_TO_M)/1000, ((agentdst_set * MILLINM_TO_M)%1000)/100);
             }
