@@ -158,7 +158,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                      WM_SetFocus(systemSetDlg);
                      break;
                 case 3:
-                     WM_SetFocus(myFleetDlg);
+//                     WM_SetFocus(myFleetDlg);
                    break;
                 default:
                      break;
@@ -218,6 +218,10 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 						HSD_BUTTON_SetBkColor(buttons[2], pColors->btPrevFocusBkColor);
 						HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
 						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
+          
+                  HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
+						HSD_BUTTON_SetTextColor(buttons[3], pColors->btTextColor);
+						HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
 						break;
 			 
        case WM_INIT_DIALOG:

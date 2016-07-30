@@ -286,7 +286,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 }
 
 
-WM_HWIN DLG_MyFleetSetMenuCreate(void)
+WM_HWIN DLG_AlarmSetMenuCreate(void)
 {
    WM_HWIN handle;
    
