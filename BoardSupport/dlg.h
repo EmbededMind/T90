@@ -26,6 +26,8 @@ extern WM_HWIN mainMenuDlg;
 extern WM_HWIN dstSetMenuDlg;
 extern WM_HWIN alarmSetMenuDlg;
 extern WM_HWIN systemSetDlg;
+extern WM_HWIN myFleetDlg;
+
 extern WM_HWIN singleShipDstSetWin;
 extern WM_HWIN doubleShipDstSetWin;
 
@@ -53,6 +55,7 @@ WM_HWIN DLG_AlarmSetMenuCreate(void);
 WM_HWIN WIN_SingleShipDstSetCreate(void);
 WM_HWIN WIN_doubleShipDstSetCreate(void);
 WM_HWIN DLG_SystemSetCreate(void);
+WM_HWIN DLG_MyFleetSetMenuCreate(void);
 
 WM_HWIN WIN_InvdAlarmSetCreate(void);
 WM_HWIN WIN_SpdingAlarmSetCreate(void);

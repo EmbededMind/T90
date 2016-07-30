@@ -21,12 +21,6 @@
 * Initial font height: 30                                            *
 * Range disabled: 0000 - FFFF                                        *
 * Read pattern file: E:\备份\备份\字体\T90菜单中字——30.txt         *
-* Edit/Shift/Down    at character 0x41 (65)                          *
-* Edit/Shift/Up      at character 0x41 (65)                          *
-* Character enabled:   0x9AD8 (39640)                                *
-* Range disabled: 0000 - FFFF                                        *
-* Read pattern file: E:\备份\备份\字体\T90菜单中字——30.txt         *
-* Character enabled:   0x9AD8 (39640)                                *
 *                                                                    *
 **********************************************************************
 */
@@ -2412,6 +2406,38 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_6210[ 90] = { /* code 6210 */
   ________,________,________,
   ________,________,________};
 
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_6211[ 90] = { /* code 6211 */
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,____XX__,________,
+  _______X,XXX_XX__,_X______,
+  _XXXXXXX,XXX_XX__,XXX_____,
+  _XXXXXX_,____XX__,_XXX____,
+  _____XX_,____XX__,__XXX___,
+  _____XX_,____XX__,___X____,
+  XXXXXXXX,XXXXXXXX,XXXXXX__,
+  XXXXXXXX,XXXXXXXX,XXXXXX__,
+  _____XX_,____XX__,________,
+  _____XX_,_____XX_,___X____,
+  _____XX_,XXX__XX_,__XXX___,
+  ___XXXXX,XXX__XX_,XXXX____,
+  XXXXXXXX,_____XXX,XX______,
+  XXX__XX_,______XX,X_______,
+  _____XX_,____XXXX,____XX__,
+  _____XX_,__XXXXXX,____XX__,
+  _____XX_,XXXXX__X,X___XX__,
+  _XXXXXX_,_X_____X,XX_XX___,
+  _XXXXX__,________,XXXXX___,
+  ________,________,_XXXX___,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________};
+
 GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_62A5[ 90] = { /* code 62A5 */
   ________,________,________,
   ________,________,________,
@@ -3336,6 +3362,38 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_7279[ 90] = { /* code 7279 */
   ____XX__,________,_XX_____,
   ____XX__,_____XXX,XXX_____,
   ____XX__,_____XXX,XX______,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________};
+
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_7684[ 90] = { /* code 7684 */
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ____XX__,_____XX_,________,
+  ____XX__,_____XX_,________,
+  ___XX___,____XX__,________,
+  ___XX___,____XX__,________,
+  _XXXXXXX,XX__XXXX,XXXXX___,
+  _XXXXXXX,XX_XXXXX,XXXXX___,
+  _XX_____,XX_XX___,___XX___,
+  _XX_____,XX_XX___,___XX___,
+  _XX_____,XXXX____,___XX___,
+  _XX_____,XX_XX___,___XX___,
+  _XX_____,XX__XX__,___XX___,
+  _XXXXXXX,XX___XX_,___XX___,
+  _XXXXXXX,XX___XX_,___XX___,
+  _XX_____,XX____XX,___XX___,
+  _XX_____,XX_____X,X__XX___,
+  _XX_____,XX_____X,___XX___,
+  _XX_____,XX______,___XX___,
+  _XX_____,XX______,___XX___,
+  _XXXXXXX,XX______,___XX___,
+  _XXXXXXX,XX______,__XXX___,
+  _XX_____,XX___XXX,XXXX____,
+  _XX_____,XX___XXX,XXX_____,
   ________,________,________,
   ________,________,________,
   ________,________,________};
@@ -4300,6 +4358,38 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_95F4[ 90] = { /* code 95F4 */
   ________,________,________,
   ________,________,________};
 
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_961F[ 90] = { /* code 961F */
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,_____XX_,________,
+  _XXXXXXX,X____XX_,________,
+  _XXXXXXX,X____XX_,________,
+  _XX____X,X____XX_,________,
+  _XX___XX,_____XX_,________,
+  _XX___X_,_____XX_,________,
+  _XX__XX_,_____XX_,________,
+  _XX_XX__,_____XX_,________,
+  _XX_XX__,_____XXX,________,
+  _XX__XX_,_____XXX,________,
+  _XX__XX_,____XX_X,________,
+  _XX___XX,____XX_X,X_______,
+  _XX___XX,____X__X,X_______,
+  _XX___XX,___XX___,X_______,
+  _XXXXXXX,___X____,XX______,
+  _XXXXXX_,__XX____,_XX_____,
+  _XX_____,_XX_____,_XXX____,
+  _XX_____,XX______,__XXX___,
+  _XX____X,X_______,___XXX__,
+  _XX___XX,________,____X___,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________};
+
 GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_969C[ 90] = { /* code 969C */
   ________,________,________,
   ________,________,________,
@@ -4557,7 +4647,7 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_30_FF1F[ 90] = { /* code FF1F, FU
   ________,________,________,
   ________,________,________};
 
-GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30_CharInfo[141] = {
+GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30_CharInfo[144] = {
    {   7,   7,  1, acGUI_Font_T90_30_0020 } /* code 0020 */
   ,{   7,   7,  1, acGUI_Font_T90_30_0021 } /* code 0021 */
   ,{   5,   5,  1, acGUI_Font_T90_30_002E } /* code 002E */
@@ -4632,6 +4722,7 @@ GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30_CharInfo[141] = {
   ,{  22,  22,  3, acGUI_Font_T90_30_5F0F } /* code 5F0F */
   ,{  22,  22,  3, acGUI_Font_T90_30_6062 } /* code 6062 */
   ,{  22,  22,  3, acGUI_Font_T90_30_6210 } /* code 6210 */
+  ,{  22,  22,  3, acGUI_Font_T90_30_6211 } /* code 6211 */
   ,{  22,  22,  3, acGUI_Font_T90_30_62A5 } /* code 62A5 */
   ,{  22,  22,  3, acGUI_Font_T90_30_62D4 } /* code 62D4 */
   ,{  22,  22,  3, acGUI_Font_T90_30_62D6 } /* code 62D6 */
@@ -4661,6 +4752,7 @@ GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30_CharInfo[141] = {
   ,{  22,  22,  3, acGUI_Font_T90_30_6E7E } /* code 6E7E */
   ,{  22,  22,  3, acGUI_Font_T90_30_7248 } /* code 7248 */
   ,{  22,  22,  3, acGUI_Font_T90_30_7279 } /* code 7279 */
+  ,{  22,  22,  3, acGUI_Font_T90_30_7684 } /* code 7684 */
   ,{  22,  22,  3, acGUI_Font_T90_30_786E } /* code 786E */
   ,{  22,  22,  3, acGUI_Font_T90_30_79BB } /* code 79BB */
   ,{  22,  22,  3, acGUI_Font_T90_30_79FB } /* code 79FB */
@@ -4691,6 +4783,7 @@ GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30_CharInfo[141] = {
   ,{  22,  22,  3, acGUI_Font_T90_30_95ED } /* code 95ED */
   ,{  22,  22,  3, acGUI_Font_T90_30_95EF } /* code 95EF */
   ,{  22,  22,  3, acGUI_Font_T90_30_95F4 } /* code 95F4 */
+  ,{  22,  22,  3, acGUI_Font_T90_30_961F } /* code 961F */
   ,{  22,  22,  3, acGUI_Font_T90_30_969C } /* code 969C */
   ,{  22,  22,  3, acGUI_Font_T90_30_9759 } /* code 9759 */
   ,{  22,  22,  3, acGUI_Font_T90_30_97E9 } /* code 97E9 */
@@ -4701,478 +4794,492 @@ GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_30_CharInfo[141] = {
   ,{  22,  22,  3, acGUI_Font_T90_30_FF1F } /* code FF1F */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop128 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop130 = {
    0xFF1F /* first character */
   ,0xFF1F /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[140] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[143] /* address of first character */
   ,(GUI_CONST_STORAGE GUI_FONT_PROP *)0 /* pointer to next GUI_FONT_PROP */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop127 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop129 = {
    0xFF1A /* first character */
   ,0xFF1A /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[139] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[142] /* address of first character */
+  ,&GUI_Font_T90_30_Prop130 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop128 = {
+   0x9C9C /* first character */
+  ,0x9C9C /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[141] /* address of first character */
+  ,&GUI_Font_T90_30_Prop129 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop127 = {
+   0x9AD8 /* first character */
+  ,0x9AD8 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[140] /* address of first character */
   ,&GUI_Font_T90_30_Prop128 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop126 = {
-   0x9C9C /* first character */
-  ,0x9C9C /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[138] /* address of first character */
+   0x97F3 /* first character */
+  ,0x97F3 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[139] /* address of first character */
   ,&GUI_Font_T90_30_Prop127 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop125 = {
-   0x9AD8 /* first character */
-  ,0x9AD8 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[137] /* address of first character */
+   0x97E9 /* first character */
+  ,0x97E9 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[138] /* address of first character */
   ,&GUI_Font_T90_30_Prop126 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop124 = {
-   0x97F3 /* first character */
-  ,0x97F3 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[136] /* address of first character */
+   0x9759 /* first character */
+  ,0x9759 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[137] /* address of first character */
   ,&GUI_Font_T90_30_Prop125 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop123 = {
-   0x97E9 /* first character */
-  ,0x97E9 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[135] /* address of first character */
+   0x969C /* first character */
+  ,0x969C /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[136] /* address of first character */
   ,&GUI_Font_T90_30_Prop124 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop122 = {
-   0x9759 /* first character */
-  ,0x9759 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[134] /* address of first character */
+   0x961F /* first character */
+  ,0x961F /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[135] /* address of first character */
   ,&GUI_Font_T90_30_Prop123 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop121 = {
-   0x969C /* first character */
-  ,0x969C /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[133] /* address of first character */
+   0x95F4 /* first character */
+  ,0x95F4 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[134] /* address of first character */
   ,&GUI_Font_T90_30_Prop122 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop120 = {
-   0x95F4 /* first character */
-  ,0x95F4 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[132] /* address of first character */
+   0x95EF /* first character */
+  ,0x95EF /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[133] /* address of first character */
   ,&GUI_Font_T90_30_Prop121 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop119 = {
-   0x95EF /* first character */
-  ,0x95EF /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[131] /* address of first character */
+   0x95ED /* first character */
+  ,0x95ED /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[132] /* address of first character */
   ,&GUI_Font_T90_30_Prop120 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop118 = {
-   0x95ED /* first character */
-  ,0x95ED /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[130] /* address of first character */
+   0x91CF /* first character */
+  ,0x91CF /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[131] /* address of first character */
   ,&GUI_Font_T90_30_Prop119 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop117 = {
-   0x91CF /* first character */
-  ,0x91CF /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[129] /* address of first character */
+   0x91CC /* first character */
+  ,0x91CC /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[130] /* address of first character */
   ,&GUI_Font_T90_30_Prop118 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop116 = {
-   0x91CC /* first character */
-  ,0x91CC /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[128] /* address of first character */
+   0x901F /* first character */
+  ,0x901F /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[129] /* address of first character */
   ,&GUI_Font_T90_30_Prop117 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop115 = {
-   0x901F /* first character */
-  ,0x901F /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[127] /* address of first character */
+   0x8FDE /* first character */
+  ,0x8FDE /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[128] /* address of first character */
   ,&GUI_Font_T90_30_Prop116 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop114 = {
-   0x8FDE /* first character */
-  ,0x8FDE /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[126] /* address of first character */
+   0x8F6F /* first character */
+  ,0x8F6F /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[127] /* address of first character */
   ,&GUI_Font_T90_30_Prop115 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop113 = {
-   0x8F6F /* first character */
-  ,0x8F6F /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[125] /* address of first character */
+   0x8DDD /* first character */
+  ,0x8DDD /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[126] /* address of first character */
   ,&GUI_Font_T90_30_Prop114 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop112 = {
-   0x8DDD /* first character */
-  ,0x8DDD /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[124] /* address of first character */
+   0x8D8A /* first character */
+  ,0x8D8A /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[125] /* address of first character */
   ,&GUI_Font_T90_30_Prop113 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop111 = {
-   0x8D8A /* first character */
-  ,0x8D8A /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[123] /* address of first character */
+   0x8D85 /* first character */
+  ,0x8D85 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[124] /* address of first character */
   ,&GUI_Font_T90_30_Prop112 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop110 = {
-   0x8D85 /* first character */
-  ,0x8D85 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[122] /* address of first character */
+   0x8D25 /* first character */
+  ,0x8D25 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[123] /* address of first character */
   ,&GUI_Font_T90_30_Prop111 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop109 = {
-   0x8D25 /* first character */
-  ,0x8D25 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[121] /* address of first character */
+   0x8C03 /* first character */
+  ,0x8C03 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[122] /* address of first character */
   ,&GUI_Font_T90_30_Prop110 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop108 = {
-   0x8C03 /* first character */
-  ,0x8C03 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[120] /* address of first character */
+   0x8BBE /* first character */
+  ,0x8BBE /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[121] /* address of first character */
   ,&GUI_Font_T90_30_Prop109 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop107 = {
-   0x8BBE /* first character */
-  ,0x8BBE /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[119] /* address of first character */
+   0x8B66 /* first character */
+  ,0x8B66 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[120] /* address of first character */
   ,&GUI_Font_T90_30_Prop108 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop106 = {
-   0x8B66 /* first character */
-  ,0x8B66 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[118] /* address of first character */
+   0x83DC /* first character */
+  ,0x83DC /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[119] /* address of first character */
   ,&GUI_Font_T90_30_Prop107 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop105 = {
-   0x83DC /* first character */
-  ,0x83DC /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[117] /* address of first character */
+   0x8303 /* first character */
+  ,0x8303 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[118] /* address of first character */
   ,&GUI_Font_T90_30_Prop106 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop104 = {
-   0x8303 /* first character */
-  ,0x8303 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[116] /* address of first character */
+   0x8282 /* first character */
+  ,0x8282 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[117] /* address of first character */
   ,&GUI_Font_T90_30_Prop105 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop103 = {
-   0x8282 /* first character */
-  ,0x8282 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[115] /* address of first character */
+   0x8239 /* first character */
+  ,0x8239 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[116] /* address of first character */
   ,&GUI_Font_T90_30_Prop104 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop102 = {
-   0x8239 /* first character */
-  ,0x8239 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[114] /* address of first character */
+   0x8237 /* first character */
+  ,0x8237 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[115] /* address of first character */
   ,&GUI_Font_T90_30_Prop103 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop101 = {
-   0x8237 /* first character */
-  ,0x8237 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[113] /* address of first character */
+   0x822A /* first character */
+  ,0x822A /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[114] /* address of first character */
   ,&GUI_Font_T90_30_Prop102 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop100 = {
-   0x822A /* first character */
-  ,0x822A /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[112] /* address of first character */
+   0x80FD /* first character */
+  ,0x80FD /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[113] /* address of first character */
   ,&GUI_Font_T90_30_Prop101 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop99 = {
-   0x80FD /* first character */
-  ,0x80FD /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[111] /* address of first character */
+   0x7F6E /* first character */
+  ,0x7F6E /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[112] /* address of first character */
   ,&GUI_Font_T90_30_Prop100 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop98 = {
-   0x7F6E /* first character */
-  ,0x7F6E /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[110] /* address of first character */
+   0x7F51 /* first character */
+  ,0x7F51 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[111] /* address of first character */
   ,&GUI_Font_T90_30_Prop99 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop97 = {
-   0x7F51 /* first character */
-  ,0x7F51 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[109] /* address of first character */
+   0x7EDF /* first character */
+  ,0x7EDF /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[110] /* address of first character */
   ,&GUI_Font_T90_30_Prop98 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop96 = {
-   0x7EDF /* first character */
-  ,0x7EDF /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[108] /* address of first character */
+   0x7CFB /* first character */
+  ,0x7CFB /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[109] /* address of first character */
   ,&GUI_Font_T90_30_Prop97 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop95 = {
-   0x7CFB /* first character */
-  ,0x7CFB /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[107] /* address of first character */
+   0x7C73 /* first character */
+  ,0x7C73 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[108] /* address of first character */
   ,&GUI_Font_T90_30_Prop96 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop94 = {
-   0x7C73 /* first character */
-  ,0x7C73 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[106] /* address of first character */
+   0x79FB /* first character */
+  ,0x79FB /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[107] /* address of first character */
   ,&GUI_Font_T90_30_Prop95 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop93 = {
-   0x79FB /* first character */
-  ,0x79FB /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[105] /* address of first character */
+   0x79BB /* first character */
+  ,0x79BB /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[106] /* address of first character */
   ,&GUI_Font_T90_30_Prop94 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop92 = {
-   0x79BB /* first character */
-  ,0x79BB /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[104] /* address of first character */
+   0x786E /* first character */
+  ,0x786E /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[105] /* address of first character */
   ,&GUI_Font_T90_30_Prop93 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop91 = {
-   0x786E /* first character */
-  ,0x786E /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[103] /* address of first character */
+   0x7684 /* first character */
+  ,0x7684 /* last character  */
+  ,&GUI_Font_T90_30_CharInfo[104] /* address of first character */
   ,&GUI_Font_T90_30_Prop92 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop90 = {
    0x7279 /* first character */
   ,0x7279 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[102] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[103] /* address of first character */
   ,&GUI_Font_T90_30_Prop91 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop89 = {
    0x7248 /* first character */
   ,0x7248 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[101] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[102] /* address of first character */
   ,&GUI_Font_T90_30_Prop90 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop88 = {
    0x6E7E /* first character */
   ,0x6E7E /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[100] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[101] /* address of first character */
   ,&GUI_Font_T90_30_Prop89 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop87 = {
    0x6D88 /* first character */
   ,0x6D88 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 99] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[100] /* address of first character */
   ,&GUI_Font_T90_30_Prop88 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop86 = {
    0x6D77 /* first character */
   ,0x6D77 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 98] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 99] /* address of first character */
   ,&GUI_Font_T90_30_Prop87 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop85 = {
    0x6C34 /* first character */
   ,0x6C34 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 97] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 98] /* address of first character */
   ,&GUI_Font_T90_30_Prop86 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop84 = {
    0x6B8A /* first character */
   ,0x6B8A /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 96] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 97] /* address of first character */
   ,&GUI_Font_T90_30_Prop85 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop83 = {
    0x6B63 /* first character */
   ,0x6B63 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 95] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 96] /* address of first character */
   ,&GUI_Font_T90_30_Prop84 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop82 = {
    0x6A21 /* first character */
   ,0x6A21 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 94] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 95] /* address of first character */
   ,&GUI_Font_T90_30_Prop83 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop81 = {
    0x6807 /* first character */
   ,0x6807 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 93] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 94] /* address of first character */
   ,&GUI_Font_T90_30_Prop82 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop80 = {
    0x677F /* first character */
   ,0x677F /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 92] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 93] /* address of first character */
   ,&GUI_Font_T90_30_Prop81 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop79 = {
    0x672C /* first character */
   ,0x672C /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 91] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 92] /* address of first character */
   ,&GUI_Font_T90_30_Prop80 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop78 = {
    0x671D /* first character */
   ,0x671D /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 90] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 91] /* address of first character */
   ,&GUI_Font_T90_30_Prop79 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop77 = {
    0x66F4 /* first character */
   ,0x66F4 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 89] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 90] /* address of first character */
   ,&GUI_Font_T90_30_Prop78 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop76 = {
    0x662F /* first character */
   ,0x662F /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 88] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 89] /* address of first character */
   ,&GUI_Font_T90_30_Prop77 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop75 = {
    0x65F6 /* first character */
   ,0x65F6 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 87] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 88] /* address of first character */
   ,&GUI_Font_T90_30_Prop76 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop74 = {
    0x65E5 /* first character */
   ,0x65E5 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 86] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 87] /* address of first character */
   ,&GUI_Font_T90_30_Prop75 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop73 = {
    0x65B9 /* first character */
   ,0x65B9 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 85] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 86] /* address of first character */
   ,&GUI_Font_T90_30_Prop74 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop72 = {
    0x65B0 /* first character */
   ,0x65B0 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 84] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 85] /* address of first character */
   ,&GUI_Font_T90_30_Prop73 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop71 = {
    0x6570 /* first character */
   ,0x6570 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 83] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 84] /* address of first character */
   ,&GUI_Font_T90_30_Prop72 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop70 = {
    0x6545 /* first character */
   ,0x6545 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 82] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 83] /* address of first character */
   ,&GUI_Font_T90_30_Prop71 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop69 = {
    0x6539 /* first character */
   ,0x6539 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 81] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 82] /* address of first character */
   ,&GUI_Font_T90_30_Prop70 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop68 = {
    0x63D2 /* first character */
   ,0x63D2 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 80] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 81] /* address of first character */
   ,&GUI_Font_T90_30_Prop69 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop67 = {
    0x63A5 /* first character */
   ,0x63A5 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 79] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 80] /* address of first character */
   ,&GUI_Font_T90_30_Prop68 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop66 = {
    0x636E /* first character */
   ,0x636E /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 78] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 79] /* address of first character */
   ,&GUI_Font_T90_30_Prop67 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop65 = {
    0x6362 /* first character */
   ,0x6362 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 77] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 78] /* address of first character */
   ,&GUI_Font_T90_30_Prop66 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop64 = {
    0x62D6 /* first character */
   ,0x62D6 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 76] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 77] /* address of first character */
   ,&GUI_Font_T90_30_Prop65 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop63 = {
    0x62D4 /* first character */
   ,0x62D4 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 75] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 76] /* address of first character */
   ,&GUI_Font_T90_30_Prop64 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop62 = {
    0x62A5 /* first character */
   ,0x62A5 /* last character  */
-  ,&GUI_Font_T90_30_CharInfo[ 74] /* address of first character */
+  ,&GUI_Font_T90_30_CharInfo[ 75] /* address of first character */
   ,&GUI_Font_T90_30_Prop63 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_30_Prop61 = {
    0x6210 /* first character */
-  ,0x6210 /* last character  */
+  ,0x6211 /* last character  */
   ,&GUI_Font_T90_30_CharInfo[ 73] /* address of first character */
   ,&GUI_Font_T90_30_Prop62 /* pointer to next GUI_FONT_PROP */
 };

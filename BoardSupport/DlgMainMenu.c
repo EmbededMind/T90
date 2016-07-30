@@ -15,7 +15,7 @@
 
 WM_HWIN mainMenuDlg;
 
-static WM_HWIN buttons[3];
+static WM_HWIN buttons[4];
 
 static const MenuColor *pColors = mainMenuColors;
 
@@ -25,7 +25,8 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
    
    {HSD_BUTTON_CreateIndirect,  "0", GUI_ID_BUTTON0, 0, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2,   MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
    {HSD_BUTTON_CreateIndirect,  "almSet", GUI_ID_BUTTON1,   0, MAIN_MENU_ITEM_HEIGHT*2+MAIN_MENU_ITEM_MARGIN*3, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
-   {HSD_BUTTON_CreateIndirect,  "sysSet", GUI_ID_BUTTON2,   0, MAIN_MENU_ITEM_HEIGHT*3+MAIN_MENU_ITEM_MARGIN*4, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
+   {HSD_BUTTON_CreateIndirect,  "sysSet", GUI_ID_BUTTON2,   0, MAIN_MENU_ITEM_HEIGHT*3+MAIN_MENU_ITEM_MARGIN*4, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
+   {HSD_BUTTON_CreateIndirect,  "myship", GUI_ID_BUTTON3,   0, MAIN_MENU_ITEM_HEIGHT*4+MAIN_MENU_ITEM_MARGIN*5, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
 };
 
 
@@ -41,7 +42,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 
            if(pMsg->Data.v){
               flag_prevfocus = 0;
-              for(i = 0; i < 3; i++)                      //all buttons reset to unfocussed state,
+              for(i = 0; i < 4; i++)                      //all buttons reset to unfocussed state,
               {
                 HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
                 HSD_BUTTON_SetTextColor(buttons[i], pColors->btTextColor);
@@ -68,6 +69,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
               case 2:
                    WM_BringToTop(systemSetDlg);
                    break;
+              case 3:
+//                   WM_BringToTop(myFleetDlg); 
+                 break;
               }
            }
            else
@@ -153,6 +157,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                 case 2:
                      WM_SetFocus(systemSetDlg);
                      break;
+                case 3:
+                     WM_SetFocus(myFleetDlg);
+                   break;
                 default:
                      break;
                 }
@@ -237,6 +244,13 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
                   WM_SetCallback(buttons[2],&myButtonCallback);
 						HSD_BUTTON_SetText(buttons[2], "系统设置");
 						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
+                  
+                  buttons[3] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON3);
+                  HSD_BUTTON_SetTxFont(buttons[3], &GUI_Font_T90_30);
+                  HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
+                  WM_SetCallback(buttons[3],&myButtonCallback);
+						HSD_BUTTON_SetText(buttons[3], "我的船队");
+						HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
             
             break; 
 						
@@ -249,8 +263,8 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 						GUI_SetTextMode(GUI_TM_TRANS);
 						GUI_SetColor(pColors->headTextColor);
 						GUI_DispStringAt("主菜单", 30, 9);
-					  GUI_SetColor(pColors->btBkColor);
-						GUI_FillRect(0, MAIN_MENU_ITEM_HEIGHT*4+MAIN_MENU_ITEM_MARGIN*5, MAIN_MENU_ITEM_WIDTH-1, MAIN_MENU_HEIGHT-1);
+					   GUI_SetColor(pColors->btBkColor);
+						GUI_FillRect(0, MAIN_MENU_ITEM_HEIGHT*5+MAIN_MENU_ITEM_MARGIN*6, MAIN_MENU_ITEM_WIDTH-1, MAIN_MENU_HEIGHT-1);
 						break;
             
        default:
