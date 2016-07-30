@@ -11,6 +11,7 @@
 #include "uart.h"
 #include "lpc177x_8x_eeprom.h"
 #include "Config.h"
+#include "BUTTON.h"
 //#include "stub.h"
 
 #define T90

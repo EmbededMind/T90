@@ -12,7 +12,6 @@
 #include "TEXT.h"
 #include "stub.h"
 
-
 /*********************************************************************
 *
 *              Handles
@@ -75,13 +74,13 @@ WM_HWIN SoftInputWin;
 /* EditWin */
 #define MMSISET_ET_X      20      //x0
 #define MMSISET_ET_Y      100     //y0
-#define MMSISET_ET_WIDTH  350     //xsize
+#define MMSISET_ET_WIDTH  370     //xsize
 #define MMSISET_ET_HEIGHT 45      //ysize
 
 //确定键
 #define MMSISET_BTOK_X       MMSISET_ET_X+MMSISET_ET_WIDTH+10      //x0
 #define MMSISET_BTOK_Y       MMSISET_ET_Y                          //y0
-#define MMSISET_BTOK_WIDTH   100                                   //xsize
+#define MMSISET_BTOK_WIDTH   85                                    //xsize
 #define MMSISET_BTOK_HEIGHT  MMSISET_ET_HEIGHT                     //ysize
 
 
@@ -107,25 +106,26 @@ WM_HWIN SoftInputWin;
 #define ID_BUTTON_9        GUI_ID_USER+12
 #define ID_BUTTON_EMPTY    GUI_ID_USER+13
 
-
 /*********************************************************************
 *
-*             Skins
+*            Skin
 *
 **********************************************************************
 */
+/* button skin */
+extern const BUTTON_SKINFLEX_PROPS btSkin[2][2];
 
-/* MMSI确定按键皮肤 */
-BUTTON_SKINFLEX_PROPS Focusskin={{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},
-																														{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},
-																														{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},15
-																													};
 
-BUTTON_SKINFLEX_PROPS noFocusskin={{0x00819298,0x00819298,0x00819298},
-																														{0x00819298,0x00819298},
-																														{0x00819298,0x00819298},15
-																													};
+/*********************************************************************
+*
+*             other define
+*
+**********************************************************************
+*/
+/*  MMSI max length */
+#define MMSI_LENGTH 9
 
 																													
 #endif
+	
 																													

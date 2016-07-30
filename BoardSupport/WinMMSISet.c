@@ -1,10 +1,8 @@
 #include "WinMMSISet.h"
 
 
-/** @brief MMSI */
-#define MMSI_NUM 9;
+/** @brief MMSI */ //for Liyi
 long MMSI=0;
-static uint8_t MMSI_num=0;
 
 /*********************************************************************
 *
@@ -22,8 +20,12 @@ static WM_HWIN buttons[13];
 /** @brief MMSI编辑框 */
 static WM_HWIN edit;
 
-static const HomeColor *pColor = homeColors;
+/** @brief color config */
+static const MMSISetWinColor *pColor = mmsiSetWinColor;
 
+/** @brief skin config */
+static const BUTTON_SKINFLEX_PROPS *pSkin = btSkin[0];
+												
 /** @brief MMSI编辑框 
 	*
  *    @param [in] pMsg  消息指针
@@ -34,13 +36,13 @@ static void myEditCallback(WM_MESSAGE* pMsg){
 			case WM_SET_FOCUS:
 				    if(pMsg->Data.v==1)
 								{
-									EDIT_SetBkColor(edit,EDIT_CI_ENABLED,pColor->numColor);
-									EDIT_SetTextColor(edit,EDIT_CI_ENABELD,GUI_WHITE);
+									EDIT_SetBkColor(edit,EDIT_CI_ENABLED,pColor->focusEditbkColor);
+									//EDIT_SetTextColor(edit,EDIT_CI_ENABELD,pColor->editTextColor);
 								}
 								else
 								{
-									EDIT_SetBkColor(edit,EDIT_CI_ENABLED,GUI_WHITE);
-									EDIT_SetTextColor(edit,EDIT_CI_ENABELD,GUI_BLACK);
+									EDIT_SetBkColor(edit,EDIT_CI_ENABLED,pColor->noFocusEditbkColor);
+									//EDIT_SetTextColor(edit,EDIT_CI_ENABELD,GUI_BLACK);
 								}
 								EDIT_Callback(pMsg);
 				    break;
@@ -74,8 +76,8 @@ static void btOkCallback(WM_MESSAGE* pMsg){
 		case WM_KEY:
 							switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){	
 								case GUI_KEY_ENTER:
-									    EDIT_GetText(edit,textbuf,10);
-													for(i=0;i<9;i++)
+									    EDIT_GetText(edit,textbuf,10); 
+													for(i=0;i<MMSI_LENGTH;i++)
 								      MMSI = MMSI*10+(textbuf[i]-48);
 									    break;
 								
@@ -104,11 +106,11 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
       case WM_SET_FOCUS:
 						     if(pMsg->Data.v)
 											{
-												BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,pColor->numColor);
+												BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,pColor->foucsBtBkColor);
 											}
 											else
 											{
-												BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+												BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 												
 												//刷新MMSI输入错误提示
 												TEXT_GetText(Hint,HintText,20);
@@ -172,7 +174,7 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 																		}
 																		else
 																		{
-																			TEXT_SetText(Hint,"MMSI ERR...");
+																			TEXT_SetText(Hint,"MMSI ERR..."); //don't forget to change
 																		}
 														    break;
 												}
@@ -194,62 +196,62 @@ static void inputBtCreat(WM_MESSAGE *pMsg)
 		buttons[1] = BUTTON_CreateEx(INPUT_BT0_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_0);   
 		WM_SetCallback(buttons[1], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[1], "0");
-		BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 	
 		buttons[2] = BUTTON_CreateEx(INPUT_BT1_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_1);	
 		WM_SetCallback(buttons[2], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[2], "1");
-		BUTTON_SetBkColor(buttons[2], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[2], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 
 		buttons[3] = BUTTON_CreateEx(INPUT_BT2_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_2);    
 		WM_SetCallback(buttons[3], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[3], "2");
-		BUTTON_SetBkColor(buttons[3], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[3], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 
 		buttons[4] = BUTTON_CreateEx(INPUT_BT3_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_3);    
 		WM_SetCallback(buttons[4], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[4], "3");		
-		BUTTON_SetBkColor(buttons[4], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[4], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 
 		buttons[5] = BUTTON_CreateEx(INPUT_BT4_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_4);    
 		WM_SetCallback(buttons[5], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[5], "4");
-		BUTTON_SetBkColor(buttons[5], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[5], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 
 		buttons[6] = BUTTON_CreateEx(INPUT_BT5_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_DEL);    
 		WM_SetCallback(buttons[6], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[6], "X");	
-		BUTTON_SetBkColor(buttons[6], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[6], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 		
 		buttons[7] = BUTTON_CreateEx(INPUT_BT0_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_5);    
 		WM_SetCallback(buttons[7], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[7], "5");	
-		BUTTON_SetBkColor(buttons[7], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[7], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 		
 		buttons[8] = BUTTON_CreateEx(INPUT_BT1_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_6);    
 		WM_SetCallback(buttons[8], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[8], "6");	
-		BUTTON_SetBkColor(buttons[8], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[8], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 		
 		buttons[9] = BUTTON_CreateEx(INPUT_BT2_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_7);    
 		WM_SetCallback(buttons[9], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[9], "7");	
-		BUTTON_SetBkColor(buttons[9], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[9], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 		
 		buttons[10] = BUTTON_CreateEx(INPUT_BT3_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_8);    
 		WM_SetCallback(buttons[10], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[10], "8");	
-		BUTTON_SetBkColor(buttons[10], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[10], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 		
 		buttons[11] = BUTTON_CreateEx(INPUT_BT4_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_9);    
 		WM_SetCallback(buttons[11], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[11], "9");	
-		BUTTON_SetBkColor(buttons[11], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);
+		BUTTON_SetBkColor(buttons[11], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);
 		
 		buttons[12] = BUTTON_CreateEx(INPUT_BT5_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_EMPTY);    
 		WM_SetCallback(buttons[12], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[12], "C");	
-		BUTTON_SetBkColor(buttons[12], BUTTON_CI_UNPRESSED,pColor->bbsBottomColor);	
+		BUTTON_SetBkColor(buttons[12], BUTTON_CI_UNPRESSED,pColor->noFoucsBtBkColor);	
 }
 
 
@@ -260,37 +262,45 @@ static void inputBtCreat(WM_MESSAGE *pMsg)
 static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 
 	int NCode, Id;
-  switch(pMsg->MsgId){
-
-    case WM_CREATE:
-									
-				     Hint = TEXT_CreateEx(100,75,150,30,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_TEXT0,"");
-				     TEXT_SetTextColor(Hint,GUI_RED);
-				
-									pColor = &homeColors[t90_set.sys.nightmode];
-									edit = EDIT_CreateEx(MMSISET_X,MMSISET_Y,MMSISET_WIDTH,MMSISET_HEIGHT,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_EDIT0,9);
-									EDIT_SetBkColor(edit,EDIT_CI_ENABELD,GUI_WHITE);
-				     EDIT_EnableBlink(edit,0,0);
-				     WM_SetCallback(edit,&myEditCallback);
-				
-				     buttons[0] = BUTTON_CreateEx(MMSISET_BTOK_X,MMSISET_BTOK_Y,MMSISET_BTOK_WIDTH,MMSISET_BTOK_HEIGHT,pMsg->hWin, WM_CF_SHOW,0,ID_BUTTON_MMSIOK);  
-				     BUTTON_SetTextColor(buttons[0],BUTTON_CI_UNPRESSED,GUI_WHITE);
-				     BUTTON_SetSkinFlexProps(&noFocusskin,BUTTON_SKINFLEX_PI_ENABLED);
-									BUTTON_SetSkinFlexProps(&noFocusskin,BUTTON_SKINFLEX_PI_PRESSED);
-				     BUTTON_SetSkinFlexProps(&Focusskin,BUTTON_SKINFLEX_PI_FOCUSSED);
-									BUTTON_SetSkin(buttons[0],BUTTON_DrawSkinFlex);
-				     BUTTON_SetText(buttons[0],"OK");
-									WM_SetCallback(buttons[0],&btOkCallback);   
-         break;
-         
-    case WM_PAINT:
-         GUI_SetBkColor(pColor->bkColor);
-         GUI_Clear();
-				     GUI_DispStringAt("INPUT MMSI", 30, 9);
-									break;
-    default:
-         WM_DefaultProc(pMsg);
-  }
+	int xSize;
+	int ySize;
+	
+	switch(pMsg->MsgId){
+			case USER_MSG_SKIN:
+								pColor = &(mmsiSetWinColor[pMsg->Data.v]);
+			     pSkin = btSkin[pMsg->Data.v];
+								break;
+			
+			case WM_CREATE:
+								pColor = &mmsiSetWinColor[t90_set.sys.nightmode];
+			
+								Hint = TEXT_CreateEx(100,75,150,30,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_TEXT0,"");
+								TEXT_SetTextColor(Hint,pColor->hintTextColor);
+			
+								edit = EDIT_CreateEx(MMSISET_ET_X,MMSISET_ET_Y,MMSISET_ET_WIDTH,MMSISET_ET_HEIGHT,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_EDIT0,9);
+								EDIT_SetBkColor(edit,EDIT_CI_ENABELD,pColor->noFocusEditbkColor);
+								EDIT_EnableBlink(edit,0,0);
+								WM_SetCallback(edit,&myEditCallback);
+			
+								buttons[0] = BUTTON_CreateEx(MMSISET_BTOK_X,MMSISET_BTOK_Y,MMSISET_BTOK_WIDTH,MMSISET_BTOK_HEIGHT,pMsg->hWin, WM_CF_SHOW,0,ID_BUTTON_MMSIOK);  
+								//BUTTON_SetTextColor(buttons[0],BUTTON_CI_UNPRESSED,GUI_WHITE);
+								BUTTON_SetSkinFlexProps(btSkin[0],BUTTON_SKINFLEX_PI_ENABLED);
+								BUTTON_SetSkinFlexProps(btSkin[1],BUTTON_SKINFLEX_PI_PRESSED);
+								BUTTON_SetSkinFlexProps(btSkin[1],BUTTON_SKINFLEX_PI_FOCUSSED);
+								BUTTON_SetSkin(buttons[0],BUTTON_DrawSkinFlex);
+								BUTTON_SetText(buttons[0],"OK"); //don't forget to change
+								WM_SetCallback(buttons[0],&btOkCallback);   
+								break;
+								
+			case WM_PAINT:
+				    xSize = WM_GetWindowSizeX(pMsg->hWin);
+			     ySize = WM_GetWindowSizeY(pMsg->hWin);
+			     GUI_DrawGradientRoundedV(0, 0, xSize - 1, ySize - 1, 20, pColor->bkTopColor,pColor->bkBottomColor);
+								GUI_DispStringAt("INPUT MMSI", 30, 9); //don't forget change
+								break;
+			default:
+								WM_DefaultProc(pMsg);
+	}
 }
 
 /** @brief 输入法回调
@@ -299,28 +309,30 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
  */
 static void InputWindowCallback(WM_MESSAGE* pMsg){
 	int NCode, Id;
-  switch(pMsg->MsgId){
+	int xSize ,ySize;
+	
+	switch(pMsg->MsgId){
 
-    case WM_CREATE:
-					    inputBtCreat(pMsg);  
-         break;
-				
-				case WM_PAINT:
-         GUI_SetBkColor(GUI_DARKGRAY);
-         GUI_Clear();
-				     
-									break;
-				
-				case WM_SET_FOCUS:
-								if(pMsg->Data.v)
-								{
-									WM_SetFocus(buttons[1]);
-								}
+			case WM_CREATE:
+								inputBtCreat(pMsg);  
 								break;
-								
-    default:
-         WM_DefaultProc(pMsg);
-			}
+			
+			case WM_PAINT:
+			     xSize = WM_GetWindowSizeX(pMsg->hWin);
+			     ySize = WM_GetWindowSizeY(pMsg->hWin);
+			     GUI_DrawGradientRoundedV(0, 0, xSize - 1, ySize - 1, 20, pColor->bkInputColor,pColor->bkInputColor);
+								break;
+			
+			case WM_SET_FOCUS:
+							if(pMsg->Data.v)
+							{
+								WM_SetFocus(buttons[1]);
+							}
+							break;
+							
+			default:
+								WM_DefaultProc(pMsg);
+		}
 }
 	
 
@@ -331,9 +343,9 @@ static void InputWindowCallback(WM_MESSAGE* pMsg){
 WM_HWIN WIN_MMSISetCreate(void){
    WM_HWIN handle;  
    handle  = WM_CreateWindow(MMSISET_X, MMSISET_Y, MMSISET_WIDTH, MMSISET_HEIGHT, WM_CF_SHOW, &MMSIWindowCallback , 0);
+			WM_SetHasTrans(handle);
    return handle;
 }
-
 
 /** @brief 输入法窗口创建
  *
@@ -342,5 +354,6 @@ WM_HWIN WIN_MMSISetCreate(void){
 WM_HWIN WIN_SoftInputCreate(void){
    WM_HWIN handle;  
    handle  = WM_CreateWindowAsChild(INPUTWIN_X, INPUTWIN_Y, INPUTWIN_WIDTH, INPUTWIN_HEIGHT,MMSISetWin, WM_CF_SHOW, &InputWindowCallback , 0);
+			WM_SetHasTrans(handle);
    return handle;
 }
