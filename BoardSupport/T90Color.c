@@ -44,14 +44,17 @@ const ConfirmWinColor confirmWinColors[2]  = {
 } ;
 
 const MMSISetWinColor mmsiSetWinColor[2] = { //for Liyi
-	//bkTopColor bkBottomColor headtextColor hintTextColor focusEditbkColor noFocusEditbkColor editTextColor foucsBtBkColor noFoucsBtBkColor btTextColor bkInputColor
-  {0},
-	 {0}
-} ;
-			
-const BUTTON_SKINFLEX_PROPS btSkin[2][2] = {//for Liyi
-/* day */	  {{{0},{0},{0},15}, /* nofocus */  {{0},{0},{0},15}},  /* focus */
-/* night */	{{{0},{0},{0},15}, /* nofocus */ {{0},{0},{0},15}}   /* focus */
-};
+	//bkTopColor   bkBottomColor   headtextColor hintTextColor focusEditbkColor  noFocusEditbkColor editTextColor foucsBtBkColor     noFoucsBtBkColor btTextColor bkInputColor
+ {0x00646c71,   0x00343c41,     0xeaeaea,     GUI_RED,      FOCUS_COLOR_DAY,  GUI_WHITE,         0xeaeaea,     FOCUS_COLOR_DAY,   0x00595959,      0xeaeaea,   0x00595959 },
+	{0x00686c6f,   0x00383c3f,     0xeaeaea,     GUI_RED,      FOCUS_COLOR_NIGHT,GUI_WHITE,         0xeaeaea,     FOCUS_COLOR_NIGHT, 0x00595959,      0xeaeaea,   0x00595959 }
+} ;			
 
+const BUTTON_SKINFLEX_PROPS btSkin[2][2] = {//for Liyi
+/* day */	  
+         /* nofocus */        {{{0x00595959,0x00595959,0x00595959},{0x00595959,0x00595959},{0x00595959,0x00595959},15}, 
+           /* focus */        {{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},15}},
+/* night */	
+           /* nofocus */      {{{0x00595959,0x00595959,0x00595959},{0x00595959,0x00595959},{0x00595959,0x00595959},15}, 
+            /* focus */       {{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},15}}  
+};
 

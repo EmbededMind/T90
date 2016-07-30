@@ -24,7 +24,7 @@ static WM_HWIN edit;
 static const MMSISetWinColor *pColor = mmsiSetWinColor;
 
 /** @brief skin config */
-static const BUTTON_SKINFLEX_PROPS *pSkin = btSkin[0];
+static const BUTTON_SKINFLEX_PROPS *pSkin = btSkin[1];
 												
 /** @brief MMSI编辑框 
 	*
@@ -179,7 +179,6 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 														    break;
 												}
 												BUTTON_Callback(pMsg);
-            WM_Paint(SoftInputWin);
 											break;
 												
 						default :
@@ -284,9 +283,9 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 			
 								buttons[0] = BUTTON_CreateEx(MMSISET_BTOK_X,MMSISET_BTOK_Y,MMSISET_BTOK_WIDTH,MMSISET_BTOK_HEIGHT,pMsg->hWin, WM_CF_SHOW,0,ID_BUTTON_MMSIOK);  
 								//BUTTON_SetTextColor(buttons[0],BUTTON_CI_UNPRESSED,GUI_WHITE);
-								BUTTON_SetSkinFlexProps(btSkin[0],BUTTON_SKINFLEX_PI_ENABLED);
-								BUTTON_SetSkinFlexProps(btSkin[1],BUTTON_SKINFLEX_PI_PRESSED);
-								BUTTON_SetSkinFlexProps(btSkin[1],BUTTON_SKINFLEX_PI_FOCUSSED);
+								BUTTON_SetSkinFlexProps(pSkin,BUTTON_SKINFLEX_PI_ENABLED);
+								BUTTON_SetSkinFlexProps(pSkin+1,BUTTON_SKINFLEX_PI_PRESSED);
+								BUTTON_SetSkinFlexProps(pSkin+1,BUTTON_SKINFLEX_PI_FOCUSSED);
 								BUTTON_SetSkin(buttons[0],BUTTON_DrawSkinFlex);
 								BUTTON_SetText(buttons[0],"OK"); //don't forget to change
 								WM_SetCallback(buttons[0],&btOkCallback);   
