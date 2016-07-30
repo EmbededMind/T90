@@ -207,8 +207,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                            }
                     break;
 							 case GUI_KEY_UP:
-										index = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-printf("index = %d\n",index);							 
+										index = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;							 
 										if(index == 0)
                                  WM_SetFocus(slider);
                               if(index == 1)
@@ -216,7 +215,6 @@ printf("index = %d\n",index);
 										break;
                       case GUI_KEY_DOWN:
 								 		index = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-printf("index = %d\n",index);	
 										if(index == 0)
                                  WM_SetFocus(buttons[1]);
                               if(index == 1)
@@ -273,7 +271,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			   pColors = &(setWinColors[pMsg->Data.v]);	
 		      pColors_Slider = &(setDlgColors[pMsg->Data.v]);
       
-				 for(i = 0; i < 4; i++)
+				 for(i = 0; i < 2; i++)
 				 {
 						HSD_BUTTON_SetBkColor(buttons[i], pColors->bkColor);
 						HSD_BUTTON_SetTextColor(buttons[i], pColors->textColor);
