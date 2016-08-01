@@ -11,7 +11,7 @@ const HomeColor homeColors[2] = {
 
 const MenuColor mainMenuColors[2] = {
 //  bkColor     headTopColor  headBottomColor  headTextColor  btBkColor       btTextColor    btFocusBkColor       btPrevFocusBkColor  btFocusTextColor
-	{ 0x00c3e0e9, 0x00646c71,   0x00343c41,      0x00eaeaea,    0x009baeb7,   0x002f2f2f,    FOCUS_COLOR_DAY,     0x007c8b92,         0x00eaeaea},
+	{ 0x00c3e0e9, 0x00646c71,   0x00343c41,     0x00eaeaea,    0x009baeb7,   0x002f2f2f,    FOCUS_COLOR_DAY,     0x007c8b92,         0x00eaeaea},
 	{ GUI_BLACK,  0x00686c6f,   0x00383c3f,     0x00EAEAEA,      0x00202123, GUI_LIGHTGRAY, FOCUS_COLOR_NIGHT,   0x007c8b92,       GUI_LIGHTGRAY}
 };
 
@@ -43,5 +43,18 @@ const ConfirmWinColor confirmWinColors[2]  = {
   { 0x00c8c8c8, 0x00c8c8c8,    0x001d1d1d, 0x00595959,  FOCUS_COLOR_NIGHT, 0xeaeaea,    0x00eaeaea}
 } ;
 
+const MMSISetWinColor mmsiSetWinColor[2] = { //for Liyi
+	//bkTopColor   bkBottomColor   headtextColor hintTextColor focusEditbkColor  noFocusEditbkColor editTextColor foucsBtBkColor     noFoucsBtBkColor btTextColor bkInputColor
+ {0x00646c71,   0x00343c41,     0xeaeaea,     GUI_RED,      FOCUS_COLOR_DAY,  GUI_WHITE,         0xeaeaea,     FOCUS_COLOR_DAY,   0x00595959,      0xeaeaea,   0x00595959 },
+	{0x00686c6f,   0x00383c3f,     0xeaeaea,     GUI_RED,      FOCUS_COLOR_NIGHT,GUI_WHITE,         0xeaeaea,     FOCUS_COLOR_NIGHT, 0x00595959,      0xeaeaea,   0x00595959 }
+} ;			
 
+const BUTTON_SKINFLEX_PROPS btSkin[2][2] = {//for Liyi
+/* day */	  
+         /* nofocus */        {{{0x00595959,0x00595959,0x00595959},{0x00595959,0x00595959},{0x00595959,0x00595959},15}, 
+           /* focus */        {{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},15}},
+/* night */	
+           /* nofocus */      {{{0x00595959,0x00595959,0x00595959},{0x00595959,0x00595959},{0x00595959,0x00595959},15}, 
+            /* focus */       {{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},15}}  
+};
 
