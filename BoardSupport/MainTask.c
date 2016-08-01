@@ -99,8 +99,7 @@ printf("maintask\n");
 		specialAlarmSetDlg = DLG_SpecialAlarmSetCreate();
 		
 		confirmWin = WIN_ConfirmCreate();
-		   MMSISetWin = WIN_MMSISetCreate();
-			SoftInputWin = WIN_SoftInputCreate();
+		  
 			
 
 		

@@ -324,7 +324,8 @@ void detect()
 	  {
 		  SimpBerthes[i].pBerth->isInvader = 0;
 	  }
-	  
+	  if(t90_set.alarm.on_off & 0x01)
+        goto detect;
      if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
      for(i = 0;i < N_boat;i++)
      {
@@ -333,6 +334,7 @@ void detect()
              isInvader(SimpBerthes[i].pBerth);
          }        
      }
+detect: NULL;
 }
 
 

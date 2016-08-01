@@ -761,7 +761,7 @@ void setCategory(long mmsi, uint8_t category)
 {
    int i  = 0;
    
-   for(i; i<N_boat; i++){
+   for(i = 0; i<N_boat; i++){
       if(SimpBerthes[i].pBerth->Boat.user_id == mmsi){
          SimpBerthes[i].pBerth->Boat.category  |= category;
          SimpBerthes[i].pBerth->isInvader  = 0;

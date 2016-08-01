@@ -41,7 +41,7 @@ void CHECK_MS_Speed()
 //	MS_isMax_SOG = 0;
 //	MS_isMin_SOG = 0;
 	
-	if(mothership.SOG > t90_set.alarm.danger_sog)
+	if( (t90_set.alarm.on_off & (0x01<<1)) && mothership.SOG > t90_set.alarm.danger_sog)
 	{		
 		if(MS_isSpeeding != MNTState_Masked)
 		{
@@ -52,7 +52,9 @@ void CHECK_MS_Speed()
 	{
 		MS_isSpeeding = 0;
 	}
-	if(mothership.SOG > t90_set.alarm.max_sog)
+   if(!(t90_set.alarm.on_off & (0x01<<2)))
+      goto sog;
+	if( mothership.SOG > t90_set.alarm.max_sog)
 	{
 		if(MS_isMax_SOG != MNTState_Masked)
 		{
@@ -68,7 +70,7 @@ void CHECK_MS_Speed()
 	}
 	else
 	{
-		MS_isMax_SOG = MS_isMin_SOG = 0;
+sog:		MS_isMax_SOG = MS_isMin_SOG = 0;
 	}
 }
 
@@ -86,6 +88,16 @@ void CHECK_DelHighSpeed()
 {
     BULY_BERTH *pBerth;
     pBerth = pBulyHeader;
+    if(!t90_set.alarm.on_off & (0x01<<3))
+    {
+        while(pBerth)
+        {
+           pBerth->pBoatLink->Boat.category = 0;
+           BULY_delete(pBerth->pBoatLink);
+           pBerth = pBerth->pNext;
+        }       
+       goto delhighship;
+    }
     
     while(pBerth)
     {
@@ -96,7 +108,7 @@ void CHECK_DelHighSpeed()
         }
         pBerth = pBerth->pNext;
     }    
-    
+delhighship: NULL;   
 }
 
 void CHECK_STRefresh()
@@ -126,14 +138,12 @@ void check()
 		CHECK_MS_Speed_masked();
 	}
 	
-	detect();	
+	detect();
 	CHECK_DelHighSpeed();
-//	SNAP_Refresh();
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
    CHECK_STRefresh();
-//INFO("highspeed num:%d",validCnt);
-//	BULY_dump();
+
 }
 
 int CHECK_GetAlarmState(void)

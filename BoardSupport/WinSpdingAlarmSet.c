@@ -205,40 +205,20 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 										}
                     break;
 							 case GUI_KEY_UP:
-//                              if(pMsg->hWin == buttons[0])
-//											WM_SetFocus(slider);
-//										else
-//											WM_SetFocus(buttons[0]);
-//                              break;
                       case GUI_KEY_DOWN:
-//										if(pMsg->hWin == buttons[0])
-//											WM_SetFocus(buttons[1]);
-//										else
 											WM_SetFocus(slider);
 										break;
 							 case GUI_KEY_RIGHT:
-//										id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-//										if(id==0) agentdst_set+=10;
-//										if(id==1) 
+
                                  agentdst_set+=5;
 										if(agentdst_set>200) agentdst_set=200;
                       
-//										sprintf(pStrBuf,"%d",agentdst_set/10);
-//							         HSD_BUTTON_SetText(buttons[0], pStrBuf);
-//										sprintf(pStrBuf,"%d",agentdst_set%10);
-//							         HSD_BUTTON_SetText(buttons[1], pStrBuf);										
+									
                     break;
 							 case GUI_KEY_LEFT:
-//										id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-//							         if(id==0) 
-//                                 agentdst_set-=10;
-//										if(id==1) 
+
                                  agentdst_set-=5;
-                              if(agentdst_set<0) agentdst_set=0;
-//                              sprintf(pStrBuf,"%d",agentdst_set);
-//                              HSD_BUTTON_SetText(buttons, pStrBuf);
-//                              sprintf(pStrBuf,"%d",agentdst_set%10);
-//                              HSD_BUTTON_SetText(buttons[1], pStrBuf);
+                              if(agentdst_set<80) agentdst_set=80;
                                break;                      
             }
             WM_Paint(spdingAlarmSetWin);
@@ -344,9 +324,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             {
                GUI_SetColor(pColors->focusBkColor);
                GUI_FillRect(ALARM_SET_WIDTH/2-61,ALARM_SET_HEIGHT/2-47, ALARM_SET_WIDTH/2 + 128,ALARM_SET_HEIGHT/2+24);
+               GUI_SetColor(pColors->focusTextColor);
+               DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
             }
-            GUI_SetColor(pColors->textColor);
-            DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
+            else
+            {
+               GUI_SetColor(pColors->textColor);
+               DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
+            }
+            
             
             break;
 		

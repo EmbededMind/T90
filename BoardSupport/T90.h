@@ -123,20 +123,23 @@ typedef struct System_Set
 	int reset;
    int motherpos;
 } System_Set;
-	
+
+typedef struct PortStatus
+{
+   char port;
+   long MMSI;
+}PortStatus;	
+
 typedef struct T90_Set
 {
    SingleDst_Set singledst_set;
    DoubleDst_Set doubledst_set;    
 	Alarm_Set alarm;
 	System_Set sys;
+   PortStatus as_MMSI;   
 } T90_Set;
 
-typedef struct PortStatus
-{
-   char port;
-   long MMSI;
-}PortStatus;
+
 
 extern T90_Set t90_set;
 extern T90_Set reset_t90_set;

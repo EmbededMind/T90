@@ -217,7 +217,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                     break;
 							 case GUI_KEY_LEFT: 
                               agentdst_set-=5;
-							         if(agentdst_set<0) agentdst_set=0;
+							         if(agentdst_set<80) agentdst_set=80;
 //							      
             }
             WM_Paint(highspshipsetWin);
@@ -323,9 +323,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             {
                GUI_SetColor(pColors->focusBkColor);
                GUI_FillRect(ALARM_SET_WIDTH/2-61,ALARM_SET_HEIGHT/2-47, ALARM_SET_WIDTH/2 + 128,ALARM_SET_HEIGHT/2+24);
+               GUI_SetColor(pColors->focusTextColor);
+               DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
             }
-            GUI_SetColor(pColors->textColor);
-            DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
+            else
+            {
+               GUI_SetColor(pColors->textColor);
+               DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
+            }
+            
          break;
 		
 		case WM_SET_FOCUS:

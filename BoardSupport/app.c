@@ -272,16 +272,17 @@ void _Play_Task(void* p_arg)
    ISD_Play(SND_ID_WLCM);
    ISD_PWRDn();      
    while(1)
-   {      
-        if(FetchSTime() == 0)
-        {
-              MUSIC_ADD(SND_ID_STOF);
+   {  
+      if(monitorState == ON) // Ý à ˜
+		{        
+               if(FetchSTime() == 0)
+               {
+                  (SND_ID_STOF);
 
-        }
-         else
-         {
-						if(monitorState == ON) // Ý à ˜
-		            {                 
+               }
+               else
+               {
+						               
                    thisBulyBerth  = BULY_fetchNextPlayBerth();
                    if(thisBulyBerth){                             
                    if((thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0){    //ÓæÕþ´¬
@@ -355,10 +356,10 @@ void _Play_Task(void* p_arg)
                            }
                            }
                         }
-                //            playList  = 2;
-                //        }
+
+             
                             
-                        else //if(playList == 2)
+                        else 
                            {
                                if(playList == 1)
                                {    

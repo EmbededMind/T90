@@ -366,16 +366,28 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             {
                GUI_SetColor(pColors->focusBkColor);
                GUI_FillRect(ALARM_SET_WIDTH/2-177,ALARM_SET_HEIGHT/2-50, ALARM_SET_WIDTH/2-45 ,ALARM_SET_HEIGHT/2+24);
+               GUI_SetColor(pColors->focusTextColor);
+               DispSOGNums(ALARM_SET_WIDTH/2-172,ALARM_SET_HEIGHT/2-40,agent_min_sog,4);
             }
-            GUI_SetColor(pColors->textColor);
-            DispSOGNums(ALARM_SET_WIDTH/2-172,ALARM_SET_HEIGHT/2-40,agent_min_sog,4);
+            else
+            {
+               GUI_SetColor(pColors->textColor);
+               DispSOGNums(ALARM_SET_WIDTH/2-172,ALARM_SET_HEIGHT/2-40,agent_min_sog,4);
+            }
             if(WM_HasFocus(buttons[1]))
             {
                GUI_SetColor(pColors->focusBkColor);
                GUI_FillRect(ALARM_SET_WIDTH/2+25,ALARM_SET_HEIGHT/2-50, ALARM_SET_WIDTH/2+157 ,ALARM_SET_HEIGHT/2+24);
+               GUI_SetColor(pColors->focusTextColor);
+               DispSOGNums(ALARM_SET_WIDTH/2+30,ALARM_SET_HEIGHT/2-40,agent_max_sog,4);
             }
-            GUI_SetColor(pColors->textColor);
-            DispSOGNums(ALARM_SET_WIDTH/2+30,ALARM_SET_HEIGHT/2-40,agent_max_sog,4);
+            else
+            {
+               GUI_SetColor(pColors->textColor);
+               DispSOGNums(ALARM_SET_WIDTH/2+30,ALARM_SET_HEIGHT/2-40,agent_max_sog,4);
+            }
+            
+            
          break;
 		
 		case WM_SET_FOCUS:
