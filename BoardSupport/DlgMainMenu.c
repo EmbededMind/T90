@@ -70,7 +70,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                    WM_BringToTop(systemSetDlg);
                    break;
               case 3:
-//                   WM_BringToTop(myFleetDlg); 
+                   WM_BringToTop(myFleetDlg); 
                  break;
               }
            }
@@ -158,7 +158,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                      WM_SetFocus(systemSetDlg);
                      break;
                 case 3:
-//                     WM_SetFocus(myFleetDlg);
+                     WM_SetFocus(myFleetDlg);
                    break;
                 default:
                      break;

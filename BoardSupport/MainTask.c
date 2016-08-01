@@ -87,7 +87,7 @@ printf("maintask\n");
 		dstSetMenuDlg = DLG_DstSetMenuCreate();		
 		alarmSetMenuDlg = DLG_AlarmSetMenuCreate();
 		systemSetDlg = DLG_SystemSetCreate();
-//		myFleetDlg = DLG_MyFleetSetMenuCreate();
+		myFleetDlg = DLG_MyFleetSetMenuCreate();
       
 		singleShipDstSetWin = WIN_SingleShipDstSetCreate();
       doubleShipDstSetWin  = WIN_doubleShipDstSetCreate();
