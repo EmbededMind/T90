@@ -66,6 +66,22 @@ typedef struct ConfirmWinColor
 	GUI_COLOR btFocusTextColor;
 } ConfirmWinColor;
 
+typedef struct MMSISetWinColor
+{
+	GUI_COLOR bkTopColor;
+	GUI_COLOR bkBottomColor;
+	GUI_COLOR headtextColor;
+	GUI_COLOR hintTextColor;
+	GUI_COLOR focusEditbkColor;
+	GUI_COLOR noFocusEditbkColor;
+	GUI_COLOR editTextColor;
+	GUI_COLOR foucsBtBkColor;
+	GUI_COLOR noFoucsBtBkColor;
+	GUI_COLOR btTextColor;
+	GUI_COLOR bkInputColor;
+}MMSISetWinColor;
+
+
 extern const HomeColor homeColors[2];
 
 extern const MenuColor mainMenuColors[2];
@@ -76,6 +92,7 @@ extern const SetDlgColor setDlgColors[2];
 
 extern const ConfirmWinColor confirmWinColors[2];
 
-#endif
+extern const MMSISetWinColor mmsiSetWinColor[2];
 
+#endif
 

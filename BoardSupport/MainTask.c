@@ -37,22 +37,23 @@ printf("maintask\n");
    GUI_UC_SetEncodeUTF8();	
    WM_SetCreateFlags(WM_CF_MEMDEV);
    
-    hMem0 = GUI_MEMDEV_Create(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    GUI_MEMDEV_Select(hMem0);
-    GUI_SetBkColor(0x009c6f00);
-    GUI_Clear();
-    
-    GUI_SetFont(&GUI_Font_T90_60);
-    GUI_SetColor(0x00c3e0e9);
-    GUI_DispStringAt("拖网距离安全标终端",200,200);
-    
-		GUI_MEMDEV_Select(0);
-    GUI_MEMDEV_CopyToLCD(hMem0);
-    GUI_MEMDEV_Delete(hMem0);
-    GUI_Delay(1000);
+//    hMem0 = GUI_MEMDEV_Create(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+//    GUI_MEMDEV_Select(hMem0);
+//    GUI_SetBkColor(0x009c6f00);
+//    GUI_Clear();
+//    
+//    GUI_SetFont(&GUI_Font_T90_60);
+//    GUI_SetColor(0x00c3e0e9);
+//    GUI_DispStringAt("拖网距离安全标终端",200,200);
+//    
+//		GUI_MEMDEV_Select(0);
+//    GUI_MEMDEV_CopyToLCD(hMem0);
+//    GUI_MEMDEV_Delete(hMem0);
+//    GUI_Delay(1000);
     
 
    //字体设置	//GUI_SetDefaultFont (&SIF_Font);
+
    GUI_SetDefaultFont (&GUI_Font30);	
    TEXT_SetDefaultFont(&GUI_Font30);
    BUTTON_SetDefaultFont (&GUI_Font30);
@@ -98,6 +99,10 @@ printf("maintask\n");
 		specialAlarmSetDlg = DLG_SpecialAlarmSetCreate();
 		
 		confirmWin = WIN_ConfirmCreate();
+		   MMSISetWin = WIN_MMSISetCreate();
+			SoftInputWin = WIN_SoftInputCreate();
+			
+
 		
       highspshipsetWin = WIN_HighSpeedShipSetCreate();
 
@@ -116,6 +121,11 @@ printf("maintask\n");
 			WM_SetFocus(mainShipWin);
 		}
       
+			WM_BringToTop(MMSISetWin);
+			WM_SetFocus(SoftInputWin);
+
+
+
    while(1)
    {
       WM_MESSAGE pMsg;      
