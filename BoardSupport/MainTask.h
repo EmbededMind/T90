@@ -34,16 +34,16 @@
 
 #define GUI_KEY_RELEASE           4
 #define GUI_KEY_MENU              5
-#define GUI_KEY_SOUNDOFF          6
-#define GUI_KEY_SINGLE            7    //single mode
+#define GUI_KEY_PWM_INC           6
+#define GUI_KEY_SOUNDOFF          7    //single mode
 #define GUI_KEY_MOLEFT            11   //Ä¸´¬ÔÚ×ó
-#define GUI_KEY_MORIGHT           12   //Ä¸´¬ÔÚÓÒ
-#define GUI_KEY_DOUBLE            14   //double mode
+#define GUI_KEY_DOUBLE            12   //Ä¸´¬ÔÚÓÒ
+#define GUI_KEY_MORIGHT           14   //double mode
 
 #define GUI_KEY_MNT_ENABLE        15
 #define GUI_KEY_MNT_DISABLE       20
 
-#define GUI_KEY_PWM_INC           21
+#define GUI_KEY_SINGLE            21
 #define GUI_KEY_PWM_DEC           22
 
 #define GUI_KEY_TRACE_ENABLE      28

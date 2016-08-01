@@ -34,16 +34,16 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
       
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
-               case GUI_KEY_MOLEFT:
-                  if(t90_set.sys.motherpos == DEFAULT_RIGHT)
-                  {
-                        myMsg.hWin = systemSetDlg;
-                        myMsg.hWinSrc = pMsg->hWin;
-                        myMsg.MsgId = USER_MSG_MOTHERPOS;
-                        myMsg.Data.v = DEFAULT_LEFT;
-                        WM_SendMessage(myMsg.hWin, &myMsg);
-                  }                     
-                        break;
+//               case GUI_KEY_MOLEFT:
+//                  if(t90_set.sys.motherpos == DEFAULT_RIGHT)
+//                  {
+//                        myMsg.hWin = systemSetDlg;
+//                        myMsg.hWinSrc = pMsg->hWin;
+//                        myMsg.MsgId = USER_MSG_MOTHERPOS;
+//                        myMsg.Data.v = DEFAULT_LEFT;
+//                        WM_SendMessage(myMsg.hWin, &myMsg);
+//                  }                     
+//                        break;
               
               case GUI_KEY_MORIGHT:
                  if(t90_set.sys.motherpos == DEFAULT_LEFT)
@@ -51,18 +51,18 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                         myMsg.hWin = systemSetDlg;
                         myMsg.hWinSrc = pMsg->hWin;
                         myMsg.MsgId = USER_MSG_MOTHERPOS;
-                        myMsg.Data.v = DEFAULT_RIGHT;
+                        myMsg.Data.v = !t90_set.sys.motherpos;
                         WM_SendMessage(myMsg.hWin, &myMsg);
                  }                    
                         break;
               
-               case GUI_KEY_SINGLE:
+//               case GUI_KEY_SINGLE:
                case GUI_KEY_LEFT:
                     if(pMsg->hWin == buttons[1]){
                        WM_SetFocus(buttons[0]);
                     }
                     break;
-               case GUI_KEY_DOUBLE:
+//               case GUI_KEY_DOUBLE:
                case GUI_KEY_RIGHT:								
                     if(pMsg->hWin == buttons[0]){
                        WM_SetFocus(buttons[1]);
