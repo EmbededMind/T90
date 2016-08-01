@@ -46,7 +46,7 @@ static System_Set agentsys_set;
 static  void (* const ProcChanging[SLD_NUM-1])(WM_MESSAGE *, int)  = {
 	_OnWorkModeChanged,
 	_OnLaunchChanged,
-   _OnNightModeChanged, 
+   _OnNightModeChanged,
    _OnVolumChanged,
    _OnBrightChanged,
    _OnUnitChanged,
@@ -277,10 +277,10 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
 						GUI_SetFont(&GUI_Font_T90_30);
 						GUI_SetColor(pColors->textColor);
 						GUI_DispStringAt("系统设置：",SYSTEM_SET_ITEM_X,SYSTEM_SET_Y+15);
-						GUI_DispStringAt("作业方式切换：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y);
+						GUI_DispStringAt("作业方式：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y);
 			         GUI_DispStringAt("单拖",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y);
 						GUI_DispStringAt("双拖",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y);
-			         GUI_DispStringAt("关闭发射功能：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
+			         GUI_DispStringAt("发射功能：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
 						GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
 						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
 						GUI_DispStringAt("夜间模式：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_ITEM_HEIGHT*2);
@@ -302,10 +302,8 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
 						GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
 						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
 						GUI_DispStringAt("软件版本 V1.0.0",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH+80,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);            
-//						GUI_SetColor(GUI_RED);
-//						GUI_DrawRect(100,400,SYSTEM_SET_WIDTH-100,432);
+
 						GUI_SetFont(&GUI_Font_T90_24);
-//						GUI_DispStringAt("使用     选择选项，使用     切换开启关闭或者更改参数", 100, 400);
                   GUI_DispStringAt("使用",100, 400);
                   GUI_SetColor(pColors->focusSliderColor);
                   GUI_DispString("  卞  ");

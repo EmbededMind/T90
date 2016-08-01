@@ -78,6 +78,13 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 
 
  */
+typedef struct RemoveShip
+{
+   long MMSI[5];
+   int numShip;
+   int findNum;
+}RemoveShip;   
+
 typedef struct SingleDst_Set
 {
 	int dst1;
@@ -136,7 +143,8 @@ typedef struct T90_Set
    DoubleDst_Set doubledst_set;    
 	Alarm_Set alarm;
 	System_Set sys;
-   PortStatus as_MMSI;   
+   PortStatus as_MMSI;
+   RemoveShip shipout;   
 } T90_Set;
 
 

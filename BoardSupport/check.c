@@ -104,7 +104,12 @@ void CHECK_DelHighSpeed()
         if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.SOG < t90_set.alarm.highspeed)
         {
             pBerth->pBoatLink->Boat.category = 0;
-						      BULY_delete(pBerth->pBoatLink);
+				BULY_delete(pBerth->pBoatLink);
+        }
+        if((pBerth->pBoatLink->Boat.category & TYPE_FAMILY) == TYPE_FAMILY)
+        {
+            pBerth->pBoatLink->Boat.category = 0;
+				BULY_delete(pBerth->pBoatLink);
         }
         pBerth = pBerth->pNext;
     }    
@@ -113,7 +118,7 @@ delhighship: NULL;
 
 void CHECK_STRefresh()
 {
-    if(mothership.SOG < 20)
+    if(mothership.SOG < 5)
     {
 	    if(STime)   STime--;     
     }

@@ -70,6 +70,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                                           pMsg->hWin, WM_CF_SHOW,  0,   GUI_ID_BUTTON0);
 
               BUTTON_SetFont(hBtns[0],&GUI_Font_T90_30);
+              BUTTON_SetFocusColor(hBtns[0],confirmWinColors[t90_set.sys.nightmode].btFocusBkColor);
               WM_SetCallback(hBtns[0], &myButtonCallback);
               WM_SetFocus(hBtns[0]);
               WM_ShowWindow (hBtns[0]);

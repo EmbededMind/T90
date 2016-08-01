@@ -318,22 +318,32 @@ void isInvader(BERTH  *pBerth)
 
 void detect()
 {
-     int i = 0;
-     detectInit();
-	  for(i = 0; i < N_boat; i++)          //clear
-	  {
-		  SimpBerthes[i].pBerth->isInvader = 0;
-	  }
-	  if(t90_set.alarm.on_off & 0x01)
-        goto detect;
-     if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
-     for(i = 0;i < N_boat;i++)
-     {
-         if(SimpBerthes[i].Dist < (t90_set.alarm.invd_dst+500)*7/4  &&  (SimpBerthes[i].pBerth->Boat.category&TYPE_SAFETY) == 0){
-             llToxy(SimpBerthes[i].pBerth);
-             isInvader(SimpBerthes[i].pBerth);
-         }        
-     }
+   int i = 0;
+   detectInit();
+   for(i = 0; i < N_boat; i++)          //clear
+   {
+      SimpBerthes[i].pBerth->isInvader = 0;
+   }
+   if(t90_set.alarm.on_off & 0x01)
+      goto detect;
+   if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
+   {
+      for(i = 0;i < N_boat;i++)
+      {
+         if(!(SimpBerthes[i].pBerth->Boat.category & TYPE_FAMILY))
+         {
+            if(SimpBerthes[i].Dist < (t90_set.alarm.invd_dst+500)*7/4  &&  (SimpBerthes[i].pBerth->Boat.category&TYPE_SAFETY) == 0)
+            {
+            llToxy(SimpBerthes[i].pBerth);
+            isInvader(SimpBerthes[i].pBerth);
+            } 
+         }
+         else
+         {
+            SimpBerthes[i].pBerth->isInvader = 0;
+         }            
+      }
+   }
 detect: NULL;
 }
 

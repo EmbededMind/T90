@@ -183,7 +183,7 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
 {
    int lastDist  = 0;
    int Dist  = 0;
-   
+   int i  = 0;
    BERTH * tmp  = NULL;   
    lastDist  = pBerth->Boat.dist;
 
@@ -201,7 +201,17 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
    pBerth->Boat.dist  = Dist;
    
    pBerth->Boat.time_cnt  = TIMESTAMP;
-
+     
+   for(i = 0; i < t90_set.shipout.numShip; i++)
+   {
+      if(pBerth->Boat.category == t90_set.shipout.MMSI[i])
+      {
+         pBerth->Boat.category |= TYPE_FAMILY;
+         pBerth->isInvader = 0;
+         pBerth->Boat.category &= TYPE_FAMILY;
+         break;
+      }            
+   }
 
    if(pBerth->Boat.category == 0  &&  p_msg->SOG >= t90_set.alarm.highspeed)
    {
@@ -211,6 +221,8 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
       BULY_add(pBerth);
 		  llToxy(pBerth);
    }
+   
+  
 
    
    tmp  = pBerth;
@@ -362,7 +374,7 @@ int add_18(struct message_18 * p_msg)
    BERTH * tmp  = NULL;
    
    int Dist  = 0;
-
+   int i;
    buf  = allocOneBerth();
    if(buf == NULL) 
    {
@@ -382,17 +394,28 @@ int add_18(struct message_18 * p_msg)
    
    if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
-      buf->isInvader  = 0;
-       
+      buf->isInvader  = 0;    
+   }
+   
+   
+   for(i = 0; i < t90_set.shipout.numShip; i++)
+   {
+      if(buf->Boat.category == t90_set.shipout.MMSI[i])
+      {
+         buf->Boat.category |= TYPE_FAMILY;
+         buf->isInvader = 0;
+         buf->Boat.category &= TYPE_FAMILY;
+         break;
+      }            
    }
 
-   else if(buf->Boat.category == 0  &&  p_msg->SOG >= t90_set.alarm.highspeed)
+   if(buf->Boat.category == 0  &&  p_msg->SOG >= t90_set.alarm.highspeed)
    {
       unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
 //      nation = 0x10;/////////////////////////////////////////////////////////////////////////////////////
 		  buf->Boat.category  = nation |  TYPE_BULLY;
-      BULY_add(buf); 
-			llToxy(buf);
+        BULY_add(buf); 
+		  llToxy(buf);
    }
  
 
@@ -467,6 +490,20 @@ int update_24A(BERTH * pBerth, struct message_24_partA * p_msg)
    int i  = 0; 
 
    pBerth->Boat.time_cnt  = TIMESTAMP; 
+   
+   
+   for(i = 0; i < t90_set.shipout.numShip; i++)
+   {
+      if(pBerth->Boat.category == t90_set.shipout.MMSI[i])
+      {
+         pBerth->Boat.category |= TYPE_FAMILY;
+         pBerth->isInvader = 0;
+         pBerth->Boat.category &= TYPE_FAMILY;
+         break;
+      }            
+   }
+   
+   
    if(pBerth->Boat.name[0] == 0)
    {
       for(i=0;i<20;i++)
@@ -503,9 +540,22 @@ int add_24A(struct message_24_partA * p_msg)
       return -1;
    }
    
+   
    buf->Boat.user_id  = p_msg->user_id;
 //   buf->Boat.dist  = 999999;
    buf->Boat.time_cnt  = TIMESTAMP;
+  
+   for(i = 0; i < t90_set.shipout.numShip; i++)
+   {
+      if(buf->Boat.category == t90_set.shipout.MMSI[i])
+      {
+         buf->Boat.category |= TYPE_FAMILY;
+         buf->isInvader = 0;
+         buf->Boat.category &= TYPE_FAMILY;
+         break;
+      }            
+   }
+   
    
    if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
@@ -550,6 +600,7 @@ int add_24A(struct message_24_partA * p_msg)
 
 int update_24B(BERTH * pBerth, type_of_ship * p_msg)
 {
+   int i;
    pBerth->Boat.time_cnt  = TIMESTAMP;
    
 
@@ -562,9 +613,7 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
       pBerth->Boat.category |= TYPE_HSD;
 //INFO("find hsd :%09ld", pBerth->Boat.user_id);      
       return 0;
-   }
-   
- 
+   } 
    else
    {
       if( p_msg->type_of_ship_and_cargo_type == 55  &&  (pBerth->Boat.category&0xf0) == 0 )
@@ -576,13 +625,28 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
          {
             pBerth->Boat.category  = nation | TYPE_BULLY;              
             BULY_add(pBerth);
-				     	  llToxy(pBerth);          
+				llToxy(pBerth);          
          }
          else
          {
-
+              
+            for(i = 0; i < t90_set.shipout.numShip; i++)
+            {
+               if(pBerth->Boat.category == t90_set.shipout.MMSI[i])
+               {
+                  pBerth->Boat.category |= TYPE_FAMILY;
+                  pBerth->isInvader = 0;
+                  pBerth->Boat.category &= TYPE_FAMILY;
+                  break;
+               }            
+            }
+            
          }         
          return 1;
+      }
+      else
+      {
+         
       }
    }
    
@@ -594,7 +658,7 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
 int add_24B(type_of_ship * p_msg)
 {
    BERTH * buf  = NULL;
-   
+   int i;
  
    buf  = allocOneBerth();
    
@@ -605,6 +669,19 @@ int add_24B(type_of_ship * p_msg)
    
    buf->Boat.user_id  = p_msg->user_id;
    buf->Boat.time_cnt   = TIMESTAMP;
+   
+      
+   for(i = 0; i < t90_set.shipout.numShip; i++)
+   {
+      if(buf->Boat.category == t90_set.shipout.MMSI[i])
+      {
+         buf->Boat.category |= TYPE_FAMILY;
+         buf->isInvader = 0;
+         buf->Boat.category &= TYPE_FAMILY;
+         break;
+      }            
+   }
+   
    
    if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
@@ -663,13 +740,13 @@ void updateTimeStamp()
    BERTH * tmp  = NULL;
      
    BERTH * pCur  = NULL;
-   int i  = 0;  
+   int i  = 0; 
    pCur  = pHeader; 
    
    while(pCur)
    {      
       if(pCur->Boat.time_cnt > 0)
-      {
+      {      
          SimpBerthes[i].latitude   = pCur->Boat.latitude;
          SimpBerthes[i].longitude  = pCur->Boat.longitude;
          SimpBerthes[i].Dist       = pCur->Boat.dist;

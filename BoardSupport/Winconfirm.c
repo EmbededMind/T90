@@ -34,7 +34,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 	
 	int xSize;
 	int ySize;  
-	
+	GUI_MEMDEV_Handle hMem0;
   switch (pMsg->MsgId) {
 			  
 	case WM_SET_FOCUS:
@@ -45,9 +45,15 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 			 break;		
 	
   case WM_PAINT:
+       
        xSize = WM_GetWindowSizeX(pMsg->hWin);
        ySize = WM_GetWindowSizeY(pMsg->hWin);
+//       hMem0 = GUI_MEMDEV_Create(0, 0, xSize, ySize);
+//       GUI_MEMDEV_Select(hMem0);
        GUI_DrawGradientRoundedV(0, 0, xSize - 1, ySize - 1, 20, pColors->bkTopColor,pColors->bkBottomColor);
+//       GUI_MEMDEV_Select(0);
+//       GUI_MEMDEV_CopyToLCD(hMem0);
+//       GUI_MEMDEV_Delete(hMem0);
        break;
 	
 	case USER_MSG_SKIN:
@@ -65,6 +71,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
     //
        BUTTON_CreateEx (60,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON0);
        buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
+       BUTTON_SetFocusColor(buttons[0],pColors->btFocusBkColor);
        WM_ShowWindow (buttons[0]);
        BUTTON_SetText(buttons[0], "确定");
        BUTTON_SetFont(buttons[0], &GUI_Font_T90_30);
@@ -78,6 +85,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
         //
        BUTTON_CreateEx(260,  110,   80,  40,thisFrame,WM_CF_HASTRANS,0,GUI_ID_BUTTON1);
        buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
+       BUTTON_SetFocusColor(buttons[1],pColors->btFocusBkColor);
        WM_ShowWindow (buttons[1]);
        BUTTON_SetText(buttons[1], "取消");
        BUTTON_SetFont(buttons[1], &GUI_Font_T90_30);
