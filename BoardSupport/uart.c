@@ -131,7 +131,7 @@ void UART0_IRQHandler(void)
                     GUI_StoreKeyMsg(tmpc, 1);
                    break;
                }
-printf("%d\n",tmpc);               
+//printf("%d\n",tmpc);               
       }   
       else if(tmpc >= 0x80  &&  tmpc <(0x80+21))
       {

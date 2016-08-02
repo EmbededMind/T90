@@ -62,8 +62,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                    }
 					 }					 
 					 timeCnt++;
-//					 if(timeCnt == 1)
-//							GUI_CURSOR_Show();
 					 WM_Paint(mainShipWin);
 					 WM_RestartTimer(timer, 500);
 					 break;
@@ -75,136 +73,61 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			
 	
       case WM_KEY:
-           switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
-//              case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                           if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
-//                           {
-//                              cursorOnStub = 4;
-//                           }
-//                           else
-//                           {
-//                              cursorOnStub = 0;
-//                           }
-//                           
-//                        }                           
-//                        break;
-              
-              case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-                           if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
-                           {
-                              cursorOnStub = 4;
-                           }
-                           else
-                           {
-                              cursorOnStub = 0;
-                           }
-//                        }   
-                        break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                            if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
-//                           {
-//                              cursorOnStub = 4;
-//                           }
-//                           else
-//                           {
-//                              cursorOnStub = 0;
-//                           }
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                            if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
-//                           {
-//                              cursorOnStub = 4;
-//                           }
-//                           else
-//                           {
-//                              cursorOnStub = 0;
-//                           }
-//                         }
-//                         
-//                         break;
-						case GUI_KEY_PWM_INC:
-								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-								 break;
-						 case GUI_KEY_MENU:
+           switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){          
+               case GUI_KEY_MORIGHT:
+                  myMsg.hWin = systemSetDlg;
+                  myMsg.hWinSrc = pMsg->hWin;
+                  myMsg.MsgId = USER_MSG_MOTHERPOS;
+                  myMsg.Data.v = !t90_set.sys.motherpos;
+                  WM_SendMessage(myMsg.hWin, &myMsg);
+                  if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_RIGHT)
+                  {
+                     cursorOnStub = 4;
+                  }
+                  else
+                  {
+                     cursorOnStub = 0;
+                  }                           
+                  break;
+                  
+               case GUI_KEY_PWM_INC:
+                  WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                  break;
+               
+               case GUI_KEY_MENU:
+                  WM_DeleteTimer(timer);
+                  WM_BringToTop(mainMenuDlg);
+                  WM_SetFocus(mainMenuDlg);
+                  break;
 
-									WM_DeleteTimer(timer);
-									WM_BringToTop(mainMenuDlg);
-									WM_SetFocus(mainMenuDlg);
-									break;
-						 
-						 case GUI_KEY_UP:	 
-//									WM_DeleteTimer(timer);
-//									WM_BringToTop(alarmMonitorWin);
-//									WM_SetFocus(alarmMonitorWin);
-//									cursorOnStub = 0;
-                           cursorOnStub = getcursor(UP);                                             
-									WM_Paint(mainShipWin);
-									break;
-						 
-						 case GUI_KEY_DOWN:
+               case GUI_KEY_UP:	 
+                  cursorOnStub = getcursor(UP);                                             
+                  WM_Paint(mainShipWin);
+                  break;
 
-                              cursorOnStub = getcursor(DOWN);
-									   WM_Paint(mainShipWin);
-                           
-									break;
-						 
-						 case GUI_KEY_LEFT:
+               case GUI_KEY_DOWN:
 
-                              cursorOnStub = getcursor(LEFT);                              
-									   WM_Paint(mainShipWin);
-                           
-           
-									break;
-												 
-						 case GUI_KEY_RIGHT:
+                  cursorOnStub = getcursor(DOWN);
+                  WM_Paint(mainShipWin);
+                  break;
 
-                              cursorOnStub = getcursor(RIGHT);                              
-									   WM_Paint(mainShipWin);
-                           
-									break;
+               case GUI_KEY_LEFT:
+                  cursorOnStub = getcursor(LEFT);                              
+                  WM_Paint(mainShipWin);
+                  break;
+                               
+               case GUI_KEY_RIGHT:
+                  cursorOnStub = getcursor(RIGHT);                              
+                  WM_Paint(mainShipWin);
+                  break;
 						 
-//						 case GUI_KEY_MONITORING:
-//									monitorState = ON;
-//									WM_Paint(mainShipWin);
-//									break;
-//						 
-						 case GUI_KEY_SOUNDOFF:
-									monitorState = monitorState == ON? OFF: ON;
-									WM_Paint(mainShipWin);
-									break;
-						 
-						 default:
-								  WM_DefaultProc(pMsg);
+               case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  WM_Paint(mainShipWin);
+                  break;
+
+               default:
+                  WM_DefaultProc(pMsg);
            }
            break;
            

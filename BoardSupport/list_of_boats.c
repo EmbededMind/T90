@@ -85,23 +85,23 @@ int insert_18(struct message_18 * p_msg)
       if(Berthes[i].Boat.user_id == p_msg->user_id)
       {
          /// We regard little offset as non-move ,just for optimizaton
-          if(   NOT_ALMOST(p_msg->longitude,Berthes[i].Boat.longitude)  
-             || NOT_ALMOST(p_msg->latitude,Berthes[i].Boat.latitude)    ) 
-          {
-                                                                                                                                                   
-               if(update_18(&(Berthes[i]), p_msg))
-               {
-                  return 1;               
-               }
+         if(   NOT_ALMOST(p_msg->longitude,Berthes[i].Boat.longitude)  
+          || NOT_ALMOST(p_msg->latitude,Berthes[i].Boat.latitude)    ) 
+         {
+                                                                                                                                                
+            if(update_18(&(Berthes[i]), p_msg))
+            {
+               return 1;               
+            }
 
-               else
-                  return -1;
-          }
-          else
-          {
-             Berthes[i].Boat.time_cnt  = TIMESTAMP;
-             return 0;
-          }
+            else
+               return -1;
+         }
+         else
+         {
+            Berthes[i].Boat.time_cnt  = TIMESTAMP;
+            return 0;
+         }
       }
    }
    
@@ -131,10 +131,10 @@ int insert_24A(struct message_24_partA * p_msg)
          {        
             return  1;
          }
-          else
-          {
-             return -1;
-          }
+         else
+         {
+            return -1;
+         }
       }
    }
    
@@ -219,7 +219,7 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
 //		  nation = 0x10;//////////////////////////////////////////////////////////////////////////
       pBerth->Boat.category  = nation | TYPE_BULLY;   
       BULY_add(pBerth);
-		  llToxy(pBerth);
+		llToxy(pBerth);
    }
    
   
@@ -299,9 +299,7 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
       }
 INFO("Err!");      
       return -1;
-   }
-   
-   
+   }  
    else 
    {
       if(pBerth->pNext == NULL)

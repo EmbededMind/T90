@@ -177,7 +177,6 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 {
    if(pointa.y == pointb.y)
    {
-
       return 0;
    }
    else 
@@ -201,10 +200,6 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 
 void detectInit()
 {
-   
-
-
-
    PloPoint *index;
    int i = 0;
    adjustPlo();
@@ -224,9 +219,8 @@ void detectInit()
       i++;
       index = index->next;
    }while(index != pmin);     
-    
-   
- }
+      
+}
 
 Bool isCloseStub(BERTH *pBerth)
 {

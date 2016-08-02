@@ -26,70 +26,50 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
    WM_MESSAGE myMsg;
 
    switch(pMsg->MsgId){
-//      case WM_SET_FOCUS:
-////     
-//           BUTTON_Callback(pMsg);
-//					 WM_Paint(workModeWin);
-//           break;
-      
       case WM_KEY:
-            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
-//               case GUI_KEY_MOLEFT:
-//                  if(t90_set.sys.motherpos == DEFAULT_RIGHT)
-//                  {
-//                        myMsg.hWin = systemSetDlg;
-//                        myMsg.hWinSrc = pMsg->hWin;
-//                        myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                        myMsg.Data.v = DEFAULT_LEFT;
-//                        WM_SendMessage(myMsg.hWin, &myMsg);
-//                  }                     
-//                        break;
-              
+            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){             
               case GUI_KEY_MORIGHT:
-                 if(t90_set.sys.motherpos == DEFAULT_LEFT)
-                 {
+                    if(t90_set.sys.motherpos == DEFAULT_LEFT)
+                    {
                         myMsg.hWin = systemSetDlg;
                         myMsg.hWinSrc = pMsg->hWin;
                         myMsg.MsgId = USER_MSG_MOTHERPOS;
                         myMsg.Data.v = !t90_set.sys.motherpos;
                         WM_SendMessage(myMsg.hWin, &myMsg);
-                 }                    
-                        break;
-              
-//               case GUI_KEY_SINGLE:
+                    }                    
+                    break;
                case GUI_KEY_LEFT:
                     if(pMsg->hWin == buttons[1]){
                        WM_SetFocus(buttons[0]);
                     }
                     break;
-//               case GUI_KEY_DOUBLE:
                case GUI_KEY_RIGHT:								
                     if(pMsg->hWin == buttons[0]){
                        WM_SetFocus(buttons[1]);
                     }
-										break;
-							 case GUI_KEY_ENTER:
-										if(WM_HasFocus(buttons[0]))
-										{                                
-											t90_set.sys.workmode = SINGLE_MODE;
-										}
-										if(WM_HasFocus(buttons[1]))
-										{
-											t90_set.sys.workmode = DOUBLE_MODE;
-										}
-										WM_BringToTop(mainShipWin);
-										WM_SetFocus(mainShipWin);
-										T90_Store();
-                              monitorState = ON;
-										StubRefresh();
-										WM_SendMessageNoPara(systemSetDlg, WM_INIT_DIALOG);
+						  break;
+               case GUI_KEY_ENTER:
+                     if(WM_HasFocus(buttons[0]))
+                     {                                
+                        t90_set.sys.workmode = SINGLE_MODE;
+                     }
+                     if(WM_HasFocus(buttons[1]))
+                     {
+                        t90_set.sys.workmode = DOUBLE_MODE;
+                     }
+                     WM_BringToTop(mainShipWin);
+                     WM_SetFocus(mainShipWin);
+                     T90_Store();
+                     monitorState = ON;
+                     StubRefresh();
+                     WM_SendMessageNoPara(systemSetDlg, WM_INIT_DIALOG);
                     break;
-            }
-            BUTTON_Callback(pMsg);
-            WM_Paint(workModeWin);
+               }
+           BUTTON_Callback(pMsg);
+           WM_Paint(workModeWin);
            break;
            
-     default :
+      default :
            BUTTON_Callback(pMsg);
            break;
    }
@@ -122,41 +102,39 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
     case WM_PAINT:
          GUI_SetBkColor(pColor->bkColor);
          GUI_Clear();
-				 if(WM_HasFocus(buttons[0]))
-				 {
-					 GUI_SetColor(pColor->numColor);
-				 }
-				 else 
-				 {
-					 GUI_SetColor(pColor->bbsTopColor);
-				 }
-				 GUI_FillRoundedRect(BUTTON0_X,BUTTON0_Y,BUTTON0_X+BUTTON_WIDTH-1,BUTTON0_Y+BUTTON_HEIGHT-1,8);
+         if(WM_HasFocus(buttons[0]))
+         {
+            GUI_SetColor(pColor->numColor);
+         }
+         else 
+         {
+            GUI_SetColor(pColor->bbsTopColor);
+         }
+         GUI_FillRoundedRect(BUTTON0_X,BUTTON0_Y,BUTTON0_X+BUTTON_WIDTH-1,BUTTON0_Y+BUTTON_HEIGHT-1,8);
 
-            GUI_SetTextMode(GUI_TM_TRANS);
-            GUI_SetColor(pColor->bkColor);
-            GUI_SetFont(&GUI_Font_T90_30B);
-            GUI_DispStringAt("单拖模式", BUTTON0_X+43,BUTTON0_Y+8);
-				 if(WM_HasFocus(buttons[1]))
-				 {
-					 GUI_SetColor(pColor->numColor);
-				 }
-				 else 
-				 {
-					 GUI_SetColor(pColor->bbsTopColor);
-				 }
-				 GUI_FillRoundedRect(BUTTON1_X,BUTTON1_Y,BUTTON1_X+BUTTON_WIDTH-1,BUTTON1_Y+BUTTON_HEIGHT-1,8);
-                 GUI_SetColor(pColor->bkColor);
-                 GUI_DispStringAt("双拖模式", BUTTON1_X+43,BUTTON1_Y+8);
-		
-                    break;
-		
+         GUI_SetTextMode(GUI_TM_TRANS);
+         GUI_SetColor(pColor->bkColor);
+         GUI_SetFont(&GUI_Font_T90_30B);
+         GUI_DispStringAt("单拖模式", BUTTON0_X+43,BUTTON0_Y+8);
+         if(WM_HasFocus(buttons[1]))
+         {
+            GUI_SetColor(pColor->numColor);
+         }
+         else 
+         {
+            GUI_SetColor(pColor->bbsTopColor);
+         }
+         GUI_FillRoundedRect(BUTTON1_X,BUTTON1_Y,BUTTON1_X+BUTTON_WIDTH-1,BUTTON1_Y+BUTTON_HEIGHT-1,8);
+         GUI_SetColor(pColor->bkColor);
+         GUI_DispStringAt("双拖模式", BUTTON1_X+43,BUTTON1_Y+8);
+         break;		
 		case WM_SET_FOCUS:
-				 if(pMsg->Data.v)
-				 {
-						WM_SetFocus(buttons[0]);
-				 }
-					WM_Paint(workModeWin);
-				 break;
+         if(pMsg->Data.v)
+         {
+             WM_SetFocus(buttons[0]);
+         }
+         WM_Paint(workModeWin);
+         break;
          
     default:
          WM_DefaultProc(pMsg);

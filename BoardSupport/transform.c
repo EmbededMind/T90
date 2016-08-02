@@ -22,57 +22,53 @@ int rectifyNum(int num, int stepValue)   //根据步进值对整形数纠正误差
 void llToxy(BERTH *pBerth)
 {
     
-    pBerth->x_to_cross = (int)(cos(mothership.COG*3.14/1800)*(pBerth->Boat.longitude - mothership.longitude)
+   pBerth->x_to_cross = (int)(cos(mothership.COG*3.14/1800)*(pBerth->Boat.longitude - mothership.longitude)
 																				 -sin(mothership.COG*3.14/1800)*(pBerth->Boat.latitude  - mothership.latitude));
-		pBerth->y_to_cross = (int)(sin(mothership.COG*3.14/1800)*(pBerth->Boat.longitude - mothership.longitude)
+   pBerth->y_to_cross = (int)(sin(mothership.COG*3.14/1800)*(pBerth->Boat.longitude - mothership.longitude)
 																				 +cos(mothership.COG*3.14/1800)*(pBerth->Boat.latitude  - mothership.latitude));    
 }
 
 
 int getAngleOfShip(BERTH *pBerth)
 {
-//    int flag;
-//    int angle;
-    if(pBerth->x_to_cross > 0)
-    {
-        if(pBerth->y_to_cross >= 0)
-        {            
-             return 90 - GETANGLE(pBerth->y_to_cross,pBerth->x_to_cross);
-        }
-        else
-        {           
-            return GETANGLE(pBerth->y_to_cross,pBerth->x_to_cross) + 90;
-        }
-    }else if(pBerth->x_to_cross < 0)
-    {
-        if(pBerth->y_to_cross <= 0)
-        {
-            return 270 - GETANGLE(pBerth->y_to_cross,pBerth->x_to_cross);
-        }
-        else
-        {
-            return 270 + GETANGLE(pBerth->y_to_cross,pBerth->x_to_cross);
-        }
-    }
-    else
-    {
-         if(pBerth->y_to_cross >= 0)
-        {
-            return 0;
-        }
-        else 
-        {
-            return 180;
-        }
-
-    }
-
+   if(pBerth->x_to_cross > 0)
+   {
+      if(pBerth->y_to_cross >= 0)
+      {            
+         return 90 - GETANGLE(pBerth->y_to_cross,pBerth->x_to_cross);
+      }
+      else
+      {           
+         return GETANGLE(pBerth->y_to_cross,pBerth->x_to_cross) + 90;
+      }
+   }else if(pBerth->x_to_cross < 0)
+   {
+      if(pBerth->y_to_cross <= 0)
+      {
+         return 270 - GETANGLE(pBerth->y_to_cross,pBerth->x_to_cross);
+      }
+      else
+      {
+         return 270 + GETANGLE(pBerth->y_to_cross,pBerth->x_to_cross);
+      }
+   }
+   else
+   {
+      if(pBerth->y_to_cross >= 0)
+      {
+         return 0;
+      }
+      else 
+      {
+         return 180;
+      }
+   }
 }
 
 
 int SND_ParseNum(int num, uint8_t *pNum)
 {
-	  memset(pNum,0,sizeof(uint8_t)*5);
+    memset(pNum,0,sizeof(uint8_t)*5);
     pNum[0] = num/100000;
     if(pNum[0])//百位不为零
     {

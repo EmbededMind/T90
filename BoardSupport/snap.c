@@ -27,8 +27,8 @@ void SNAP_SetSnapLink(BERTH *pBerth)
 void SNAP_reset(void)
 {
    pSnapLink  = (BERTH*)(&mothership);
-	 pSnapLink->x_to_cross = 0;
-	 pSnapLink->y_to_cross = 0;
+   pSnapLink->x_to_cross = 0;
+   pSnapLink->y_to_cross = 0;
 //   snapType   = 0;
    checkMMSI  = mothership.user_id;
 }
@@ -38,13 +38,7 @@ void SNAP_Refresh(void)
 	if(pSnapLink == NULL || pSnapLink->Boat.user_id != checkMMSI)
 	{
 		SNAP_reset();
-//		return;
 	}
-
-//	if(!BULY_getValidNumber() && pSnapLink->Boat.user_id != checkMMSI)
-//	{
-//		SNAP_reset();
-//	}
 }
 
 void SNAP_searchNearestObj(int Dir_x, int Dir_y)
@@ -59,181 +53,175 @@ void SNAP_searchNearestObj(int Dir_x, int Dir_y)
 	long refMMSI = pSnapLink->Boat.user_id;
 	
 	int i;
-		 if(Dir_x == -1)
-     {
-        for(i=0; i<N_boat; i++)
-        {
-           if(SimpBerthes[i].pBerth->isInvader)
-           {
-              if(SimpBerthes[i].pBerth->Boat.user_id != refMMSI)
-              {
-                 if(SimpBerthes[i].pBerth->x_to_cross < ref_x  &&  ref_x - SimpBerthes[i].pBerth->x_to_cross < minDiff)
-                 {
-                    minDiff  = ref_x - SimpBerthes[i].pBerth->x_to_cross;
-                    potentialSnapLink  = SimpBerthes[i].pBerth;                  
-                 }
-              }
-           }
-        }
-        
-					 if(BULY_getValidNumber() > 0)
-					 {
-							pBuly  = pBulyHeader;
-							while(pBuly){
-								 if(pBuly->pBoatLink->Boat.user_id != refMMSI){
-											 if(    pBuly->pBoatLink->x_to_cross  
-													 && pBuly->pBoatLink->x_to_cross < ref_x  
-													 && ref_x -pBuly->pBoatLink->x_to_cross < minDiff )
-											 {
-													minDiff  = ref_x -pBuly->pBoatLink->x_to_cross;
-													potentialSnapLink  = pBuly->pBoatLink;
-											 }
-								 }
-								 
-								 pBuly  = pBuly->pNext;
-							}
-					 }
+   if(Dir_x == -1)
+   {
+      for(i=0; i<N_boat; i++)
+      {
+         if(SimpBerthes[i].pBerth->isInvader)
+         {
+            if(SimpBerthes[i].pBerth->Boat.user_id != refMMSI)
+            {
+               if(SimpBerthes[i].pBerth->x_to_cross < ref_x  &&  ref_x - SimpBerthes[i].pBerth->x_to_cross < minDiff)
+               {
+                  minDiff  = ref_x - SimpBerthes[i].pBerth->x_to_cross;
+                  potentialSnapLink  = SimpBerthes[i].pBerth;                  
+               }
+            }
+         }
+      }
      
-        if(potentialSnapLink)
-        {
-           pSnapLink  = potentialSnapLink;
-           checkMMSI  = ((BERTH*)pSnapLink)->Boat.user_id;
-        }    
-        return ;
-     }
+      if(BULY_getValidNumber() > 0)
+      {
+         pBuly  = pBulyHeader;
+         while(pBuly)
+         {
+            if(pBuly->pBoatLink->Boat.user_id != refMMSI)
+            {
+               if(    pBuly->pBoatLink->x_to_cross  
+                   && pBuly->pBoatLink->x_to_cross < ref_x  
+                   && ref_x -pBuly->pBoatLink->x_to_cross < minDiff )
+               {
+                  minDiff  = ref_x -pBuly->pBoatLink->x_to_cross;
+                  potentialSnapLink  = pBuly->pBoatLink;
+               }
+            }
+            pBuly  = pBuly->pNext;
+         }
+      }
+
+      if(potentialSnapLink)
+      {
+         pSnapLink  = potentialSnapLink;
+         checkMMSI  = ((BERTH*)pSnapLink)->Boat.user_id;
+      }    
+      return ;
+   }	 
+   else if(Dir_x == 1)  
+   {
+      for(i=0; i<N_boat; i++)
+      {
+         if(SimpBerthes[i].pBerth->isInvader)
+         {
+            if(SimpBerthes[i].pBerth->Boat.user_id != refMMSI)
+            {
+               if(SimpBerthes[i].pBerth->x_to_cross > ref_x  &&  SimpBerthes[i].pBerth->x_to_cross - ref_x < minDiff)
+               {
+                  minDiff  = SimpBerthes[i].pBerth->x_to_cross - ref_x;
+                  potentialSnapLink  = SimpBerthes[i].pBerth;             
+               }
+            }
+         }
+      }
+
+      if(BULY_getValidNumber() > 0)
+      {
+         pBuly  = pBulyHeader;
+         while(pBuly){
+            if(pBuly->pBoatLink->Boat.user_id != refMMSI){
+               if(    pBuly->pBoatLink->x_to_cross  
+                   && pBuly->pBoatLink->x_to_cross > ref_x  
+                   && pBuly->pBoatLink->x_to_cross -ref_x < minDiff )
+               {
+                  minDiff  = pBuly->pBoatLink->x_to_cross -ref_x;
+                  potentialSnapLink  = pBuly->pBoatLink;
+               }
+            }
+            pBuly  = pBuly->pNext;
+         }
+      }
+
+      if(potentialSnapLink)
+      {
+         pSnapLink  = potentialSnapLink;
+         checkMMSI  = ((BERTH*)pSnapLink)->Boat.user_id;      
+      }      
+      return ;
+   }
+   else if(Dir_y == -1)
+   {
+
+      for(i=0; i<N_boat; i++)
+      {
+         if(SimpBerthes[i].pBerth->isInvader)
+         {
+            if(SimpBerthes[i].pBerth->Boat.user_id != refMMSI)
+            {
+               if(SimpBerthes[i].pBerth->y_to_cross < ref_y  &&  ref_y - SimpBerthes[i].pBerth->y_to_cross < minDiff)
+               {
+                  minDiff  = ref_y - SimpBerthes[i].pBerth->y_to_cross;
+                  potentialSnapLink  = SimpBerthes[i].pBerth;
+               }
+            }
+         }
+      }
+      if(BULY_getValidNumber() > 0)
+      {
+         pBuly  = pBulyHeader;
+         while(pBuly){
+            if(pBuly->pBoatLink->Boat.user_id != refMMSI)
+            {
+               if(pBuly->pBoatLink->y_to_cross  
+                  && pBuly->pBoatLink->y_to_cross < ref_y 
+                  && ref_y-pBuly->pBoatLink->y_to_cross < minDiff )
+               {
+                  minDiff  = ref_y -pBuly->pBoatLink->y_to_cross;
+                  potentialSnapLink  = pBuly->pBoatLink;
+               }
+            }         
+            pBuly  = pBuly->pNext;
+         }
+      }
+      
+      if(potentialSnapLink)
+      {
+         pSnapLink  = potentialSnapLink;
+         checkMMSI  = ((BERTH*)pSnapLink)->Boat.user_id;        
+      }
+     
+      return ;
+   } 
 		 
-     else if(Dir_x == 1)  
-     {
-        for(i=0; i<N_boat; i++)
-        {
-           if(SimpBerthes[i].pBerth->isInvader)
-           {
-              if(SimpBerthes[i].pBerth->Boat.user_id != refMMSI)
-              {
-                 if(SimpBerthes[i].pBerth->x_to_cross > ref_x  &&  SimpBerthes[i].pBerth->x_to_cross - ref_x < minDiff)
-                 {
-                    minDiff  = SimpBerthes[i].pBerth->x_to_cross - ref_x;
-                    potentialSnapLink  = SimpBerthes[i].pBerth;             
-                 }
-              }
-           }
-        }
+   else if(Dir_y == 1)   
+   {
+      for(i=0; i<N_boat; i++)
+      {
+         if(SimpBerthes[i].pBerth->isInvader)
+         {
+            if(SimpBerthes[i].pBerth->Boat.user_id != refMMSI)
+            {
+               if(SimpBerthes[i].pBerth->y_to_cross > ref_y  &&  SimpBerthes[i].pBerth->y_to_cross - ref_y < minDiff)
+               {
+                  minDiff  = SimpBerthes[i].pBerth->y_to_cross - ref_y;
+                  potentialSnapLink  = SimpBerthes[i].pBerth;
+               }
+            }
+         }
+      }
 
-					 if(BULY_getValidNumber() > 0)
-					 {
-							pBuly  = pBulyHeader;
-							while(pBuly){
-								 if(pBuly->pBoatLink->Boat.user_id != refMMSI){
-											 if(    pBuly->pBoatLink->x_to_cross  
-													 && pBuly->pBoatLink->x_to_cross > ref_x  
-													 && pBuly->pBoatLink->x_to_cross -ref_x < minDiff )
-											 {
-													minDiff  = pBuly->pBoatLink->x_to_cross -ref_x;
-													potentialSnapLink  = pBuly->pBoatLink;
-											 }
-								 }
-								 
-								 pBuly  = pBuly->pNext;
-							}
-					 }
-
-        if(potentialSnapLink)
-        {
-           pSnapLink  = potentialSnapLink;
-           checkMMSI  = ((BERTH*)pSnapLink)->Boat.user_id;      
-        }      
-        return ;
-     }
-		 
-     else if(Dir_y == -1)
-     {
-
-        for(i=0; i<N_boat; i++)
-        {
-           if(SimpBerthes[i].pBerth->isInvader)
-           {
-              if(SimpBerthes[i].pBerth->Boat.user_id != refMMSI)
-              {
-                 if(SimpBerthes[i].pBerth->y_to_cross < ref_y  &&  ref_y - SimpBerthes[i].pBerth->y_to_cross < minDiff)
-                 {
-                    minDiff  = ref_y - SimpBerthes[i].pBerth->y_to_cross;
-                    potentialSnapLink  = SimpBerthes[i].pBerth;
-                 }
-              }
-           }
-        }
-
-					 if(BULY_getValidNumber() > 0)
-					 {
-							pBuly  = pBulyHeader;
-							while(pBuly){
-								 if(pBuly->pBoatLink->Boat.user_id != refMMSI){
-											 if(    pBuly->pBoatLink->y_to_cross  
-													 && pBuly->pBoatLink->y_to_cross < ref_y 
-													 && ref_y -pBuly->pBoatLink->y_to_cross < minDiff )
-											 {
-													minDiff  = ref_y -pBuly->pBoatLink->y_to_cross;
-													potentialSnapLink  = pBuly->pBoatLink;
-											 }
-								 }
-								 
-								 pBuly  = pBuly->pNext;
-							}
-					 }
-         
-        if(potentialSnapLink)
-        {
-           pSnapLink  = potentialSnapLink;
-           checkMMSI  = ((BERTH*)pSnapLink)->Boat.user_id;        
-        }
-        
-        return ;
-     } 
-		 
-     else if(Dir_y == 1)   
-     {
-
-        for(i=0; i<N_boat; i++)
-        {
-           if(SimpBerthes[i].pBerth->isInvader)
-           {
-              if(SimpBerthes[i].pBerth->Boat.user_id != refMMSI)
-              {
-                 if(SimpBerthes[i].pBerth->y_to_cross > ref_y  &&  SimpBerthes[i].pBerth->y_to_cross - ref_y < minDiff)
-                 {
-                    minDiff  = SimpBerthes[i].pBerth->y_to_cross - ref_y;
-                    potentialSnapLink  = SimpBerthes[i].pBerth;
-                 }
-              }
-           }
-        }
-
-					 if(BULY_getValidNumber() > 0)
-					 {
-							pBuly  = pBulyHeader;
-							while(pBuly){
-								 if(pBuly->pBoatLink->Boat.user_id != refMMSI){
-											 if(    pBuly->pBoatLink->y_to_cross  
-													 && pBuly->pBoatLink->y_to_cross > ref_y 
-													 && pBuly->pBoatLink->y_to_cross -ref_y< minDiff )
-											 {
-													minDiff  = pBuly->pBoatLink->y_to_cross -ref_y;
-													potentialSnapLink  = pBuly->pBoatLink;
-											 }
-								 }
-								 
-								 pBuly  = pBuly->pNext;
-							}
-					 }
-        
-        if(potentialSnapLink)
-        {
-           pSnapLink  = potentialSnapLink;
-           checkMMSI  = ((BERTH*)pSnapLink)->Boat.user_id;         
-        }
-        
-        return ;
-     }     
+      if(BULY_getValidNumber() > 0)
+      {
+         pBuly  = pBulyHeader;
+         while(pBuly){
+            if(pBuly->pBoatLink->Boat.user_id != refMMSI)
+            {
+               if(    pBuly->pBoatLink->y_to_cross  
+                   && pBuly->pBoatLink->y_to_cross > ref_y 
+                   && pBuly->pBoatLink->y_to_cross -ref_y< minDiff )
+               {
+                  minDiff  = pBuly->pBoatLink->y_to_cross -ref_y;
+                  potentialSnapLink  = pBuly->pBoatLink;
+               }
+            }
+            pBuly  = pBuly->pNext;
+         }
+      }
+      if(potentialSnapLink)
+      {
+         pSnapLink  = potentialSnapLink;
+         checkMMSI  = ((BERTH*)pSnapLink)->Boat.user_id;         
+      }
+      return ;
+   }     
 }
 
 void SNAP_SearchNearestStub(char keyType, Stub *pCursorStub)
@@ -248,8 +236,6 @@ void SNAP_SearchNearestStub(char keyType, Stub *pCursorStub)
 			{
 				do
 				{
-//					if(pIndex->pStub->basePoint.y > point.y)
-//						if(
 					pIndex = pIndex->pNext;
 				}
 				while(pIndex != pStubHead);

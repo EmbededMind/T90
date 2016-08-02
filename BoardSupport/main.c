@@ -14,13 +14,7 @@
 #include "lpc177x_8x_uart.h"
 #include "sdram.h"
 
-////////
-///////
-//////
-////
-///
-//
-//
+
 extern volatile int TimeMS;  // Defined in GUI_X.c
 
 void SysTick_Handler (void);
@@ -46,17 +40,17 @@ void SysTick_Init(void)//SysTick_Init
 
 int main(void)
 {	
-	CLKPWR_ConfigPPWR(CLKPWR_PCONP_PCGPIO, ENABLE);/* 打开GPIO外设电源，上电后GPIO电源默认是打开的，此行可去掉 */
+   CLKPWR_ConfigPPWR(CLKPWR_PCONP_PCGPIO, ENABLE);/* 打开GPIO外设电源，上电后GPIO电源默认是打开的，此行可去掉 */
 
 
 //初始化UART0 ，UART2，打开Timer2
 	USER_Init();
- printf("-------\n");
+printf("-------\n");
 	lpc1788_Lcd_Init();	  /* 初始化LCD */	
 
 // lpc1788_SDRAM_Test();
- lpc1788_PWM_Init();
- EEPROM_Init();
+   lpc1788_PWM_Init();
+   EEPROM_Init();
 // 
 ////	LCD_test();
 ////  //fs_test();

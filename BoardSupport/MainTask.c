@@ -37,19 +37,19 @@ printf("maintask\n");
    GUI_UC_SetEncodeUTF8();	
    WM_SetCreateFlags(WM_CF_MEMDEV);
    
-    hMem0 = GUI_MEMDEV_Create(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    GUI_MEMDEV_Select(hMem0);
-    GUI_SetBkColor(0x009c6f00);
-    GUI_Clear();
-    
-    GUI_SetFont(&GUI_Font_T90_60);
-    GUI_SetColor(0x00c3e0e9);
-    GUI_DispStringAt("拖网距离安全标终端",200,200);
-    
-		GUI_MEMDEV_Select(0);
-    GUI_MEMDEV_CopyToLCD(hMem0);
-    GUI_MEMDEV_Delete(hMem0);
-    GUI_Delay(1000);
+   hMem0 = GUI_MEMDEV_Create(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+   GUI_MEMDEV_Select(hMem0);
+   GUI_SetBkColor(0x009c6f00);
+   GUI_Clear();
+
+   GUI_SetFont(&GUI_Font_T90_60);
+   GUI_SetColor(0x00c3e0e9);
+   GUI_DispStringAt("拖网距离安全标终端",200,200);
+
+   GUI_MEMDEV_Select(0);
+   GUI_MEMDEV_CopyToLCD(hMem0);
+   GUI_MEMDEV_Delete(hMem0);
+   GUI_Delay(1000);
     
 
    //字体设置	//GUI_SetDefaultFont (&SIF_Font);
@@ -64,64 +64,64 @@ printf("maintask\n");
 	
 //	 GUI_SetBkColor(GUI_GRAY);
 //   GUI_Clear();
-	 GUI_SetColor(GUI_BLACK);
-	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
-	 GUI_FillRect(0, SCREEN_HEIGHT, 799, 479);   //右边和下边被遮盖边框填充黑色
-	 
-	 
-	 GUI_CURSOR_Select(&GUI_CursorCrossS);       //选择光标类型
-	 GUI_CURSOR_Hide();
+   GUI_SetColor(GUI_BLACK);
+   GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
+   GUI_FillRect(0, SCREEN_HEIGHT, 799, 479);   //右边和下边被遮盖边框填充黑色
+
+
+   GUI_CURSOR_Select(&GUI_CursorCrossS);       //选择光标类型
+   GUI_CURSOR_Hide();
 	 
 //DLG_testDimensinCreate();
 	
-		workModeWin = WIN_WorkModeCreate(); 
-	
-		mainShipWin = WIN_SingleShipCreate();	
-//		doubleShipWin = WIN_DoubleShipCreate();
+   workModeWin = WIN_WorkModeCreate(); 
 
-  
+   mainShipWin = WIN_SingleShipCreate();	
+   //		doubleShipWin = WIN_DoubleShipCreate();
 
-		
-		alarmMonitorWin = WIN_AlarmMonitorCreate();           //创建窗口 
-		
-		mainMenuDlg = DLG_MainMenuCreate();	
-		dstSetMenuDlg = DLG_DstSetMenuCreate();		
-		alarmSetMenuDlg = DLG_AlarmSetMenuCreate();
-		systemSetDlg = DLG_SystemSetCreate();
-		myFleetDlg = DLG_MyFleetSetMenuCreate();
+
+
+
+   alarmMonitorWin = WIN_AlarmMonitorCreate();           //创建窗口 
+
+   mainMenuDlg = DLG_MainMenuCreate();	
+   dstSetMenuDlg = DLG_DstSetMenuCreate();		
+   alarmSetMenuDlg = DLG_AlarmSetMenuCreate();
+   systemSetDlg = DLG_SystemSetCreate();
+   myFleetDlg = DLG_MyFleetSetMenuCreate();
+
+   singleShipDstSetWin = WIN_SingleShipDstSetCreate();
+   doubleShipDstSetWin  = WIN_doubleShipDstSetCreate();
+
+   invdAlarmSetWin = WIN_InvdAlarmSetCreate();
+   spdingAlarmSetWin = WIN_SpdingAlarmSetCreate();
+   sogAlarmSetWin = WIN_SogAlarmSetCreate();
+   specialAlarmSetDlg = DLG_SpecialAlarmSetCreate();
+
+   confirmWin = WIN_ConfirmCreate();
+     
       
-		singleShipDstSetWin = WIN_SingleShipDstSetCreate();
-      doubleShipDstSetWin  = WIN_doubleShipDstSetCreate();
-		
-		invdAlarmSetWin = WIN_InvdAlarmSetCreate();
-		spdingAlarmSetWin = WIN_SpdingAlarmSetCreate();
-		sogAlarmSetWin = WIN_SogAlarmSetCreate();
-		specialAlarmSetDlg = DLG_SpecialAlarmSetCreate();
-		
-		confirmWin = WIN_ConfirmCreate();
-		  
-			
-
-		
-      highspshipsetWin = WIN_HighSpeedShipSetCreate();
 
 
-		if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖
-		{         
-			monitorState = OFF;
-			WM_BringToTop(workModeWin);
-			WM_SetFocus(workModeWin);
-		}
+   highspshipsetWin = WIN_HighSpeedShipSetCreate();
 
-		else
-		{
-			StubRefresh();
-			WM_BringToTop(mainShipWin);
-			WM_SetFocus(mainShipWin);
-		}
-      
-			WM_BringToTop(MMSISetWin);
-			WM_SetFocus(SoftInputWin);
+
+   if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖
+   {         
+      monitorState = OFF;
+      WM_BringToTop(workModeWin);
+      WM_SetFocus(workModeWin);
+   }
+
+   else
+   {
+      StubRefresh();
+      WM_BringToTop(mainShipWin);
+      WM_SetFocus(mainShipWin);
+   }
+
+      WM_BringToTop(MMSISetWin);
+      WM_SetFocus(SoftInputWin);
 
 
 

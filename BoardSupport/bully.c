@@ -113,46 +113,36 @@ void BULY_delete(BERTH* addr)
    BULY_BERTH* pBC;
    BULY_BERTH* pCursor;
   
-	 if(pBulyHeader)
-	 {
-		 pBC  = pBulyHeader;  
-		 if(pBulyHeader->pBoatLink == addr)
-		 {
-//        pBulyHeader->pBoatLink->Boat.category = 0;
-				pBulyHeader  = pBulyHeader->pNext;
-
-	//      if(pBC->pBoatLink->mntState == MNTState_Triggered)
-	//      {
-					 validCnt--;
-	//      }
-				memset(pBC, 0, sizeof(BULY_BERTH));
-				return;
-		 }
-		 else
-		 {
-				pCursor  = pBulyHeader->pNext;
-				while(pCursor)
-				{
-					 if(pCursor->pBoatLink == addr)
-					 {
-//                         pBulyHeader->pBoatLink->Boat.category = 0;
-                         pBC->pNext  = pCursor->pNext;
-						 
-	//            if(pCursor->pBoatLink->mntState == MNTState_Triggered)
-	//            {
-								 validCnt--;
-	//            }
-							memset(pCursor, 0, sizeof(BULY_BERTH));			 
-							return ;
-					 }
-					 else
-					 {
-							pBC  = pCursor;
-							pCursor  = pCursor->pNext;
-					 }
-				}
-		 }
-	 }
+	if(pBulyHeader)
+   {
+      pBC  = pBulyHeader;  
+      if(pBulyHeader->pBoatLink == addr)
+      {
+         pBulyHeader  = pBulyHeader->pNext;
+         validCnt--;
+         memset(pBC, 0, sizeof(BULY_BERTH));
+         return;
+      }
+      else
+      {
+         pCursor  = pBulyHeader->pNext;
+         while(pCursor)
+         {
+            if(pCursor->pBoatLink == addr)
+            {
+               pBC->pNext  = pCursor->pNext;
+               validCnt--;
+               memset(pCursor, 0, sizeof(BULY_BERTH));			 
+               return ;
+            }
+            else
+            {
+               pBC  = pCursor;
+               pCursor  = pCursor->pNext;
+            }
+         }
+      }
+   }
 }
 
 
@@ -178,7 +168,6 @@ void BULY_maskAllBerth(void )
       }
       pBuly  = pBuly->pNext;
    }
-//   validCnt  = 0;
 }
 
 
@@ -243,8 +232,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
 unsigned char BULY_parseNation(long id)
 {
    int i  = 0;
-   int tmp  = id /1000000;
-//INFO("parseMMSI:%09ld--%d", id,tmp);  
+   int tmp  = id /1000000; 
 
    if(tmp < NationMap[0].orgCode  ||  tmp >= NationMap[NATION_NUM-1].orgCode+NationMap[NATION_NUM-1].expCnt)
    {
@@ -254,7 +242,6 @@ unsigned char BULY_parseNation(long id)
    for(; i<NATION_NUM; i++){
       if( tmp >= NationMap[i].orgCode  &&  tmp <= (NationMap[i].orgCode+NationMap[i].expCnt) ) 
       {
-//INFO("NationMap[%d].nation:0x%x",i, NationMap[i].nation);
          if( (0x01<<i) &t90_set.alarm.nation){
             return NationMap[i].nation;
          }
