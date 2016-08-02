@@ -86,34 +86,38 @@ static void CHECK_MS_Speed_masked()
 
 void CHECK_DelHighSpeed()
 {
-    BULY_BERTH *pBerth;
-    pBerth = pBulyHeader;
-    if(!t90_set.alarm.on_off & (0x01<<3))
-    {
-        while(pBerth)
-        {
-           pBerth->pBoatLink->Boat.category = 0;
-           BULY_delete(pBerth->pBoatLink);
-           pBerth = pBerth->pNext;
-        }       
-       goto delhighship;
-    }
+   BULY_BERTH *pBerth;
+   BULY_BERTH *pNext;
+   pBerth = pBulyHeader;
+   if(!t90_set.alarm.on_off & (0x01<<3))
+   {
+      while(pBerth)
+      {
+         pNext = pBerth->pNext;
+         pBerth->pBoatLink->Boat.category = 0;
+         BULY_delete(pBerth->pBoatLink);
+         pBerth = pNext;
+      }       
+      return;
+   }
     
-    while(pBerth)
-    {
-        if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.SOG < t90_set.alarm.highspeed)
-        {
-            pBerth->pBoatLink->Boat.category = 0;
-				BULY_delete(pBerth->pBoatLink);
-        }
-        if((pBerth->pBoatLink->Boat.category & TYPE_FAMILY) == TYPE_FAMILY)
-        {
-            pBerth->pBoatLink->Boat.category = 0;
-				BULY_delete(pBerth->pBoatLink);
-        }
-        pBerth = pBerth->pNext;
-    }    
-delhighship: NULL;   
+   while(pBerth)
+   {
+      pNext = pBerth->pNext;
+      if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.SOG < t90_set.alarm.highspeed)
+      {
+         pBerth->pBoatLink->Boat.category = 0;
+         BULY_delete(pBerth->pBoatLink);
+         goto delhighjmp;
+      }
+      if((pBerth->pBoatLink->Boat.category & TYPE_FAMILY) == TYPE_FAMILY)
+      {
+         pBerth->pBoatLink->Boat.category = 0;
+         BULY_delete(pBerth->pBoatLink);
+      }
+delhighjmp:      pBerth = pBerth->pNext;
+   }    
+   
 }
 
 void CHECK_STRefresh()

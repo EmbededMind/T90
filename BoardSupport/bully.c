@@ -122,6 +122,7 @@ printf("BULY_delete begin\n");
          validCnt--;
          pBC->pBoatLink = NULL;
          pBC->pNext = NULL;
+         
 //         memset(pBC, NULL, sizeof(BULY_BERTH));
          return;
       }

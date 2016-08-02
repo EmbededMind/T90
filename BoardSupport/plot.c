@@ -420,16 +420,13 @@ void DrawAllOtherShips()    //?????
 		}
 	}
 	
-//	if(monitorState == ON)
-//	{
-		while(pBully)
-		{
-			point.x = pBully->pBoatLink->x_to_cross;
-			point.y = pBully->pBoatLink->y_to_cross;
-			DrawBullyShip(GetItemPixel(point), (pBully->pBoatLink->Boat.COG - mothership.COG)/10);
-			pBully = pBully->pNext;
-		}
-//	}
+   while(pBully)
+   {
+      point.x = pBully->pBoatLink->x_to_cross;
+      point.y = pBully->pBoatLink->y_to_cross;
+      DrawBullyShip(GetItemPixel(point), (pBully->pBoatLink->Boat.COG - mothership.COG)/10);
+      pBully = pBully->pNext;
+   }
 }
 void DrawBlueTri(Point pixelTemp)
 {
