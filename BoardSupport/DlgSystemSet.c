@@ -277,6 +277,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
 						GUI_SetFont(&GUI_Font_T90_30);
 						GUI_SetColor(pColors->textColor);
 						GUI_DispStringAt("系统设置：",SYSTEM_SET_ITEM_X,SYSTEM_SET_Y+15);
+                  GUI_SetFont(&GUI_Font_T90_24);
 						GUI_DispStringAt("作业方式：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y);
 			         GUI_DispStringAt("单拖",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y);
 						GUI_DispStringAt("双拖",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y);
@@ -333,59 +334,21 @@ WM_HWIN DLG_SystemSetCreate()
 static void sldListener(WM_MESSAGE * pMsg)
 {
    const WM_KEY_INFO * pInfo;
-   WM_MESSAGE myMsg;
-   
-   
+   WM_MESSAGE myMsg;  
    switch(pMsg->MsgId)
    {
       case WM_KEY:
            pInfo  = (WM_KEY_INFO*)(pMsg->Data.p);
            switch(pInfo->Key)
-           {
-              
-//              case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }                           
-//                        break;
-              
+           {          
               case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }   
-                        break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
+                  myMsg.hWin = systemSetDlg;
+                  myMsg.hWinSrc = pMsg->hWin;
+                  myMsg.MsgId = USER_MSG_MOTHERPOS;
+                  myMsg.Data.v = !t90_set.sys.motherpos;
+                  WM_SendMessage(myMsg.hWin, &myMsg);   
+                  break; 
+
               case GUI_KEY_PWM_INC:       
                    WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                    break;
