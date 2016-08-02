@@ -194,6 +194,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 											WM_BringToTop(confirmWin);
 											WM_SetFocus(confirmWin);
 										}
+//printf("isInvadON = %d\n",isInvadON);
                     break;
 							 
                case GUI_KEY_RIGHT:
@@ -207,7 +208,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                                  {
                                     agentdst_set+=50;
                                  }
-											if(agentdst_set > 9900) agentdst_set = 9900;
+											if(agentdst_set > 5000) agentdst_set = 5000;
 										}
 										else
 										{
@@ -317,7 +318,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				 HSD_SLIDER_SetFocusSlotColor(slider,pColors_Slider->focusSlotColor);
              WM_SetCallback(slider, &mySliderCallback);
              HSD_SLIDER_SetValue(slider,t90_set.alarm.on_off & 0x01);
-//				 WM_DefaultProc(pMsg);
          break;
          
     case WM_PAINT:
@@ -400,7 +400,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                
                sprintf(pStrBuf,"%01d.%01d", (agentdst_set * MILLINM_TO_M)/1000, ((agentdst_set * MILLINM_TO_M)%1000)/100);
             }
-//            HSD_SLIDER_SetValue(slider,isInvadON);
             HSD_BUTTON_SetText(button, pStrBuf);
             GUI_DispStringAt("闯入报警：", drawArea.x0, drawArea.y0 - 60);
             GUI_DispStringAt("关闭", drawArea.x0+125, drawArea.y0 - 60);
@@ -430,6 +429,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                   HSD_SLIDER_SetValue(slider,isInvadON);
 					}
 					WM_SetFocus(alarmSetMenuDlg);
+//printf("isInvadON = %d\n",isInvadON);
+//printf("t90_set.alarm.invd_dst = 0x%x\n",t90_set.alarm.invd_dst);
 					break;
          
     default:

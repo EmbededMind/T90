@@ -282,7 +282,7 @@ Bool isInPolygon(BERTH *pBerth)
     
     if(isinpoly == pointInPolygon)
     {    
-        oldFlg = TRUE;
+       oldFlg = TRUE;
     }
     else
     {
@@ -318,7 +318,7 @@ void detect()
    {
       SimpBerthes[i].pBerth->isInvader = 0;
    }
-   if(t90_set.alarm.on_off & 0x01)
+   if(!(t90_set.alarm.on_off & 0x01))
       goto detect;
    if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
    {

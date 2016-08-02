@@ -112,15 +112,17 @@ void BULY_delete(BERTH* addr)
 {
    BULY_BERTH* pBC;
    BULY_BERTH* pCursor;
-  
+printf("BULY_delete begin\n"); 
 	if(pBulyHeader)
    {
       pBC  = pBulyHeader;  
       if(pBulyHeader->pBoatLink == addr)
-      {
+      {         
          pBulyHeader  = pBulyHeader->pNext;
          validCnt--;
-         memset(pBC, 0, sizeof(BULY_BERTH));
+         pBC->pBoatLink = NULL;
+         pBC->pNext = NULL;
+//         memset(pBC, NULL, sizeof(BULY_BERTH));
          return;
       }
       else
@@ -132,17 +134,18 @@ void BULY_delete(BERTH* addr)
             {
                pBC->pNext  = pCursor->pNext;
                validCnt--;
-               memset(pCursor, 0, sizeof(BULY_BERTH));			 
+               pCursor->pBoatLink = NULL;
+               pCursor->pNext = NULL;               
                return ;
             }
-            else
-            {
+
                pBC  = pCursor;
                pCursor  = pCursor->pNext;
-            }
+
          }
       }
    }
+printf("BULY_delete end\n");
 }
 
 

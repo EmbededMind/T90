@@ -78,6 +78,7 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 
 
  */
+
 typedef struct RemoveShip
 {
    long MMSI[5];

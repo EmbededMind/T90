@@ -63,6 +63,7 @@ int getSphereDist(long lg_1,long lt_1, long lg_2, long lt_2);
 void updateTimeStamp(void);
 static BERTH * allocOneBerth(void);
 
+static int highspeed;
 /**
 * 
 *
@@ -181,12 +182,13 @@ int insert_24B(type_of_ship * p_msg)
 
 int update_18(BERTH * pBerth, struct message_18 * p_msg)
 {
+   
    int lastDist  = 0;
    int Dist  = 0;
    int i  = 0;
    BERTH * tmp  = NULL;   
    lastDist  = pBerth->Boat.dist;
-
+   highspeed = t90_set.alarm.highspeed;
 
 
    /// Update struct elements  
@@ -212,8 +214,8 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
          break;
       }            
    }
-
-   if(pBerth->Boat.category == 0  &&  p_msg->SOG >= t90_set.alarm.highspeed)
+printf(">=highspeed begin\n");
+   if(pBerth->Boat.category == 0  &&  p_msg->SOG >= highspeed)
    {
       unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
 //		  nation = 0x10;//////////////////////////////////////////////////////////////////////////
@@ -221,6 +223,7 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
       BULY_add(pBerth);
 		llToxy(pBerth);
    }
+printf(">=highspeed end \n");
    
   
 
@@ -373,6 +376,7 @@ int add_18(struct message_18 * p_msg)
    
    int Dist  = 0;
    int i;
+   highspeed = t90_set.alarm.highspeed;
    buf  = allocOneBerth();
    if(buf == NULL) 
    {
@@ -406,8 +410,8 @@ int add_18(struct message_18 * p_msg)
          break;
       }            
    }
-
-   if(buf->Boat.category == 0  &&  p_msg->SOG >= t90_set.alarm.highspeed)
+printf(">=highspeed begin\n");
+   if(buf->Boat.category == 0  &&  p_msg->SOG >= highspeed)
    {
       unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
 //      nation = 0x10;/////////////////////////////////////////////////////////////////////////////////////
@@ -415,7 +419,7 @@ int add_18(struct message_18 * p_msg)
         BULY_add(buf); 
 		  llToxy(buf);
    }
- 
+printf(">=highspeed end\n"); 
 
 //printf("alloc:%d--%09ld\n",buf-Berthes,buf->Boat.user_id);   
    if(pHeader == NULL)
@@ -488,7 +492,6 @@ int update_24A(BERTH * pBerth, struct message_24_partA * p_msg)
    int i  = 0; 
 
    pBerth->Boat.time_cnt  = TIMESTAMP; 
-   
    
    for(i = 0; i < t90_set.shipout.numShip; i++)
    {
