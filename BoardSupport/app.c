@@ -782,7 +782,9 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
       shiftReg   = text[16];
       shiftReg   = (shiftReg << 8) | text[17];
       mothership.COG = shiftReg /10;
-
+////			printf("reg = %d", shiftReg);
+////			printf("mo.cog = %d", mothership.COG);
+//mothership.COG = 900;
 
       shiftReg   = text[18];
       shiftReg   = (shiftReg << 8) | text[19];
