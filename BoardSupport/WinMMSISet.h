@@ -106,15 +106,6 @@ WM_HWIN SoftInputWin;
 #define ID_BUTTON_9        GUI_ID_USER+12
 #define ID_BUTTON_EMPTY    GUI_ID_USER+13
 
-/*********************************************************************
-*
-*            Skin
-*
-**********************************************************************
-*/
-/* button skin */
-extern const BUTTON_SKINFLEX_PROPS btSkin[2][2];
-
 
 /*********************************************************************
 *

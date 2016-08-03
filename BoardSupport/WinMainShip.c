@@ -156,7 +156,6 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 								 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 								 break;
 						 case GUI_KEY_MENU:
-
 									WM_DeleteTimer(timer);
 									WM_BringToTop(mainMenuDlg);
 									WM_SetFocus(mainMenuDlg);

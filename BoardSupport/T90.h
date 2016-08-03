@@ -43,6 +43,9 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define OFF      0
 #define ON       1
 
+#define MMSI_SET 1
+#define MMSI_ADD 2
+
 #define DEFAULT_MOTOAS 2000
 #define DEFAULT_DST1   400
 #define DEFAULT_DST2   25
@@ -69,8 +72,8 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_VOLUM      1
 #define DEFAULT_BRIGHT     4
 
-
-
+/* button skin */
+extern const BUTTON_SKINFLEX_PROPS btSkin[2][2];
 
 
 /**
@@ -159,6 +162,9 @@ void T90_Reset(void);
 void T90_setAlarmON_OFF(int value,int which);
 
 //int fetchplug();
+
+extern long monitMMSI[5];
+extern int MonitShipNum;
 #endif
 
 

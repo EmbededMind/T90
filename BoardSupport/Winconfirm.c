@@ -18,7 +18,7 @@ static WM_HWIN dlgTextContent;
 
 static int Option  = 0;
 static WM_MESSAGE myMsg;
-static WM_HWIN buttons[2];
+static WM_HWIN buttons[3];
 
 static void myButton(WM_MESSAGE * pMsg);
 
@@ -34,13 +34,22 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 	
 	int xSize;
 	int ySize;  
+	char UserData;
 	
   switch (pMsg->MsgId) {
 			  
 	case WM_SET_FOCUS:
 			 if(pMsg->Data.v)
 			 {
-				 WM_SetFocus(buttons[0]);
+					WM_GetUserData(pMsg->hWin,&UserData,4);
+					if(UserData==MONITMMSI_FULL)
+					{
+						WM_SetFocus(buttons[2]);
+					}
+					else
+					{
+						WM_SetFocus(buttons[0]);
+					}
 			 }
 			 break;		
 	
@@ -86,6 +95,18 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        BUTTON_SetBkColor(buttons[1],BUTTON_BI_UNPRESSED,pColors->btBkColor);
        BUTTON_SetTextColor(buttons[1],BUTTON_BI_UNPRESSED,pColors->btTextColor);
        
+							//
+							// Initialization of 'bt_OK'
+							//							
+							buttons[2] = BUTTON_CreateEx (180,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON2);
+       WM_HideWin(buttons[2]);
+       BUTTON_SetText(buttons[2], "确定");
+       BUTTON_SetFont(buttons[2], &GUI_Font_T90_30);
+	      WM_SetCallback(buttons[2], &myButton);
+	
+       BUTTON_SetBkColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btBkColor);
+       BUTTON_SetTextColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btTextColor);
+							
     //
     // Initialization of 'Text'
     //
@@ -105,27 +126,35 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 	  switch(pInfo->Key)
 		 {
 		   	case GUI_KEY_LEFT:
-		   	case GUI_KEY_RIGHT: 				
-						 if(WM_HasFocus(buttons[0]))
-             {
-               WM_SetFocus(buttons[1]);
-             }
-             else
-             {
-               WM_SetFocus(buttons[0]);
-             }
-			       break;	
+		   	case GUI_KEY_RIGHT: 
+							   WM_GetUserData(pMsg->hWin,&UserData,4);
+							   if(UserData==MONITMMSI_FULL)
+										{
+											WM_SetFocus(buttons[2]);
+										}
+										else
+										{
+											if(WM_HasFocus(buttons[0]))
+											{
+													WM_SetFocus(buttons[1]);
+											}
+											else
+											{
+													WM_SetFocus(buttons[0]);
+											}
+										}
+										break;	
        
-        case GUI_KEY_BACKSPACE:
-             {
-               myMsg.hWin  = myMsg.hWinSrc;
-               myMsg.hWinSrc  = pMsg->hWin;
-               myMsg.MsgId    = USER_MSG_REPLY;
-               myMsg.Data.v   = REPLY_CANCEL;
-               WM_SendMessage(myMsg.hWin, &myMsg);  
-               WM_BringToBottom(confirmWin);  
-             }
-						 break;  
+    case GUI_KEY_BACKSPACE:
+									{
+										myMsg.hWin  = myMsg.hWinSrc;
+										myMsg.hWinSrc  = pMsg->hWin;
+										myMsg.MsgId    = USER_MSG_REPLY;
+										myMsg.Data.v   = REPLY_CANCEL;
+										WM_SendMessage(myMsg.hWin, &myMsg);  
+										WM_BringToBottom(confirmWin);  
+									}
+									break;  
            
 			   default:
 			       break;
@@ -158,6 +187,20 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
                        myMsg.Data.v   = REPLY_CANCEL;
                        WM_SendMessage(myMsg.hWin, &myMsg);
                        break;
+																		
+																		case GUI_ID_BUTTON2:
+                       myMsg.hWin     = myMsg.hWinSrc;
+                       myMsg.hWinSrc  = pMsg->hWin;
+                       myMsg.MsgId    = USER_MSG_REPLY;
+                       myMsg.Data.v   = REPLY_OK;
+                       WM_SendMessage(myMsg.hWin, &myMsg);
+																							
+																							{
+																								WM_ShowWin(buttons[0]);
+																								WM_ShowWin(buttons[1]);
+																								WM_HideWin(buttons[2]);
+																							}
+																			    break;
                }
                WM_BringToBottom(confirmWin);
                break;
@@ -183,11 +226,45 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
               break;
          case SYS_SETTING:
               TEXT_SetText(dlgTextContent, "是否更改设置内容？");
+									     UserData = SYS_SETTING;
+									     WM_SetUserData(pMsg->hWin,&UserData,4);
 							break;
          case SYS_RESET:
               TEXT_SetText(dlgTextContent, "是否恢复出厂设置？");
+									     UserData = SYS_RESET;
+									     WM_SetUserData(pMsg->hWin,&UserData,4);
               break;
-         
+									
+									case MONITMMSI_SET:
+										    TEXT_SetText(dlgTextContent, "是否修改辅助作业船九位码？");
+									     
+									     UserData = MONITMMSI_SET;
+									     WM_SetUserData(pMsg->hWin,&UserData,4);
+              break;
+									
+									case MONITMMSI_ADD:
+										    TEXT_SetText(dlgTextContent, "是否添加屏蔽报警船只？");
+									     
+									     UserData = MONITMMSI_ADD;
+									     WM_SetUserData(pMsg->hWin,&UserData,4);
+									     break;
+									
+									case MONITMMSI_DEL:
+										    TEXT_SetText(dlgTextContent, "删除后,该对船只报警功能\n恢复正常,是否确认删除？");
+									     
+									     UserData = MONITMMSI_DEL;
+									     WM_SetUserData(pMsg->hWin,&UserData,4);
+									     break;
+									
+									case MONITMMSI_FULL:
+														TEXT_SetText(dlgTextContent, "已经达到设置上限,请删除后\n再进行添加！");
+									     WM_HideWin(buttons[0]);
+									     WM_HideWin(buttons[1]);
+									     WM_ShowWin(buttons[2]);
+									     UserData = MONITMMSI_FULL;
+									     WM_SetUserData(pMsg->hWin,&UserData,4);
+									     break;
+									
          default:       
               break;
       }
@@ -202,7 +279,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 
 WM_HWIN WIN_ConfirmCreate(void) {
   WM_HWIN hWin;	
-	hWin = WM_CreateWindow(200, 120, 400, 200,WM_CF_SHOW, _cbWindow, 0);
+	hWin = WM_CreateWindow(200, 120, 400, 200,WM_CF_SHOW, _cbWindow, 4);
 	WM_SetHasTrans(hWin);
   return hWin;
 }

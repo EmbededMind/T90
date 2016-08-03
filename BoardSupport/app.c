@@ -37,7 +37,7 @@
 
 
 /* 定义任务堆栈大小 */
-#define USER_TASK_STACK_SIZE 2048
+#define USER_TASK_STACK_SIZE  2048
 #define TOUCH_TASK_STACK_SIZE 256
 #define KEY_TASK_STACK_SIZE 128
 
