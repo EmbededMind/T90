@@ -13,8 +13,7 @@
 #define ID_SLIDER_5         (GUI_ID_USER + 0x25)
 #define ID_SLIDER_6         (GUI_ID_USER + 0x26)
 #define ID_SLIDER_7         (GUI_ID_USER + 0x27)
-#define ID_SLIDER_8         (GUI_ID_USER + 0x28)
-#define ID_SLIDER_9         (GUI_ID_USER + 0x29)
+
 
 #define SYSTEM_SET_X        (MAIN_MENU_X+MAIN_MENU_WIDTH)
 #define SYSTEM_SET_Y        MAIN_MENU_Y
