@@ -131,49 +131,49 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
       
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
-              case GUI_KEY_MOLEFT:
-                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-                        {
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = DEFAULT_LEFT;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-                        }                           
-                        break;
+//              case GUI_KEY_MOLEFT:
+//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
+//                        {
+//                           myMsg.hWin = systemSetDlg;
+//                           myMsg.hWinSrc = pMsg->hWin;
+//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
+//                           myMsg.Data.v = DEFAULT_LEFT;
+//                           WM_SendMessage(myMsg.hWin, &myMsg);
+//                        }                           
+//                        break;
               
               case GUI_KEY_MORIGHT:
-                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-                        {
+//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
+//                        {
                            myMsg.hWin = systemSetDlg;
                            myMsg.hWinSrc = pMsg->hWin;
                            myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = DEFAULT_RIGHT;
+                           myMsg.Data.v = !t90_set.sys.motherpos;
                            WM_SendMessage(myMsg.hWin, &myMsg);
-                        }   
+//                        }   
                         break; 
-                  case GUI_KEY_SINGLE:
-                         if(t90_set.sys.workmode == DOUBLE_MODE)
-                         {                            
-                            myMsg.hWin = systemSetDlg;
-                            myMsg.hWinSrc = pMsg->hWin;
-                            myMsg.MsgId = USER_MSG_WORKMODE;
-                            myMsg.Data.v = SINGLE_MODE;
-                            WM_SendMessage(myMsg.hWin, &myMsg);
-                         }
-                         
-                         break;
-                  case GUI_KEY_DOUBLE:
-                         if(t90_set.sys.workmode == SINGLE_MODE)
-                         {
-                            myMsg.hWin = systemSetDlg;
-                            myMsg.hWinSrc = pMsg->hWin;
-                            myMsg.MsgId = USER_MSG_WORKMODE;
-                            myMsg.Data.v = DOUBLE_MODE;
-                            WM_SendMessage(myMsg.hWin, &myMsg);
-                         }
-                         
-                         break; 
+//                  case GUI_KEY_SINGLE:
+//                         if(t90_set.sys.workmode == DOUBLE_MODE)
+//                         {                            
+//                            myMsg.hWin = systemSetDlg;
+//                            myMsg.hWinSrc = pMsg->hWin;
+//                            myMsg.MsgId = USER_MSG_WORKMODE;
+//                            myMsg.Data.v = SINGLE_MODE;
+//                            WM_SendMessage(myMsg.hWin, &myMsg);
+//                         }
+//                         
+//                         break;
+//                  case GUI_KEY_DOUBLE:
+//                         if(t90_set.sys.workmode == SINGLE_MODE)
+//                         {
+//                            myMsg.hWin = systemSetDlg;
+//                            myMsg.hWinSrc = pMsg->hWin;
+//                            myMsg.MsgId = USER_MSG_WORKMODE;
+//                            myMsg.Data.v = DOUBLE_MODE;
+//                            WM_SendMessage(myMsg.hWin, &myMsg);
+//                         }
+//                         
+//                         break; 
 							case GUI_KEY_PWM_INC:       
 								   WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
 								   break;
