@@ -6,8 +6,8 @@
 #include "transform.h"
 
 #define SQUARE(X) ((X)*(X))
-#define MAXNUM(a,b) (a>b? a:b)
-#define MINNUM(a,b) (a<b? a:b)
+#define MAXNUM(a,b) ((a>b)? a:b)
+#define MINNUM(a,b) ((a>b)? b:a)
 /**
  *
  *
@@ -185,19 +185,56 @@ int isCrossPointInRight(BERTH *pBerth, Point pointa, Point pointb)
 {
    if(pointa.y == pointb.y)
    {
+//		 		 printf("right y = y = %d,pointa.x = %d, pointb.x = %d",pointa.y,pointa.x,pointb.x);
       return 0;
 //      if(pBerth->x_to_cross < MINNUM(pointa.x,pointb.y))
 //         return 1;
    }
    else 
    {
-      if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y))
-      {          
+      if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y) && (pBerth->x_to_cross <= MAXNUM(pointa.x,pointb.x)))
+      {
+//printf("max = %d, min  = %d\n",MAXNUM(pointa.y,pointb.y),MINNUM(pointa.y,pointb.y));				
          if(pointa.y > pointb.y)
          {         
             if(addRight(pBerth, pointb.x, pointb.y, pointa.x, pointa.y))
             {
-               printf("right pointb.x = %d, pointb.y = %d, pointa.x = %d, pointa.y = %d\n",pointb.x, pointb.y, pointa.x, pointa.y);
+//               printf("right pointb.x = %d, pointb.y = %d, pointa.x = %d, pointa.y = %d\n",pointb.x, pointb.y, pointa.x, pointa.y);
+               return 1;
+            }
+         }
+         else
+         {         
+            if(addRight(pBerth, pointa.x, pointa.x, pointb.x, pointb.y))
+            {
+//               printf("right pointa.x = %d, pointa.y = %d, pointb.x = %d, pointb.y = %d\n", pointa.x, pointa.y, pointb.x, pointb.y);
+               return 1;
+            }
+         }
+      }       
+   }
+   return 0;
+}
+
+int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
+{
+   if(pointa.y == pointb.y)
+   {
+//		 printf("left y = y = %d,pointa.x = %d, pointb.x = %d",pointa.y,pointa.x,pointb.x);
+      return 0;
+//      if(pBerth->x_to_cross < MINNUM(pointa.x,pointb.y))
+//         return 1;
+   }
+   else 
+   {
+      if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y) && (pBerth->x_to_cross >= MINNUM(pointa.x,pointb.x)))
+      {          
+         if(pointa.y > pointb.y)
+
+         {
+            if(addLeft(pBerth, pointb.x, pointb.y, pointa.x, pointa.y))
+            {
+//               printf("left pointb.x = %d, pointb.y = %d, pointa.x = %d, pointa.y = %d\n",pointb.x, pointb.y, pointa.x, pointa.y);
                return 1;
             }
          }
@@ -214,36 +251,7 @@ int isCrossPointInRight(BERTH *pBerth, Point pointa, Point pointb)
    return 0;
 }
 
-int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
-{
-   if(pointa.y == pointb.y)
-   {
-      return 0;
-   }
-   else 
-   {
-      if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y))
-      {          
-         if(pointa.y > pointb.y)
-         {
-            if(addLeft(pBerth, pointb.x, pointb.y, pointa.x, pointa.y))
-            {
-               printf("left pointb.x = %d, pointb.y = %d, pointa.x = %d, pointa.y = %d\n",pointb.x, pointb.y, pointa.x, pointa.y);
-               return 1;
-            }
-         }
-         else
-         {
-            if(addLeft(pBerth, pointa.x, pointa.x, pointb.x, pointb.y))
-            {
-              printf("left pointa.x = %d, pointa.y = %d, pointb.x = %d, pointb.y = %d\n", pointa.x, pointa.x, pointb.x, pointb.y);
-               return 1;
-            }
-         }
-      }       
-   }
-   return 0;
-}
+
 
 
 
@@ -293,7 +301,7 @@ Bool isInPolygon(BERTH *pBerth)
    int flg_left = 0, flg_right  = 0;
    int i;
    PloPoint *index;
-printf("x = %d, y = %d///////////////////\n",pBerth->x_to_cross,pBerth->y_to_cross);
+//printf("x = %d, y = %d///////////////////\n",pBerth->x_to_cross,pBerth->y_to_cross);
    index = pmin;
    do
    {
@@ -301,7 +309,7 @@ printf("x = %d, y = %d///////////////////\n",pBerth->x_to_cross,pBerth->y_to_cro
       flg_left += isCrossPointInLeft(pBerth, index->point, index->next->point);
       index = index->next;
    }while(index != pmin);
-printf("flg_right = %d, flg_left = %d//////////////////\n",flg_right,flg_left);   
+//printf("flg_right = %d, flg_left = %d//////////////////\n",flg_right,flg_left);   
 
    if(flg_left%2 && flg_right%2)
    {
