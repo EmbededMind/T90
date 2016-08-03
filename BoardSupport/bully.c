@@ -112,7 +112,7 @@ void BULY_delete(BERTH* addr)
 {
    BULY_BERTH* pBC;
    BULY_BERTH* pCursor;
-printf("BULY_delete begin\n"); 
+//printf("BULY_delete begin\n"); 
 	if(pBulyHeader)
    {
       pBC  = pBulyHeader;  
@@ -146,7 +146,7 @@ printf("BULY_delete begin\n");
          }
       }
    }
-printf("BULY_delete end\n");
+//printf("BULY_delete end\n");
 }
 
 

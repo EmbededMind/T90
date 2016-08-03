@@ -108,7 +108,7 @@ void CHECK_DelHighSpeed()
       {
          pBerth->pBoatLink->Boat.category = 0;
          BULY_delete(pBerth->pBoatLink);
-         goto delhighjmp;
+         goto delhighjmp;// pBerth已经是一个空指针不能访问了
       }
       if((pBerth->pBoatLink->Boat.category & TYPE_FAMILY) == TYPE_FAMILY)
       {
