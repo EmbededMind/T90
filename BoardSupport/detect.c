@@ -12,7 +12,7 @@
  *
  *
  */
-static unsigned int pointInPolygon = 0;
+//static unsigned int pointInPolygon = 0;
 
 static PloPoint *pmin, *pmax;
 
@@ -173,6 +173,7 @@ int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
    }
    return 0;
 }
+
 //int addRight(BERTH *pBerth, int x1, int y1, int x2, int y2)
 //{
 //    
@@ -218,18 +219,22 @@ int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
 //   return 0;
 //}
 
+
 int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 {
    if(pointa.y == pointb.y)
    {
 		 printf("left y = y = %d,pointa.x = %d, pointb.x = %d\n",pointa.y,pointa.x,pointb.x);
       return 0;
+//      if(pBerth->x_to_cross < MINNUM(pointa.x,pointb.y))
+//         return 1;
    }
    else 
    {
       if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y) && (pBerth->x_to_cross >= MINNUM(pointa.x,pointb.x)))
       {          
          if(pointa.y > pointb.y)
+
          {
             if(addLeft(pBerth, pointb.x, pointb.y, pointa.x, pointa.y))
             {
@@ -240,8 +245,9 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
          else
          {
             if(addLeft(pBerth, pointa.x, pointa.y, pointb.x, pointb.y))
+
             {
-//              printf("left pointa.x = %d, pointa.y = %d, pointb.x = %d, pointb.y = %d\n", pointa.x, pointa.y, pointb.x, pointb.y);
+               printf("right pointa.x = %d, pointa.y = %d, pointb.x = %d, pointb.y = %d\n", pointa.x, pointa.x, pointb.x, pointb.y);
                return 1;
             }
          }
@@ -249,6 +255,8 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
    }
    return 0;
 }
+
+
 
 
 
@@ -293,10 +301,10 @@ Bool isCloseStub(BERTH *pBerth)
 Bool isInPolygon(BERTH *pBerth)
 {
 
-   unsigned int isinpoly = 0;
-   Bool newFlg = 0,oldFlg = 0;
-   int flg_left = 0, flg_right  = 0;
-   int i;
+ //  unsigned int isinpoly = 0;
+//   Bool newFlg = 0,oldFlg = 0;
+   int flg_left = 0;// flg_right  = 0;
+//   int 
    PloPoint *index;
 //printf("x = %d, y = %d///////////////////\n",pBerth->x_to_cross,pBerth->y_to_cross);
    index = pmin;

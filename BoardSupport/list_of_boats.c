@@ -215,7 +215,9 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
       }            
    }
 
+
    if((t90_set.alarm.on_off & (0x01<<3))&& pBerth->Boat.category == 0  &&  p_msg->SOG >= highspeed)
+
    {
       unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
 //		  nation = 0x10;//////////////////////////////////////////////////////////////////////////
@@ -411,7 +413,9 @@ int add_18(struct message_18 * p_msg)
       }            
    }
 
+
    if((t90_set.alarm.on_off & (0x01<<3))&& buf->Boat.category == 0  &&  p_msg->SOG >= highspeed)
+
    {
       unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
 //      nation = 0x10;/////////////////////////////////////////////////////////////////////////////////////
