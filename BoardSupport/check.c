@@ -89,13 +89,16 @@ void CHECK_DelHighSpeed()
    BULY_BERTH *pBerth;
    BULY_BERTH *pNext;
    pBerth = pBulyHeader;
-   if(!t90_set.alarm.on_off & (0x01<<3))
+   if(!(t90_set.alarm.on_off & (0x01<<3)))
    {
       while(pBerth)
       {
+				if((pBerth->pBoatLink->Boat.category & 0xf0) == 0)
+				{
          pNext = pBerth->pNext;
          pBerth->pBoatLink->Boat.category = 0;
          BULY_delete(pBerth->pBoatLink);
+				}
          pBerth = pNext;
       }       
       return;
@@ -108,14 +111,14 @@ void CHECK_DelHighSpeed()
       {
          pBerth->pBoatLink->Boat.category = 0;
          BULY_delete(pBerth->pBoatLink);
-         goto delhighjmp;
+         goto delhighjmp;// pBerth已经是一个空指针不能访问了
       }
       if((pBerth->pBoatLink->Boat.category & TYPE_FAMILY) == TYPE_FAMILY)
       {
          pBerth->pBoatLink->Boat.category = 0;
          BULY_delete(pBerth->pBoatLink);
       }
-delhighjmp:      pBerth = pBerth->pNext;
+delhighjmp:      pBerth = pNext;
    }    
    
 }
@@ -151,7 +154,7 @@ void check()
 	CHECK_DelHighSpeed();
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
-   CHECK_STRefresh();
+  CHECK_STRefresh();
 
 }
 

@@ -6,8 +6,8 @@
 #include "transform.h"
 
 #define SQUARE(X) ((X)*(X))
-#define MAXNUM(a,b) (a>b? a:b)
-#define MINNUM(a,b) (a<b? a:b)
+#define MAXNUM(a,b) ((a>b)? a:b)
+#define MINNUM(a,b) ((a>b)? b:a)
 /**
  *
  *
@@ -172,24 +172,76 @@ int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
    }
    return 0;
 }
+int addRight(BERTH *pBerth, int x1, int y1, int x2, int y2)
+{
+   
+   if(x1 + (pBerth->y_to_cross-y1)*(x2-x1)/(y2-y1) > pBerth->x_to_cross)
+   {
+      return 1;
+   }
+   return 0;
+}
+int isCrossPointInRight(BERTH *pBerth, Point pointa, Point pointb)
+{
+   if(pointa.y == pointb.y)
+   {
+//		 		 printf("right y = y = %d,pointa.x = %d, pointb.x = %d",pointa.y,pointa.x,pointb.x);
+      return 0;
+//      if(pBerth->x_to_cross < MINNUM(pointa.x,pointb.y))
+//         return 1;
+   }
+   else 
+   {
+      if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y) && (pBerth->x_to_cross <= MAXNUM(pointa.x,pointb.x)))
+      {
+//printf("max = %d, min  = %d\n",MAXNUM(pointa.y,pointb.y),MINNUM(pointa.y,pointb.y));				
+         if(pointa.y > pointb.y)
+         {         
+            if(addRight(pBerth, pointb.x, pointb.y, pointa.x, pointa.y))
+            {
+//               printf("right pointb.x = %d, pointb.y = %d, pointa.x = %d, pointa.y = %d\n",pointb.x, pointb.y, pointa.x, pointa.y);
+               return 1;
+            }
+         }
+         else
+         {         
+            if(addRight(pBerth, pointa.x, pointa.x, pointb.x, pointb.y))
+            {
+               printf("right pointa.x = %d, pointa.y = %d, pointb.x = %d, pointb.y = %d\n", pointa.x, pointa.y, pointb.x, pointb.y);
+               return 1;
+            }
+         }
+      }       
+   }
+   return 0;
+}
 
 int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 {
    if(pointa.y == pointb.y)
    {
+//		 printf("left y = y = %d,pointa.x = %d, pointb.x = %d",pointa.y,pointa.x,pointb.x);
       return 0;
    }
    else 
    {
-      if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y))
+      if (pBerth->y_to_cross > MINNUM(pointa.y,pointb.y) && pBerth->y_to_cross <= MAXNUM(pointa.y,pointb.y) && (pBerth->x_to_cross >= MINNUM(pointa.x,pointb.x)))
       {          
          if(pointa.y > pointb.y)
-         {         
-            return addLeft(pBerth, pointb.x, pointb.y, pointa.x, pointa.y);
+         {
+            if(addLeft(pBerth, pointb.x, pointb.y, pointa.x, pointa.y))
+            {
+//               printf("left pointb.x = %d, pointb.y = %d, pointa.x = %d, pointa.y = %d\n",pointb.x, pointb.y, pointa.x, pointa.y);
+               return 1;
+            }
          }
          else
-         {         
-            return addLeft(pBerth, pointa.x, pointa.x, pointb.x, pointb.y);
+         {
+            if(addLeft(pBerth, pointa.x, pointa.x, pointb.x, pointb.y))
+            {
+//              printf("left pointa.x = %d, pointa.y = %d, pointb.x = %d, pointb.y = %d\n", pointa.x, pointa.y, pointb.x, pointb.y);
+               return 1;
+            }
          }
       }       
    }
@@ -207,7 +259,7 @@ void detectInit()
    index = pmin;
    do
    {
-      if(index->point.y*index->next->point.x - index->next->point.y*index->point.x >= 0)
+      if(index->point.y*index->next->point.x - index->next->point.y*index->point.x > 0)
       {
           pointInPolygon |= 0x00000001<<i;
       }
@@ -240,19 +292,21 @@ Bool isInPolygon(BERTH *pBerth)
 {
 
    unsigned int isinpoly = 0;
-   Bool newFlg,oldFlg;
-   int flg;
+   Bool newFlg = 0,oldFlg = 0;
+   int flg_left = 0, flg_right  = 0;
    int i;
    PloPoint *index;
-   
+printf("x = %d, y = %d///////////////////\n",pBerth->x_to_cross,pBerth->y_to_cross);
    index = pmin;
    do
    {
-      flg += isCrossPointInLeft(pBerth, index->point, index->next->point);
+      flg_right += isCrossPointInRight(pBerth, index->point, index->next->point);        
+      flg_left += isCrossPointInLeft(pBerth, index->point, index->next->point);
       index = index->next;
    }while(index != pmin);
-   
-   if(flg%2)
+printf("flg_right = %d, flg_left = %d//////////////////\n",flg_right,flg_left);   
+
+   if(flg_left%2 && flg_right%2)
    {
       newFlg = 1;
    }
@@ -302,7 +356,15 @@ Bool isInPolygon(BERTH *pBerth)
 
 void isInvader(BERTH  *pBerth)
 {
-	pBerth->isInvader = isCloseStub(pBerth) || isInPolygon(pBerth);
+//	pBerth->isInvader = isCloseStub(pBerth) || isInPolygon(pBerth);
+   if(isCloseStub(pBerth))
+   {
+      pBerth->isInvader = 1;
+   }
+   else if(isInPolygon(pBerth))
+   {
+      pBerth->isInvader = 1;
+   }
 	if(pBerth->isInvader && pBerth->mntState == MNTState_None)
 	{
 		pBerth->mntState = MNTState_Triggered;
@@ -319,7 +381,7 @@ void detect()
       SimpBerthes[i].pBerth->isInvader = 0;
    }
    if(!(t90_set.alarm.on_off & 0x01))
-      goto detect;
+      return;
    if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
    {
       for(i = 0;i < N_boat;i++)
@@ -328,8 +390,8 @@ void detect()
          {
             if(SimpBerthes[i].Dist < (t90_set.alarm.invd_dst+500)*7/4  &&  (SimpBerthes[i].pBerth->Boat.category&TYPE_SAFETY) == 0)
             {
-            llToxy(SimpBerthes[i].pBerth);
-            isInvader(SimpBerthes[i].pBerth);
+               llToxy(SimpBerthes[i].pBerth);
+               isInvader(SimpBerthes[i].pBerth);
             } 
          }
          else
@@ -338,7 +400,6 @@ void detect()
          }            
       }
    }
-detect: NULL;
 }
 
 
