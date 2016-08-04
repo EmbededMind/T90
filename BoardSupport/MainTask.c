@@ -79,10 +79,10 @@ printf("maintask\n");
 //		doubleShipWin = WIN_DoubleShipCreate();
 
   
-//   MMSISetWin = WIN_MMSISetCreate();
-//			SoftInputWin = WIN_SoftInputCreate();
-//			
-//   FleetWin = WIN_FleetCreate();
+   MMSISetWin = WIN_MMSISetCreate();
+			SoftInputWin = WIN_SoftInputCreate();
+			
+   FleetWin = WIN_FleetCreate();
 
 		
 		alarmMonitorWin = WIN_AlarmMonitorCreate();           //创建窗口 

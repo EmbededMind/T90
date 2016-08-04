@@ -110,7 +110,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
     //
     // Initialization of 'Text'
     //
-		 TEXT_CreateEx (0,   40,  400, 40, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
+		 TEXT_CreateEx (0,   35,  400, 80, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
        dlgTextContent = WM_GetDialogItem(pMsg->hWin, ID_TEXT_CONTENT);
 		 TEXT_SetTextAlign(dlgTextContent,TEXT_CF_HCENTER);
        TEXT_SetFont(dlgTextContent, &GUI_Font_T90_30);
@@ -166,7 +166,6 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        NCode = pMsg->Data.v;               // Notification code
        switch (NCode) 
        {
-
           case WM_NOTIFICATION_RELEASED:      // React only if released
                switch (Id) 
                {
@@ -194,7 +193,6 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
                        myMsg.MsgId    = USER_MSG_REPLY;
                        myMsg.Data.v   = REPLY_OK;
                        WM_SendMessage(myMsg.hWin, &myMsg);
-																							
 																							{
 																								WM_ShowWin(buttons[0]);
 																								WM_ShowWin(buttons[1]);
@@ -236,28 +234,29 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
               break;
 									
 									case MONITMMSI_SET:
-										    TEXT_SetText(dlgTextContent, "是否修改辅助作业船九位码？");
+										    TEXT_SetText(dlgTextContent, "是否修改辅助作业船九位码?");
 									     
 									     UserData = MONITMMSI_SET;
 									     WM_SetUserData(pMsg->hWin,&UserData,4);
+										printf("confimwin1");
               break;
 									
 									case MONITMMSI_ADD:
-										    TEXT_SetText(dlgTextContent, "是否添加屏蔽报警船只？");
+										    TEXT_SetText(dlgTextContent, "是否添加屏蔽报警船只?");
 									     
 									     UserData = MONITMMSI_ADD;
 									     WM_SetUserData(pMsg->hWin,&UserData,4);
 									     break;
 									
 									case MONITMMSI_DEL:
-										    TEXT_SetText(dlgTextContent, "删除后,该对船只报警功能\n恢复正常,是否确认删除？");
+										    TEXT_SetText(dlgTextContent, "删除后,对该船只报警功能\n恢复正常,是否确认删除?");
 									     
 									     UserData = MONITMMSI_DEL;
 									     WM_SetUserData(pMsg->hWin,&UserData,4);
 									     break;
 									
 									case MONITMMSI_FULL:
-														TEXT_SetText(dlgTextContent, "已经达到设置上限,请删除后\n再进行添加！");
+														TEXT_SetText(dlgTextContent, "已经达到设置上限,请\n删除后再进行添加!");
 									     WM_HideWin(buttons[0]);
 									     WM_HideWin(buttons[1]);
 									     WM_ShowWin(buttons[2]);
