@@ -1,0 +1,14 @@
+.\Flash\tsc2046.o: ..\..\BoardSupport\tsc2046.c
+.\Flash\tsc2046.o: ..\..\Drivers\include\lpc177x_8x_lcd.h
+.\Flash\tsc2046.o: ..\..\Drivers\include\lpc_types.h
+.\Flash\tsc2046.o: F:\keil4\ARM\ARMCC\bin\..\include\stdint.h
+.\Flash\tsc2046.o: ..\..\Drivers\include\lpc177x_8x_pinsel.h
+.\Flash\tsc2046.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\Flash\tsc2046.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\Flash\tsc2046.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\Flash\tsc2046.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\Flash\tsc2046.o: ..\..\Drivers\include\lpc177x_8x_ssp.h
+.\Flash\tsc2046.o: ..\..\BoardSupport\lcd43.h
+.\Flash\tsc2046.o: ..\..\Drivers\include\lpc177x_8x_lcd.h
+.\Flash\tsc2046.o: ..\..\BoardSupport\tsc2046.h
+.\Flash\tsc2046.o: ..\..\Drivers\include\lpc177x_8x_gpio.h

@@ -1,0 +1,9 @@
+.\flash\hsd_gui__settext.o: ..\..\BoardSupport\HSD_GUI__SetText.c
+.\flash\hsd_gui__settext.o: ..\..\emWin\GUI\GUI.h
+.\flash\hsd_gui__settext.o: ..\..\emWin\GUI\GUI_ConfDefaults.h
+.\flash\hsd_gui__settext.o: ..\..\emWin\Config\GUIConf.h
+.\flash\hsd_gui__settext.o: ..\..\emWin\GUI\GUI_Type.h
+.\flash\hsd_gui__settext.o: ..\..\emWin\GUI\LCD.h
+.\flash\hsd_gui__settext.o: ..\..\emWin\GUI\Global.h
+.\flash\hsd_gui__settext.o: ..\..\emWin\GUI\GUI_Version.h
+.\flash\hsd_gui__settext.o: D:\Keil\ARM\ARMCC\bin\..\include\string.h

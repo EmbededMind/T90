@@ -1,0 +1,9 @@
+.\flash\gg.o: ..\..\BoardSupport\gg.c
+.\flash\gg.o: D:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
+.\flash\gg.o: ..\..\emWin\GUI\GUI.h
+.\flash\gg.o: ..\..\emWin\GUI\GUI_ConfDefaults.h
+.\flash\gg.o: ..\..\emWin\Config\GUIConf.h
+.\flash\gg.o: ..\..\emWin\GUI\GUI_Type.h
+.\flash\gg.o: ..\..\emWin\GUI\LCD.h
+.\flash\gg.o: ..\..\emWin\GUI\Global.h
+.\flash\gg.o: ..\..\emWin\GUI\GUI_Version.h

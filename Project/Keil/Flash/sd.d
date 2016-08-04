@@ -1,0 +1,12 @@
+.\Flash\sd.o: ..\..\BoardSupport\sd.c
+.\Flash\sd.o: ..\..\Drivers\include\lpc177x_8x_mci.h
+.\Flash\sd.o: ..\..\Core\Device\Include\LPC177x_8x.H
+.\Flash\sd.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\Flash\sd.o: D:\install\KEI4.71\ARM\ARMCC\bin\..\include\stdint.h
+.\Flash\sd.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\Flash\sd.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\Flash\sd.o: ..\..\Drivers\include\lpc177x_8x_gpdma.h
+.\Flash\sd.o: ..\..\Drivers\include\lpc_types.h
+.\Flash\sd.o: ..\..\Drivers\include\lpc177x_8x_pinsel.h
+.\Flash\sd.o: ..\..\BoardSupport\sd.h
+.\Flash\sd.o: ..\..\Drivers\include\lpc177x_8x_mci.h

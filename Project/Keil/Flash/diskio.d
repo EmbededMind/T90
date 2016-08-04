@@ -1,0 +1,13 @@
+.\Flash\diskio.o: ..\..\FatFS\diskio.c
+.\Flash\diskio.o: ..\..\FatFS\diskio.h
+.\Flash\diskio.o: ..\..\FatFS\integer.h
+.\Flash\diskio.o: ..\..\Drivers\include\lpc177x_8x_mci.h
+.\Flash\diskio.o: ..\..\Core\Device\Include\LPC177x_8x.H
+.\Flash\diskio.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\Flash\diskio.o: D:\install\KEI4.71\ARM\ARMCC\bin\..\include\stdint.h
+.\Flash\diskio.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\Flash\diskio.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\Flash\diskio.o: ..\..\Drivers\include\lpc177x_8x_gpdma.h
+.\Flash\diskio.o: ..\..\Drivers\include\lpc_types.h
+.\Flash\diskio.o: ..\..\BoardSupport\sd.h
+.\Flash\diskio.o: ..\..\Drivers\include\lpc177x_8x_mci.h

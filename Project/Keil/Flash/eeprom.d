@@ -1,0 +1,12 @@
+.\flash\eeprom.o: ..\..\BoardSupport\eeprom.c
+.\flash\eeprom.o: ..\..\BoardSupport\eeprom.h
+.\flash\eeprom.o: ..\..\Drivers\include\lpc177x_8x_clkpwr.h
+.\flash\eeprom.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\flash\eeprom.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\eeprom.o: D:\InstallFiles\Keil\MDK-ARMv4.74\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\eeprom.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\eeprom.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\flash\eeprom.o: ..\..\Drivers\include\lpc_types.h
+.\flash\eeprom.o: ..\..\Core\Device\Include\system_LPC177x_8x.h
+.\flash\eeprom.o: ..\..\BoardSupport\uart.h
+.\flash\eeprom.o: D:\InstallFiles\Keil\MDK-ARMv4.74\ARM\ARMCC\bin\..\include\stdio.h

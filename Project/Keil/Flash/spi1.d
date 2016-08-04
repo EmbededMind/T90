@@ -1,0 +1,14 @@
+.\flash\spi1.o: ..\..\BoardSupport\SPI1.c
+.\flash\spi1.o: ..\..\BoardSupport\SPI1.h
+.\flash\spi1.o: ..\..\Core\Device\Include\LPC177x_8x.H
+.\flash\spi1.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\spi1.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\spi1.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\spi1.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\flash\spi1.o: ..\..\Drivers\include\lpc177x_8x_ssp.h
+.\flash\spi1.o: ..\..\Drivers\include\lpc_types.h
+.\flash\spi1.o: ..\..\Drivers\include\lpc177x_8x_gpio.h
+.\flash\spi1.o: ..\..\Drivers\include\lpc177x_8x_pinsel.h
+.\flash\spi1.o: ..\..\BoardSupport\DMA.h
+.\flash\spi1.o: D:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\flash\spi1.o: ..\..\Drivers\include\lpc177x_8x_gpdma.h

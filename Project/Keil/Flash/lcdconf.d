@@ -1,0 +1,17 @@
+.\flash\lcdconf.o: ..\..\emWin\Config\LCDConf.c
+.\flash\lcdconf.o: ..\..\emWin\GUI\GUI.h
+.\flash\lcdconf.o: ..\..\emWin\GUI\GUI_ConfDefaults.h
+.\flash\lcdconf.o: ..\..\emWin\Config\GUIConf.h
+.\flash\lcdconf.o: ..\..\emWin\GUI\GUI_Type.h
+.\flash\lcdconf.o: ..\..\emWin\GUI\LCD.h
+.\flash\lcdconf.o: ..\..\emWin\GUI\Global.h
+.\flash\lcdconf.o: ..\..\emWin\GUI\GUI_Version.h
+.\flash\lcdconf.o: D:\Keil\ARM\ARMCC\bin\..\include\stddef.h
+.\flash\lcdconf.o: ..\..\emWin\GUI\GUIDRV_Lin.h
+.\flash\lcdconf.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\flash\lcdconf.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\lcdconf.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\lcdconf.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\lcdconf.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\flash\lcdconf.o: ..\..\Core\Device\Include\system_LPC177x_8x.h
+.\flash\lcdconf.o: ..\..\emWin\Config\LCDConf.h

@@ -1,0 +1,9 @@
+.\flash\guiconf.o: ..\..\emWin\Config\GUIConf.c
+.\flash\guiconf.o: ..\..\emWin\GUI\GUI.h
+.\flash\guiconf.o: ..\..\emWin\GUI\GUI_ConfDefaults.h
+.\flash\guiconf.o: ..\..\emWin\Config\GUIConf.h
+.\flash\guiconf.o: ..\..\emWin\GUI\GUI_Type.h
+.\flash\guiconf.o: ..\..\emWin\GUI\LCD.h
+.\flash\guiconf.o: ..\..\emWin\GUI\Global.h
+.\flash\guiconf.o: ..\..\emWin\GUI\GUI_Version.h
+.\flash\guiconf.o: ..\..\BoardSupport\sdram.h

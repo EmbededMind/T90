@@ -120,6 +120,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                   cursorOnStub = getcursor(RIGHT);                              
                   WM_Paint(mainShipWin);
                   break;
+
 						 
                case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;

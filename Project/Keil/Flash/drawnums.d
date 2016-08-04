@@ -1,0 +1,9 @@
+.\flash\drawnums.o: ..\..\BoardSupport\drawNums.c
+.\flash\drawnums.o: ..\..\BoardSupport\drawNums.h
+.\flash\drawnums.o: ..\..\emWin\GUI\GUI.h
+.\flash\drawnums.o: ..\..\emWin\GUI\GUI_ConfDefaults.h
+.\flash\drawnums.o: ..\..\emWin\Config\GUIConf.h
+.\flash\drawnums.o: ..\..\emWin\GUI\GUI_Type.h
+.\flash\drawnums.o: ..\..\emWin\GUI\LCD.h
+.\flash\drawnums.o: ..\..\emWin\GUI\Global.h
+.\flash\drawnums.o: ..\..\emWin\GUI\GUI_Version.h

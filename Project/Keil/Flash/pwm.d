@@ -1,0 +1,14 @@
+.\flash\pwm.o: ..\..\BoardSupport\pwm.c
+.\flash\pwm.o: ..\..\Drivers\include\lpc177x_8x_pwm.h
+.\flash\pwm.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\flash\pwm.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\pwm.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\pwm.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\pwm.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\flash\pwm.o: ..\..\Drivers\include\lpc_types.h
+.\flash\pwm.o: ..\..\Drivers\include\lpc177x_8x_clkpwr.h
+.\flash\pwm.o: ..\..\Core\Device\Include\system_LPC177x_8x.h
+.\flash\pwm.o: ..\..\Drivers\include\lpc177x_8x_adc.h
+.\flash\pwm.o: ..\..\Drivers\include\lpc177x_8x_pinsel.h
+.\flash\pwm.o: ..\..\BoardSupport\pwm.h
+.\flash\pwm.o: D:\Keil\ARM\ARMCC\bin\..\include\stdio.h

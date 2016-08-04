@@ -1,0 +1,5 @@
+-c --cpu Cortex-M3 -D__MICROLIB -g -W -O1 --apcs=interwork -I..\..\..\Core\CM3\DeviceSupport\NXP\LPC17xx -I..\..\Core\CMSIS\Include -I..\..\Core\Device\Include -I..\..\Drivers\include -I..\..\BoardSupport -I..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\RealView -I..\..\uCOS-II\Source -I..\..\uCOS-II\Cfg -I..\..\emWin\Config -I..\..\emWin\GUI -I..\..\emWin\SEGGERDEMO -I..\..\Project -I..\..\FatFS 
+-I M:\keil\ARM\RV31\INC 
+-I M:\keil\ARM\CMSIS\Include 
+-I M:\keil\ARM\Inc\NXP\LPC177x_8x 
+-D__BUILD_WITH_EXAMPLE__ -o ".\Flash\26.o" --omf_browse ".\Flash\26.crf" --depend ".\Flash\26.d" "..\..\BoardSupport\26.c"

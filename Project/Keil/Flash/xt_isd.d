@@ -1,0 +1,11 @@
+.\flash\xt_isd.o: ..\..\BoardSupport\xt_isd.c
+.\flash\xt_isd.o: ..\..\BoardSupport\xt_isd.h
+.\flash\xt_isd.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\xt_isd.o: ..\..\Drivers\include\lpc177x_8x_gpio.h
+.\flash\xt_isd.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\flash\xt_isd.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\xt_isd.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\xt_isd.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\flash\xt_isd.o: ..\..\Drivers\include\lpc_types.h
+.\flash\xt_isd.o: ..\..\BoardSupport\Config.h
+.\flash\xt_isd.o: ..\..\BoardSupport\SPI1.h

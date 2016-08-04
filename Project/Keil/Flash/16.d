@@ -1,0 +1,9 @@
+.\flash\16.o: ..\..\BoardSupport\16.c
+.\flash\16.o: ..\..\BoardSupport\16.h
+.\flash\16.o: ..\..\emWin\GUI\GUI.h
+.\flash\16.o: ..\..\emWin\GUI\GUI_ConfDefaults.h
+.\flash\16.o: ..\..\emWin\Config\GUIConf.h
+.\flash\16.o: ..\..\emWin\GUI\GUI_Type.h
+.\flash\16.o: ..\..\emWin\GUI\LCD.h
+.\flash\16.o: ..\..\emWin\GUI\Global.h
+.\flash\16.o: ..\..\emWin\GUI\GUI_Version.h

@@ -1,0 +1,16 @@
+.\flash\sdram.o: ..\..\BoardSupport\sdram.c
+.\flash\sdram.o: ..\..\Drivers\include\lpc177x_8x_libcfg_default.h
+.\flash\sdram.o: ..\..\Drivers\include\lpc_types.h
+.\flash\sdram.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\sdram.o: ..\..\Drivers\include\lpc177x_8x_emc.h
+.\flash\sdram.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\flash\sdram.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\sdram.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\sdram.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\flash\sdram.o: ..\..\Drivers\include\lpc177x_8x_clkpwr.h
+.\flash\sdram.o: ..\..\Core\Device\Include\system_LPC177x_8x.h
+.\flash\sdram.o: ..\..\Drivers\include\lpc177x_8x_pinsel.h
+.\flash\sdram.o: ..\..\Drivers\include\lpc177x_8x_timer.h
+.\flash\sdram.o: ..\..\BoardSupport\uart.h
+.\flash\sdram.o: D:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\flash\sdram.o: ..\..\BoardSupport\sdram.h

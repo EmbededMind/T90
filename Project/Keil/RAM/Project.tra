@@ -1,0 +1,51 @@
+*** Creating Trace Output File '.\RAM\Project.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\ram\startup_lpc177x_8x.o"'
+### List of Objects: adding '".\ram\system_lpc177x_8x.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_gpio.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_systick.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_clkpwr.o"'
+### List of Objects: adding '".\ram\debug_frmwrk.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_adc.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_bod.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_can.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_crc.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_dac.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_eeprom.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_emac.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_emc.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_exti.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_gpdma.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_i2c.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_i2s.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_iap.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_lcd.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_mci.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_mcpwm.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_nvic.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_pinsel.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_pwm.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_qei.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_rtc.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_ssp.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_timer.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_uart.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_usbhost.o"'
+### List of Objects: adding '".\ram\lpc177x_8x_wwdt.o"'
+### List of Objects: adding '".\ram\main.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\ram\startup_lpc177x_8x.o" ".\ram\system_lpc177x_8x.o" ".\ram\lpc177x_8x_gpio.o" ".\ram\lpc177x_8x_systick.o" ".\ram\lpc177x_8x_clkpwr.o" ".\ram\debug_frmwrk.o" ".\ram\lpc177x_8x_adc.o" ".\ram\lpc177x_8x_bod.o" ".\ram\lpc177x_8x_can.o" ".\ram\lpc177x_8x_crc.o" ".\ram\lpc177x_8x_dac.o" ".\ram\lpc177x_8x_eeprom.o" ".\ram\lpc177x_8x_emac.o" ".\ram\lpc177x_8x_emc.o" ".\ram\lpc177x_8x_exti.o" ".\ram\lpc177x_8x_gpdma.o" ".\ram\lpc177x_8x_i2c.o" ".\ram\lpc177x_8x_i2s.o" ".\ram\lpc177x_8x_iap.o" ".\ram\lpc177x_8x_lcd.o" ".\ram\lpc177x_8x_mci.o" ".\ram\lpc177x_8x_mcpwm.o" ".\ram\lpc177x_8x_nvic.o" ".\ram\lpc177x_8x_pinsel.o" ".\ram\lpc177x_8x_pwm.o" ".\ram\lpc177x_8x_qei.o" ".\ram\lpc177x_8x_rtc.o" ".\ram\lpc177x_8x_ssp.o" ".\ram\lpc177x_8x_timer.o" ".\ram\lpc177x_8x_uart.o" ".\ram\lpc177x_8x_usbhost.o" ".\ram\lpc177x_8x_wwdt.o" ".\ram\main.o" --library_type=microlib --strict --scatter ".\RAM\Project.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\RAM\Project.map" -o ".\RAM\Project.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\RAM\Project.axf'
+### ADS-LD Command File: '.\RAM\Project.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\RAM\Project.lnp', Handle=0x00000278
+### Writing '.lnp' file
+### ADS-LD Command file '.\RAM\Project.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

@@ -1,0 +1,9 @@
+.\flash\lpc177x_8x_nvic.o: ..\..\Drivers\source\lpc177x_8x_nvic.c
+.\flash\lpc177x_8x_nvic.o: ..\..\BoardSupport\lpc177x_8x_libcfg.h
+.\flash\lpc177x_8x_nvic.o: ..\..\Drivers\include\lpc_types.h
+.\flash\lpc177x_8x_nvic.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\lpc177x_8x_nvic.o: ..\..\Drivers\include\lpc177x_8x_nvic.h
+.\flash\lpc177x_8x_nvic.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\flash\lpc177x_8x_nvic.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\lpc177x_8x_nvic.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\lpc177x_8x_nvic.o: ..\..\Core\CMSIS\Include\core_cmFunc.h

@@ -1,0 +1,12 @@
+.\flash\sound.o: ..\..\BoardSupport\sound.c
+.\flash\sound.o: ..\..\BoardSupport\sound.h
+.\flash\sound.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\sound.o: ..\..\Drivers\include\lpc177x_8x_uart.h
+.\flash\sound.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\flash\sound.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\sound.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\sound.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\flash\sound.o: ..\..\Drivers\include\lpc_types.h
+.\flash\sound.o: ..\..\BoardSupport\Config.h
+.\flash\sound.o: ..\..\BoardSupport\uart.h
+.\flash\sound.o: D:\Keil\ARM\ARMCC\bin\..\include\stdio.h

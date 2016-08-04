@@ -1,0 +1,13 @@
+.\flash\dispsognums.o: ..\..\BoardSupport\DispSOGNums.c
+.\flash\dispsognums.o: ..\..\emWin\GUI\GUI.h
+.\flash\dispsognums.o: ..\..\emWin\GUI\GUI_ConfDefaults.h
+.\flash\dispsognums.o: ..\..\emWin\Config\GUIConf.h
+.\flash\dispsognums.o: ..\..\emWin\GUI\GUI_Type.h
+.\flash\dispsognums.o: ..\..\emWin\GUI\LCD.h
+.\flash\dispsognums.o: ..\..\emWin\GUI\Global.h
+.\flash\dispsognums.o: ..\..\emWin\GUI\GUI_Version.h
+.\flash\dispsognums.o: ..\..\BoardSupport\DispSOGNums.h
+.\flash\dispsognums.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\dispsognums.o: ..\..\BoardSupport\stub.h
+.\flash\dispsognums.o: ..\..\BoardSupport\layout.h
+.\flash\dispsognums.o: ..\..\Drivers\include\lpc_types.h

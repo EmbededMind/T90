@@ -1,0 +1,10 @@
+.\flash\comm.o: ..\..\BoardSupport\comm.c
+.\flash\comm.o: ..\..\Drivers\include\lpc177x_8x_uart.h
+.\flash\comm.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\flash\comm.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\comm.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\comm.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\comm.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\flash\comm.o: ..\..\Drivers\include\lpc_types.h
+.\flash\comm.o: D:\Keil\ARM\ARMCC\bin\..\include\string.h
+.\flash\comm.o: ..\..\BoardSupport\comm.h

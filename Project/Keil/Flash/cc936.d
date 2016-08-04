@@ -1,0 +1,11 @@
+.\Flash\cc936.o: ..\..\FatFS\option\cc936.c
+.\Flash\cc936.o: ..\..\FatFS\option\../ff.h
+.\Flash\cc936.o: ..\..\FatFS\option\../integer.h
+.\Flash\cc936.o: ..\..\FatFS\option\../ffconf.h
+.\Flash\cc936.o: ..\..\FatFS\exfuns.h
+.\Flash\cc936.o: ..\..\Core\Device\Include\LPC177x_8x.H
+.\Flash\cc936.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\Flash\cc936.o: D:\install\KEI4.71\ARM\ARMCC\bin\..\include\stdint.h
+.\Flash\cc936.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\Flash\cc936.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\Flash\cc936.o: ..\..\BoardSupport\sdram.h

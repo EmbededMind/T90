@@ -1,0 +1,9 @@
+.\flash\28.o: ..\..\BoardSupport\28.c
+.\flash\28.o: ..\..\BoardSupport\28.h
+.\flash\28.o: ..\..\emWin\GUI\GUI.h
+.\flash\28.o: ..\..\emWin\GUI\GUI_ConfDefaults.h
+.\flash\28.o: ..\..\emWin\Config\GUIConf.h
+.\flash\28.o: ..\..\emWin\GUI\GUI_Type.h
+.\flash\28.o: ..\..\emWin\GUI\LCD.h
+.\flash\28.o: ..\..\emWin\GUI\Global.h
+.\flash\28.o: ..\..\emWin\GUI\GUI_Version.h

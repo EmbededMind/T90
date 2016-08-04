@@ -41,6 +41,7 @@ extern WM_HWIN confirmWin;
 
 extern WM_HWIN MMSISetWin;
 extern WM_HWIN SoftInputWin;
+extern WM_HWIN FleetWin;
 //extern WM_HWIN textprowin;
 
 WM_HWIN WIN_WorkModeCreate(void);
@@ -69,6 +70,7 @@ WM_HWIN WIN_ConfirmCreate(void);
 
 WM_HWIN WIN_MMSISetCreate(void);
 WM_HWIN WIN_SoftInputCreate(void);
+WM_HWIN WIN_FleetCreate(void);
 //WM_HWIN DLG_testCustomedWidgetCreate(void);
 
 #ifdef P_AM128A

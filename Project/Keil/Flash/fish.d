@@ -1,0 +1,9 @@
+.\flash\fish.o: ..\..\BoardSupport\fish.c
+.\flash\fish.o: D:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
+.\flash\fish.o: ..\..\emWin\GUI\GUI.h
+.\flash\fish.o: ..\..\emWin\GUI\GUI_ConfDefaults.h
+.\flash\fish.o: ..\..\emWin\Config\GUIConf.h
+.\flash\fish.o: ..\..\emWin\GUI\GUI_Type.h
+.\flash\fish.o: ..\..\emWin\GUI\LCD.h
+.\flash\fish.o: ..\..\emWin\GUI\Global.h
+.\flash\fish.o: ..\..\emWin\GUI\GUI_Version.h

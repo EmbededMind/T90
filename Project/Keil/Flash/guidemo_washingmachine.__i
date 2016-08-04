@@ -1,0 +1,5 @@
+-c --cpu Cortex-M3 -D__MICROLIB -g -O1 --apcs=interwork -I..\..\Core\CMSIS\Include -I..\..\Core\Device\Include -I..\..\Drivers\include -I..\..\BoardSupport -I..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\RealView -I..\..\uCOS-II\Source -I..\..\uCOS-II\Cfg -I..\..\emWin\Config -I..\..\emWin\GUI -I..\..\emWin\SEGGERDEMO -I..\..\Project 
+-I F:\keil4\ARM\RV31\INC 
+-I F:\keil4\ARM\CMSIS\Include 
+-I F:\keil4\ARM\Inc\NXP\LPC177x_8x 
+-D__BUILD_WITH_EXAMPLE__ -o ".\Flash\guidemo_washingmachine.o" --omf_browse ".\Flash\guidemo_washingmachine.crf" --depend ".\Flash\guidemo_washingmachine.d" "..\..\emWin\SEGGERDEMO\GUIDEMO_WashingMachine.c"

@@ -22,6 +22,7 @@
 #define USER_MSG_DATA_ACK_RESULT   (WM_USER + 0x15)
 #define USER_MSG_WORKMODE  (WM_USER + 0x16)
 #define USER_MSG_MOTHERPOS (WM_USER + 0x17)
+#define USER_MSG_MMSISET   (WM_USER + 0x19)
 
 
 #define STORE_SETTING   1
@@ -31,6 +32,10 @@
 #define ADD_MONITED     5
 #define SYS_SETTING     6
 #define SYS_RESET       7
+#define MONITMMSI_SET   8
+#define MONITMMSI_ADD   9
+#define MONITMMSI_DEL   10
+#define MONITMMSI_FULL  11
 
 #define GUI_KEY_RELEASE           4
 #define GUI_KEY_MENU              5

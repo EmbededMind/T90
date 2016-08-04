@@ -1,0 +1,12 @@
+.\flash\lcd43.o: ..\..\BoardSupport\lcd43.c
+.\flash\lcd43.o: ..\..\Drivers\include\lpc177x_8x_lcd.h
+.\flash\lcd43.o: ..\..\Drivers\include\lpc_types.h
+.\flash\lcd43.o: D:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\flash\lcd43.o: ..\..\Drivers\include\lpc177x_8x_pinsel.h
+.\flash\lcd43.o: ..\..\Core\Device\Include\LPC177x_8x.h
+.\flash\lcd43.o: ..\..\Core\CMSIS\Include\core_cm3.h
+.\flash\lcd43.o: ..\..\Core\CMSIS\Include\core_cmInstr.h
+.\flash\lcd43.o: ..\..\Core\CMSIS\Include\core_cmFunc.h
+.\flash\lcd43.o: ..\..\BoardSupport\lcd43.h
+.\flash\lcd43.o: ..\..\Drivers\include\lpc177x_8x_lcd.h
+.\flash\lcd43.o: ..\..\BoardSupport\sdram.h
