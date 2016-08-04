@@ -143,7 +143,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            pColors  = &(setDlgColors[pMsg->Data.v]);
            
            WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);
-           for(i = 0; i < SLD_NUM; i++)
+           for(i = 0; i < 10; i++)
            {	
               HSD_SLIDER_SetBkColor(slideres[i], pColors->bkColor);
               HSD_SLIDER_SetFocusBkColor(slideres[i], pColors->bkColor);

@@ -26,7 +26,8 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
    {HSD_BUTTON_CreateIndirect,  "0", GUI_ID_BUTTON0, 0, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2,   MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
    {HSD_BUTTON_CreateIndirect,  "almSet", GUI_ID_BUTTON1,   0, MAIN_MENU_ITEM_HEIGHT*2+MAIN_MENU_ITEM_MARGIN*3, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
    {HSD_BUTTON_CreateIndirect,  "sysSet", GUI_ID_BUTTON2,   0, MAIN_MENU_ITEM_HEIGHT*3+MAIN_MENU_ITEM_MARGIN*4, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0},
-   {HSD_BUTTON_CreateIndirect,  "myship", GUI_ID_BUTTON3,   0, MAIN_MENU_ITEM_HEIGHT*4+MAIN_MENU_ITEM_MARGIN*5, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
+			{HSD_BUTTON_CreateIndirect,  "myFleet", GUI_ID_BUTTON3,   0, MAIN_MENU_ITEM_HEIGHT*4+MAIN_MENU_ITEM_MARGIN*5, MAIN_MENU_ITEM_WIDTH, MAIN_MENU_ITEM_HEIGHT,    0, 0, 0}
+
 };
 
 
@@ -69,13 +70,16 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
               case 2:
                    WM_BringToTop(systemSetDlg);
                    break;
-              case 3:
-                   WM_BringToTop(myFleetDlg); 
-                 break;
+
+														
+														case 3:
+															    WM_BringToTop(FleetWin);
+															    break;
+
               }
            }
            else
-           {	
+           {
               if(flag_prevfocus)																						//if previous focussed
               {
                  HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btPrevFocusBkColor);   
@@ -157,9 +161,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                 case 2:
                      WM_SetFocus(systemSetDlg);
                      break;
-                case 3:
-                     WM_SetFocus(myFleetDlg);
-                   break;
+																case 3:
+																					WM_SetFocus(FleetWin);
+																	    break;
                 default:
                      break;
                 }
@@ -201,76 +205,132 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
     switch(pMsg->MsgId){
 			 
 			 case USER_MSG_SKIN:
-						pColors = &(mainMenuColors[pMsg->Data.v]);	
-			 
-						WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor); 
-			 
-						HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
-						HSD_BUTTON_SetTextColor(buttons[0], pColors->btTextColor);
-						HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
-			 
-						HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
-						HSD_BUTTON_SetTextColor(buttons[1], pColors->btTextColor);
-						HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
-      
-			 
+									pColors = &(mainMenuColors[pMsg->Data.v]);	
+							
+									WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor); 
+							
+									HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
+									HSD_BUTTON_SetTextColor(buttons[0], pColors->btTextColor);
+									HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
+							
+									HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
+									HSD_BUTTON_SetTextColor(buttons[1], pColors->btTextColor);
+									HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
+									
+							
 
-						HSD_BUTTON_SetBkColor(buttons[2], pColors->btPrevFocusBkColor);
-						HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
-						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
-          
-                  HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
-						HSD_BUTTON_SetTextColor(buttons[3], pColors->btTextColor);
-						HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
-						break;
+//<<<<<<< HEAD
+//						HSD_BUTTON_SetBkColor(buttons[2], pColors->btPrevFocusBkColor);
+//						HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
+//						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
+//          
+//                  HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
+//						HSD_BUTTON_SetTextColor(buttons[3], pColors->btTextColor);
+//						HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
+//						break;
+//			 
+//       case WM_INIT_DIALOG:
+//						pColors = &mainMenuColors[t90_set.sys.nightmode];
+//                  WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);           
+//            
+//						buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
+//                  HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
+//                  HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
+//                  WM_SetCallback(buttons[0], &myButtonCallback);
+//						HSD_BUTTON_SetText(buttons[0], "距离设置");
+//						HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
+//            
+//						buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
+//                  HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
+//                  HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
+//                  WM_SetCallback(buttons[1],&myButtonCallback);
+//						HSD_BUTTON_SetText(buttons[1], "报警设置");
+//						HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
+//            
+//						buttons[2] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
+//                  HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
+//                  HSD_BUTTON_SetBkColor(buttons[2], pColors->btBkColor);
+//                  WM_SetCallback(buttons[2],&myButtonCallback);
+//						HSD_BUTTON_SetText(buttons[2], "系统设置");
+//						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
+//                  
+//                  buttons[3] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON3);
+//                  HSD_BUTTON_SetTxFont(buttons[3], &GUI_Font_T90_30);
+//                  HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
+//                  WM_SetCallback(buttons[3],&myButtonCallback);
+//						HSD_BUTTON_SetText(buttons[3], "我的船队");
+//						HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
+//            
+//            break; 
+//						
+//			 case WM_PAINT:
+//						
+//						GUI_DrawGradientV( 0, 0,
+//															 MAIN_MENU_WIDTH-MAIN_MENU_ITEM_MARGIN-1, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
+//															 pColors->headTopColor, pColors->headBottomColor);
+//						GUI_SetFont(&GUI_Font_T90_30);
+//						GUI_SetTextMode(GUI_TM_TRANS);
+//						GUI_SetColor(pColors->headTextColor);
+//						GUI_DispStringAt("主菜单", 30, 9);
+//					   GUI_SetColor(pColors->btBkColor);
+//						GUI_FillRect(0, MAIN_MENU_ITEM_HEIGHT*5+MAIN_MENU_ITEM_MARGIN*6, MAIN_MENU_ITEM_WIDTH-1, MAIN_MENU_HEIGHT-1);
+//						break;
+//            
+//=======
+									HSD_BUTTON_SetBkColor(buttons[2], pColors->btPrevFocusBkColor);
+									HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
+									HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
+							
+									HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
+									HSD_BUTTON_SetTextColor(buttons[3], pColors->btTextColor);
+									HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
+									break;
 			 
-       case WM_INIT_DIALOG:
-						pColors = &mainMenuColors[t90_set.sys.nightmode];
-                  WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);           
-            
-						buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
-                  HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
-                  HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
-                  WM_SetCallback(buttons[0], &myButtonCallback);
-						HSD_BUTTON_SetText(buttons[0], "距离设置");
-						HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
-            
-						buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
-                  HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
-                  HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
-                  WM_SetCallback(buttons[1],&myButtonCallback);
-						HSD_BUTTON_SetText(buttons[1], "报警设置");
-						HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
-            
-						buttons[2] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
-                  HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
-                  HSD_BUTTON_SetBkColor(buttons[2], pColors->btBkColor);
-                  WM_SetCallback(buttons[2],&myButtonCallback);
-						HSD_BUTTON_SetText(buttons[2], "系统设置");
-						HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
-                  
-                  buttons[3] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON3);
-                  HSD_BUTTON_SetTxFont(buttons[3], &GUI_Font_T90_30);
-                  HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
-                  WM_SetCallback(buttons[3],&myButtonCallback);
-						HSD_BUTTON_SetText(buttons[3], "我的船队");
-						HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
-            
-            break; 
+				case WM_INIT_DIALOG:
+									pColors = &mainMenuColors[t90_set.sys.nightmode];
+									WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);           
+
+									buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
+									HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
+									HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
+									WM_SetCallback(buttons[0], &myButtonCallback);
+									HSD_BUTTON_SetText(buttons[0], "距离设置");
+									HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
+
+									buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
+									HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
+									HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
+									WM_SetCallback(buttons[1],&myButtonCallback);
+									HSD_BUTTON_SetText(buttons[1], "报警设置");
+									HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
+
+									buttons[2] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
+									HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
+									HSD_BUTTON_SetBkColor(buttons[2], pColors->btBkColor);
+									WM_SetCallback(buttons[2],&myButtonCallback);
+									HSD_BUTTON_SetText(buttons[2], "系统设置");
+									HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
+
+									buttons[3] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON3);
+									HSD_BUTTON_SetTxFont(buttons[3], &GUI_Font_T90_30);
+									HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
+									WM_SetCallback(buttons[3],&myButtonCallback);
+									HSD_BUTTON_SetText(buttons[3], "我的船队");
+									HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);						
+									break; 
 						
 			 case WM_PAINT:
-						
-						GUI_DrawGradientV( 0, 0,
-															 MAIN_MENU_WIDTH-MAIN_MENU_ITEM_MARGIN-1, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
-															 pColors->headTopColor, pColors->headBottomColor);
-						GUI_SetFont(&GUI_Font_T90_30);
-						GUI_SetTextMode(GUI_TM_TRANS);
-						GUI_SetColor(pColors->headTextColor);
-						GUI_DispStringAt("主菜单", 30, 9);
-					   GUI_SetColor(pColors->btBkColor);
-						GUI_FillRect(0, MAIN_MENU_ITEM_HEIGHT*5+MAIN_MENU_ITEM_MARGIN*6, MAIN_MENU_ITEM_WIDTH-1, MAIN_MENU_HEIGHT-1);
-						break;
-            
+									GUI_DrawGradientV( 0, 0,
+									MAIN_MENU_WIDTH-MAIN_MENU_ITEM_MARGIN-1, MAIN_MENU_ITEM_HEIGHT+MAIN_MENU_ITEM_MARGIN*2-1,
+									pColors->headTopColor, pColors->headBottomColor);
+				
+									GUI_SetFont(&GUI_Font_T90_30);
+									GUI_SetTextMode(GUI_TM_TRANS);
+									GUI_SetColor(pColors->headTextColor);
+									GUI_DispStringAt("主菜单", 30, 9);
+									GUI_SetColor(pColors->btBkColor);
+									GUI_FillRect(0, MAIN_MENU_ITEM_HEIGHT*5+MAIN_MENU_ITEM_MARGIN*6, MAIN_MENU_ITEM_WIDTH-1, MAIN_MENU_HEIGHT-1);
+									break;
        default:
             WM_DefaultProc(pMsg);
             break;
