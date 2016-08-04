@@ -281,7 +281,9 @@ static void myDialogCallBack(WM_MESSAGE* pMsg){
 									HSD_BUTTON_SetTextColor(buttons[2], pColors->btTextColor);
 									HSD_BUTTON_SetTextFocusColor(buttons[2], pColors->btFocusTextColor);
 							
+
 									HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
+
 									HSD_BUTTON_SetTextColor(buttons[3], pColors->btTextColor);
 									HSD_BUTTON_SetTextFocusColor(buttons[3], pColors->btFocusTextColor);
 									break;
