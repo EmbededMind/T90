@@ -128,7 +128,7 @@ printf("maintask\n");
    while(1)
    {
       WM_MESSAGE pMsg;      
-// printf("ipcMsg = %x\n", ipcMsg);
+ printf("maintask while begin\n");
       if(ipcMsg){
          if(ipcMsg & 0x01 )
          {  
@@ -239,8 +239,9 @@ printf("maintask\n");
          
       }
 
-      
-      GUI_Delay(200);      
+printf("main task while end\n");       
+      GUI_Delay(200);
+     
    }
 
 }

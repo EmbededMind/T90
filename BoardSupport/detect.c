@@ -224,7 +224,7 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 {
    if(pointa.y == pointb.y)
    {
-		 printf("left y = y = %d,pointa.x = %d, pointb.x = %d\n",pointa.y,pointa.x,pointb.x);
+//		 printf("left y = y = %d,pointa.x = %d, pointb.x = %d\n",pointa.y,pointa.x,pointb.x);
       return 0;
 //      if(pBerth->x_to_cross < MINNUM(pointa.x,pointb.y))
 //         return 1;
@@ -247,7 +247,7 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
             if(addLeft(pBerth, pointa.x, pointa.y, pointb.x, pointb.y))
 
             {
-               printf("right pointa.x = %d, pointa.y = %d, pointb.x = %d, pointb.y = %d\n", pointa.x, pointa.x, pointb.x, pointb.y);
+//               printf("right pointa.x = %d, pointa.y = %d, pointb.x = %d, pointb.y = %d\n", pointa.x, pointa.x, pointb.x, pointb.y);
                return 1;
             }
          }

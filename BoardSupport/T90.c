@@ -54,7 +54,16 @@ T90_Set t90_set = {
 		NM,
 		OFF,
 		OFF,
-      DEFAULT_LEFT   },
+  DEFAULT_LEFT,
+  {
+     0,
+     55,
+  },
+  {
+     0,
+     55,   
+  } 
+  },
    {
       0,
       0,
@@ -63,7 +72,8 @@ T90_Set t90_set = {
       {0},
       0,
       0,
-   }
+   },
+
 };
 T90_Set reset_t90_set = {
 
@@ -100,7 +110,15 @@ T90_Set reset_t90_set = {
 		NM,
 		OFF,
 		OFF,
-      DEFAULT_LEFT   },
+      DEFAULT_LEFT,
+  {
+     0,
+     55,
+  },
+  {
+     0,
+     55,   
+  }  },
    {
       0,
       0

@@ -78,6 +78,11 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 
 
  */
+typedef struct Average
+{
+   Bool on_off;
+   int averageNum;
+}Average_set;
 
 typedef struct RemoveShip
 {
@@ -129,7 +134,10 @@ typedef struct System_Set
 	int unit;
 	int update;
 	int reset;
-   int motherpos;
+ int motherpos;
+ Average_set SOG;
+ Average_set COG;
+ 
 } System_Set;
 
 typedef struct PortStatus
@@ -142,8 +150,8 @@ typedef struct T90_Set
 {
    SingleDst_Set singledst_set;
    DoubleDst_Set doubledst_set;    
-	Alarm_Set alarm;
-	System_Set sys;
+	  Alarm_Set alarm;
+	  System_Set sys;
    PortStatus as_MMSI;
    RemoveShip shipout;   
 } T90_Set;

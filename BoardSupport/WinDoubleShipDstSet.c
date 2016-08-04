@@ -227,7 +227,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                               }
                       break;
                       case 2:
-                            preDouDstSet.net_port -= 50;
+                            preDouDstSet.safety1_to_mo -= 50;
                             if(pointyPretreatment())
                                break;
                             if(tempDouDstSet.safety1_to_mo > 50){
