@@ -278,7 +278,6 @@ void DelMMSI(int dex){
  */
 static void FleetWinCallback(WM_MESSAGE* pMsg){
 	char i;
-   long arrindex=100000000;
 	int NCode, Id;
    char editText[10];
 	WM_MESSAGE myMsg;
@@ -293,15 +292,11 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     EDIT_EnableBlink(edit,0,0);
 		     WM_SetCallback(edit,&myEditCallback);
            MonitShipNum = t90_set.shipout.numShip;
-           memcpy(monitMMSI,t90_set.shipout.MMSI,sizeof(long)*5);
+           for(i=0;i<5;i++)
+            monitMMSI[i]=t90_set.shipout.MMSI[i];
            MMSI=t90_set.as_MMSI.MMSI;
-           MMSI = 999999999;
-//		     for(i=0;i<9;i++)
-//           {
-//            editText[i] = MMSI/arrindex;
-//            arrindex/=10;
-//           }
-          // EDIT_SetText(edit,MMSI);
+           sprintf(editText,"%ld",MMSI);
+           EDIT_SetText(edit,editText);
            
 			  addbutton = BUTTON_CreateEx(103,116,159,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON0);
 		     WM_SetHasTrans(addbutton);
@@ -412,7 +407,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		
 		case USER_MSG_SKIN:
 			    pColor = &subMenuColors[pMsg->Data.v];
-		     //pSkin = btSkin[pMsg->Data.v];
+//		       pSkin = btSkin[pMsg->Data.v];
 			    break;
 			
 		case WM_SET_FOCUS:
@@ -497,7 +492,8 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
                                           {
                                              t90_set.shipout.MMSI[i] = monitMMSI[i];
                                           }
-                                          t90_set.shipout.numShip = MonitShipNum;                                          
+                                          t90_set.shipout.numShip = MonitShipNum;
+                                          T90_Store();                                          
 													}
 													else if(pMsg->Data.v==REPLY_CANCEL)
 													{

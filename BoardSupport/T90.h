@@ -71,6 +71,10 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 
 #define DEFAULT_VOLUM      1
 #define DEFAULT_BRIGHT     4
+#define DEFAULT_OFF        0
+#define DEFAULT_ON         1
+#define DEFAULT_SOG_TIME   15
+#define DEFAULT_COG_TIME   60
 
 /* button skin */
 extern const BUTTON_SKINFLEX_PROPS btSkin[2][2];

@@ -34,7 +34,7 @@ extern OS_EVENT * CommMBox;
 volatile Bool Doubleclick  = FALSE;
 volatile Bool isReleasedDet  = FALSE;
 
-uint8_t recBuf[18]  = {0};
+uint8_t recBuf[21]  = {0};
 uint8_t* pRecBuf  = recBuf;
 
 void xl_UART_Config(unsigned char port)
@@ -160,14 +160,31 @@ void UART2_IRQHandler(void)
    {	 
        UART_Receive(UART_2, pRecBuf++, 1, NONE_BLOCKING);
        if(pRecBuf-recBuf >=18){
-          crcVal  = recBuf[16] ;
-          crcVal  = (crcVal << 8) | recBuf[17];
-          
-          
-          if(crcVal == Comm_getCRC(recBuf, 16)){
-             OSMboxPost(CommMBox, (void*)recBuf);
+          if(recBuf[1] != 51)
+          {
+             crcVal  = recBuf[16] ;
+             crcVal  = (crcVal << 8) | recBuf[17];
+             
+             
+             if(crcVal == Comm_getCRC(recBuf, 16)){
+                OSMboxPost(CommMBox, (void*)recBuf);
+             }
+             pRecBuf  = recBuf;
           }
-          pRecBuf  = recBuf;
+          else if(recBuf[1] == 51)
+          {
+             if(pRecBuf - recBuf >= 21)
+             {
+                crcVal  = recBuf[19];
+                crcVal  = (crcVal << 8) | recBuf[20];
+                
+                if(crcVal == Comm_getCRC(recBuf, 19))
+                {
+                   OSMboxPost(CommMBox, (void*)recBuf);
+                }
+                pRecBuf  = recBuf;
+             }
+          }
        }
 
    }
@@ -180,7 +197,8 @@ void UART2_IRQHandler(void)
 PUTCHAR_PROTOTYPE//重定向C printf函数到Uart0
 {
 	UART_Send((UART_ID_Type)UART_0, (uint8_t*) &ch, 1, BLOCKING);  /* 发送一个字符到UART */
-	while (UART_CheckBusy((UART_ID_Type)UART_0) == SET);/* 等于发送完成，THR必须为空*/
+	while(UART_CheckBusy((UART_ID_Type)UART_0) == SET)
+      ;  /* 等于发送完成，THR必须为空*/
   return ch;
 }
 

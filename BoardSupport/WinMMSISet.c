@@ -372,8 +372,10 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 														EDIT_SetText(hWin,edittext);
                                           t90_set.as_MMSI.MMSI = MMSI;
                                           t90_set.as_MMSI.port = 1;
+                                          T90_Store();
 														WM_BringToTop(FleetWin);
 														WM_SetFocus(FleetWin);
+                                         
 													}
 													else if(pMsg->Data.v==REPLY_CANCEL)
 													{
@@ -408,6 +410,8 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 															WM_SetFocus(WM_GetDialogItem(FleetWin,GUI_ID_BUTTON0));
                                              t90_set.shipout.MMSI[MonitShipNum-1] = MMSI_tmp;
                                              t90_set.shipout.numShip = MonitShipNum;
+                                             
+                                             T90_Store();
                                             
 														}
 														else

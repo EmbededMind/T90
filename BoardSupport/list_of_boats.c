@@ -206,13 +206,22 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
      
    for(i = 0; i < t90_set.shipout.numShip; i++)
    {
-      if(pBerth->Boat.category == t90_set.shipout.MMSI[i])
+      if(pBerth->Boat.user_id == t90_set.shipout.MMSI[i])
       {
          pBerth->Boat.category |= TYPE_FAMILY;
          pBerth->isInvader = 0;
          pBerth->Boat.category &= TYPE_FAMILY;
          break;
       }            
+   }
+   if(t90_set.as_MMSI.port)
+   {
+      if(pBerth->Boat.user_id == t90_set.as_MMSI.MMSI)
+      {
+         pBerth->Boat.category |= TYPE_FAMILY;
+         pBerth->isInvader = 0;
+         pBerth->Boat.category &= TYPE_FAMILY;
+      }
    }
 
 
@@ -404,13 +413,22 @@ int add_18(struct message_18 * p_msg)
    
    for(i = 0; i < t90_set.shipout.numShip; i++)
    {
-      if(buf->Boat.category == t90_set.shipout.MMSI[i])
+      if(buf->Boat.user_id == t90_set.shipout.MMSI[i])
       {
          buf->Boat.category |= TYPE_FAMILY;
          buf->isInvader = 0;
          buf->Boat.category &= TYPE_FAMILY;
          break;
       }            
+   }
+   if(t90_set.as_MMSI.port)
+   {
+      if(buf->Boat.user_id == t90_set.as_MMSI.MMSI)
+      {
+         buf->Boat.category |= TYPE_FAMILY;
+         buf->isInvader = 0;
+         buf->Boat.category &= TYPE_FAMILY;
+      }
    }
 
 
@@ -498,7 +516,7 @@ int update_24A(BERTH * pBerth, struct message_24_partA * p_msg)
    
    for(i = 0; i < t90_set.shipout.numShip; i++)
    {
-      if(pBerth->Boat.category == t90_set.shipout.MMSI[i])
+      if(pBerth->Boat.user_id == t90_set.shipout.MMSI[i])
       {
          pBerth->Boat.category |= TYPE_FAMILY;
          pBerth->isInvader = 0;
@@ -507,6 +525,15 @@ int update_24A(BERTH * pBerth, struct message_24_partA * p_msg)
       }            
    }
    
+   if(t90_set.as_MMSI.port)
+   {
+      if(t90_set.as_MMSI.MMSI == pBerth->Boat.user_id)
+      {
+         pBerth->Boat.category |= TYPE_FAMILY;
+         pBerth->isInvader = 0;
+         pBerth->Boat.category &= TYPE_FAMILY;
+      }
+   }
    
    if(pBerth->Boat.name[0] == 0)
    {
@@ -551,7 +578,7 @@ int add_24A(struct message_24_partA * p_msg)
   
    for(i = 0; i < t90_set.shipout.numShip; i++)
    {
-      if(buf->Boat.category == t90_set.shipout.MMSI[i])
+      if(buf->Boat.user_id == t90_set.shipout.MMSI[i])
       {
          buf->Boat.category |= TYPE_FAMILY;
          buf->isInvader = 0;
@@ -560,6 +587,15 @@ int add_24A(struct message_24_partA * p_msg)
       }            
    }
    
+   if(t90_set.as_MMSI.port)
+   {
+      if(t90_set.as_MMSI.MMSI == buf->Boat.user_id)
+      {
+         buf->Boat.category |= TYPE_FAMILY;
+         buf->isInvader = 0;
+         buf->Boat.category &= TYPE_FAMILY;
+      }
+   }
    
    if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
@@ -636,13 +672,19 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
               
             for(i = 0; i < t90_set.shipout.numShip; i++)
             {
-               if(pBerth->Boat.category == t90_set.shipout.MMSI[i])
+               if(pBerth->Boat.user_id == t90_set.shipout.MMSI[i])
                {
                   pBerth->Boat.category |= TYPE_FAMILY;
                   pBerth->isInvader = 0;
                   pBerth->Boat.category &= TYPE_FAMILY;
                   break;
                }            
+            }
+            if(t90_set.as_MMSI.MMSI == pBerth->Boat.user_id)
+            {
+                pBerth->Boat.category |= TYPE_FAMILY;
+                pBerth->isInvader = 0;
+                pBerth->Boat.category &= TYPE_FAMILY;
             }
             
          }         
@@ -677,7 +719,7 @@ int add_24B(type_of_ship * p_msg)
       
    for(i = 0; i < t90_set.shipout.numShip; i++)
    {
-      if(buf->Boat.category == t90_set.shipout.MMSI[i])
+      if(buf->Boat.user_id == t90_set.shipout.MMSI[i])
       {
          buf->Boat.category |= TYPE_FAMILY;
          buf->isInvader = 0;
@@ -685,7 +727,12 @@ int add_24B(type_of_ship * p_msg)
          break;
       }            
    }
-   
+   if(t90_set.as_MMSI.MMSI == buf->Boat.user_id)
+   {
+       buf->Boat.category |= TYPE_FAMILY;
+       buf->isInvader = 0;
+       buf->Boat.category &= TYPE_FAMILY;
+   }
    
    if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;

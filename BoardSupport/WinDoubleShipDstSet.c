@@ -376,12 +376,12 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
                  if(t90_set.sys.motherpos == DEFAULT_LEFT)
                  {   
                     if(stubs[i+1].isValid)                    
-                       Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+                       Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
                  }
                  else
                  {
                     if(stubs[i+1].isValid)
-                       Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+                       Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
                  }
               }
               memcpy(&preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));

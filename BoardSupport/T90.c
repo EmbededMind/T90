@@ -56,12 +56,12 @@ T90_Set t90_set = {
 		OFF,
      DEFAULT_LEFT,
      {
-        0,
-        55,
+     DEFAULT_OFF,
+     DEFAULT_SOG_TIME,
      },
      {
-        0,
-        55,   
+     DEFAULT_OFF,
+     DEFAULT_COG_TIME,   
      } 
   },
    {
@@ -112,12 +112,12 @@ T90_Set reset_t90_set = {
 		OFF,
       DEFAULT_LEFT,
   {
-     0,
-     55,
+     DEFAULT_OFF,
+     DEFAULT_SOG_TIME,
   },
   {
-     0,
-     55,   
+     DEFAULT_OFF,
+     DEFAULT_COG_TIME,   
   }  },
    {
       0,

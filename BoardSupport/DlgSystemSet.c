@@ -96,16 +96,16 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            {
               for(i = 0; i < 3; i++)
               {
-						           if(portStatus[i].port)
-                     Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M);
+						if(portStatus[i].port)
+                     Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
               }
            }
            else
            {                            
               for(i = 0; i < 3; i++)
               {
-						           if(portStatus[i].port)
-                     Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
+						if(portStatus[i].port)
+                     Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M, abs(stubs[i+1].basePoint.y*MILLINM_TO_M),t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
               }                         
            }
            break;
@@ -117,6 +117,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
            StubRefresh();
            break;
+      
       case USER_MSG_SKIN:    
            pColors  = &(setDlgColors[pMsg->Data.v]);
            pColors_win = &(setWinColors[pMsg->Data.v]); 
@@ -344,18 +345,78 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                }
                if(t90_set.sys.workmode != agentsys_set.workmode)
                {
-                  t90_set.sys.workmode = agentsys_set.workmode;
+                  t90_set.sys.workmode = agentsys_set.workmode;                  
                   StubRefresh();
+                  if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
+                  {
+                     for(i = 1; i < 5; i++)
+                     {
+                        if(stubs[i].isValid)
+                        {
+                           Comm_addFrame(i, stubs[i].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        }
+                     }
+                  }
+                  else if(t90_set.sys.workmode == DOUBLE_MODE)
+                  {
+                     for(i = 1; i < 5; i++)
+                     {
+                        if(stubs[i].isValid)
+                        {
+                           Comm_addFrame(i, stubs[i].basePoint.x - stubs[4].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        }
+                     }
+                  }
                }
                if(t90_set.sys.SOG.on_off != agentsys_set.SOG.on_off || t90_set.sys.SOG.averageNum != agentsys_set.SOG.averageNum)
                {
                   t90_set.sys.SOG.on_off = agentsys_set.SOG.on_off;
-                  t90_set.sys.SOG.averageNum = agentsys_set.SOG.averageNum;                  
+                  t90_set.sys.SOG.averageNum = agentsys_set.SOG.averageNum;
+                  if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
+                  {
+                     for(i = 1; i < 5; i++)
+                     {
+                        if(stubs[i].isValid)
+                        {
+                           Comm_addFrame(i, stubs[i].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        }
+                     }
+                  }
+                  else if(t90_set.sys.workmode == DOUBLE_MODE)
+                  {
+                     for(i = 1; i < 5; i++)
+                     {
+                        if(stubs[i].isValid)
+                        {
+                           Comm_addFrame(i, stubs[i].basePoint.x - stubs[4].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        }
+                     }
+                  }                  
                }
                if(t90_set.sys.COG.on_off != agentsys_set.COG.on_off || t90_set.sys.COG.averageNum != agentsys_set.COG.averageNum)
                {
                   t90_set.sys.COG.on_off = agentsys_set.COG.on_off;
-                  t90_set.sys.COG.averageNum = agentsys_set.COG.averageNum;                  
+                  t90_set.sys.COG.averageNum = agentsys_set.COG.averageNum;
+                  if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
+                  {
+                     for(i = 1; i < 5; i++)
+                     {
+                        if(stubs[i].isValid)
+                        {
+                           Comm_addFrame(i, stubs[i].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        }
+                     }
+                  }
+                  else if(t90_set.sys.workmode == DOUBLE_MODE)
+                  {
+                     for(i = 1; i < 5; i++)
+                     {
+                        if(stubs[i].isValid)
+                        {
+                           Comm_addFrame(i, stubs[i].basePoint.x - stubs[4].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        }
+                     }
+                  }                  
                }
                memcpy(&t90_set.sys, &agentsys_set, sizeof(t90_set.sys));
                T90_Store();

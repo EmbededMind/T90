@@ -72,7 +72,7 @@ void Comm_sendFrame(uint8_t* pFrame)
  * @input [in] offset_y   Y·½ÏòÆ«ÒÆ
  *
  */
-void Comm_addFrame( uint8_t whichPort, int offset_x, uint16_t offset_y )
+void Comm_addFrame( uint8_t whichPort, int offset_x, uint16_t offset_y, uint8_t sog_time, uint8_t cog_time)
 {
    uint16_t crcRes  = 0;
    
@@ -94,6 +94,8 @@ void Comm_addFrame( uint8_t whichPort, int offset_x, uint16_t offset_y )
    frameTab[cursor][6]  = offset_x & 0xff;
    
    frameTab[cursor][7]  = whichPort;
+   frameTab[cursor][8]  = sog_time;
+   frameTab[cursor][9]  = cog_time;
    
    crcRes  = Comm_getCRC(frameTab[cursor], 16);
    
@@ -115,8 +117,7 @@ uint8_t* Comm_fetchNextFrame(void)
          flags &= (~(0x01<<i));
          return &(frameTab[i][0]);
       }
-   }
-   
+   }  
    return NULL;
 }
 

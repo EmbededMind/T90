@@ -42,49 +42,17 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key)
 			       	{
-//                     case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }                           
-//                        break;
+
               
               case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
+
                            myMsg.hWin = systemSetDlg;
                            myMsg.hWinSrc = pMsg->hWin;
                            myMsg.MsgId = USER_MSG_MOTHERPOS;
                            myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }   
+                           WM_SendMessage(myMsg.hWin, &myMsg); 
                         break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-                         
-//                         break;
+
 				         case GUI_KEY_PWM_INC:       
 							            WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                        break;
@@ -440,15 +408,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				{                
                 if(whichFig == 0)
                 {
-                   Comm_addFrame(whichFig+1, -agentdst_set.dst2, agentdst_set.dst1);
+                   Comm_addFrame(whichFig+1, -agentdst_set.dst2, agentdst_set.dst1, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
                 }
                 else if(whichFig == 1)
                 {
-                   Comm_addFrame(whichFig+1, 0, agentdst_set.dst3);               
+                   Comm_addFrame(whichFig+1, 0, agentdst_set.dst3, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);               
                 }
                 else if(whichFig == 2)
                 {
-                   Comm_addFrame(whichFig+1, agentdst_set.dst4, agentdst_set.dst5);
+                   Comm_addFrame(whichFig+1, agentdst_set.dst4, agentdst_set.dst5, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
                 }
 
                 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst1);
