@@ -25,7 +25,7 @@
 WM_HWIN systemSetDlg;
 
 
-
+static void myButtonCallback(WM_MESSAGE * pMsg);
 static void sldListener(WM_MESSAGE * pMsg);
 static void sldResetCallback(WM_MESSAGE* pMsg);
 
@@ -75,9 +75,9 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  =
 };
 
 
-static WM_HWIN slideres[10];
-static WM_HWIN buttons[2];
-
+static WM_HWIN slideres[11];
+static WM_HWIN buttons[4];
+static WM_HWIN text[2];
 static void  _cbDialog(WM_MESSAGE * pMsg)
 {
    WM_MESSAGE myMsg;
@@ -109,29 +109,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
               }                         
            }
            break;
-//      case USER_MSG_WORKMODE:
-//           HSD_SLIDER_SetValue(slideres[0],pMsg->Data.v);
-//           t90_set.sys.workmode = HSD_SLIDER_GetValue(slideres[0]);
-//           T90_Store();
-//           memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
-//           StubRefresh();
-//           if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
-//           {
-//              for(i = 0; i < 3; i++)
-//              {
-//					            if(portStatus[i].port)
-//                    Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M);
-//              }
-//           }
-//           else
-//           {                            
-//              for(i = 0; i < 3; i++)
-//              {
-//					            if(portStatus[i].port)
-//                    Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M));
-//              }                         
-//           }
-//           break;      
+      
       case USER_MSG_DIM:   
            HSD_SLIDER_Loop(slideres[4]);
            t90_set.sys.bright = HSD_SLIDER_GetValue(slideres[4]);
@@ -141,7 +119,8 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            break;
       case USER_MSG_SKIN:    
            pColors  = &(setDlgColors[pMsg->Data.v]);
-           
+           pColors_win = &(setWinColors[pMsg->Data.v]); 
+      
            WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);
            for(i = 0; i < 10; i++)
            {	
@@ -152,7 +131,50 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
               HSD_SLIDER_SetFocusSliderColor(slideres[i], pColors->focusSliderColor);
               HSD_SLIDER_SetFocusSlotColor(slideres[i],pColors->focusSlotColor);
            }
+           for(i = 0; i < 4; i++)
+           {
+              HSD_BUTTON_SetBkColor(buttons[i], pColors_win->bkColor);
+			     HSD_BUTTON_SetTextFocusColor(buttons[i], pColors_win->focusTextColor);
+              HSD_BUTTON_SetFocusBkColor(buttons[i],pColors_win->focusBkColor);
+           }
+           HSD_BUTTON_SetBkColor(text[0], pColors_win->bkColor);
+           HSD_BUTTON_SetBkColor(text[1], pColors_win->bkColor);
+           if(agentsys_set.COG.on_off)
+           {
+              for(i = 0; i < 2; i++)
+              {
+                 HSD_BUTTON_SetTextColor(buttons[i], pColors_win->textColor);
+                 
+              }
+              HSD_BUTTON_SetTextColor(text[0], pColors_win->textColor);
+              
+           }
+           else
+           {
+              for(i = 0; i < 2; i++)
+              {
+                 HSD_BUTTON_SetTextColor(buttons[i], pColors_win->bkColor);
+              }
+              HSD_BUTTON_SetTextColor(text[0], pColors_win->bkColor);
+              
+           }
            
+           if(agentsys_set.SOG.on_off)
+           {
+              for(i = 2; i < 4; i++)
+              {
+                 HSD_BUTTON_SetTextColor(buttons[i], pColors_win->textColor);
+              }
+              HSD_BUTTON_SetTextColor(text[1], pColors_win->textColor);
+           }
+           else
+           {
+              for(i = 2; i < 4; i++)
+              {
+                 HSD_BUTTON_SetTextColor(buttons[i], pColors_win->bkColor);
+              }
+              HSD_BUTTON_SetTextColor(text[1], pColors_win->bkColor);
+           }
            break;
            
       case WM_INIT_DIALOG:  
@@ -164,7 +186,12 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            agentsys_set.unit      =  t90_set.sys.unit;
            agentsys_set.update    =  t90_set.sys.update;
            agentsys_set.reset     =  t90_set.sys.reset;
-                 
+           agentsys_set.COG.on_off = t90_set.sys.COG.on_off;
+           agentsys_set.COG.averageNum = t90_set.sys.COG.averageNum;
+    
+           agentsys_set.SOG.on_off = t90_set.sys.SOG.on_off;
+           agentsys_set.SOG.averageNum = t90_set.sys.SOG.averageNum;
+//           memcpy(&agentsys_set,&t90_set.sys,sizeof(t90_set.sys));      
            pColors  = &(setDlgColors[t90_set.sys.nightmode]);
 		     pColors_win = &(setWinColors[t90_set.sys.nightmode]);     
       
@@ -185,7 +212,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            
            slideres[3]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_3);
            WM_SetCallback(slideres[3], &sldListener);
-					      HSD_SLIDER_SetNumTicks(slideres[3], 6);
+			  HSD_SLIDER_SetNumTicks(slideres[3], 6);
            HSD_SLIDER_SetRange(slideres[3], 1, 6);
            HSD_SLIDER_SetValue(slideres[3], t90_set.sys.volum);
            
@@ -213,11 +240,12 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            slideres[5]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_5);
            WM_SetCallback(slideres[5], &sldListener);
            HSD_SLIDER_SetRange(slideres[5],0,1);
+           HSD_SLIDER_SetValue(slideres[5],agentsys_set.SOG.on_off);
            
            slideres[6]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_6);
            WM_SetCallback(slideres[6], &sldListener);
            HSD_SLIDER_SetRange(slideres[6],0,1);
-           
+           HSD_SLIDER_SetValue(slideres[6],agentsys_set.COG.on_off);
            
            WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);
            
@@ -230,27 +258,71 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                HSD_SLIDER_SetFocusSliderColor(slideres[i], pColors->focusSliderColor);
                HSD_SLIDER_SetFocusSlotColor(slideres[i],pColors->focusSlotColor);
            }
-           buttons[0]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
-                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5, 
-                                   20, 
+           buttons[0]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*5+6+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
+                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5 - 5, 
+                                   15, 
                                    GUI_GetFontSizeY(), 
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
-//           WM_SetCallback(buttons[0], &myButtonCallback); 
-			  HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
+           WM_SetCallback(buttons[0], &myButtonCallback); 
+			  HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_24);
            HSD_BUTTON_SetBkColor(buttons[0], pColors_win->bkColor);
 			  HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
 			  HSD_BUTTON_SetTextFocusColor(buttons[0], pColors_win->focusTextColor);
+           HSD_BUTTON_SetFocusBkColor(buttons[0],pColors_win->focusBkColor);
            
-           buttons[1]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
-                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5, 
-                                   20, 
+           buttons[1]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
+                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5 - 5, 
+                                   15, 
                                    GUI_GetFontSizeY(), 
-                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
-//           WM_SetCallback(buttons[0], &myButtonCallback); 
-			  HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
+                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON1);   
+           WM_SetCallback(buttons[1], &myButtonCallback); 
+			  HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_24);
            HSD_BUTTON_SetBkColor(buttons[1], pColors_win->bkColor);
 			  HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
-			  HSD_BUTTON_SetTextFocusColor(buttons[0], pColors_win->focusTextColor);
+			  HSD_BUTTON_SetTextFocusColor(buttons[1], pColors_win->focusTextColor);
+           HSD_BUTTON_SetFocusBkColor(buttons[1],pColors_win->focusBkColor);
+           
+           buttons[2]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*5+6+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
+                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*6 - 5, 
+                                   15, 
+                                   GUI_GetFontSizeY(), 
+                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON2);   
+           WM_SetCallback(buttons[2], &myButtonCallback); 
+			  HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_24);
+           HSD_BUTTON_SetBkColor(buttons[2], pColors_win->bkColor);
+			  HSD_BUTTON_SetTextColor(buttons[2], pColors_win->textColor);
+			  HSD_BUTTON_SetTextFocusColor(buttons[2], pColors_win->focusTextColor);
+           HSD_BUTTON_SetFocusBkColor(buttons[2],pColors_win->focusBkColor);
+           
+           buttons[3]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
+                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*6 - 5, 
+                                   15, 
+                                   GUI_GetFontSizeY(), 
+                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON3);   
+           WM_SetCallback(buttons[3], &myButtonCallback); 
+			  HSD_BUTTON_SetTxFont(buttons[3], &GUI_Font_T90_24);
+           HSD_BUTTON_SetBkColor(buttons[3], pColors_win->bkColor);
+			  HSD_BUTTON_SetTextColor(buttons[3], pColors_win->textColor);
+			  HSD_BUTTON_SetTextFocusColor(buttons[3], pColors_win->focusTextColor);
+           HSD_BUTTON_SetFocusBkColor(buttons[3],pColors_win->focusBkColor);
+           
+           text[0] =  HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*7+15+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
+                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5 -5 , 
+                                   15, 
+                                   GUI_GetFontSizeY(), 
+                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON1); 
+           HSD_BUTTON_SetTxFont(text[0], &GUI_Font_T90_24);
+           HSD_BUTTON_SetBkColor(text[0], pColors_win->bkColor);
+			  HSD_BUTTON_SetTextColor(text[0], pColors_win->textColor);
+           
+           text[1] = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*7+15+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
+                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*6 - 5, 
+                                   15, 
+                                   GUI_GetFontSizeY(), 
+                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON2);
+           HSD_BUTTON_SetTxFont(text[1], &GUI_Font_T90_24);
+           HSD_BUTTON_SetBkColor(text[1], pColors_win->bkColor);
+			  HSD_BUTTON_SetTextColor(text[1], pColors_win->textColor);                                   
            break;
            
            
@@ -274,6 +346,16 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                {
                   t90_set.sys.workmode = agentsys_set.workmode;
                   StubRefresh();
+               }
+               if(t90_set.sys.SOG.on_off != agentsys_set.SOG.on_off || t90_set.sys.SOG.averageNum != agentsys_set.SOG.averageNum)
+               {
+                  t90_set.sys.SOG.on_off = agentsys_set.SOG.on_off;
+                  t90_set.sys.SOG.averageNum = agentsys_set.SOG.averageNum;                  
+               }
+               if(t90_set.sys.COG.on_off != agentsys_set.COG.on_off || t90_set.sys.COG.averageNum != agentsys_set.COG.averageNum)
+               {
+                  t90_set.sys.COG.on_off = agentsys_set.COG.on_off;
+                  t90_set.sys.COG.averageNum = agentsys_set.COG.averageNum;                  
                }
                memcpy(&t90_set.sys, &agentsys_set, sizeof(t90_set.sys));
                T90_Store();
@@ -335,6 +417,16 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
 						GUI_DispStringAt("减少",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_ITEM_HEIGHT*4);
 						GUI_DispStringAt("增加",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_ITEM_HEIGHT*4);
                   
+                  GUI_DispStringAt("航速平均化：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_ITEM_HEIGHT*5);
+                  GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_ITEM_HEIGHT*5);
+						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_ITEM_HEIGHT*5);
+                  
+                  
+                  GUI_DispStringAt("航向平均化：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);
+                  GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);
+						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);
+                  
+                  
 						GUI_DispStringAt("单位设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
 						GUI_DispStringAt("千米",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
 						GUI_DispStringAt("海里",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
@@ -360,12 +452,42 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                   GUI_SetColor(pColors->textColor);
                   GUI_DispString("切换开启关闭或者更改参数。");
                   
-                  sprintf(pStrBuf,"%01d",agentsys_set.SOG.averageNum/10);
+                  if(agentsys_set.SOG.on_off)
+                  {
+                     HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
+                     HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
+                     HSD_BUTTON_SetTextColor(text[0], pColors_win->textColor);                                         
+                  }
+                  else
+                  {
+                     HSD_BUTTON_SetTextColor(buttons[0], pColors_win->bkColor);
+                     HSD_BUTTON_SetTextColor(buttons[1], pColors_win->bkColor);
+                     HSD_BUTTON_SetTextColor(text[0], pColors_win->bkColor);                    
+                  }
+                  sprintf(pStrBuf,"%d",agentsys_set.SOG.averageNum/10);
                   HSD_BUTTON_SetText(buttons[0],pStrBuf);
-                  sprintf(pStrBuf, "%01d", agentsys_set.SOG.averageNum%10);
+                  sprintf(pStrBuf, "%d", agentsys_set.SOG.averageNum%10);
                   HSD_BUTTON_SetText(buttons[1],pStrBuf);
-                        
-            break;
+                  HSD_BUTTON_SetText(text[0],"s");
+   
+                  if(agentsys_set.COG.on_off)
+                  {
+                     HSD_BUTTON_SetTextColor(buttons[2], pColors_win->textColor);
+                     HSD_BUTTON_SetTextColor(buttons[3], pColors_win->textColor);
+                     HSD_BUTTON_SetTextColor(text[1], pColors_win->textColor);                  
+                  }
+                  else
+                  {
+                     HSD_BUTTON_SetTextColor(buttons[2], pColors_win->bkColor);
+                     HSD_BUTTON_SetTextColor(buttons[3], pColors_win->bkColor); 
+                     HSD_BUTTON_SetTextColor(text[1], pColors_win->bkColor);                     
+                  }
+                  sprintf(pStrBuf,"%d",agentsys_set.COG.averageNum/10);
+                  HSD_BUTTON_SetText(buttons[2],pStrBuf);
+                  sprintf(pStrBuf, "%d", agentsys_set.COG.averageNum%10);
+                  HSD_BUTTON_SetText(buttons[3],pStrBuf);
+                  HSD_BUTTON_SetText(text[1],"s");
+           break;
        default:
            WM_DefaultProc(pMsg);
            break;
@@ -380,17 +502,207 @@ WM_HWIN DLG_SystemSetCreate()
    return hWin;
 }
 
+static void myButtonCallback(WM_MESSAGE * pMsg)
+{
+   int id = 0;
+   switch(pMsg->MsgId)
+   {
+      case WM_SET_FOCUS:
+         if(pMsg->Data.v){
+            HSD_BUTTON_SetBkColor(pMsg->hWin, pColors_win->focusBkColor);
+         }
+         else{
+            HSD_BUTTON_SetBkColor(pMsg->hWin, pColors_win->bkColor);
+         }
+            HSD_BUTTON_Callback(pMsg);
+         break;
+         
+      case WM_KEY:
+         id = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
+         switch(((WM_KEY_INFO*)pMsg->Data.p)->Key)
+         {
+            
+            case GUI_KEY_LEFT:
+               if(id == 0 || id == 1)
+               {
+                  WM_SetFocus(buttons[0]);
+               }
+               if(id == 2 || id == 3)
+               {
+                  WM_SetFocus(buttons[2]);
+               }
+               break;
+            case GUI_KEY_RIGHT:
+               if(id == 0 || id == 1)
+               {
+                  WM_SetFocus(buttons[1]);
+               }
+               if(id == 2 || id == 3)
+               {
+                  WM_SetFocus(buttons[3]);
+               }
+               break;
+            case GUI_KEY_UP:
+               if(id == 0)
+               {
+                  agentsys_set.SOG.averageNum += 10;
+                  if(agentsys_set.SOG.averageNum > 99)
+                     agentsys_set.SOG.averageNum = 99;
+               }
+               else if(id == 1)
+               {
+                  agentsys_set.SOG.averageNum += 1;
+                  if(agentsys_set.SOG.averageNum > 99)
+                     agentsys_set.SOG.averageNum = 99;
+               }
+               else if(id == 2)
+               {
+                  agentsys_set.COG.averageNum += 10;
+                  if(agentsys_set.COG.averageNum > 99)
+                     agentsys_set.COG.averageNum = 99;
+               }
+               else if(id == 3)
+               {
+                  agentsys_set.COG.averageNum += 1;
+                  if(agentsys_set.COG.averageNum > 99)
+                     agentsys_set.COG.averageNum = 99;
+               }
+               sprintf(pStrBuf,"%d",agentsys_set.SOG.averageNum/10);
+               HSD_BUTTON_SetText(buttons[0],pStrBuf);
+               sprintf(pStrBuf, "%d", agentsys_set.SOG.averageNum%10);
+               HSD_BUTTON_SetText(buttons[1],pStrBuf);
+               
+               sprintf(pStrBuf,"%d",agentsys_set.COG.averageNum/10);
+               HSD_BUTTON_SetText(buttons[2],pStrBuf);
+               sprintf(pStrBuf, "%d", agentsys_set.COG.averageNum%10);
+               HSD_BUTTON_SetText(buttons[3],pStrBuf);
+               break;
+            case GUI_KEY_DOWN:
+               if(id == 0)
+               {
+                  agentsys_set.SOG.averageNum -= 10;
+                  if(agentsys_set.SOG.averageNum < 1)
+                     agentsys_set.SOG.averageNum = 1;
+               }
+               if(id == 1)
+               {
+                  agentsys_set.SOG.averageNum -= 1;
+                  if(agentsys_set.SOG.averageNum < 1)
+                     agentsys_set.SOG.averageNum = 1;
+               }
+               if(id == 2)
+               {
+                  agentsys_set.COG.averageNum -= 10;
+                  if(agentsys_set.COG.averageNum < 1)
+                     agentsys_set.COG.averageNum = 1;
+               }
+               if(id == 3)
+               {
+                  agentsys_set.COG.averageNum -= 1;
+                  if(agentsys_set.COG.averageNum < 1)
+                     agentsys_set.COG.averageNum = 1;
+               }
+               sprintf(pStrBuf,"%d",agentsys_set.SOG.averageNum/10);
+               HSD_BUTTON_SetText(buttons[0],pStrBuf);
+               sprintf(pStrBuf, "%d", agentsys_set.SOG.averageNum%10);
+               HSD_BUTTON_SetText(buttons[1],pStrBuf);
+               
+               sprintf(pStrBuf,"%d",agentsys_set.COG.averageNum/10);
+               HSD_BUTTON_SetText(buttons[2],pStrBuf);
+               sprintf(pStrBuf, "%d", agentsys_set.COG.averageNum%10);
+               HSD_BUTTON_SetText(buttons[3],pStrBuf);
+               break;
+            case GUI_KEY_BACKSPACE:
+               if(id == 0 || id == 1)
+               {
+                  WM_SetFocus(slideres[5]);
+               }
+               if(id == 2 || id == 3)
+               {
+                  WM_SetFocus(slideres[6]);
+               }
+               break;
+            default:
+               break;
+        }
+        break;
+     default:
+        HSD_BUTTON_Callback(pMsg);
+   }
+   
+      
+}
 
 static void sldListener(WM_MESSAGE * pMsg)
 {
    const WM_KEY_INFO * pInfo;
    WM_MESSAGE myMsg;  
+   int id = 0;
    switch(pMsg->MsgId)
    {
       case WM_KEY:
+           id = WM_GetId(pMsg->hWin) - ID_SLIDER_0;
            pInfo  = (WM_KEY_INFO*)(pMsg->Data.p);
            switch(pInfo->Key)
-           {          
+           {  
+                             
+              case GUI_KEY_UP:
+                 if(id == 0)
+                 {
+                    WM_SetFocus(slideres[9]);
+                    break;
+                 }
+                 HSD_SLIDER_Callback(pMsg);
+                 break;
+                 
+              case GUI_KEY_RIGHT:
+                 
+                 if(id == 5)
+                 {
+                    if(agentsys_set.SOG.on_off == 1)
+                    {
+                       WM_SetFocus(buttons[0]);                     
+                       break;
+                    }
+                    else
+                    {
+                       HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
+                       HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
+                       HSD_BUTTON_SetTextColor(text[0], pColors_win->textColor);
+                    }                  
+                 }               
+                 if(id == 6)
+                 {
+                    if(agentsys_set.COG.on_off == 1)
+                    {
+                       WM_SetFocus(buttons[2]);                    
+                       break;
+                    }
+                    else
+                    {
+                       HSD_BUTTON_SetTextColor(buttons[2], pColors_win->textColor);
+                       HSD_BUTTON_SetTextColor(buttons[3], pColors_win->textColor);
+                       HSD_BUTTON_SetTextColor(text[1], pColors_win->textColor);
+                    }
+                 }
+                 HSD_SLIDER_Callback(pMsg);
+                 break;
+              case GUI_KEY_LEFT:
+                 HSD_SLIDER_Callback(pMsg);   
+                 if(id == 5)
+                 {
+                    
+                    HSD_BUTTON_SetTextColor(buttons[0], pColors_win->bkColor);
+                    HSD_BUTTON_SetTextColor(buttons[1], pColors_win->bkColor);
+                    HSD_BUTTON_SetTextColor(text[0], pColors_win->bkColor);
+                 }
+                 if(id == 6)
+                 {
+                    HSD_BUTTON_SetTextColor(buttons[2], pColors_win->bkColor);
+                    HSD_BUTTON_SetTextColor(buttons[3], pColors_win->bkColor);
+                    HSD_BUTTON_SetTextColor(text[1], pColors_win->bkColor);
+                 }
+                 break;                 
               case GUI_KEY_MORIGHT:
                   myMsg.hWin = systemSetDlg;
                   myMsg.hWinSrc = pMsg->hWin;
@@ -402,6 +714,7 @@ static void sldListener(WM_MESSAGE * pMsg)
               case GUI_KEY_PWM_INC:       
                    WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                    break;
+              
               case GUI_KEY_BACKSPACE:
                    if(Mem_isEqual(&t90_set.sys, &agentsys_set, sizeof(t90_set.sys)) )
                    {
@@ -505,13 +818,17 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
    const WM_KEY_INFO* pKeyInfo;
    
    WM_MESSAGE  myMsg;
-   
+   int id = 0;
    switch(pMsg->MsgId)
    {
       case WM_KEY:
            pKeyInfo  = (WM_KEY_INFO*)pMsg->Data.p;
+           id = WM_GetId(pMsg->hWin) - ID_SLIDER_0;
            switch(pKeyInfo->Key)
            {
+              case GUI_KEY_DOWN:
+                   WM_SetFocus(slideres[0]);
+                   break;
               case GUI_KEY_RIGHT:
                    myMsg.hWin      = WM_GetClientWindow(confirmWin);            
                    myMsg.hWinSrc   = pMsg->hWin;

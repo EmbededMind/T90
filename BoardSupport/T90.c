@@ -54,15 +54,15 @@ T90_Set t90_set = {
 		NM,
 		OFF,
 		OFF,
-  DEFAULT_LEFT,
-  {
-     0,
-     55,
-  },
-  {
-     0,
-     55,   
-  } 
+     DEFAULT_LEFT,
+     {
+        0,
+        55,
+     },
+     {
+        0,
+        55,   
+     } 
   },
    {
       0,

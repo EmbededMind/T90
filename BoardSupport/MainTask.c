@@ -122,7 +122,6 @@ printf("maintask\n");
    while(1)
    {
       WM_MESSAGE pMsg;      
- printf("ipcMsg = %x\n", ipcMsg);
       if(ipcMsg){
          if(ipcMsg & 0x01 )
          {  

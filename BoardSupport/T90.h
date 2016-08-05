@@ -153,8 +153,8 @@ typedef struct T90_Set
 {
    SingleDst_Set singledst_set;
    DoubleDst_Set doubledst_set;    
-	  Alarm_Set alarm;
-	  System_Set sys;
+	Alarm_Set alarm;
+	System_Set sys;
    PortStatus as_MMSI;
    RemoveShip shipout;   
 } T90_Set;
