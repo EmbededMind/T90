@@ -354,7 +354,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 	int NCode, Id;
 	int xSize;
 	int ySize;
-   long MMSI_tmp;
+   long MMSI_tmp = 0;
 
 	switch(pMsg->MsgId){
 		
@@ -363,6 +363,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 								case MONITMMSI_SET:
 								     if(pMsg->Data.v==REPLY_OK)
 													{
+                                          MMSI  = 0;
 														EDIT_GetText(edit,edittext,10);
                                           for(i=0;i<MMSI_LENGTH;i++)
 												 	   {

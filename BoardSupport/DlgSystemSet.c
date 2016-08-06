@@ -235,7 +235,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
 					 
 			  slideres[9]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_9);
            WM_SetCallback(slideres[9], &sldResetCallback);
-           HSD_SLIDER_SetRange(slideres[9], 0, 6); 
+           HSD_SLIDER_SetRange(slideres[9], 0, 8); 
            HSD_SLIDER_SetValue(slideres[9], t90_set.sys.reset);
            
            slideres[5]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_5);
@@ -928,7 +928,7 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
            break;
            
       case USER_MSG_REPLY:
-           WM_SetFocus(slideres[7]);
+           WM_SetFocus(slideres[9]);
            WM_BringToTop(systemSetDlg);
            if(pMsg->Data.v == REPLY_OK )
            {
@@ -943,39 +943,51 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
               T90_Reset();
               
 				  HSD_SLIDER_SetValue(slideres[0], t90_set.sys.workmode);
-              HSD_SLIDER_SetValue(slideres[7], 0);
+              HSD_SLIDER_SetValue(slideres[9], 0);
 				  GUI_Delay(1000);
 							
 				  HSD_SLIDER_SetValue(slideres[1], t90_set.sys.launch);
-              HSD_SLIDER_SetValue(slideres[7], 1);
+              HSD_SLIDER_SetValue(slideres[9], 1);
 				  GUI_Delay(1000);
 							
               HSD_SLIDER_SetValue(slideres[2], t90_set.sys.nightmode);
-              HSD_SLIDER_SetValue(slideres[7], 2);
+              HSD_SLIDER_SetValue(slideres[9], 2);
               GUI_Delay(1000);
 							
               HSD_SLIDER_SetValue(slideres[3], t90_set.sys.volum);
-              HSD_SLIDER_SetValue(slideres[7], 3);
+              HSD_SLIDER_SetValue(slideres[9], 3);
               GUI_Delay(1000);
               
               HSD_SLIDER_SetValue(slideres[4], t90_set.sys.bright);
-              HSD_SLIDER_SetValue(slideres[7], 4);
+              HSD_SLIDER_SetValue(slideres[9], 4);
               GUI_Delay(1000);
               
-              HSD_SLIDER_SetValue(slideres[5], t90_set.sys.unit);
-              HSD_SLIDER_SetValue(slideres[7], 5);
+              HSD_SLIDER_SetValue(slideres[5], t90_set.sys.SOG.on_off);
+               HSD_SLIDER_SetValue(slideres[9], 5);
+              GUI_Delay(1000);
+              
+              HSD_SLIDER_SetValue(slideres[6], t90_set.sys.COG.on_off);
+              HSD_SLIDER_SetValue(slideres[9], 6);
+              GUI_Delay(1000);
+              
+              HSD_SLIDER_SetValue(slideres[7], t90_set.sys.unit);
+              HSD_SLIDER_SetValue(slideres[9], 7);
               GUI_Delay(1000);
 							
-				  HSD_SLIDER_SetValue(slideres[6], t90_set.sys.update);
-              HSD_SLIDER_SetValue(slideres[7], 6);
+				  HSD_SLIDER_SetValue(slideres[8], t90_set.sys.update);
+              HSD_SLIDER_SetValue(slideres[9], 8);
               GUI_Delay(1000);
               
-              HSD_SLIDER_SetValue(slideres[7], 0);
+              HSD_SLIDER_SetValue(slideres[9], 0);
               
               NVIC_SystemReset();
               
               
-           } 
+           }
+           else
+           {
+              WM_SetFocus(mainMenuDlg); 
+           }               
 
            break;
            
