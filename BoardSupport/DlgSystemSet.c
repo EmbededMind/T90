@@ -432,6 +432,8 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
 					HSD_SLIDER_SetValue(slideres[6], t90_set.sys.COG.on_off);
 					HSD_SLIDER_SetValue(slideres[7], t90_set.sys.unit);
 					HSD_SLIDER_SetValue(slideres[8], t90_set.sys.update);
+               agentsys_set.SOG.averageNum = t90_set.sys.SOG.averageNum;
+               agentsys_set.COG.averageNum = t90_set.sys.COG.averageNum;
             }
             
             WM_SetFocus(slideres[0]);

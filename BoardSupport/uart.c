@@ -160,7 +160,7 @@ void UART2_IRQHandler(void)
    {	 
        UART_Receive(UART_2, pRecBuf++, 1, NONE_BLOCKING);
        if(pRecBuf-recBuf >=18){
-          if(recBuf[1] != 51)
+          if(recBuf[1] != 0x51)
           {
              crcVal  = recBuf[16] ;
              crcVal  = (crcVal << 8) | recBuf[17];
@@ -171,7 +171,7 @@ void UART2_IRQHandler(void)
              }
              pRecBuf  = recBuf;
           }
-          else if(recBuf[1] == 51)
+          else if(recBuf[1] == 0x51)
           {
              if(pRecBuf - recBuf >= 21)
              {
