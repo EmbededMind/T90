@@ -16,7 +16,11 @@
 
 static PloPoint *pmin, *pmax;
 
-
+/**
+ *  函数名：adjustPlo
+ *  作用：将stubs里的切点进行重新排序,以得到一个凸多变形.
+ *
+ */
 void adjustPlo()
 {
    int i;

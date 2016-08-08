@@ -107,7 +107,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 							//
 							// Initialization of 'bt_OK'
 							//							
-							buttons[2] = BUTTON_CreateEx (180,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON2);
+							buttons[2] = BUTTON_CreateEx (160,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON2);
        WM_HideWin(buttons[2]);
        BUTTON_SetText(buttons[2], "确定");
        BUTTON_SetFont(buttons[2], &GUI_Font_T90_30);
@@ -156,12 +156,19 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        
     case GUI_KEY_BACKSPACE:
 									{
-										myMsg.hWin  = myMsg.hWinSrc;
-										myMsg.hWinSrc  = pMsg->hWin;
-										myMsg.MsgId    = USER_MSG_REPLY;
-										myMsg.Data.v   = REPLY_CANCEL;
-										WM_SendMessage(myMsg.hWin, &myMsg);  
-										WM_BringToBottom(confirmWin);  
+										WM_GetUserData(pMsg->hWin,&UserData,4);
+							   if(UserData==MONITMMSI_FULL)
+										{
+										}
+										else
+										{
+											myMsg.hWin  = myMsg.hWinSrc;
+											myMsg.hWinSrc  = pMsg->hWin;
+											myMsg.MsgId    = USER_MSG_REPLY;
+											myMsg.Data.v   = REPLY_CANCEL;
+											WM_SendMessage(myMsg.hWin, &myMsg);  
+											WM_BringToBottom(confirmWin); 
+										} 
 									}
 									break;  
            
@@ -264,7 +271,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 									     break;
 									
 									case MONITMMSI_FULL:
-										  TEXT_SetText(dlgTextContent, "已经达到设置上限,请\n删除后再进行添加!");
+										  TEXT_SetText(dlgTextContent, "已经达到设置上限,请删\n除后再进行添加!");
 									     WM_HideWin(buttons[0]);
 									     WM_HideWin(buttons[1]);
 									     WM_ShowWin(buttons[2]);

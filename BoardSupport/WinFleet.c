@@ -111,9 +111,17 @@ static void delBtCallback(WM_MESSAGE* pMsg){
 													WM_SetFocus(confirmWin); 
 									    BUTTON_Callback(pMsg);
 									    break;
-								default:
-													WM_DefaultProc(pMsg);
-													break;
+                          case GUI_KEY_BACKSPACE:
+									    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
+									    break;
+                          
+								  case GUI_KEY_MENU:
+                               WM_BringToTop(mainShipWin);
+                               WM_SetFocus(mainShipWin);
+                               break;
+//								default:
+//													WM_DefaultProc(pMsg);
+//													break;
 							}
 							break;
 		default:
@@ -196,9 +204,18 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 									    if(MonitShipNum>0)
 														WM_SetFocus(delButton[0]);
 									    break;
-								default:
-													WM_DefaultProc(pMsg);
-													break;
+                               
+                          case GUI_KEY_BACKSPACE:
+							 		    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
+									    break;
+                          
+								  case GUI_KEY_MENU:
+									    WM_BringToTop(mainShipWin);
+									    WM_SetFocus(mainShipWin);
+									    break;
+//								default:
+//													WM_DefaultProc(pMsg);
+//													break;
 							}
 							break;
 		default:
@@ -245,9 +262,19 @@ static void myEditCallback(WM_MESSAGE* pMsg){
 									case GUI_KEY_DOWN:
 														WM_SetFocus(addbutton);
 									     break;
-									default:
-														WM_DefaultProc(pMsg);
-										    break;
+                           
+                           case GUI_KEY_BACKSPACE: 
+										  WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
+										  break;
+									
+									case GUI_KEY_MENU:
+										  WM_BringToTop(mainShipWin);
+										  WM_SetFocus(mainShipWin);
+										  break;
+                           
+//									default:
+//														WM_DefaultProc(pMsg);
+//										    break;
 								}
 								break;
 		 default:
@@ -280,6 +307,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 	char i;
 	int NCode, Id;
    char editText[10];
+   long bits = 1000000000; 
 	WM_MESSAGE myMsg;
 	BUTTON_SKINFLEX_PROPS pProps[1];
 	
@@ -290,12 +318,19 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		
 			  edit = EDIT_CreateEx(281,50,191,38,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_EDIT0,9);
 		     EDIT_EnableBlink(edit,0,0);
+           EDIT_SetFont(edit,&GUI_Font_T90_30);
 		     WM_SetCallback(edit,&myEditCallback);
            MonitShipNum = t90_set.shipout.numShip;
            for(i=0;i<5;i++)
             monitMMSI[i]=t90_set.shipout.MMSI[i];
            MMSI=t90_set.as_MMSI.MMSI;
-           sprintf(editText,"%ld",MMSI);
+
+           for(i=0;i<9;i++) 
+		   {
+			   editText[i] = ((MMSI%bits)/(bits/10))+48; 
+			   bits /=10; 
+		   }
+
            EDIT_SetText(edit,editText);
            
 			  addbutton = BUTTON_CreateEx(103,116,159,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON0);
@@ -379,34 +414,40 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     for(i=0;i<MonitShipNum;i++)
 		     {
 								GUI_DispDecAt(monitMMSI[i],MMSIList[i].x0+50,MMSIList[i].y0+3,9);
+								BUTTON_SetText(WM_GetDialogItem(pMsg->hWin,GUI_ID_BUTTON1+i),"删除");
 							}
 							
 			    break;
 							
-		case WM_KEY:
-			    switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){	
-								case GUI_KEY_BACKSPACE:
-									    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
-									    break;
-								case GUI_KEY_MENU:
-									    WM_BringToTop(mainShipWin);
-									    WM_SetFocus(mainShipWin);
-									    break;
-								//
-								// add key response
-								//
-								case GUI_KEY_SOUNDOFF:
-									    break;
-								
-								case GUI_KEY_PWM_INC:
-									    break;
-								
-								case GUI_KEY_MORIGHT:
-									    break;
-							}
+//		case WM_KEY:
+//			    switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){	
+//								case GUI_KEY_BACKSPACE:
+//									    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
+//									    break;
+//								case GUI_KEY_MENU:
+//									    WM_BringToTop(mainShipWin);
+//									    WM_SetFocus(mainShipWin);
+//									    break;
+//								//
+//								// add key response
+//								//
+//								case GUI_KEY_SOUNDOFF:
+//									    break;
+//								
+//								case GUI_KEY_PWM_INC:
+//									    break;
+//								
+//								case GUI_KEY_MORIGHT:
+//									    break;
+//							}
 		
 		case USER_MSG_SKIN:
 			    pColor = &subMenuColors[pMsg->Data.v];
+       for(i=0;i<5;i++)
+		     {
+								BUTTON_SetFocusColor(delButton[i],pColor->btBkColor);
+		      BUTTON_SetBkColor(delButton[i],BUTTON_CI_UNPRESSED,pColor->btBkColor);
+							}
 //		       pSkin = btSkin[pMsg->Data.v];
 			    break;
 			

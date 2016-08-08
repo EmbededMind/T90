@@ -36,14 +36,15 @@ static int myOperat;//发送出去的消息ID，等待响应
  *    @param [in] pMsg  消息指针
  */
 																													
-BUTTON_SKINFLEX_PROPS inputBtSkin[2][2] = 
+BUTTON_SKINFLEX_PROPS inputBtSkin[2][2] = //FOR_LIYI
 {
 /* day */	  
-         /* nofocus */        {{{GUI_WHITE,0x00303030,0x00303030},{0x00303030,0x00303030},{0x00303030,0x00303030},0}, 
-           /* focus */        {{GUI_WHITE,FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},0}},
+           /* nofocus */      {{{GUI_WHITE,0x008b9da5,0x008b9da5},{0x008b9da5,0x008b9da5},{0x008b9da5,0x008b9da5},0}, 
+            /* focus */       {{GUI_WHITE,FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},0}},
+
 /* night */	
-           /* nofocus */      {{{GUI_WHITE,0x008b9da5,0x00303030},{0x00303030,0x00303030},{0x00303030,0x00303030},0}, 
-            /* focus */       {{GUI_WHITE,FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},{FOCUS_COLOR_DAY,FOCUS_COLOR_DAY},0}}
+         /* nofocus */        {{{GUI_WHITE,0x00303030,0x00303030},{0x00303030,0x00303030},{0x00303030,0x00303030},0}, 
+           /* focus */        {{GUI_WHITE,FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},0}}
 };	
 
 static void myEditCallback(WM_MESSAGE* pMsg){
@@ -431,8 +432,8 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 							}
 			    break;
 			case USER_MSG_SKIN:
-				    BUTTON_SetSkinFlexProps(inputBtSkin[t90_set.sys.nightmode],BUTTON_SKINFLEX_PI_ENABLED);
-								BUTTON_SetSkinFlexProps(inputBtSkin[t90_set.sys.nightmode]+1,BUTTON_SKINFLEX_PI_FOCUSSED);
+				  BUTTON_SetSkinFlexProps(inputBtSkin[pMsg->Data.v],BUTTON_SKINFLEX_PI_ENABLED);
+					  BUTTON_SetSkinFlexProps(inputBtSkin[pMsg->Data.v]+1,BUTTON_SKINFLEX_PI_FOCUSSED);
 			     for(i=1;i<13;i++)
 								{
 									WM_Invalidate(buttons[i]);
@@ -456,29 +457,23 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 								break;
 			
 			case WM_CREATE:
-								//pColor = &mmsiSetWinColor[t90_set.sys.nightmode];
-			               //pSkin = btSkin[t90_set.sys.nightmode];
-								Hint = TEXT_CreateEx(120,75,200,30,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_TEXT0,"");
-			               TEXT_SetFont(Hint,&GUI_Font_T90_24);
-								TEXT_SetTextColor(Hint,GUI_WHITE);
-			
-								edit = EDIT_CreateEx(MMSISET_ET_X,MMSISET_ET_Y,MMSISET_ET_WIDTH,MMSISET_ET_HEIGHT,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_EDIT0,9);
-								EDIT_SetBkColor(edit,EDIT_CI_ENABELD,subMenuColors[t90_set.sys.nightmode].btBkColor);
-								EDIT_EnableBlink(edit,0,0);
-								WM_SetCallback(edit,&myEditCallback);
-			               MMSI = t90_set.as_MMSI.MMSI;
-         
-								buttons[0] = BUTTON_CreateEx(MMSISET_BTOK_X,MMSISET_BTOK_Y,MMSISET_BTOK_WIDTH,MMSISET_BTOK_HEIGHT,pMsg->hWin, WM_CF_SHOW,0,ID_BUTTON_MMSIOK);
-                        WM_SetHasTrans(buttons[0]);			
-								//BUTTON_SetTextColor(buttons[0],BUTTON_CI_UNPRESSED,GUI_WHITE);
-			               //BUTTON_SetBkColor(buttons[0],BUTTON_CI_UNPRESSED,GUI_GRAY);
-								//BUTTON_SetSkinFlexProps(pSkin,BUTTON_SKINFLEX_PI_DISABLED);
-								//BUTTON_SetSkinFlexProps(pSkin,BUTTON_SKINFLEX_PI_ENABLED);
-								//BUTTON_SetSkinFlexProps(pSkin+1,BUTTON_SKINFLEX_PI_FOCUSSED);
-								//BUTTON_SetSkin(buttons[0],BUTTON_SKIN_FLEX);
-								//BUTTON_SetText(buttons[0],"确定"); 
-								WM_SetCallback(buttons[0],&btOkCallback);   
-								break;
+               //pColor = &mmsiSetWinColor[t90_set.sys.nightmode];
+               //pSkin = btSkin[t90_set.sys.nightmode];
+               Hint = TEXT_CreateEx(120,75,200,30,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_TEXT0,"");
+               TEXT_SetFont(Hint,&GUI_Font_T90_24);
+               TEXT_SetTextColor(Hint,GUI_WHITE);
+
+               edit = EDIT_CreateEx(MMSISET_ET_X,MMSISET_ET_Y,MMSISET_ET_WIDTH,MMSISET_ET_HEIGHT,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_EDIT0,9);
+               EDIT_SetBkColor(edit,EDIT_CI_ENABELD,GUI_WHITE);
+               EDIT_EnableBlink(edit,0,0);
+               EDIT_SetFont(edit,&GUI_Font_T90_30);
+               WM_SetCallback(edit,&myEditCallback);
+               MMSI = t90_set.as_MMSI.MMSI;
+
+               buttons[0] = BUTTON_CreateEx(MMSISET_BTOK_X,MMSISET_BTOK_Y,MMSISET_BTOK_WIDTH,MMSISET_BTOK_HEIGHT,pMsg->hWin, WM_CF_SHOW,0,ID_BUTTON_MMSIOK);
+               WM_SetHasTrans(buttons[0]);			
+               WM_SetCallback(buttons[0],&btOkCallback);   
+               break;
 								
 			case WM_PAINT:
 				    xSize = WM_GetWindowSizeX(pMsg->hWin);

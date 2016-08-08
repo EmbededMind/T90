@@ -38,7 +38,7 @@ static void  SDRAM_GPIO_Config(void)
 { 
 	
 	/*ÅäÖÃEMCµÄA0-A14*/
-  LPC_IOCON->P4_0=0x01;
+   LPC_IOCON->P4_0=0x01;
 	LPC_IOCON->P4_1=0x01;
 	LPC_IOCON->P4_2=0x01;
 	LPC_IOCON->P4_3=0x01;

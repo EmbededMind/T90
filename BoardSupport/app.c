@@ -276,7 +276,7 @@ void _Play_Task(void* p_arg)
    while(1)
    { 
 printf("Play Task while begin\n");      
-      if(monitorState == ON) // ݠ࠘
+      if(monitorState == ON) // ݠ�?
       {        
          if(FetchSTime() == 0)
          {
@@ -614,7 +614,7 @@ printf("Comm Task while begin\n");
 
 LOL:
          Comm_sendFrame(pFrame);
-            OSMboxPend(CommMBox, 400, &err);
+            OSMboxPend(CommMBox, 800, &err);
             if(err == OS_ERR_NONE){
                dataNoAckCnt  = 0;
 
