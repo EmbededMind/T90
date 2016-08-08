@@ -84,7 +84,7 @@ void DispSOGNums(int x, int y, int num, int type)
         atpointtenth.y = atpointones.y;
         ones = num/10;
         tenth = num%10;
-        if(ones < 9)
+        if(ones < 10)
         {
             GUI_FillRect(atpointones.x+112,atpointones.y+59,atpointones.x+138,atpointones.y+79);      
             DrawNums(atpointones,numcode[ones],type);
