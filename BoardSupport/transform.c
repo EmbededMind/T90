@@ -30,7 +30,7 @@ void llToxy(BERTH *pBerth)
    
    if(!(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT))
    {
-      pBerth->x_to_cross -= stubs[4].basePoint.x;      
+      pBerth->x_to_cross += stubs[4].basePoint.x;      
    }      
 }
 
