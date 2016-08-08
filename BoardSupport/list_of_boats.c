@@ -795,7 +795,8 @@ void updateTimeStamp()
    pCur  = pHeader; 
    
    while(pCur)
-   {      
+   {
+printf("updateTimeStamp begin\n");      
       if(pCur->Boat.time_cnt > 0)
       {      
          SimpBerthes[i].latitude   = pCur->Boat.latitude;
@@ -841,7 +842,7 @@ void updateTimeStamp()
          pCur  = tmp;
         
       }
-
+printf("updateTimeStamp end\n");
    }
    N_boat  = i;    
 

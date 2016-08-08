@@ -40,7 +40,7 @@ void CHECK_MS_Speed()
 //	MS_isSpeeding = 0;   //clear
 //	MS_isMax_SOG = 0;
 //	MS_isMin_SOG = 0;
-	
+printf("CHECK_MS_Speed begin\n");	
 	if( (t90_set.alarm.on_off & (0x01<<1)) && mothership.SOG > t90_set.alarm.danger_sog)
 	{		
 		if(MS_isSpeeding != MNTState_Masked)
@@ -72,22 +72,26 @@ void CHECK_MS_Speed()
 	{
 sog:		MS_isMax_SOG = MS_isMin_SOG = 0;
 	}
+printf("CHECK_MS_Speed bend\n");
 }
 
 static void CHECK_MS_Speed_masked()
 {
+printf("CHECK_MS_Speed_masked begin\n");
 	if(MS_isSpeeding ==MNTState_Triggered)
 		MS_isSpeeding = MNTState_Masked;
 	if(MS_isMax_SOG ==MNTState_Triggered)
 		MS_isMax_SOG = MNTState_Masked;
 	if(MS_isMin_SOG ==MNTState_Triggered)
 		MS_isMin_SOG = MNTState_Masked;
+printf("CHECK_MS_Speed_masked end\n");
 }
 
 void CHECK_DelHighSpeed()
 {
    BULY_BERTH *pBerth;
    BULY_BERTH *pNext;
+printf("CHECK_DelHighSpeed begin\n");
    pBerth = pBulyHeader;
    if(!(t90_set.alarm.on_off & (0x01<<3)))
    {
@@ -120,11 +124,12 @@ void CHECK_DelHighSpeed()
       }
 delhighjmp:      pBerth = pNext;
    }    
-   
+printf("CHECK_DelHighSpeed end\n");  
 }
 
 void CHECK_STRefresh()
 {
+printf("CHECK_STRefresh begin\n");
     if(mothership.SOG < 5)
     {
 	    if(STime)   STime--;     
@@ -133,6 +138,7 @@ void CHECK_STRefresh()
     {
        STime = STIME;
     }
+printf("CHECK_STRefresh end\n");
 }
 
 int FetchSTime()
@@ -143,6 +149,7 @@ int FetchSTime()
 
 void check()
 {
+printf("check begin\n");
 	if(isKeyTrigged)
 	{
 		isKeyTrigged = 0;
@@ -155,7 +162,7 @@ void check()
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
   CHECK_STRefresh();
-
+printf("check end\n");
 }
 
 int CHECK_GetAlarmState(void)
@@ -166,6 +173,7 @@ int CHECK_GetAlarmState(void)
 static void CHECK_MaskAllBerth(void)
 {
 	int i;
+printf("CHECK_MaskAllBerth begin\n");
 	for(i = 0; i < N_boat; i++)
 	{
 		if(SimpBerthes[i].pBerth->mntState == MNTState_Triggered)
@@ -173,11 +181,13 @@ static void CHECK_MaskAllBerth(void)
 			SimpBerthes[i].pBerth->mntState = MNTState_Masked;
 		}
 	}
+printf("CHECK_MaskAllBerth end\n");
 }
 
 static void CHECK_HasAlarm(void)
 {
 	int i;
+printf("CHECK_HasAlarm begin\n");
 	for(i = 0; i < N_boat; i++)
 	{
 		if(SimpBerthes[i].pBerth->isInvader)
@@ -192,6 +202,7 @@ static void CHECK_HasAlarm(void)
 		return;
 	}
 	hasAlarm = 0;
+printf("CHECK_HasAlarm end\n");
 }
 
 

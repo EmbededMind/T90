@@ -614,7 +614,7 @@ printf("Comm Task while begin\n");
 
 LOL:
          Comm_sendFrame(pFrame);
-            OSMboxPend(CommMBox, 200, &err);
+            OSMboxPend(CommMBox, 400, &err);
             if(err == OS_ERR_NONE){
                dataNoAckCnt  = 0;
 

@@ -258,14 +258,13 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 									     break;
 									
 									case MONITMMSI_DEL:
-										    TEXT_SetText(dlgTextContent, "删除后,对该船只报警功能\n恢复正常,是否确认删除?");
-									     
+										  TEXT_SetText(dlgTextContent, "删除后,对该船只报警功能\n恢复正常,是否确认删除?");								     
 									     UserData = MONITMMSI_DEL;
 									     WM_SetUserData(pMsg->hWin,&UserData,4);
 									     break;
 									
 									case MONITMMSI_FULL:
-														TEXT_SetText(dlgTextContent, "已经达到设置上限,请\n删除后再进行添加!");
+										  TEXT_SetText(dlgTextContent, "已经达到设置上限,请\n删除后再进行添加!");
 									     WM_HideWin(buttons[0]);
 									     WM_HideWin(buttons[1]);
 									     WM_ShowWin(buttons[2]);

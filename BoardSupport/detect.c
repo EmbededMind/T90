@@ -22,10 +22,11 @@ void adjustPlo()
    int i;
    int tmp;
    PloPoint *index, *ptmp;
-   
+printf("PloPoint begin\n");   
    if(pmin)
    {
-      index = pmin->next;
+//      index = pmin->next;
+        index  = pmin;
       do
       {
          ptmp = index;
@@ -161,8 +162,10 @@ jmptang1:
       }
 jmptang2:
       NULL;
-   }     
+   }
+printf("PloPoint end\n");   
 }
+
 int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
 {
    
@@ -262,6 +265,7 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 
 void detectInit()
 {
+printf("detecInit begin\n");
 //   PloPoint *index;
 //   int i = 0;
    adjustPlo();
@@ -281,7 +285,7 @@ void detectInit()
 //      i++;
 //      index = index->next;
 //   }while(index != pmin);     
-      
+printf("detecInit end\n");      
 }
 
 Bool isCloseStub(BERTH *pBerth)
@@ -387,6 +391,7 @@ void isInvader(BERTH  *pBerth)
 void detect()
 {
    int i = 0;
+printf("detec begin\n");
    detectInit();
    for(i = 0; i < N_boat; i++)          //clear
    {
@@ -396,6 +401,7 @@ void detect()
       return;
    if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
    {
+printf("have a input\n");
       for(i = 0;i < N_boat;i++)
       {
          if(!(SimpBerthes[i].pBerth->Boat.category & TYPE_FAMILY))
@@ -412,6 +418,7 @@ void detect()
          }            
       }
    }
+printf("detec end\n");
 }
 
 

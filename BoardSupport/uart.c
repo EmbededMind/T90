@@ -60,7 +60,7 @@ void xl_UART_Config(unsigned char port)
            UART_IntConfig(UART_0, UART_INTCFG_RLS, ENABLE);           
            
            NVIC_SetPriority(UART0_IRQn, ((0x02<<3)|0x02));
-	          NVIC_EnableIRQ(UART0_IRQn);          
+	        NVIC_EnableIRQ(UART0_IRQn);          
 
            break;
            
