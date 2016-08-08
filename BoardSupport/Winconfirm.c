@@ -112,9 +112,8 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        BUTTON_SetText(buttons[2], "确定");
        BUTTON_SetFont(buttons[2], &GUI_Font_T90_30);
 	      WM_SetCallback(buttons[2], &myButton);
-	
-       BUTTON_SetBkColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btBkColor);
-       BUTTON_SetTextColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btTextColor);
+	    BUTTON_SetFocusColor(buttons[2],pColors->btFocusBkColor);
+       
 							
     //
     // Initialization of 'Text'
@@ -209,11 +208,11 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
                        myMsg.MsgId    = USER_MSG_REPLY;
                        myMsg.Data.v   = REPLY_OK;
                        WM_SendMessage(myMsg.hWin, &myMsg);
-																							{
-																								WM_ShowWin(buttons[0]);
-																								WM_ShowWin(buttons[1]);
-																								WM_HideWin(buttons[2]);
-																							}
+                        {
+                           WM_ShowWin(buttons[0]);
+                           WM_ShowWin(buttons[1]);
+                           WM_HideWin(buttons[2]);
+                        }
 																			    break;
                }
                WM_BringToBottom(confirmWin);

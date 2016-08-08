@@ -352,14 +352,15 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     BUTTON_SetFocusColor(delButton[0],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 		     WIDGET_SetEffect(delButton[0],&WIDGET_Effect_None);
 		     WM_SetCallback(delButton[0],&delBtCallback);
-		
+
+           
 							delButton[1] = BUTTON_CreateEx(305,250,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON2);
 		     BUTTON_SetFont(delButton[1],&GUI_Font_T90_24);
 		     BUTTON_SetTextColor(delButton[1],BUTTON_CI_UNPRESSED,GUI_WHITE);
 		     BUTTON_SetBkColor(delButton[1],BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
 		     BUTTON_SetFocusColor(delButton[1],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 		     WIDGET_SetEffect(delButton[1],&WIDGET_Effect_None);
-							WM_SetCallback(delButton[1],&delBtCallback);
+			            WM_SetCallback(delButton[1],&delBtCallback);
 							
 							delButton[2] = BUTTON_CreateEx(305,285,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON3);
 		     BUTTON_SetFont(delButton[2],&GUI_Font_T90_24);
@@ -387,8 +388,8 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 	      break;		
 		
 		case WM_PAINT:
-							GUI_SetBkColor(subMenuColors[t90_set.sys.nightmode].bkColor);
-			    GUI_Clear();
+			  GUI_SetBkColor(subMenuColors[t90_set.sys.nightmode].bkColor);
+			  GUI_Clear();
 		
 		     GUI_SetTextMode(GUI_TEXTMODE_TRANS);
 		     GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btTextColor);
@@ -413,11 +414,11 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     GUI_SetFont(&GUI_Font_T90_30);
 		     for(i=0;i<MonitShipNum;i++)
 		     {
-								GUI_DispDecAt(monitMMSI[i],MMSIList[i].x0+50,MMSIList[i].y0+3,9);
-								BUTTON_SetText(WM_GetDialogItem(pMsg->hWin,GUI_ID_BUTTON1+i),"删除");
-							}
-							
-			    break;
+              GUI_DispDecAt(monitMMSI[i],MMSIList[i].x0+50,MMSIList[i].y0+3,9);
+              BUTTON_SetText(WM_GetDialogItem(pMsg->hWin,GUI_ID_BUTTON1+i),"删除");
+           }
+			  			
+			  break;
 							
 //		case WM_KEY:
 //			    switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){	

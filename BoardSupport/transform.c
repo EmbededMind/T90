@@ -21,11 +21,17 @@ int rectifyNum(int num, int stepValue)   //根据步进值对整形数纠正误差
 
 void llToxy(BERTH *pBerth)
 {
-    
+   
+      
    pBerth->x_to_cross = (int)(cos(mothership.COG*3.14/1800)*(pBerth->Boat.longitude - mothership.longitude)
-																				 -sin(mothership.COG*3.14/1800)*(pBerth->Boat.latitude  - mothership.latitude));
+                                                             -sin(mothership.COG*3.14/1800)*(pBerth->Boat.latitude  - mothership.latitude));
    pBerth->y_to_cross = (int)(sin(mothership.COG*3.14/1800)*(pBerth->Boat.longitude - mothership.longitude)
-																				 +cos(mothership.COG*3.14/1800)*(pBerth->Boat.latitude  - mothership.latitude));    
+                                                             +cos(mothership.COG*3.14/1800)*(pBerth->Boat.latitude  - mothership.latitude));
+   
+   if(!(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT))
+   {
+      pBerth->x_to_cross -= stubs[4].basePoint.x;      
+   }      
 }
 
 
