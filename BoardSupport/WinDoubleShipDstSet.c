@@ -358,7 +358,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
              sprintf(pStrBuf, "%d", tempDouDstSet.safety3_to_mo);
              HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);
              T90_Store();
-             StubRefresh();             
+//             StubRefresh();             
          }
          else
          {

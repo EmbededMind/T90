@@ -248,7 +248,7 @@ printf("Refresh while begin\n");
       Stub_setValidity(1, portStatus[0].port == 1?1:0);
       Stub_setValidity(2, portStatus[1].port == 1?1:0);
       Stub_setValidity(3, portStatus[2].port == 1?1:0);
-      StubRefresh();
+//      StubRefresh();
          
 printf("Refresh while end\n");
       OSTimeDlyHMSM(0,0,5,0);
@@ -488,7 +488,7 @@ printf("Comm Task while begin\n");
             long recMMSI  = 0;
             char recPort = 0;
             pulseNoAckCnt  = 0;
-            StubRefresh();
+            
           
             recPort  = (pFrame[14]>>6)&0x03;
 
@@ -503,7 +503,8 @@ printf("Comm Task while begin\n");
                   portStatus[0].port  = recPort;
                   portStatus[0].MMSI  = recMMSI;
                   if(recPort == 1)
-                  {                     
+                  {
+                     StubRefresh();                     
                      if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
                      {
                         Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
@@ -533,7 +534,8 @@ printf("Comm Task while begin\n");
                portStatus[1].MMSI  = recMMSI;
                portStatus[1].port  = recPort;
                if(recPort == 1)
-               {                  
+               {
+                  StubRefresh();                  
                   if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
                   {
                      Comm_addFrame(2,stubs[2].basePoint.x*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
@@ -564,6 +566,7 @@ printf("Comm Task while begin\n");
                portStatus[2].port  = recPort;
                if(recPort == 1)
                {
+                  StubRefresh();
                   if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
                   {
                      Comm_addFrame(3,stubs[3].basePoint.x*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);

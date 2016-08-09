@@ -277,7 +277,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
                memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
 				   T90_Store(); 
-               StubRefresh();
+//               StubRefresh();
            }
            else 
            {
@@ -404,6 +404,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         break;
 				
 	 case USER_MSG_REPLY:
+            StubRefresh();
 				if(pMsg->Data.v == REPLY_OK)
 				{                
                 if(whichFig == 0)

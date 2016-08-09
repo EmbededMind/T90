@@ -372,6 +372,8 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                {
                   t90_set.sys.SOG.on_off = agentsys_set.SOG.on_off;
                   t90_set.sys.SOG.averageNum = agentsys_set.SOG.averageNum;
+                  StubRefresh();
+                  
                   if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
                   {
                      for(i = 1; i < 5; i++)
@@ -397,6 +399,8 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                {
                   t90_set.sys.COG.on_off = agentsys_set.COG.on_off;
                   t90_set.sys.COG.averageNum = agentsys_set.COG.averageNum;
+                  
+                  StubRefresh();
                   if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
                   {
                      for(i = 1; i < 5; i++)

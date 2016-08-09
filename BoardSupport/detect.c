@@ -267,30 +267,30 @@ int isCrossPointInLeft(BERTH *pBerth, Point pointa, Point pointb)
 
 
 
-void detectInit()
-{
-printf("detecInit begin\n");
-//   PloPoint *index;
-//   int i = 0;
-   adjustPlo();
-//   
-//   index = pmin;
-//   do
-//   {
-//      if(index->point.y*index->next->point.x - index->next->point.y*index->point.x > 0)
-//      {
-//          pointInPolygon |= 0x00000001<<i;
-//      }
-//      else
-//      {
-//          pointInPolygon &= 0xfffffffe<<i;
-//      }
+//void detectInit()
+//{
+//printf("detecInit begin\n");
+////   PloPoint *index;
+////   int i = 0;
+//   adjustPlo();
+////   
+////   index = pmin;
+////   do
+////   {
+////      if(index->point.y*index->next->point.x - index->next->point.y*index->point.x > 0)
+////      {
+////          pointInPolygon |= 0x00000001<<i;
+////      }
+////      else
+////      {
+////          pointInPolygon &= 0xfffffffe<<i;
+////      }
 
-//      i++;
-//      index = index->next;
-//   }while(index != pmin);     
-printf("detecInit end\n");      
-}
+////      i++;
+////      index = index->next;
+////   }while(index != pmin);     
+//printf("detecInit end\n");      
+//}
 
 Bool isCloseStub(BERTH *pBerth)
 {
@@ -396,7 +396,8 @@ void detect()
 {
    int i = 0;
 printf("detec begin\n");
-   detectInit();
+//   detectInit();
+   adjustPlo();
    for(i = 0; i < N_boat; i++)          //clear
    {
       SimpBerthes[i].pBerth->isInvader = 0;
