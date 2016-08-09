@@ -68,7 +68,7 @@ static void delBtCallback(WM_MESSAGE* pMsg){
 	WM_MESSAGE myMsg;
 	switch(pMsg->MsgId){
 		case WM_SET_FOCUS:
-			    if(pMsg->Data.v==1)
+			   if(pMsg->Data.v==1)
             {
                BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
             }
@@ -173,7 +173,7 @@ static void addBtCallback(WM_MESSAGE* pMsg){
                GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btBkColor);
                BUTTON_SetTextColor(addbutton, BUTTON_BI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btTextColor); 
             }
-		     GUI_FillRoundedRect(0,0,xSize-1,ySize-1,5);
+	        GUI_FillRoundedRect(0,0,xSize-1,ySize-1,5);
 							GUI_SetFont(&GUI_Font_T90_30);
 							GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btTextColor);
 							GUI_SetTextMode(GUI_TEXTMODE_TRANS);
@@ -407,7 +407,8 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		case WM_PAINT:
 			  GUI_SetBkColor(subMenuColors[t90_set.sys.nightmode].bkColor);
 			  GUI_Clear();
-		
+      
+		  
 		     GUI_SetTextMode(GUI_TEXTMODE_TRANS);
 		     GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btTextColor);
 		     GUI_SetFont(&GUI_Font_T90_30);

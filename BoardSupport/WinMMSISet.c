@@ -112,7 +112,7 @@ static void btOkCallback(WM_MESSAGE* pMsg){
 		     RECT->y0 = 0;
 		     RECT->y1 = ySize;
 							
-			    if(WM_HasFocus(pMsg->hWin))
+	/*		    if(WM_HasFocus(pMsg->hWin))
 								GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 							else
 								GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btBkColor);
@@ -121,7 +121,7 @@ static void btOkCallback(WM_MESSAGE* pMsg){
 							GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btTextColor);
 							GUI_SetTextMode(GUI_TEXTMODE_TRANS);
 							GUI_DispStringInRect("确定",RECT,GUI_TA_VCENTER|GUI_TA_HCENTER);
-							break;					
+							break;		*/		
 							
 		case WM_KEY:
 							switch(((WM_KEY_INFO*)pMsg->Data.p)->Key){	
@@ -418,7 +418,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 														}
 														else
 														{
-															TEXT_SetText(Hint,"该船只以存在！");//don't forget
+															TEXT_SetText(Hint,"该船只已存在。");//don't forget
 															WM_ShowWin(SoftInputWin);
 															WM_SetFocus(SoftInputWin);
 														}
@@ -478,7 +478,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 			case WM_PAINT:
 				   xSize = WM_GetWindowSizeX(pMsg->hWin);
 			      ySize = WM_GetWindowSizeY(pMsg->hWin);
-			      GUI_DrawGradientRoundedV(0, 0, xSize - 1, ySize - 1, 20, subMenuColors[t90_set.sys.nightmode].headTopColor,subMenuColors[t90_set.sys.nightmode].headBottomColor);
+			      GUI_DrawGradientRoundedV(0, 0, xSize - 1, ySize - 1, 20, homeColors[t90_set.sys.nightmode].bbsTopColor,homeColors[t90_set.sys.nightmode].bbsBottomColor);
 			
 			      GUI_SetTextMode(GUI_TEXTMODE_TRANS);
 			      GUI_SetColor(setWinColors[t90_set.sys.nightmode].textColor);

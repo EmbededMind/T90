@@ -1,6 +1,0 @@
-给confim窗口添加额外数据
-判断输入的MMSI与已存在是否相同
-
-弹出输入法窗口时较慢解决办法，创建该窗口中的BT小工具时，创建标记设置为WM_CF_HASTRANS，然后在使用WM_ShowWin
-
-添加自定义消息 USER_MSG_CHOOSE 的操作指令 MONITMMSI_SET：辅船MMSI设置 ，MONITMMSI_ADD：添加监控的船，MONITMMSI_DEL：删除监控的船，MONITMMSI_FULL：监控船已满

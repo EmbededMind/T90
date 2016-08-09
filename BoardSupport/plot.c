@@ -301,7 +301,10 @@ static void FigureScale(int flag)                  // ???}?  flag=0??mainShipWin
 	int x_min = 0, x_max = 0, y_min = 0, y_max = 0;
 	Point center;
 	BULY_BERTH *pBully = pBulyHeader;
-
+   
+   Stub_setValidity(1, portStatus[0].port == 1?1:0);
+   Stub_setValidity(2, portStatus[1].port == 1?1:0);
+   Stub_setValidity(3, portStatus[2].port == 1?1:0);
 	x_min = STUB_GetMostValue(X_MIN);
 	x_max = STUB_GetMostValue(X_MAX);
 	y_min = STUB_GetMostValue(Y_MIN);

@@ -22,7 +22,7 @@ static WM_HWIN buttons[3];
 
 static void myButton(WM_MESSAGE * pMsg);
 
-static const ConfirmWinColor *pColors = confirmWinColors;
+static const ConfirmWinColor *pColors;
 
 static void _cbWindow(WM_MESSAGE * pMsg) {
 	
@@ -71,16 +71,18 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
     
        BUTTON_SetBkColor(buttons[0], BUTTON_BI_UNPRESSED, pColors->btBkColor);
        BUTTON_SetBkColor(buttons[1], BUTTON_BI_UNPRESSED, pColors->btBkColor);
-       
+       BUTTON_SetBkColor(buttons[2], BUTTON_BI_UNPRESSED, pColors->btBkColor);
+   
        BUTTON_SetFocusColor(buttons[0], pColors->btFocusBkColor);
        BUTTON_SetFocusColor(buttons[1], pColors->btFocusBkColor);
+       BUTTON_SetFocusColor(buttons[2], pColors->btFocusBkColor);
+       
        TEXT_SetTextColor(dlgTextContent, pColors->textColor);
        break;
  
   case WM_CREATE:
-    //
-    // Initialization of 'bt_OK'
-    //
+       pColors = &confirmWinColors[t90_set.sys.nightmode];
+  
        BUTTON_CreateEx (60,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON0);
        buttons[0] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
        BUTTON_SetFocusColor(buttons[0],pColors->btFocusBkColor);
@@ -92,9 +94,6 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        BUTTON_SetBkColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btBkColor);
        BUTTON_SetTextColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btTextColor);
        
-        //
-        // Initialization of 'bt_Cancle'
-        //
        BUTTON_CreateEx(260,  110,   80,  40,thisFrame,WM_CF_HASTRANS,0,GUI_ID_BUTTON1);
        buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
        BUTTON_SetFocusColor(buttons[1],pColors->btFocusBkColor);
@@ -105,21 +104,14 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 			 
        BUTTON_SetBkColor(buttons[1],BUTTON_BI_UNPRESSED,pColors->btBkColor);
        BUTTON_SetTextColor(buttons[1],BUTTON_BI_UNPRESSED,pColors->btTextColor);
-       
-							//
-							// Initialization of 'bt_OK'
-							//							
-							buttons[2] = BUTTON_CreateEx (160,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON2);
+						
+		 buttons[2] = BUTTON_CreateEx (160,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON2);
        WM_HideWin(buttons[2]);
        BUTTON_SetText(buttons[2], "确定");
        BUTTON_SetFont(buttons[2], &GUI_Font_T90_30);
-	      WM_SetCallback(buttons[2], &myButton);
+	    WM_SetCallback(buttons[2], &myButton);
 	    BUTTON_SetFocusColor(buttons[2],pColors->btFocusBkColor);
-       
-							
-    //
-    // Initialization of 'Text'
-    //
+       						
 		 TEXT_CreateEx (0,   35,  400, 80, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
        dlgTextContent = WM_GetDialogItem(pMsg->hWin, ID_TEXT_CONTENT);
 		 TEXT_SetTextAlign(dlgTextContent,TEXT_CF_HCENTER);
