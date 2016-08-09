@@ -337,8 +337,8 @@ static void inputBtCreat(WM_MESSAGE *pMsg)
 		WM_SetCallback(buttons[12], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[12], "C");	
 		//BUTTON_SetBkColor(buttons[12], BUTTON_CI_UNPRESSED,GUI_GRAY);	
-		for(i=1;i<13;i++)
-		 BUTTON_SetSkin(buttons[i],BUTTON_DrawSkinFlex); 
+		for(i=1;i<13;i++)      
+		   BUTTON_SetSkin(buttons[i],BUTTON_DrawSkinFlex); 
 }
 
 
@@ -392,9 +392,9 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 														EDIT_GetText(edit,edittext,10);
 														MMSI_tmp = 0;	
 														for(i=0;i<MMSI_LENGTH;i++)
-												 	{
-													 	MMSI_tmp = MMSI_tmp*10+(edittext[i]-48); 
-													 }
+												 	   {
+													 	   MMSI_tmp = MMSI_tmp*10+(edittext[i]-48); 
+													   }
 														//判断输入的MMSI是否已存在
 														comparflag=0;
 														for(i=0;i<MonitShipNum;i++)
@@ -418,7 +418,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 														}
 														else
 														{
-															TEXT_SetText(Hint,"please input different MMSI...");//don't forget
+															TEXT_SetText(Hint,"该船只以存在！");//don't forget
 															WM_ShowWin(SoftInputWin);
 															WM_SetFocus(SoftInputWin);
 														}
@@ -476,17 +476,26 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
                break;
 								
 			case WM_PAINT:
-				    xSize = WM_GetWindowSizeX(pMsg->hWin);
-			     ySize = WM_GetWindowSizeY(pMsg->hWin);
-			     GUI_DrawGradientRoundedV(0, 0, xSize - 1, ySize - 1, 20, GUI_LIGHTGRAY,subMenuColors[t90_set.sys.nightmode].bkColor);
+				   xSize = WM_GetWindowSizeX(pMsg->hWin);
+			      ySize = WM_GetWindowSizeY(pMsg->hWin);
+			      GUI_DrawGradientRoundedV(0, 0, xSize - 1, ySize - 1, 20, subMenuColors[t90_set.sys.nightmode].headTopColor,subMenuColors[t90_set.sys.nightmode].headBottomColor);
 			
-			     GUI_SetTextMode(GUI_TEXTMODE_TRANS);
-			     GUI_SetColor(GUI_BLACK);
-		      GUI_SetFont(&GUI_Font_T90_30);
-								GUI_DispStringAt("请输入所需要屏蔽的船只的九位码", 80, 40); //don't forget change
-								break;
+			      GUI_SetTextMode(GUI_TEXTMODE_TRANS);
+			      GUI_SetColor(setWinColors[t90_set.sys.nightmode].textColor);
+		         GUI_SetFont(&GUI_Font_T90_30);
+               GUI_DispStringAt("请输入所需要屏蔽的船只的九位码", 80, 40); //don't forget change
+               GUI_SetFont(&GUI_Font_T90_24);
+               GUI_SetColor(setWinColors[t90_set.sys.nightmode].focusBkColor);
+               GUI_DispStringAt("  卞  咗祐 ", 80, 260);
+               GUI_SetColor(GUI_WHITE);
+               GUI_DispString("及"); 
+               GUI_SetColor(setWinColors[t90_set.sys.nightmode].focusBkColor);
+               GUI_DispString("【确认】");
+               GUI_SetColor(GUI_WHITE);
+               GUI_DispString("键可输入数字。");
+               break;
 			default:
-								WM_DefaultProc(pMsg);
+					WM_DefaultProc(pMsg);
 	}
 }
 

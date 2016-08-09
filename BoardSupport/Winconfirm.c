@@ -71,7 +71,9 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
     
        BUTTON_SetBkColor(buttons[0], BUTTON_BI_UNPRESSED, pColors->btBkColor);
        BUTTON_SetBkColor(buttons[1], BUTTON_BI_UNPRESSED, pColors->btBkColor);
-      
+       
+       BUTTON_SetFocusColor(buttons[0], pColors->btFocusBkColor);
+       BUTTON_SetFocusColor(buttons[1], pColors->btFocusBkColor);
        TEXT_SetTextColor(dlgTextContent, pColors->textColor);
        break;
  

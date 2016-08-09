@@ -58,6 +58,7 @@ static const MenuColor *pColor = subMenuColors;
 static int myMsgId;//发送出去的消息ID，等待响应
 static int delMMSI;//选择删除的MMSI
 
+static GUI_RECT pRect = {100, 400, 600, 450};
 /** @brief 删除船只按键窗口回调
  *
  *    @param [in] pMsg  消息指针
@@ -68,29 +69,30 @@ static void delBtCallback(WM_MESSAGE* pMsg){
 	switch(pMsg->MsgId){
 		case WM_SET_FOCUS:
 			    if(pMsg->Data.v==1)
-							{
-								BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
-							}
-							else
-							{
-								BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
-							}
-							BUTTON_Callback(pMsg);
+            {
+               BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+            }
+            else
+            {
+               BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
+            }
+            BUTTON_Callback(pMsg);
+            WM_InvalidateRect(FleetWin, &pRect);
 			    break;
 							
 		case WM_KEY:
 			    switch(((WM_KEY_INFO*)pMsg->Data.p)->Key ){
 								case GUI_KEY_UP:
-														WM_SetFocusOnPrevChild(FleetWin);
+										WM_SetFocusOnPrevChild(FleetWin);
 									    break;
 								
 								case GUI_KEY_DOWN:
 									    id = WM_GetId(pMsg->hWin);
 									    if(id!=GUI_ID_BUTTON5)
-													{
-														if(id-0x170<MonitShipNum)
-															WM_SetFocusOnNextChild(FleetWin);
-													}
+                              {
+                                 if(id-0x170<MonitShipNum)
+                                    WM_SetFocusOnNextChild(FleetWin);
+                              }
 									    break;
 								
 								case GUI_KEY_LEFT:
@@ -143,13 +145,14 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 //		case WM_SET_FOCUS:
 //							if(pMsg->Data.v==1)
 //							{
-//								BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btFocusBkColor);//pColor->btFocusBkColor
+//								BUTTON_SetBkColor(addbutton,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btFocusBkColor);//pColor->btFocusBkColor
 //							}
 //							else
 //							{
-//								BUTTON_SetBkColor(pMsg->hWin,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
+//								BUTTON_SetBkColor(addbutton,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
 //							}
-//							BUTTON_Callback(pMsg);
+////							BUTTON_Callback(pMsg);
+//                     WM_InvalidateRect(FleetWin, &pRect);
 //			    break;
 		
 		case WM_PAINT:
@@ -161,30 +164,38 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 		     RECT->y1 = ySize;
 							
 			    if(WM_HasFocus(pMsg->hWin))
-								GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
-							else
-								GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btBkColor);
+             {
+			  		GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+               BUTTON_SetTextColor(addbutton, BUTTON_BI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btFocusTextColor);       
+             }
+            else
+            {
+               GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btBkColor);
+               BUTTON_SetTextColor(addbutton, BUTTON_BI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btTextColor); 
+            }
 		     GUI_FillRoundedRect(0,0,xSize-1,ySize-1,5);
 							GUI_SetFont(&GUI_Font_T90_30);
 							GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btTextColor);
 							GUI_SetTextMode(GUI_TEXTMODE_TRANS);
 							GUI_DispStringInRect("添加船队船只",RECT,GUI_TA_VCENTER|GUI_TA_HCENTER);
+                     
 							break;
 								
 		case WM_KEY:
 							switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
 								case GUI_KEY_ENTER:
+                              WM_InvalidateRect(FleetWin, &pRect);
 									    if(MonitShipNum<5)
-													{
-														myMsg.hWin = MMSISetWin;
-														myMsg.hWinSrc = FleetWin;
-														myMsg.MsgId = USER_MSG_MMSISET;
-														myMsg.Data.v = MONITMMSI_ADD;
-														WM_SendMessage(myMsg.hWin,&myMsg);
-													}
-													else
-													{
-														myMsg.hWin = confirmWin;
+                              {
+                                 myMsg.hWin = MMSISetWin;
+                                 myMsg.hWinSrc = FleetWin;
+                                 myMsg.MsgId = USER_MSG_MMSISET;
+                                 myMsg.Data.v = MONITMMSI_ADD;
+                                 WM_SendMessage(myMsg.hWin,&myMsg);
+                              }
+                              else
+                              {
+                                 myMsg.hWin = confirmWin;
 									     myMsg.hWinSrc = FleetWin;
 									     myMsg.MsgId = USER_MSG_CHOOSE;
 									     myMsg.Data.v = MONITMMSI_FULL;
@@ -202,7 +213,7 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 								
 								case GUI_KEY_DOWN:
 									    if(MonitShipNum>0)
-														WM_SetFocus(delButton[0]);
+										 WM_SetFocus(delButton[0]);
 									    break;
                                
                           case GUI_KEY_BACKSPACE:
@@ -232,6 +243,7 @@ static void addBtCallback(WM_MESSAGE* pMsg){
  */
 static void myEditCallback(WM_MESSAGE* pMsg){
 	WM_MESSAGE myMsg;
+   
 	char UserData;//窗口数据
 		switch(pMsg->MsgId){
 			case WM_SET_FOCUS:
@@ -244,6 +256,7 @@ static void myEditCallback(WM_MESSAGE* pMsg){
 									EDIT_SetBkColor(edit,EDIT_CI_ENABLED,GUI_WHITE);
 								}
 								EDIT_Callback(pMsg);
+                        WM_InvalidateRect(FleetWin,&pRect);
 								break;
 								
 			case WM_KEY:
@@ -352,7 +365,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     BUTTON_SetFocusColor(delButton[0],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 		     WIDGET_SetEffect(delButton[0],&WIDGET_Effect_None);
 		     WM_SetCallback(delButton[0],&delBtCallback);
-
+           BUTTON_SetFocusColor(delButton[0], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
            
 							delButton[1] = BUTTON_CreateEx(305,250,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON2);
 		     BUTTON_SetFont(delButton[1],&GUI_Font_T90_24);
@@ -361,6 +374,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     BUTTON_SetFocusColor(delButton[1],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 		     WIDGET_SetEffect(delButton[1],&WIDGET_Effect_None);
 			            WM_SetCallback(delButton[1],&delBtCallback);
+           BUTTON_SetFocusColor(delButton[1], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 							
 							delButton[2] = BUTTON_CreateEx(305,285,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON3);
 		     BUTTON_SetFont(delButton[2],&GUI_Font_T90_24);
@@ -369,6 +383,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     BUTTON_SetFocusColor(delButton[2],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 		     WIDGET_SetEffect(delButton[2],&WIDGET_Effect_None);
 							WM_SetCallback(delButton[2],&delBtCallback);
+           BUTTON_SetFocusColor(delButton[2], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 							
 							delButton[3] = BUTTON_CreateEx(305,320,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON4);
 		     BUTTON_SetFont(delButton[3],&GUI_Font_T90_24);
@@ -377,14 +392,16 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     BUTTON_SetFocusColor(delButton[3],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 							WIDGET_SetEffect(delButton[3],&WIDGET_Effect_None);
 							WM_SetCallback(delButton[3],&delBtCallback);
+           BUTTON_SetFocusColor(delButton[3], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 							
 							delButton[4] = BUTTON_CreateEx(305,355,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON5);
 		     BUTTON_SetFont(delButton[4],&GUI_Font_T90_24);
 		     BUTTON_SetTextColor(delButton[4],BUTTON_CI_UNPRESSED,GUI_WHITE);
 		     BUTTON_SetBkColor(delButton[4],BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
 		     BUTTON_SetFocusColor(delButton[4],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
-							WIDGET_SetEffect(delButton[4],&WIDGET_Effect_None);
-							WM_SetCallback(delButton[4],&delBtCallback);
+			  WIDGET_SetEffect(delButton[4],&WIDGET_Effect_None);
+			  WM_SetCallback(delButton[4],&delBtCallback);
+           BUTTON_SetFocusColor(delButton[4], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 	      break;		
 		
 		case WM_PAINT:
@@ -411,13 +428,49 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     GUI_DispStringInRect("操作",&Operat,GUI_TA_VCENTER|GUI_TA_HCENTER);
 							GUI_DispStringInRectWrap("船只添加到“我的船队”后,不触发闯入报警.",&note,GUI_TA_VCENTER,GUI_WRAPMODE_WORD);
 		
-		     GUI_SetFont(&GUI_Font_T90_30);
+//		     GUI_SetFont(&GUI_Font_T90_30);
+           
 		     for(i=0;i<MonitShipNum;i++)
 		     {
               GUI_DispDecAt(monitMMSI[i],MMSIList[i].x0+50,MMSIList[i].y0+3,9);
               BUTTON_SetText(WM_GetDialogItem(pMsg->hWin,GUI_ID_BUTTON1+i),"删除");
            }
-			  			
+			  if(WM_HasFocus(edit) || WM_HasFocus(addbutton))
+           {
+               GUI_SetFont(&GUI_Font_T90_24);
+               GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+               GUI_DispStringAt("【确认】",100, 400);
+               GUI_SetColor(setWinColors[t90_set.sys.nightmode].textColor);
+               GUI_DispString("键进入设置模式 ");
+               GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+               GUI_DispString("  卞  ");
+               GUI_SetColor(setWinColors[t90_set.sys.nightmode].textColor);
+               GUI_DispString("选择选项。");
+           }
+
+           {
+              int flg = 0;
+              for(i = 0; i < 5; i++)
+              {
+                 if(WM_HasFocus(delButton[i]))
+                 {
+                    flg = 1;
+                    break;
+                 }
+              }
+              if(flg)
+              {
+                 GUI_SetFont(&GUI_Font_T90_24);
+                 GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+                 GUI_DispStringAt("【确认】",100, 400);
+                 GUI_SetColor(setDlgColors[t90_set.sys.nightmode].textColor);
+                 GUI_DispString("键删除 ");
+                 GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+                 GUI_DispString("  卞  ");
+                 GUI_SetColor(setDlgColors[t90_set.sys.nightmode].textColor);
+                 GUI_DispString("选择选项。");
+              }
+           }           
 			  break;
 							
 //		case WM_KEY:
@@ -446,7 +499,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 			    pColor = &subMenuColors[pMsg->Data.v];
        for(i=0;i<5;i++)
 		     {
-								BUTTON_SetFocusColor(delButton[i],pColor->btBkColor);
+								BUTTON_SetFocusColor(delButton[i],pColor->btFocusBkColor);
 		      BUTTON_SetBkColor(delButton[i],BUTTON_CI_UNPRESSED,pColor->btBkColor);
 							}
 //		       pSkin = btSkin[pMsg->Data.v];

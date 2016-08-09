@@ -301,11 +301,11 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 
             GUI_DispStringAt("使用",50, ALARM_SET_HEIGHT-30-32);
             GUI_SetColor(pColors->focusBkColor);
-            GUI_DispString(" 咗祐 ");
+            GUI_DispString("  卞  ");
             GUI_SetColor(pColors->textColor);
             GUI_DispString("选择选项，使用");
             GUI_SetColor(pColors->focusBkColor);
-            GUI_DispString("  卞  ");
+            GUI_DispString(" 咗祐 ");
             GUI_SetColor(pColors->textColor);
             GUI_DispString("选择数字。");
 
