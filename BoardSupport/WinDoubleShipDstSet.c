@@ -385,6 +385,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
                  }
               }
               memcpy(&preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));
+              
               sprintf(pStrBuf, "%d", preDouDstSet.mo_to_as);
               HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
               
@@ -394,8 +395,10 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
               
               sprintf(pStrBuf, "%d", preDouDstSet.safety1_to_mo);
               HSD_DIMENSION_EX_SetValText(hExDim[2], pStrBuf);
+              
               sprintf(pStrBuf, "%d", preDouDstSet.safety2_to_mo);
               HSD_DIMENSION_EX_SetValText(hExDim[3], pStrBuf);
+              
               sprintf(pStrBuf, "%d", preDouDstSet.safety3_to_mo);
               HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);
            }
@@ -407,13 +410,15 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
               HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
               
               
-                 sprintf(pStrBuf, "%d", tempDouDstSet.net_port);
-                 HSD_DIMENSION_EX_SetValText(hExDim[1], pStrBuf);
+              sprintf(pStrBuf, "%d", tempDouDstSet.net_port);
+              HSD_DIMENSION_EX_SetValText(hExDim[1], pStrBuf);
               
               sprintf(pStrBuf, "%d", tempDouDstSet.safety1_to_mo);
               HSD_DIMENSION_EX_SetValText(hExDim[2], pStrBuf);
+            
               sprintf(pStrBuf, "%d", tempDouDstSet.safety2_to_mo);
               HSD_DIMENSION_EX_SetValText(hExDim[3], pStrBuf);
+            
               sprintf(pStrBuf, "%d", tempDouDstSet.safety3_to_mo);
               HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);                           
            }

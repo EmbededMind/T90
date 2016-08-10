@@ -349,7 +349,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                   StubRefresh();
                   if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
                   {
-                     for(i = 1; i < 5; i++)
+                     for(i = 1; i < 4; i++)
                      {
                         if(stubs[i].isValid)
                         {
@@ -359,7 +359,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                   }
                   else if(t90_set.sys.workmode == DOUBLE_MODE)
                   {
-                     for(i = 1; i < 5; i++)
+                     for(i = 1; i < 4; i++)
                      {
                         if(stubs[i].isValid)
                         {
@@ -376,7 +376,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                   
                   if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
                   {
-                     for(i = 1; i < 5; i++)
+                     for(i = 1; i < 4; i++)
                      {
                         if(stubs[i].isValid)
                         {
@@ -386,7 +386,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                   }
                   else if(t90_set.sys.workmode == DOUBLE_MODE)
                   {
-                     for(i = 1; i < 5; i++)
+                     for(i = 1; i < 4; i++)
                      {
                         if(stubs[i].isValid)
                         {
@@ -403,7 +403,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                   StubRefresh();
                   if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
                   {
-                     for(i = 1; i < 5; i++)
+                     for(i = 1; i < 4; i++)
                      {
                         if(stubs[i].isValid)
                         {
@@ -413,7 +413,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                   }
                   else if(t90_set.sys.workmode == DOUBLE_MODE)
                   {
-                     for(i = 1; i < 5; i++)
+                     for(i = 1; i < 4; i++)
                      {
                         if(stubs[i].isValid)
                         {

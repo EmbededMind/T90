@@ -121,7 +121,17 @@ uint8_t* Comm_fetchNextFrame(void)
    return NULL;
 }
 
-
+int Comm_isflags(void)
+{
+   if(flags & 0x1F)
+   {
+      return 1;
+   }
+   else
+   {
+      return 0;
+   }
+}
 
 
 

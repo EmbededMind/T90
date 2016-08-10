@@ -43,7 +43,7 @@
 #define TIMESTAMP           24
 
 #define MAP_REFRESH_SLOT    500
-#define CURSOR_HIDE_CNT     200  
+#define CURSOR_HIDE_CNT     200
 
 
 
@@ -51,20 +51,20 @@
  *
  *              array size config
  */
-#define MSG_QUEUE_TABNUM    20
-#define BOAT_NUM_MAX        500
+#define MSG_QUEUE_TABNUM      20
+#define BOAT_NUM_MAX          500
 //#define MNT_NUM_MAX         50
 //#define INVD_NUM_MAX        10
-#define BULY_NUM_MAX         20
+#define BULY_NUM_MAX          20
 
 /********************************************************************
  *
  *              EEPROM address config
  */
-#define SYSCONF_ADDR     0                        
+#define SYSCONF_ADDR     0
 
 #define MNT_PAGE_ID_HEADER  (uint8_t)1
-#define MNT_PAGE_ID         (uint8_t)2       
+#define MNT_PAGE_ID         (uint8_t)2
 
 
  

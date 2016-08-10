@@ -112,7 +112,7 @@ static void btOkCallback(WM_MESSAGE* pMsg){
 		     RECT->y0 = 0;
 		     RECT->y1 = ySize;
 							
-	/*		    if(WM_HasFocus(pMsg->hWin))
+			    if(WM_HasFocus(pMsg->hWin))
 								GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 							else
 								GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btBkColor);
@@ -121,7 +121,7 @@ static void btOkCallback(WM_MESSAGE* pMsg){
 							GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btTextColor);
 							GUI_SetTextMode(GUI_TEXTMODE_TRANS);
 							GUI_DispStringInRect("确定",RECT,GUI_TA_VCENTER|GUI_TA_HCENTER);
-							break;		*/		
+							break;				
 							
 		case WM_KEY:
 							switch(((WM_KEY_INFO*)pMsg->Data.p)->Key){	
@@ -264,7 +264,7 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 static void inputBtCreat(WM_MESSAGE *pMsg)
 {
 	uint8_t i;
-		buttons[1] = BUTTON_CreateEx(INPUT_BT0_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_0); 
+		buttons[1] = BUTTON_CreateEx(INPUT_BT0_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_0); 
   WM_ShowWin(buttons[1]);
 	 BUTTON_SetSkinFlexProps(inputBtSkin[t90_set.sys.nightmode],BUTTON_SKINFLEX_PI_ENABLED);
 	 BUTTON_SetSkinFlexProps(inputBtSkin[t90_set.sys.nightmode]+1,BUTTON_SKINFLEX_PI_FOCUSSED);
@@ -272,67 +272,67 @@ static void inputBtCreat(WM_MESSAGE *pMsg)
 		BUTTON_SetText(buttons[1], "0");
 		//BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED,GUI_GRAY);
 	
-		buttons[2] = BUTTON_CreateEx(INPUT_BT1_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_1);	
+		buttons[2] = BUTTON_CreateEx(INPUT_BT1_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_1);	
   WM_ShowWin(buttons[2]);
 		WM_SetCallback(buttons[2], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[2], "1");
 		//BUTTON_SetBkColor(buttons[2], BUTTON_CI_UNPRESSED,GUI_GRAY);
 
-		buttons[3] = BUTTON_CreateEx(INPUT_BT2_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_2);   
+		buttons[3] = BUTTON_CreateEx(INPUT_BT2_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_2);   
   WM_ShowWin(buttons[3]); 
 		WM_SetCallback(buttons[3], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[3], "2");
 		//BUTTON_SetBkColor(buttons[3], BUTTON_CI_UNPRESSED,GUI_GRAY);
 
-		buttons[4] = BUTTON_CreateEx(INPUT_BT3_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_3); 
+		buttons[4] = BUTTON_CreateEx(INPUT_BT3_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_3); 
   WM_ShowWin(buttons[4]);   
 		WM_SetCallback(buttons[4], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[4], "3");		
 		//BUTTON_SetBkColor(buttons[4], BUTTON_CI_UNPRESSED,GUI_GRAY);
 
-		buttons[5] = BUTTON_CreateEx(INPUT_BT4_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_4);
+		buttons[5] = BUTTON_CreateEx(INPUT_BT4_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_4);
   WM_ShowWin(buttons[5]);    
 		WM_SetCallback(buttons[5], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[5], "4");
 		//BUTTON_SetBkColor(buttons[5], BUTTON_CI_UNPRESSED,GUI_GRAY);
 
-		buttons[6] = BUTTON_CreateEx(INPUT_BT5_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_DEL);
+		buttons[6] = BUTTON_CreateEx(INPUT_BT5_X,INPUT_BT_LIN1_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_DEL);
   WM_ShowWin(buttons[6]);    
 		WM_SetCallback(buttons[6], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[6], "X");	
 		//BUTTON_SetBkColor(buttons[6], BUTTON_CI_UNPRESSED,GUI_GRAY);
 		
-		buttons[7] = BUTTON_CreateEx(INPUT_BT0_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_5);  
+		buttons[7] = BUTTON_CreateEx(INPUT_BT0_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_5);  
   WM_ShowWin(buttons[7]);  
 		WM_SetCallback(buttons[7], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[7], "5");	
 		//BUTTON_SetBkColor(buttons[7], BUTTON_CI_UNPRESSED,GUI_GRAY);
 		
-		buttons[8] = BUTTON_CreateEx(INPUT_BT1_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_6); 
+		buttons[8] = BUTTON_CreateEx(INPUT_BT1_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_6); 
   WM_ShowWin(buttons[8]);   
 		WM_SetCallback(buttons[8], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[8], "6");	
 		//BUTTON_SetBkColor(buttons[8], BUTTON_CI_UNPRESSED,GUI_GRAY);
 		
-		buttons[9] = BUTTON_CreateEx(INPUT_BT2_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_7);   
+		buttons[9] = BUTTON_CreateEx(INPUT_BT2_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_7);   
   WM_ShowWin(buttons[9]); 
 		WM_SetCallback(buttons[9], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[9], "7");	
 		//BUTTON_SetBkColor(buttons[9], BUTTON_CI_UNPRESSED,GUI_GRAY);
 		
-		buttons[10] = BUTTON_CreateEx(INPUT_BT3_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_8); 
+		buttons[10] = BUTTON_CreateEx(INPUT_BT3_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_8); 
   WM_ShowWin(buttons[10]);   
 		WM_SetCallback(buttons[10], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[10], "8");	
 		//BUTTON_SetBkColor(buttons[10], BUTTON_CI_UNPRESSED,GUI_GRAY);
 		
-		buttons[11] = BUTTON_CreateEx(INPUT_BT4_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_9);   
+		buttons[11] = BUTTON_CreateEx(INPUT_BT4_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_9);   
   WM_ShowWin(buttons[11]); 
 		WM_SetCallback(buttons[11], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[11], "9");	
 		//BUTTON_SetBkColor(buttons[11], BUTTON_CI_UNPRESSED,GUI_GRAY);
 		
-		buttons[12] = BUTTON_CreateEx(INPUT_BT5_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_HASTRANS,  0,  ID_BUTTON_EMPTY);  
+		buttons[12] = BUTTON_CreateEx(INPUT_BT5_X,INPUT_BT_LIN2_Y,INPUT_BT_WIDTH,INPUT_BT_HEIGHT,pMsg->hWin, WM_CF_SHOW,  0,  ID_BUTTON_EMPTY);  
   WM_ShowWin(buttons[12]);  
 		WM_SetCallback(buttons[12], &InputBtCallback);                                       
 		BUTTON_SetText(buttons[12], "C");	
@@ -530,7 +530,7 @@ static void InputWindowCallback(WM_MESSAGE* pMsg){
 			
 			case WM_PAINT:
 			     GUI_SetColor(GUI_GRAY);
-			     GUI_FillRoundedRect(0,0,xSize,ySize,20);
+			     GUI_FillRect(0,0,xSize,ySize);
 			     
 								break;
 			
@@ -565,6 +565,6 @@ WM_HWIN WIN_MMSISetCreate(void){
 WM_HWIN WIN_SoftInputCreate(void){
    WM_HWIN handle;  
    handle  = WM_CreateWindowAsChild(INPUTWIN_X, INPUTWIN_Y, INPUTWIN_WIDTH, INPUTWIN_HEIGHT,MMSISetWin, WM_CF_SHOW|WM_CF_LATE_CLIP, &InputWindowCallback , 0);
-			WM_SetHasTrans(handle);
+//			WM_SetHasTrans(handle);
    return handle;
 }

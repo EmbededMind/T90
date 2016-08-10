@@ -41,37 +41,37 @@ void CHECK_MS_Speed()
 //	MS_isMax_SOG = 0;
 //	MS_isMin_SOG = 0;
 printf("CHECK_MS_Speed begin\n");	
-	if( (t90_set.alarm.on_off & (0x01<<1)) && mothership.SOG > t90_set.alarm.danger_sog)
-	{		
-		if(MS_isSpeeding != MNTState_Masked)
-		{
-			MS_isSpeeding = MNTState_Triggered;
-		}
-	}
-	else
-	{
-		MS_isSpeeding = 0;
-	}
+	  if( (t90_set.alarm.on_off & (0x01<<1)) && mothership.SOG > t90_set.alarm.danger_sog)
+	  {		
+		    if(MS_isSpeeding != MNTState_Masked)
+		    {
+			      MS_isSpeeding = MNTState_Triggered;
+		    }
+	  }
+	  else
+	  {
+		    MS_isSpeeding = 0;
+	  }
    if(!(t90_set.alarm.on_off & (0x01<<2)))
       goto sog;
-	if( mothership.SOG > t90_set.alarm.max_sog)
-	{
-		if(MS_isMax_SOG != MNTState_Masked)
-		{
-			MS_isMax_SOG = MNTState_Triggered;
-		}
-	}
-	else if(mothership.SOG < t90_set.alarm.min_sog)
-	{
-		if(MS_isMin_SOG != MNTState_Masked)
-		{
-			MS_isMin_SOG = MNTState_Triggered;
-		}
-	}
-	else
-	{
-sog:		MS_isMax_SOG = MS_isMin_SOG = 0;
-	}
+	  if( mothership.SOG > t90_set.alarm.max_sog)
+	  {
+		    if(MS_isMax_SOG != MNTState_Masked)
+						{
+									MS_isMax_SOG = MNTState_Triggered;
+						}
+	  }
+	  else if(mothership.SOG < t90_set.alarm.min_sog)
+	  {
+		    if(MS_isMin_SOG != MNTState_Masked)
+		    {
+			      MS_isMin_SOG = MNTState_Triggered;
+		    }
+	  }
+  	else
+	  {
+      sog:		MS_isMax_SOG = MS_isMin_SOG = 0;
+	  }
 printf("CHECK_MS_Speed bend\n");
 }
 
