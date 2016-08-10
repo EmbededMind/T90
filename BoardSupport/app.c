@@ -244,11 +244,23 @@ printf("Refresh while begin\n");
       
 //      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
-
-      Stub_setValidity(1, portStatus[0].port == 1?1:0);
-      Stub_setValidity(2, portStatus[1].port == 1?1:0);
-      Stub_setValidity(3, portStatus[2].port == 1?1:0);
-//      StubRefresh();
+      
+      if(stubs[1].isValid != portStatus[0].port)
+      {
+         Stub_setValidity(1, portStatus[0].port == 1?1:0);
+         StubRefresh();
+      }
+      if(stubs[2].isValid != portStatus[1].port)
+      {
+         Stub_setValidity(2, portStatus[1].port == 1?1:0);
+         StubRefresh();
+      }
+      if(stubs[3].isValid != portStatus[2].port)
+      {
+         Stub_setValidity(3, portStatus[2].port == 1?1:0);
+         StubRefresh();
+      }
+     
          
 printf("Refresh while end\n");
       OSTimeDlyHMSM(0,0,5,0);
