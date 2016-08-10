@@ -59,7 +59,7 @@ static   OS_STK Play_Task_Stack[PLAY_TAST_STACK_SIZE];
 static   OS_STK Comm_Task_Stack[COMM_TASK_STACK_SIZE];
 
 
-
+static uint8_t isNeedstubRefresh = 0;
 OS_EVENT *  CommMBox;
 
 //static  OS_STK_DATA UI_Task_Stack_Use;
@@ -244,24 +244,14 @@ printf("Refresh while begin\n");
       
 //      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
-      
-      if(stubs[1].isValid != portStatus[0].port)
+       
+      if(isNeedstubRefresh)
       {
          Stub_setValidity(1, portStatus[0].port == 1?1:0);
-         StubRefresh();
-      }
-      if(stubs[2].isValid != portStatus[1].port)
-      {
          Stub_setValidity(2, portStatus[1].port == 1?1:0);
-         StubRefresh();
-      }
-      if(stubs[3].isValid != portStatus[2].port)
-      {
          Stub_setValidity(3, portStatus[2].port == 1?1:0);
          StubRefresh();
-      }
-     
-         
+      }   
 printf("Refresh while end\n");
       OSTimeDlyHMSM(0,0,5,0);
 
@@ -497,23 +487,21 @@ printf("Comm Task while begin\n");
 
 LOL:
             Comm_sendFrame(pFrame);
-               OSMboxPend(CommMBox, 200, &err);
-               if(err == OS_ERR_NONE){
+            OSMboxPend(CommMBox, 200, &err);
+            if(err == OS_ERR_NONE){
+               dataNoAckCnt  = 0;
+               ipcMsg  |= 0x20;
+            }
+            else{
+               dataNoAckCnt++;
+               if(dataNoAckCnt > 3){
                   dataNoAckCnt  = 0;
-
-                  ipcMsg  |= 0x20;
+                  ipcMsg  |= 0x10;
                }
                else{
-                  dataNoAckCnt++;
-                  if(dataNoAckCnt > 3){
-                     dataNoAckCnt  = 0;
-
-                     ipcMsg  |= 0x10;
-                  }
-                  else{
-                     goto LOL;
-                  }
+                  goto LOL;
                }
+            }
             
          }
       }
@@ -546,21 +534,22 @@ LOL:
                }
                             
                if(recPort != portStatus[0].port ){
-                     portStatus[0].port  = recPort;
-                     
-                     if(recPort == 1)
+                  isNeedstubRefresh = 1;
+                  portStatus[0].port  = recPort;
+                  
+                  if(recPort == 1)
+                  {
+                     StubRefresh();                     
+                     if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
                      {
-                        StubRefresh();                     
-                        if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
-                        {
-                           Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
-                        }
-                        else
-                        {
-                           Comm_addFrame(1,(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
-                        }
+                        Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
                      }
-                     ipcMsg  |= 0x01;               
+                     else
+                     {
+                        Comm_addFrame(1,(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                     }
+                  }
+                  ipcMsg  |= 0x01;               
                }
    //            printf("port1 %d\n",recPort);
                
@@ -582,7 +571,7 @@ LOL:
                }
                
                if(recPort != portStatus[1].port ){
-                  
+                  isNeedstubRefresh = 1;
                   portStatus[1].port  = recPort;
                   if(recPort == 1)
                   {
@@ -618,7 +607,7 @@ LOL:
                }
                
                if(recPort != portStatus[2].port ){
-                  
+                  isNeedstubRefresh = 1;
                   portStatus[2].port  = recPort;
                   if(recPort == 1)
                   {
@@ -634,13 +623,6 @@ LOL:
                   }
                   ipcMsg  |= 0x04; 
                }
-   //            printf("port3 %d\n",recPort);
-               
-   //            if(portStatus[2].port == 1)
-   //               Stub_setValidity(3,1);
-   //            else
-   //               Stub_setValidity(3,0);
-   //printf("stubs[3].isValid %d\n",stubs[3].isValid);
                if(t90_set.sys.SOG.on_off)
                {
                   SOG = pFrame[15];
