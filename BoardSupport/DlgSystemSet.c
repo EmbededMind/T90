@@ -92,21 +92,24 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            t90_set.sys.motherpos = pMsg->Data.v;
            memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
            T90_Store();
-           if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+           if(t90_set.sys.workmode == DOUBLE_MODE)
            {
-              for(i = 0; i < 3; i++)
+              if(t90_set.sys.motherpos == DEFAULT_LEFT)
               {
-						if(portStatus[i].port)
-                     Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                 for(i = 0; i < 3; i++)
+                 {
+                     if(portStatus[i].port)
+                        Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                 }
               }
-           }
-           else
-           {                            
-              for(i = 0; i < 3; i++)
-              {
-						if(portStatus[i].port)
-                     Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M, abs(stubs[i+1].basePoint.y*MILLINM_TO_M),t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
-              }                         
+              else
+              {                            
+                 for(i = 0; i < 3; i++)
+                 {
+                     if(portStatus[i].port)
+                        Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M, abs(stubs[i+1].basePoint.y*MILLINM_TO_M),t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                 }                         
+              }
            }
            break;
       

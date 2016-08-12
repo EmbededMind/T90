@@ -184,18 +184,18 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 		case WM_KEY:
 							switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
 								case GUI_KEY_ENTER:
-                              WM_InvalidateRect(FleetWin, &pRect);
+             WM_InvalidateRect(FleetWin, &pRect);
 									    if(MonitShipNum<5)
-                              {
-                                 myMsg.hWin = MMSISetWin;
-                                 myMsg.hWinSrc = FleetWin;
-                                 myMsg.MsgId = USER_MSG_MMSISET;
-                                 myMsg.Data.v = MONITMMSI_ADD;
-                                 WM_SendMessage(myMsg.hWin,&myMsg);
-                              }
-                              else
-                              {
-                                 myMsg.hWin = confirmWin;
+             {
+                myMsg.hWin = MMSISetWin;
+                myMsg.hWinSrc = FleetWin;
+                myMsg.MsgId = USER_MSG_MMSISET;
+                myMsg.Data.v = MONITMMSI_ADD;
+                WM_SendMessage(myMsg.hWin,&myMsg);
+             }
+             else
+             {
+                myMsg.hWin = confirmWin;
 									     myMsg.hWinSrc = FleetWin;
 									     myMsg.MsgId = USER_MSG_CHOOSE;
 									     myMsg.Data.v = MONITMMSI_FULL;
@@ -215,8 +215,7 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 									    if(MonitShipNum>0)
 										 WM_SetFocus(delButton[0]);
 									    break;
-                               
-                          case GUI_KEY_BACKSPACE:
+        case GUI_KEY_BACKSPACE:
 							 		    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
 									    break;
                           

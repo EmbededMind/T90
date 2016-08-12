@@ -54,10 +54,10 @@ printf("maintask\n");
     
 
    //字体设置	//GUI_SetDefaultFont (&SIF_Font);
-   GUI_SetDefaultFont (&GUI_Font30);	
-   TEXT_SetDefaultFont(&GUI_Font30);
-   BUTTON_SetDefaultFont (&GUI_Font30);
-   HEADER_SetDefaultFont(&GUI_Font30);
+   GUI_SetDefaultFont (&GUI_Font_T90_30);	
+   TEXT_SetDefaultFont(&GUI_Font_T90_30);
+   BUTTON_SetDefaultFont (&GUI_Font_T90_30);
+   HEADER_SetDefaultFont(&GUI_Font_T90_30);
    HEADER_SetDefaultBkColor(GUI_BLUE);
    //EDIT_SetDefaultFont(&GUI_Font30);
    WIDGET_SetDefaultEffect(&WIDGET_Effect_None); 

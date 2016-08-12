@@ -236,13 +236,11 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
    while(1)
    {
 printf("Refresh while begin\n");
-//      int i = 1;
       OSMutexPend(Refresher, 0, &myErr);           
       updateTimeStamp();    
       check();
       OSMutexPost(Refresher);
       
-//      OSMboxPost(MSBOX,&i);
       isChecked  = 1;
        
       if(isNeedstubRefresh)
@@ -487,8 +485,8 @@ printf("Comm Task while begin\n");
 
 LOL:
             Comm_sendFrame(pFrame);
-            OSMboxPend(CommMBox, 200, &err);
-            if(err == OS_ERR_NONE){
+            pFrame  = (uint8_t*)OSMboxPend(CommMBox, 200, &err);
+            if(err == OS_ERR_NONE && (pFrame[1] == 0x31)){
                dataNoAckCnt  = 0;
                ipcMsg  |= 0x20;
             }
@@ -522,8 +520,8 @@ LOL:
                recPort  = (pFrame[14]>>6)&0x03;
 
                /// Port 1 changed!
-               recMMSI  = pFrame[2];  
-               recMMSI  = recMMSI<<8|pFrame[3]; 
+               recMMSI  = pFrame[2];
+               recMMSI  = recMMSI<<8|pFrame[3];
                recMMSI  = recMMSI<<8|pFrame[4];
                recMMSI  = recMMSI<<8|pFrame[5];
                recPort  = (pFrame[14]>>6)&0x03;
@@ -551,12 +549,7 @@ LOL:
                   }
                   ipcMsg  |= 0x01;               
                }
-   //            printf("port1 %d\n",recPort);
-               
-   //            if(portStatus[0].port == 1)
-   //               Stub_setValidity(1,1);
-   //            else
-   //               Stub_setValidity(1,0);
+
    //printf("stubs[1].isValid %d\n",stubs[1].isValid);
                /// Port 2 changed!
                recMMSI  = pFrame[6];  
@@ -587,13 +580,7 @@ LOL:
                   }
                   ipcMsg  |= 0x02; 
                }
-   //            printf("port2 %d\n",recPort);
-               
-   //            if(portStatus[1].port == 1)
-   //               Stub_setValidity(2,1);
-   //            else
-   //               Stub_setValidity(2,0);
-   //printf("stubs[2].isValid %d\n",stubs[2].isValid);
+
                /// Port 3 changed!
                recMMSI  = pFrame[10];  
                recMMSI  = recMMSI<<8|pFrame[11]; 
@@ -677,7 +664,7 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
 
 
    SPI2_Int();
-   SPI2_DMA_Init();  
+   SPI2_DMA_Init();
 
    SPI1_Int();
 

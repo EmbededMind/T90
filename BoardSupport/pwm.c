@@ -40,6 +40,7 @@ void lpc1788_PWM_Init(void)//PWM初始化函数
   PWM_CounterCmd(1, ENABLE);/* PWM1计数使能 */
   PWM_Cmd(1, ENABLE);  /* PWM模式使能 */
 }
+
 void SetBackLight(uint32_t level)//设置PWM占空比，调节LCD背光亮度
 { 
   PWM_MATCHCFG_Type PWMMatchCfgDat;

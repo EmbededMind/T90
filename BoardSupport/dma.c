@@ -61,12 +61,12 @@ void DMA_IRQHandler (void)
 
        if(DMADest_Buffer[0] == '!'  ||  DMADest_Buffer[0] == '$')
        {
-          for(index=0;index<50;index++)	
+          for(index=0;index<50;index++)
           {
             Partition[myCnt][index]=DMADest_Buffer[index];
           }
 
-          OSQPost(QSem,(void *)Partition[myCnt]); 
+          OSQPost(QSem,(void *)Partition[myCnt]);
           myCnt++;
           myCnt  = myCnt%(MSG_QUEUE_TABNUM);
           
@@ -77,7 +77,7 @@ void DMA_IRQHandler (void)
                      | GPDMA_DMACCxControl_SWidth((uint32_t)GPDMA_LUTPerWid[GPDMACfg_SPI2.SrcConn]) \
                      | GPDMA_DMACCxControl_DWidth((uint32_t)GPDMA_LUTPerWid[GPDMACfg_SPI2.SrcConn]) \
                      | GPDMA_DMACCxControl_DI \
-                     | GPDMA_DMACCxControl_I;  
+                     | GPDMA_DMACCxControl_I;
           GPDMA_ClearIntPending (GPDMA_STATCLR_INTTC, 0);
           GPDMA_ChannelCmd(0, ENABLE);	                   
        } 
@@ -122,19 +122,19 @@ void SPI2_DMA_Init(void)
 void UART2_DMA_Init()
 {
 
-   NVIC_DisableIRQ (DMA_IRQn);
-   NVIC_SetPriority(DMA_IRQn, ((0x01<<3)|0x01));
-   GPDMACfg_UART2.ChannelNum = 1;
-   GPDMACfg_UART2.SrcMemAddr = 0;// Source memory - don't care
-   GPDMACfg_UART2.DstMemAddr = (uint32_t) &UART2_RX;// Destination memory
-   GPDMACfg_UART2.TransferSize = 18;// Transfer size
-  //	GPDMACfg1.TransferWidth = 0;// Transfer width - don't care
-   GPDMACfg_UART2.TransferType = GPDMA_TRANSFERTYPE_P2M;// Transfer type
-   GPDMACfg_UART2.SrcConn = GPDMA_CONN_UART2_Rx;// Source connection
-   GPDMACfg_UART2.DstConn = 0;// Destination connection - don't care
-   GPDMACfg_UART2.DMALLI = 0;// Linker List Item - unused
-   GPDMA_Setup(&GPDMACfg_UART2);
-   NVIC_EnableIRQ (DMA_IRQn);
-   GPDMA_ChannelCmd(1, ENABLE);
+ NVIC_DisableIRQ (DMA_IRQn);
+ NVIC_SetPriority(DMA_IRQn, ((0x01<<3)|0x01));
+ GPDMACfg_UART2.ChannelNum = 1;
+ GPDMACfg_UART2.SrcMemAddr = 0;// Source memory - don't care
+ GPDMACfg_UART2.DstMemAddr = (uint32_t) &UART2_RX;// Destination memory
+ GPDMACfg_UART2.TransferSize = 18;// Transfer size
+//	GPDMACfg1.TransferWidth = 0;// Transfer width - don't care
+ GPDMACfg_UART2.TransferType = GPDMA_TRANSFERTYPE_P2M;// Transfer type
+ GPDMACfg_UART2.SrcConn = GPDMA_CONN_UART2_Rx;// Source connection
+ GPDMACfg_UART2.DstConn = 0;// Destination connection - don't care
+ GPDMACfg_UART2.DMALLI = 0;// Linker List Item - unused
+ GPDMA_Setup(&GPDMACfg_UART2);
+ NVIC_EnableIRQ (DMA_IRQn);
+ GPDMA_ChannelCmd(1, ENABLE);
 }
 

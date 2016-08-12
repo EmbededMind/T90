@@ -34,7 +34,6 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[1].basePoint.x = -t90_set.singledst_set.dst2*M_TO_MILLINM;
 		stubs[1].basePoint.y = -t90_set.singledst_set.dst1*M_TO_MILLINM;
 
-//		stubs[1].isValid = 1;
 
 		stubs[1].type = safetySignStub;
 		stubs[1].StubNum = 1;
@@ -42,7 +41,6 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[2].basePoint.y = -t90_set.singledst_set.dst3*M_TO_MILLINM;
 
 
-//		stubs[2].isValid = 1;
 
 		stubs[2].type = safetySignStub;
 		stubs[2].StubNum = 2;
@@ -54,15 +52,13 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[4].isValid = FALSE;
   
 
-//		stubs[3].isValid = 1;
+
 		stubs[3].type = safetySignStub;
 		
 		stubs[4].isValid = 0;
       stubs[4].StubNum = 4;
   
-//  stubs[1].isValid  = 1;
-//  stubs[2].isValid  = 1;
-//  stubs[3].isValid  = 1;
+
 
 	}
 	else if(t90_set.sys.workmode == DOUBLE_MODE)
@@ -88,27 +84,23 @@ void StubRefresh()   //根据设置的距离计算桩点的坐标
 		stubs[2].StubNum = 2;
 		stubs[3].basePoint.x = (t90_set.doubledst_set.net_port + t90_set.doubledst_set.mo_to_as)*M_TO_MILLINM/2;
 		stubs[3].basePoint.y = -sqrt(t90_set.doubledst_set.safety3_to_mo * t90_set.doubledst_set.safety3_to_mo 
-        - (t90_set.doubledst_set.net_port - t90_set.doubledst_set.mo_to_as) * 
-        (t90_set.doubledst_set.net_port - t90_set.doubledst_set.mo_to_as) / 4)*M_TO_MILLINM;
+                         - (t90_set.doubledst_set.net_port - t90_set.doubledst_set.mo_to_as) * 
+                           (t90_set.doubledst_set.net_port - t90_set.doubledst_set.mo_to_as) / 4)*M_TO_MILLINM;
 
 		stubs[3].type = safetySignStub;
 		stubs[3].StubNum = 3;
-      stubs[4].basePoint.x = t90_set.doubledst_set.mo_to_as*M_TO_MILLINM;
+  stubs[4].basePoint.x = t90_set.doubledst_set.mo_to_as*M_TO_MILLINM;
 		stubs[4].basePoint.y = 0;
 		stubs[4].basePoint.y = 0;
-//      stubs[4].basePoint.x = pdoubleDstSet[4].motoas*M_TO_MILLINM;
-//      stubs[4].basePoint.y=0;
+
 		stubs[4].isValid = TRUE;
 		stubs[4].type = aidedStub;
       stubs[4].StubNum = 4;
       
-//      stubs[1].isValid  = 1;
-//      stubs[2].isValid  = 1;
-//      stubs[3].isValid  = 1;
+
 	}
 	FillStubNodes();
 	FillStubInfo();	
-//	PrintStubInfo();
 }
 
 
@@ -227,7 +219,7 @@ static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
 	{
 		do
 		{
-         numValid++;
+   numValid++;
 			point = GetRelativePoint(pIndex->pStub->basePoint, pIndex->pNext->pStub->basePoint);
 
 			dist = GetDistance(pIndex->pStub->basePoint, pIndex->pNext->pStub->basePoint);
@@ -258,11 +250,11 @@ static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
             pointd.y = pIndex->pNext->pStub->tang2.point.y;
             
            	A1 = pointb.y - pointa.y;
-	         B1 = pointa.x - pointb.x;
-	         C1 = pointa.y * pointb.x - pointa.x * pointb.y;
-	         A2 = pointd.y - pointc.y;
-	         B2 = pointc.x - pointd.x;
-	         C2 = pointc.y + pointd.x - pointc.x * pointd.y;
+            B1 = pointa.x - pointb.x;
+            C1 = pointa.y * pointb.x - pointa.x * pointb.y;
+            A2 = pointd.y - pointc.y;
+            B2 = pointc.x - pointd.x;
+            C2 = pointc.y + pointd.x - pointc.x * pointd.y;
             if(B1*A2 - B2*A1)
             {
                pIndex->pStub->crossPoint.x = (C1 * B2 - C2 * B1) / (B1 * A2 - B2 * A1);
@@ -291,7 +283,7 @@ int STUB_GetMostValue(char type)
 				do
 				{
 					if(pIndex->pStub->basePoint.x > xMax)
-						xMax = pIndex->pStub->basePoint.x;
+						 xMax = pIndex->pStub->basePoint.x;
 					pIndex = pIndex->pNext;
 				}
 				while(pIndex != pStubHead);

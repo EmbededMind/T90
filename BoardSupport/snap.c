@@ -29,7 +29,12 @@ void SNAP_reset(void)
    pSnapLink  = (BERTH*)(&mothership);
    pSnapLink->x_to_cross = 0;
    pSnapLink->y_to_cross = 0;
-//   snapType   = 0;
+   
+   if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
+   {
+      pSnapLink->x_to_cross += t90_set.doubledst_set.mo_to_as;
+   }
+   
    checkMMSI  = mothership.user_id;
 }
 

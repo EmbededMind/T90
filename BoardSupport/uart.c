@@ -39,7 +39,7 @@ uint8_t* pRecBuf  = recBuf;
 
 void xl_UART_Config(unsigned char port)
 {
-     UART_CFG_Type      UARTConfigStruct;
+   UART_CFG_Type      UARTConfigStruct;
    UART_FIFO_CFG_Type UARTFIFOConfigStruct;
    
    UART_ConfigStructInit(&UARTConfigStruct);
@@ -60,7 +60,7 @@ void xl_UART_Config(unsigned char port)
            UART_IntConfig(UART_0, UART_INTCFG_RLS, ENABLE);           
            
            NVIC_SetPriority(UART0_IRQn, ((0x02<<3)|0x02));
-	        NVIC_EnableIRQ(UART0_IRQn);          
+	          NVIC_EnableIRQ(UART0_IRQn);          
 
            break;
            
@@ -85,7 +85,7 @@ void xl_UART_Config(unsigned char port)
            UART_IntConfig(UART_2, UART_INTCFG_RLS, ENABLE); 
            
            NVIC_SetPriority(UART2_IRQn, ((0x02<<3)|0x03));
-	        NVIC_EnableIRQ(UART2_IRQn);      
+	          NVIC_EnableIRQ(UART2_IRQn);      
 
 
            break;
@@ -122,7 +122,7 @@ void UART0_IRQHandler(void)
       {        
                isKeyTrigged  = 1;
                switch(tmpc)
-               {                  
+               {                
                  case GUI_KEY_TRACE_ENABLE:
                    break;
                  case GUI_KEY_TRACE_DISABLE:
@@ -139,7 +139,7 @@ void UART0_IRQHandler(void)
       }
       else
       {   
-               
+      
       }
    }
 }
@@ -159,34 +159,41 @@ void UART2_IRQHandler(void)
    else if ((tmp == UART_IIR_INTID_RDA) || (tmp == UART_IIR_INTID_CTI))	// Receive Data Available or Character time-out
    {	 
        UART_Receive(UART_2, pRecBuf++, 1, NONE_BLOCKING);
-       if(pRecBuf-recBuf >=18){
-          if(recBuf[1] != 0x51)
-          {
-             crcVal  = recBuf[16] ;
-             crcVal  = (crcVal << 8) | recBuf[17];
-             
-             
-             if(crcVal == Comm_getCRC(recBuf, 16)){
-                OSMboxPost(CommMBox, (void*)recBuf);
-             }
-             pRecBuf  = recBuf;
-          }
-          else if(recBuf[1] == 0x51)
-          {
-             if(pRecBuf - recBuf >= 21)
+       if(recBuf[0] == 0x24)
+       {
+          if(pRecBuf-recBuf >=18){
+             if(recBuf[1] != 0x51)
              {
-                crcVal  = recBuf[19];
-                crcVal  = (crcVal << 8) | recBuf[20];
+                crcVal  = recBuf[16] ;
+                crcVal  = (crcVal << 8) | recBuf[17];
                 
-                if(crcVal == Comm_getCRC(recBuf, 19))
-                {
+                
+                if(crcVal == Comm_getCRC(recBuf, 16)){
                    OSMboxPost(CommMBox, (void*)recBuf);
                 }
                 pRecBuf  = recBuf;
              }
+             else if(recBuf[1] == 0x51)
+             {
+                if(pRecBuf - recBuf >= 21)
+                {
+
+                   crcVal  = recBuf[19];
+                   crcVal  = (crcVal << 8) | recBuf[20];
+                   
+                   if(crcVal == Comm_getCRC(recBuf, 19))
+                   {
+                      OSMboxPost(CommMBox, (void*)recBuf);
+                   }
+                   pRecBuf  = recBuf;
+                }
+             }
           }
        }
-
+       else
+       {
+          pRecBuf = recBuf;
+       }
    }
    else if(tmp == UART_IIR_INTID_THRE){
 

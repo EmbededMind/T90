@@ -78,6 +78,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                            myMsg.MsgId = USER_MSG_MOTHERPOS;
                            myMsg.Data.v = !t90_set.sys.motherpos;
                            WM_SendMessage(myMsg.hWin, &myMsg);
+							             WM_InvalidateWindow(doubleShipDstSetWin);
 //                        }   
                         break;
                         
@@ -342,9 +343,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
       case USER_MSG_DATA_ACK_RESULT:
 
          if(pMsg->Data.v)
-         {
-             
-             memcpy(&t90_set.doubledst_set,&tempDouDstSet,sizeof(tempDouDstSet));
+         {             
              sprintf(pStrBuf, "%d", tempDouDstSet.mo_to_as);
              HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
             
@@ -357,34 +356,19 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
              HSD_DIMENSION_EX_SetValText(hExDim[3], pStrBuf);
              sprintf(pStrBuf, "%d", tempDouDstSet.safety3_to_mo);
              HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);
-             T90_Store();
-//             StubRefresh();             
+             T90_Store();					 
          }
          else
          {
 
-             memcpy(&tempDouDstSet,&t90_set.doubledst_set,sizeof(tempDouDstSet));
-                                     
+             memcpy(&t90_set.doubledst_set, &preDouDstSet, sizeof(tempDouDstSet));
+             StubRefresh();                        
          }     
          break;
       case USER_MSG_REPLY:
            if(pMsg->Data.v == REPLY_OK)
            {
-              StubRefresh();
-              for(i = 0; i < 3; i++)
-              {
-                 if(t90_set.sys.motherpos == DEFAULT_LEFT)
-                 {   
-                    if(stubs[i+1].isValid)                    
-                       Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
-                 }
-                 else
-                 {
-                    if(stubs[i+1].isValid)
-                       Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
-                 }
-              }
-              memcpy(&preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));
+						  memcpy(&preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));
               
               sprintf(pStrBuf, "%d", preDouDstSet.mo_to_as);
               HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
@@ -401,6 +385,22 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
               
               sprintf(pStrBuf, "%d", preDouDstSet.safety3_to_mo);
               HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);
+						  memcpy(&t90_set.doubledst_set, &tempDouDstSet, sizeof(preDouDstSet));
+              StubRefresh();
+              for(i = 0; i < 3; i++)
+              {
+                 if(t90_set.sys.motherpos == DEFAULT_LEFT)
+                 {   
+                    if(stubs[i+1].isValid)                    
+                       Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                 }
+                 else
+                 {
+                    if(stubs[i+1].isValid)
+                       Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                 }
+              }
+
            }
            else
            {

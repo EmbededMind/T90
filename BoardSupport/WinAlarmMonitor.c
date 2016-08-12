@@ -15,7 +15,7 @@
 /** @brief 单拖模式窗口的句柄 */
 WM_HWIN alarmMonitorWin;
 
-
+extern Bool toast_flg ;
 static WM_HTIMER timer;
 
 static int timeCnt = 0;
@@ -40,7 +40,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 		 
 		 case WM_TIMER:
 			 
-					if(!CHECK_GetAlarmState())
+					if(!CHECK_GetAlarmState() && toast_flg == FALSE)
 					{
 						WM_DeleteTimer(timer);
 						WM_BringToTop(mainShipWin);
@@ -61,11 +61,11 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 					 if(pMsg->Data.v)
 					 {					 
 						 	GUI_CURSOR_Show();
-						 timer = WM_CreateTimer(pMsg->hWin, 0, 500, 0);
+						  timer = WM_CreateTimer(pMsg->hWin, 0, 500, 0);
 					 }
 					 else
 					 {
-						 GUI_CURSOR_Hide();
+						  GUI_CURSOR_Hide();
 					 }
 					 WM_DefaultProc(pMsg);
 					 break;
