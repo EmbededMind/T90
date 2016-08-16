@@ -113,9 +113,11 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 													
 													case GUI_KEY_ENTER:
 														    BUTTON_GetText(pMsg->hWin,pBuf,2);
-													     if(pBuf[0]=='X')
+                  item_id = WM_GetId(pMsg->hWin);
+                  
+													     if(item_id == ID_BUTTON_DEL)
 																			EDIT_AddKey(edit,GUI_KEY_BACKSPACE); //回删
-																		else if(pBuf[0]=='C')
+																		else if(item_id == ID_BUTTON_EMPTY)
 																			EDIT_SetText(edit,"");               //清空
 																		else
 																			EDIT_AddKey(edit,pBuf[0]);
@@ -129,7 +131,7 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 																		break;
 																		
 													 case GUI_KEY_BACKSPACE:
-                  if(!getflag())
+                  if(!getflag() && t90_set.as_MMSI.port)
                   {
                      if(EDIT_GetNumChars(edit)==0)
                      {
@@ -148,7 +150,7 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
                     {
                        MMSI_tmp = MMSI_tmp*10+(edittext[i]-48); 
                     }
-                    if(MMSI_tmp == t90_set.as_MMSI.MMSI)
+                    if(MMSI_tmp == t90_set.as_MMSI.MMSI && t90_set.as_MMSI.port)
                     {
                        WM_SetFocus(FleetWin);
                        WM_BringToTop(FleetWin);
@@ -511,8 +513,7 @@ static void InputWindowCallback(WM_MESSAGE* pMsg){
 
          }
          else
-         {
-            
+         {            
             WM_BringToTop(FleetWin);
             WM_SetFocus(FleetWin);           
          }

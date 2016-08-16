@@ -150,7 +150,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
     case GUI_KEY_BACKSPACE:
 									{
 										WM_GetUserData(pMsg->hWin,&UserData,4);
-							   if(UserData==MONITMMSI_FULL)
+							   if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
 										{
 										}
 										else
