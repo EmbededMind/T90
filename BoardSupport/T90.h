@@ -53,28 +53,28 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_DST4   25
 #define DEFAULT_DST5   400
 
-#define DEFAULT_DOUDST1 1000
-#define DEFAULT_DOUDST2 1500
-#define DEFAULT_DOUDST3 2000
-#define DEFAULT_DOUDST4 3000
+#define DEFAULT_DOUDST1 800
+#define DEFAULT_DOUDST2 100
+#define DEFAULT_DOUDST3 500
+#define DEFAULT_DOUDST4 1000
 
 
-#define DEFAULT_INVD_DST         2000
+#define DEFAULT_INVD_DST         200
 #define DEFAULT_DANGER_SOG_X10   80
 #define DEFAULT_MIN_SOG_X10      15
-#define DEFAULT_MAX_SOG_X10      55
-#define DEFAULT_NATION           0x00
+#define DEFAULT_MAX_SOG_X10      40
+#define DEFAULT_NATION           0xff
 #define DEFAULT_LEFT             0
 #define DEFAULT_RIGHT            1
 #define DEFAULT_ALARMOFF         0xff
 #define DEFAULT_HSPEED_X10       120
 
-#define DEFAULT_VOLUM      1
-#define DEFAULT_BRIGHT     4
+#define DEFAULT_VOLUM      4
+#define DEFAULT_BRIGHT     5
 #define DEFAULT_OFF        0
 #define DEFAULT_ON         1
 #define DEFAULT_SOG_TIME   15
-#define DEFAULT_COG_TIME   60
+#define DEFAULT_COG_TIME   50
 
 /* button skin */
 extern const BUTTON_SKINFLEX_PROPS btSkin[2][2];
@@ -85,17 +85,12 @@ extern const BUTTON_SKINFLEX_PROPS btSkin[2][2];
 
 
  */
-typedef struct Average
-{
-   Bool on_off;
-   int averageNum;
-}Average_set;
+
 
 typedef struct RemoveShip
 {
    long MMSI[5];
    int numShip;
-   int findNum;
 }RemoveShip;   
 
 typedef struct SingleDst_Set
@@ -134,7 +129,6 @@ typedef struct Alarm_Set
 typedef struct System_Set
 {
 	int workmode;
-	int launch;
 	int nightmode;
 	int volum;
 	int bright;
@@ -142,8 +136,8 @@ typedef struct System_Set
 	int update;
 	int reset;
  int motherpos;
- Average_set SOG;
- Average_set COG;
+ int SOG;
+ int COG;
  
 } System_Set;
 
@@ -157,8 +151,8 @@ typedef struct T90_Set
 {
    SingleDst_Set singledst_set;
    DoubleDst_Set doubledst_set;    
-	Alarm_Set alarm;
-	System_Set sys;
+	  Alarm_Set alarm;
+	  System_Set sys;
    PortStatus as_MMSI;
    RemoveShip shipout;   
 } T90_Set;

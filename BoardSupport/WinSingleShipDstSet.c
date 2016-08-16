@@ -43,7 +43,9 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key)
 			       	{
 
-              
+              case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  break;
               case GUI_KEY_MORIGHT:
 
                            myMsg.hWin = systemSetDlg;
@@ -61,7 +63,7 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                    
                    switch(id){
                       case 0:
-                           if(agentdst_set.dst1 < 2000){
+                           if(agentdst_set.dst1 < 3000){
                               if(agentdst_set.dst3 - agentdst_set.dst1 <= 20)
                                  break;
                               agentdst_set.dst1  += 20;
@@ -70,8 +72,8 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst1  = 2000;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "2000");
+                              agentdst_set.dst1  = 3000;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "3000");
                            }
                            break;
                       case 1:
@@ -87,15 +89,15 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                            }
                            break;
                       case 2:
-                           if(agentdst_set.dst3  < 2000){
+                           if(agentdst_set.dst3  < 3000){
                               agentdst_set.dst3  += 20;
                               agentdst_set.dst3  -= (agentdst_set.dst3 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst3);
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst3  = 2000;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "2000");
+                              agentdst_set.dst3  = 3000;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "3000");
                            }
                            break;
                       case 3:
@@ -111,7 +113,7 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                            }
                            break;
                       case 4:
-                           if(agentdst_set.dst5 < 2000){
+                           if(agentdst_set.dst5 < 3000){
                               if(agentdst_set.dst3 - agentdst_set.dst5 <= 20)
                                  break;
                               agentdst_set.dst5  += 20;
@@ -120,8 +122,8 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                               HSD_DIMENSION_SetValText(hDimensions[id], pStrBuf);
                            }
                            else{
-                              agentdst_set.dst5  = 2000;
-                              HSD_DIMENSION_SetValText(hDimensions[id], "2000");
+                              agentdst_set.dst5  = 3000;
+                              HSD_DIMENSION_SetValText(hDimensions[id], "3000");
                            }
                            break;
                    }	 
@@ -407,43 +409,43 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 //             StubRefresh();
 				if(pMsg->Data.v == REPLY_OK)
 				{                
-                if(whichFig == 0)
-                {
-                   Comm_addFrame(whichFig+1, -agentdst_set.dst2, agentdst_set.dst1, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
-                }
-                else if(whichFig == 1)
-                {
-                   Comm_addFrame(whichFig+1, 0, agentdst_set.dst3, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);               
-                }
-                else if(whichFig == 2)
-                {
-                   Comm_addFrame(whichFig+1, agentdst_set.dst4, agentdst_set.dst5, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
-                }
+       if(whichFig == 0)
+       {
+          Comm_addFrame(whichFig+1, -agentdst_set.dst2, agentdst_set.dst1, t90_set.sys.SOG, t90_set.sys.COG);
+       }
+       else if(whichFig == 1)
+       {
+          Comm_addFrame(whichFig+1, 0, agentdst_set.dst3, t90_set.sys.SOG, t90_set.sys.COG);               
+       }
+       else if(whichFig == 2)
+       {
+          Comm_addFrame(whichFig+1, agentdst_set.dst4, agentdst_set.dst5, t90_set.sys.SOG, t90_set.sys.COG);
+       }
 
-                sprintf(pStrBuf,"%d",t90_set.singledst_set.dst1);
-					 HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
+       sprintf(pStrBuf,"%d",t90_set.singledst_set.dst1);
+					  HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
 			 		 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst2);
 				 	 HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
 			 		 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst3);
-					 HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
-					 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst4);
-					 HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
-					 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst5);
-					 HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);                
+					  HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
+					  sprintf(pStrBuf,"%d",t90_set.singledst_set.dst4);
+					  HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
+					  sprintf(pStrBuf,"%d",t90_set.singledst_set.dst5);
+					                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);                
 				}
 				else
 				{
-               memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(t90_set.singledst_set));
-					sprintf(pStrBuf,"%d",agentdst_set.dst1);
-					HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
-					sprintf(pStrBuf,"%d",agentdst_set.dst2);
-					HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
-					sprintf(pStrBuf,"%d",agentdst_set.dst3);
-					HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
-					sprintf(pStrBuf,"%d",agentdst_set.dst4);
-					HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
-					sprintf(pStrBuf,"%d",agentdst_set.dst5);
-					HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
+       memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(t90_set.singledst_set));
+       sprintf(pStrBuf,"%d",agentdst_set.dst1);
+       HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
+       sprintf(pStrBuf,"%d",agentdst_set.dst2);
+       HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
+       sprintf(pStrBuf,"%d",agentdst_set.dst3);
+       HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
+       sprintf(pStrBuf,"%d",agentdst_set.dst4);
+       HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
+       sprintf(pStrBuf,"%d",agentdst_set.dst5);
+       HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
                
 				}
 				WM_SetFocus(dstSetMenuDlg);
@@ -471,7 +473,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         {
            int orgX  = DST_SET_WIDTH /2;
            int orgY  = drawArea.y0 +1;
-            
+           GUI_SetPenSize(2);
            GUI_SetColor(pColors->textColor); 
            GUI_DrawLine(orgX, orgY, orgX+16, orgY+16);
            
@@ -486,7 +488,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            GUI_SetLineStyle(GUI_LS_DOT);
            GUI_SetColor(pColors->textColor);
            GUI_DispStringAt("本", orgX-8, orgY+12);
-		     GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
+		         GUI_DispStringAt("船", orgX-8, orgY+10+GUI_GetFontSizeY());
            GUI_DrawLine(drawArea.x0, orgY+60, orgX-17, orgY+60);
            GUI_DrawLine(orgX+17, orgY+60, drawArea.x1, orgY+60);
            

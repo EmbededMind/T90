@@ -13,9 +13,15 @@ static void _Paint(HSD_STICKFIGURE_Obj* pObj, HSD_STICKFIGURE_Handle hObj){
    GUI_RECT r;
 //   GUI_COLOR bkColor;
    GUI_COLOR penColor;
-   
+   GUI_POINT point[3];
+
    GUI_GetClientRect(&r);
-   
+   point[0].x = 0;
+   point[0].y = r.y1;
+   point[1].x = (r.x0+r.x1)/2;
+   point[1].y = 0;
+   point[2].x = r.x1;
+   point[2].y = r.y1;
    if(pObj->widget.State & WIDGET_STATE_FOCUS){
 //     bkColor  = pObj->bkColor[1];
      penColor = pObj->penColor[1];
@@ -33,10 +39,10 @@ static void _Paint(HSD_STICKFIGURE_Obj* pObj, HSD_STICKFIGURE_Handle hObj){
 //INFO("%ld",penColor);
    GUI_SetLineStyle(GUI_LS_SOLID);
 //   GUI_SetColor(GUI_WHITE);
-   GUI_DrawLine(r.x0,r.y1, (r.x0+r.x1)/2, r.y0);
-   GUI_DrawLine(r.x1,r.y1, (r.x0+r.x1)/2, r.y0);
-   GUI_DrawHLine(r.y1, r.x0, r.x1);
-   
+//   GUI_DrawLine(r.x0,r.y1, (r.x0+r.x1)/2, r.y0);
+//   GUI_DrawLine(r.x1,r.y1, (r.x0+r.x1)/2, r.y0);
+//   GUI_DrawHLine(r.y1, r.x0, r.x1);
+   GUI_FillPolygon(point,3,r.x0,r.y0);
 //   if(pObj->pfnWriter){
 //      (*pObj->pfnWriter)();
 //   }

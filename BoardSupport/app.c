@@ -189,7 +189,7 @@ void SysTick_Init(void);
 
 void UI_Task(void *p_arg)/*√Ë ˆ(Description):	»ŒŒÒUI_Task*/
 {      
-		MainTask();
+		 MainTask();
 }
 
 
@@ -363,8 +363,34 @@ printf("Play Task while begin\n");
             }
             else 
             {
-               if(playList == 1)
-               {    
+               if(MS_isSpeeding == MNTState_Triggered)
+               {                                     
+                  SND_ParseNum(t90_set.alarm.danger_sog*100,aNums);
+                  MUSIC_ADD(SND_ID_MHS);
+                  MUSIC_ADD_5NUMS;
+                  MUSIC_ADD(SND_ID_KT);                 
+               }
+               else if(MS_isMax_SOG == MNTState_Triggered)
+               {
+                  SND_ParseNum(mothership.SOG*100,aNums);
+                  MUSIC_ADD(SND_ID_SN);                                   
+                  MUSIC_ADD_5NUMS;
+                  MUSIC_ADD(SND_ID_KT);
+                  MUSIC_ADD(SND_ID_HIGH);
+                  MUSIC_ADD(SND_ID_SNOR);
+               }
+               else if(MS_isMin_SOG == MNTState_Triggered)
+               {
+                  SND_ParseNum(mothership.SOG*100,aNums);
+                  MUSIC_ADD(SND_ID_SN);                                  
+                  MUSIC_ADD_5NUMS;
+                  MUSIC_ADD(SND_ID_KT);
+                  MUSIC_ADD(SND_ID_LOW);
+                  MUSIC_ADD(SND_ID_SNOR);                                     
+               }
+               
+               else
+               {
                   thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
                   if(thisinvdBerth)
                   {
@@ -397,41 +423,9 @@ printf("Play Task while begin\n");
                         MUSIC_ADD(SND_ID_KM);
                      }
                   }
-                  playList  = 2;
-                  OSTimeDlyHMSM(0, 0, 2, 0);
+               
                }
-               else if(playList == 2)
-               {
-                  if(MS_isSpeeding == MNTState_Triggered)
-                  {                                     
-                     SND_ParseNum(t90_set.alarm.danger_sog*100,aNums);
-                     MUSIC_ADD(SND_ID_MHS);
-                     MUSIC_ADD_5NUMS;
-                     MUSIC_ADD(SND_ID_KT);                 
-                  }
-                  else
-                  {
-                  if(MS_isMax_SOG == MNTState_Triggered)
-                  {
-                     SND_ParseNum(mothership.SOG*100,aNums);
-                     MUSIC_ADD(SND_ID_SN);                                   
-                     MUSIC_ADD_5NUMS;
-                     MUSIC_ADD(SND_ID_KT);
-                     MUSIC_ADD(SND_ID_HIGH);
-                     MUSIC_ADD(SND_ID_SNOR);
-                  }
-                  else if(MS_isMin_SOG == MNTState_Triggered)
-                  {
-                     SND_ParseNum(mothership.SOG*100,aNums);
-                     MUSIC_ADD(SND_ID_SN);                                  
-                     MUSIC_ADD_5NUMS;
-                     MUSIC_ADD(SND_ID_KT);
-                     MUSIC_ADD(SND_ID_LOW);
-                     MUSIC_ADD(SND_ID_SNOR);                                     
-                  }
-                  }
-                  playList = 1;
-               }
+               OSTimeDlyHMSM(0, 0, 2, 0);                              
             }
          }
       }
@@ -540,11 +534,11 @@ LOL:
                      StubRefresh();                     
                      if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
                      {
-                        Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
                      }
                      else
                      {
-                        Comm_addFrame(1,(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        Comm_addFrame(1,(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
                      }
                   }
                   ipcMsg  |= 0x01;               
@@ -571,11 +565,11 @@ LOL:
                      StubRefresh();                  
                      if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
                      {
-                        Comm_addFrame(2,stubs[2].basePoint.x*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        Comm_addFrame(2,stubs[2].basePoint.x*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
                      }
                      else
                      {
-                        Comm_addFrame(2,(stubs[2].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        Comm_addFrame(2,(stubs[2].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
                      }
                   }
                   ipcMsg  |= 0x02; 
@@ -601,28 +595,24 @@ LOL:
                      StubRefresh();
                      if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
                      {
-                        Comm_addFrame(3,stubs[3].basePoint.x*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        Comm_addFrame(3,stubs[3].basePoint.x*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
                      }
                      else
                      {
-                        Comm_addFrame(3,(stubs[3].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        Comm_addFrame(3,(stubs[3].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
                      }
                   }
                   ipcMsg  |= 0x04; 
                }
-               if(t90_set.sys.SOG.on_off)
-               {
-                  SOG = pFrame[15];
-                  SOG = SOG<<8 | pFrame[16];
-                  mothership.SOG = SOG;
-               }
-               
-               if(t90_set.sys.COG.on_off)
-               {
-                  COG = pFrame[17];
-                  COG = COG<<8 | pFrame[18];
-                  mothership.COG = COG;
-               }               
+
+               SOG = pFrame[15];
+               SOG = SOG<<8 | pFrame[16];
+               mothership.SOG = SOG;
+
+               COG = pFrame[17];
+               COG = COG<<8 | pFrame[18];
+               mothership.COG = COG;
+              
                
             }
          }
@@ -804,19 +794,19 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
       if(shiftReg)
          mothership.longitude  = shiftReg / 10;
       
-      if(!t90_set.sys.SOG.on_off)
-      {
-         shiftReg   = text[14];
-         shiftReg   = (shiftReg << 8) | text[15];
-         mothership.SOG = shiftReg;
-      }
+//      if(!t90_set.sys.SOG.on_off)
+//      {
+//         shiftReg   = text[14];
+//         shiftReg   = (shiftReg << 8) | text[15];
+//         mothership.SOG = shiftReg;
+//      }
 
-      if(!t90_set.sys.COG.on_off)
-      {
-         shiftReg   = text[16];
-         shiftReg   = (shiftReg << 8) | text[17];
-         mothership.COG = shiftReg /10;
-      }
+//      if(!t90_set.sys.COG.on_off)
+//      {
+//         shiftReg   = text[16];
+//         shiftReg   = (shiftReg << 8) | text[17];
+//         mothership.COG = shiftReg /10;
+//      }
 
 
       shiftReg   = text[18];

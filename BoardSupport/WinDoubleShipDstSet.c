@@ -69,7 +69,9 @@ static void myDimCallback(WM_MESSAGE* pMsg)
 //                           WM_SendMessage(myMsg.hWin, &myMsg);
 //                        }                           
 //                        break;
-              
+              case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  break;
               case GUI_KEY_MORIGHT:
 //                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
 //                        {
@@ -392,12 +394,12 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
                  if(t90_set.sys.motherpos == DEFAULT_LEFT)
                  {   
                     if(stubs[i+1].isValid)                    
-                       Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                       Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG, t90_set.sys.COG);
                  }
                  else
                  {
                     if(stubs[i+1].isValid)
-                       Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                       Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG, t90_set.sys.COG);
                  }
               }
 
@@ -640,6 +642,7 @@ void _paint(WM_HWIN pMsg)
        xPos_M  = drawArea.x1 - (drawArea.x1 - drawArea.x0)/5;               
        xPos_A  = drawArea.x0 + (drawArea.x1 - drawArea.x0)/5;        
     }
+    GUI_SetPenSize(2);
     GUI_DrawLine(xPos_M, yPos_M, xPos_M+16, yPos_M +16);
     GUI_DrawVLine(xPos_M+16, yPos_M+17, yPos_M+60);
     GUI_DrawHLine(yPos_M+60, xPos_M-15, xPos_M+15);

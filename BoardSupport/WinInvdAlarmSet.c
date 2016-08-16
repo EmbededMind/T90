@@ -45,7 +45,9 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 //                           WM_SendMessage(myMsg.hWin, &myMsg);
 //                        }                           
 //                        break;
-              
+              case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  break;
               case GUI_KEY_MORIGHT:
 //                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
 //                        {
@@ -131,6 +133,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
       
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
+              case GUI_KEY_SOUNDOFF:
+                   monitorState = monitorState == ON? OFF: ON;
+                   break;
               case GUI_KEY_MOLEFT:
                         if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
                         {
@@ -208,14 +213,14 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                                  {
                                     agentdst_set+=50;
                                  }
-											if(agentdst_set > 5000) agentdst_set = 5000;
+//											if(agentdst_set > 5000) agentdst_set = 5000;
 										}
 										else
 										{
                                
 											agentdst_set+=54;
                                 
-											if(agentdst_set > 5352) agentdst_set = 5352;
+//											if(agentdst_set > 5352) agentdst_set = 5352;
 										}
 										WM_Paint(invdAlarmSetWin);
 										break;
@@ -231,14 +236,14 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                                  {
                                     agentdst_set-=50;
                                  }
-											if(agentdst_set < 0) agentdst_set = 0;
+											if(agentdst_set < 50) agentdst_set = 50;
 										}
 										else
 										{
                                 
 											agentdst_set-=54;
                                  
-											if(agentdst_set < 0) agentdst_set = 0;
+											if(agentdst_set < 100) agentdst_set = 108;
 										}
 										WM_Paint(invdAlarmSetWin);
 										break;
@@ -266,9 +271,20 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		case USER_MSG_UNIT:
 				 if(pMsg->Data.v == NM)
 				 {
-					 t90_set.alarm.invd_dst = t90_set.alarm.invd_dst/100*100;
-					 agentdst_set = t90_set.alarm.invd_dst;
+        if(t90_set.alarm.invd_dst < 100)
+           t90_set.alarm.invd_dst = 50;
+        else
+					      t90_set.alarm.invd_dst = t90_set.alarm.invd_dst/100*100;       
+					   agentdst_set = t90_set.alarm.invd_dst;
 				 }
+     else
+     {
+        if(t90_set.alarm.invd_dst < 100)
+        {
+           t90_set.alarm.invd_dst = 55;        
+           agentdst_set = t90_set.alarm.invd_dst;
+        }
+     }
 				 break;
 
 		case USER_MSG_SKIN:
@@ -295,9 +311,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
              pColors_Slider = &setDlgColors[t90_set.sys.nightmode];
      
 				 GUI_SetFont(&GUI_Font_T90_30);	
-             button  = HSD_BUTTON_CreateEx(drawArea.x1-115,
+             button  = HSD_BUTTON_CreateEx(drawArea.x1-120,
                                    209, 
-                                   45, 
+                                   60, 
                                    GUI_GetFontSizeY(), 
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
              WM_SetCallback(button, &myButtonCallback); 
@@ -388,7 +404,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 
             if(t90_set.sys.unit == NM)
             {
-               GUI_DispStringAt("nm", drawArea.x1-65, 208);
+               GUI_DispStringAt("nm", drawArea.x1-55, 208);
                if(agentdst_set >= 100)
                   sprintf(pStrBuf,"%01d.%01d",agentdst_set/1000, (agentdst_set%1000)/100);
                else
@@ -396,8 +412,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             }
             else
             {
-               GUI_DispStringAt("km", drawArea.x1-65, 208);
-               
+               GUI_DispStringAt("km", drawArea.x1-55, 208);              
                sprintf(pStrBuf,"%01d.%01d", (agentdst_set * MILLINM_TO_M)/1000, ((agentdst_set * MILLINM_TO_M)%1000)/100);
             }
             HSD_BUTTON_SetText(button, pStrBuf);

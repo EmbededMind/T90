@@ -75,17 +75,17 @@ printf("CHECK_MS_Speed begin\n");
 printf("CHECK_MS_Speed bend\n");
 }
 
-static void CHECK_MS_Speed_masked()
-{
-printf("CHECK_MS_Speed_masked begin\n");
-	if(MS_isSpeeding ==MNTState_Triggered)
-		MS_isSpeeding = MNTState_Masked;
-	if(MS_isMax_SOG ==MNTState_Triggered)
-		MS_isMax_SOG = MNTState_Masked;
-	if(MS_isMin_SOG ==MNTState_Triggered)
-		MS_isMin_SOG = MNTState_Masked;
-printf("CHECK_MS_Speed_masked end\n");
-}
+//static void CHECK_MS_Speed_masked()
+//{
+//printf("CHECK_MS_Speed_masked begin\n");
+//	if(MS_isSpeeding ==MNTState_Triggered)
+//		MS_isSpeeding = MNTState_Masked;
+//	if(MS_isMax_SOG ==MNTState_Triggered)
+//		MS_isMax_SOG = MNTState_Masked;
+//	if(MS_isMin_SOG ==MNTState_Triggered)
+//		MS_isMin_SOG = MNTState_Masked;
+//printf("CHECK_MS_Speed_masked end\n");
+//}
 
 void CHECK_DelHighSpeed()
 {
@@ -154,7 +154,7 @@ printf("check begin\n");
 	{
 		isKeyTrigged = 0;
 		CHECK_MaskAllBerth();
-		CHECK_MS_Speed_masked();
+//		CHECK_MS_Speed_masked();
 	}
 	
 	detect();

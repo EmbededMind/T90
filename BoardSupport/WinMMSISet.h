@@ -38,7 +38,7 @@ WM_HWIN SoftInputWin;
 */
 
 /* FrameWin */
-#define INPUTWIN_X         20     //x0
+#define INPUTWIN_X         65     //x0
 #define INPUTWIN_Y         150    //y0
 #define INPUTWIN_WIDTH     370    //xsize
 #define INPUTWIN_HEIGHT    105     //ysize
@@ -72,7 +72,7 @@ WM_HWIN SoftInputWin;
 #define MMSISET_HEIGHT   300      //ysize
 
 /* EditWin */
-#define MMSISET_ET_X      20      //x0
+#define MMSISET_ET_X      65      //x0
 #define MMSISET_ET_Y      100     //y0
 #define MMSISET_ET_WIDTH  370     //xsize
 #define MMSISET_ET_HEIGHT 45      //ysize

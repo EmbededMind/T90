@@ -183,11 +183,11 @@ WM_HWIN WIN_AlarmMonitorCreate(void){
 static void _onPaint(void)
 {	
 	Point point;
-   GUI_RECT r;
-   GUI_SetBkColor(pColor->bkColor);
-   WM_GetClientRect(&r);
-   GUI_ClearRectEx(&r);
-	 GUI_SetTextMode(GUI_TM_TRANS);
+ GUI_RECT r;
+ GUI_SetBkColor(pColor->bkColor);
+ WM_GetClientRect(&r);
+ GUI_ClearRectEx(&r);
+ GUI_SetTextMode(GUI_TM_TRANS);
    
 //   DrawAlarmShip(); 
 	GUI_SetColor(pColor->textColor);
@@ -211,18 +211,18 @@ static void _onPaint(void)
 
 	GUI_DrawGradientV(0, 0, SCREEN_WIDTH-1, 45-1, pColor->bbsTopColor, pColor->bbsBottomColor);
 	GUI_SetColor(pColor->textColor);                             
-    GUI_SetFont(GUI_FONT_24B_1);
+ GUI_SetFont(GUI_FONT_24B_1);
 	GUI_DispCharAt('N', 15, 10);
 	GUI_DispCharAt('E', 165, 10);
 	sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
 	GUI_DispStringAt(pStrBuf, 595, 10);
 	sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
 	GUI_DispStringAt(pStrBuf, 715, 10);
-    GUI_SetFont(&GUI_Font_T90_30);
-    GUI_DispStringAt("航速：", 330, 5);
+ GUI_SetFont(&GUI_Font_T90_30);
+ GUI_DispStringAt("航速：", 330, 5);
 	GUI_DispStringAt("节", 445, 5);
 	GUI_DispStringAt("航向：", 480, 5);
-    GUI_SetFont(GUI_FONT_24B_1);
+ GUI_SetFont(GUI_FONT_24B_1);
 	GUI_SetColor(pColor->numColor);
 	lltostr(mothership.latitude, pStrBuf);
 	GUI_DispStringAt(pStrBuf, 40, 10);
@@ -232,9 +232,9 @@ static void _onPaint(void)
 //	sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
 //	GUI_DispStringAt(pStrBuf, 390, 10);
 	sprintf(pStrBuf, "%3d", mothership.COG/10);
-  pStrBuf[3]  = 194;
-  pStrBuf[4]  = 176;
-  pStrBuf[5]  = '\0';
+ pStrBuf[3]  = 194;
+ pStrBuf[4]  = 176;
+ pStrBuf[5]  = '\0';
 	GUI_DispStringAt(pStrBuf, 545, 10);
 //	sprintf(pStrBuf, "%d", timeCnt);
 //  GUI_DispStringAt(pStrBuf, 20, 60);

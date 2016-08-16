@@ -108,7 +108,10 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 //                           WM_InvalidateWindow(doubleShipDstSetWin);
 //                        }                           
 //                        break;
-//              
+              case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  break;
+  
               case GUI_KEY_MORIGHT:
 //                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
 //                        {

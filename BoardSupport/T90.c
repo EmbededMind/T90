@@ -42,27 +42,22 @@ T90_Set t90_set = {
 		DEFAULT_DANGER_SOG_X10,   
 		DEFAULT_MIN_SOG_X10,     
 		DEFAULT_MAX_SOG_X10,      
-		DEFAULT_NATION, 
-      DEFAULT_ALARMOFF },	
+		DEFAULT_NATION,
+  DEFAULT_HSPEED_X10,  
+  DEFAULT_ALARMOFF },	
 	
 	{
 		NONE_MODE,
-		OFF,
-		DAY,
+		NIGHT,
 		DEFAULT_VOLUM,
 		DEFAULT_BRIGHT,
 		NM,
-		OFF,
-		OFF,
-     DEFAULT_LEFT,
-     {
-     DEFAULT_ON,
-     DEFAULT_SOG_TIME,
-     },
-     {
-     DEFAULT_ON,
-     DEFAULT_COG_TIME,   
-     } 
+  0,
+  0,
+  DEFAULT_LEFT,
+  DEFAULT_SOG_TIME,
+  DEFAULT_COG_TIME,   
+
   },
    {
       0,
@@ -70,7 +65,6 @@ T90_Set t90_set = {
    },
    {
       {0},
-      0,
       0,
    },
 
@@ -86,8 +80,7 @@ T90_Set reset_t90_set = {
    {
       DEFAULT_DOUDST1,
       DEFAULT_DOUDST4,
-      DEFAULT_DOUDST1,
-      
+      DEFAULT_DOUDST1,     
       DEFAULT_DOUDST3,
       DEFAULT_DOUDST2,
       
@@ -98,36 +91,31 @@ T90_Set reset_t90_set = {
 		DEFAULT_MIN_SOG_X10,     
 		DEFAULT_MAX_SOG_X10,      
 		DEFAULT_NATION,
-      DEFAULT_HSPEED_X10,
-      DEFAULT_ALARMOFF   },	
+  DEFAULT_HSPEED_X10,  
+  DEFAULT_ALARMOFF },	
 	
 	{
 		NONE_MODE,
-		OFF,
 		NIGHT,
 		DEFAULT_VOLUM,
 		DEFAULT_BRIGHT,
 		NM,
-		OFF,
-		OFF,
-      DEFAULT_LEFT,
-  {
-     DEFAULT_ON,
-     DEFAULT_SOG_TIME,
+  0,
+  0,
+  DEFAULT_LEFT,
+  DEFAULT_SOG_TIME,
+  DEFAULT_COG_TIME,   
+
   },
-  {
-     DEFAULT_ON,
-     DEFAULT_COG_TIME,   
-  }  },
    {
       0,
-      0
+      0,
    },
    {
       {0},
       0,
-      0,
-   }
+   },
+
 };
 
 int MS_isSpeeding = 0;      //MS:mothership 
@@ -146,14 +134,13 @@ void printT90_Set(T90_Set * p)
 	
 
 
-	printf("Invd_dst        %d\r\n", p->alarm.invd_dst);
-	printf("Danger_sog      %d\r\n", p->alarm.danger_sog);
-	printf("Min_sog         %d\r\n", p->alarm.min_sog);
-	printf("Max_sog         %d\r\n", p->alarm.max_sog);
-	printf("Nation          %X\r\n", p->alarm.nation);
-	
-	printf("Workmode        %s-%d\r\n", p->sys.workmode?"double":"single", p->sys.workmode);
-	printf("Launch          %s-%d\r\n", p->sys.launch?"on":"off", p->sys.launch);
+   printf("Invd_dst        %d\r\n", p->alarm.invd_dst);
+   printf("Danger_sog      %d\r\n", p->alarm.danger_sog);
+   printf("Min_sog         %d\r\n", p->alarm.min_sog);
+   printf("Max_sog         %d\r\n", p->alarm.max_sog);
+   printf("Nation          %X\r\n", p->alarm.nation);
+   
+   printf("Workmode        %s-%d\r\n", p->sys.workmode?"double":"single", p->sys.workmode);
    printf("Nightmode       %s-%d\r\n", p->sys.nightmode?"Night":"Day",p->sys.nightmode);
    printf("Snd -- volum    %d\r\n",    p->sys.volum);
    printf("Brightness      %d\r\n",    p->sys.bright);
@@ -212,7 +199,7 @@ Bool T90_Load()
    if(!checkT90_Set())
    {
 //      T90_Store();
-		T90_Reset();
+		    T90_Reset();
 //printf("after fix:\r\n");   
 //      printT90_Set(&t90_set);
       flag  = FALSE;
@@ -251,20 +238,20 @@ void T90_Reset(void)
 
 
 	
-	t90_set.alarm.invd_dst   = DEFAULT_INVD_DST;
-	t90_set.alarm.danger_sog = DEFAULT_DANGER_SOG_X10;
-	t90_set.alarm.min_sog    = DEFAULT_MIN_SOG_X10;
-	t90_set.alarm.max_sog    = DEFAULT_MAX_SOG_X10;
-	t90_set.alarm.nation     = DEFAULT_NATION;
-	
-	t90_set.sys.workmode  = NONE_MODE;
-	t90_set.sys.launch    = OFF;
-   t90_set.sys.nightmode = DAY;
-   t90_set.sys.bright    = DEFAULT_BRIGHT;
-   t90_set.sys.volum     = DEFAULT_VOLUM;
-   t90_set.sys.unit      = NM;
-	t90_set.sys.update    = OFF;
-	memcpy(&t90_set,&reset_t90_set,sizeof(t90_set));
+//   t90_set.alarm.invd_dst   = DEFAULT_INVD_DST;
+//   t90_set.alarm.danger_sog = DEFAULT_DANGER_SOG_X10;
+//   t90_set.alarm.min_sog    = DEFAULT_MIN_SOG_X10;
+//   t90_set.alarm.max_sog    = DEFAULT_MAX_SOG_X10;
+//   t90_set.alarm.nation     = DEFAULT_NATION;
+//   
+//   t90_set.sys.workmode  = NONE_MODE;
+//   t90_set.sys.launch    = OFF;
+//   t90_set.sys.nightmode = NIGHT;
+//   t90_set.sys.bright    = DEFAULT_BRIGHT;
+//   t90_set.sys.volum     = DEFAULT_VOLUM;
+//   t90_set.sys.unit      = NM;
+//   t90_set.sys.update    = OFF;
+   memcpy(&t90_set,&reset_t90_set,sizeof(t90_set));
    T90_Store();
 
 

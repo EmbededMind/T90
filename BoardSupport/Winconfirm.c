@@ -43,7 +43,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 			 if(pMsg->Data.v)
 			 {
 					WM_GetUserData(pMsg->hWin,&UserData,4);
-					if(UserData==MONITMMSI_FULL)
+					if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
 					{
 						WM_SetFocus(buttons[2]);
 					}
@@ -89,7 +89,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        WM_ShowWindow (buttons[0]);
        BUTTON_SetText(buttons[0], "确定");
        BUTTON_SetFont(buttons[0], &GUI_Font_T90_30);
-	    WM_SetCallback(buttons[0], &myButton);
+	      WM_SetCallback(buttons[0], &myButton);
 	
        BUTTON_SetBkColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btBkColor);
        BUTTON_SetTextColor(buttons[0],BUTTON_BI_UNPRESSED,pColors->btTextColor);
@@ -100,24 +100,24 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        WM_ShowWindow (buttons[1]);
        BUTTON_SetText(buttons[1], "取消");
        BUTTON_SetFont(buttons[1], &GUI_Font_T90_30);
-			 WM_SetCallback(buttons[1], &myButton);
+			    WM_SetCallback(buttons[1], &myButton);
 			 
        BUTTON_SetBkColor(buttons[1],BUTTON_BI_UNPRESSED,pColors->btBkColor);
        BUTTON_SetTextColor(buttons[1],BUTTON_BI_UNPRESSED,pColors->btTextColor);
 						
-		 buttons[2] = BUTTON_CreateEx (160,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON2);
+		     buttons[2] = BUTTON_CreateEx (160,110,80,40,thisFrame, WM_CF_HASTRANS  ,0,GUI_ID_BUTTON2);
        WM_HideWin(buttons[2]);
        BUTTON_SetText(buttons[2], "确定");
        BUTTON_SetFont(buttons[2], &GUI_Font_T90_30);
-	    WM_SetCallback(buttons[2], &myButton);
-	    BUTTON_SetFocusColor(buttons[2],pColors->btFocusBkColor);
+	      WM_SetCallback(buttons[2], &myButton);
+	      BUTTON_SetFocusColor(buttons[2],pColors->btFocusBkColor);
        						
-		 TEXT_CreateEx (0,   35,  400, 80, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
+		     TEXT_CreateEx (0,   35,  400, 80, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
        dlgTextContent = WM_GetDialogItem(pMsg->hWin, ID_TEXT_CONTENT);
-		 TEXT_SetTextAlign(dlgTextContent,TEXT_CF_HCENTER);
+		     TEXT_SetTextAlign(dlgTextContent,TEXT_CF_HCENTER);
        TEXT_SetFont(dlgTextContent, &GUI_Font_T90_30);
 			 
-		 TEXT_SetTextColor (dlgTextContent,pColors->textColor);
+		     TEXT_SetTextColor (dlgTextContent,pColors->textColor);
 
        break;
 	
@@ -130,7 +130,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 		   	case GUI_KEY_LEFT:
 		   	case GUI_KEY_RIGHT: 
 							   WM_GetUserData(pMsg->hWin,&UserData,4);
-							   if(UserData==MONITMMSI_FULL)
+							   if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
 										{
 											WM_SetFocus(buttons[2]);
 										}
@@ -178,7 +178,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
           case WM_NOTIFICATION_RELEASED:      // React only if released
                switch (Id) 
                {
-                  case GUI_ID_BUTTON0: 
+                  case GUI_ID_BUTTON0:                   
                        myMsg.hWin     = myMsg.hWinSrc;
                        myMsg.hWinSrc  = pMsg->hWin;
                        myMsg.MsgId    = USER_MSG_REPLY;
@@ -202,11 +202,11 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
                        myMsg.MsgId    = USER_MSG_REPLY;
                        myMsg.Data.v   = REPLY_OK;
                        WM_SendMessage(myMsg.hWin, &myMsg);
-                        {
-                           WM_ShowWin(buttons[0]);
-                           WM_ShowWin(buttons[1]);
-                           WM_HideWin(buttons[2]);
-                        }
+                       {
+                          WM_ShowWin(buttons[0]);
+                          WM_ShowWin(buttons[1]);
+                          WM_HideWin(buttons[2]);
+                       }
 																			    break;
                }
                WM_BringToBottom(confirmWin);
@@ -243,8 +243,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
               break;
 									
 									case MONITMMSI_SET:
-										    TEXT_SetText(dlgTextContent, "是否修改辅助作业船九位码?");
-									     
+										    TEXT_SetText(dlgTextContent, "是否修改辅船九位码?");
 									     UserData = MONITMMSI_SET;
 									     WM_SetUserData(pMsg->hWin,&UserData,4);
 										printf("confimwin1");
@@ -264,14 +263,24 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 									     break;
 									
 									case MONITMMSI_FULL:
-										  TEXT_SetText(dlgTextContent, "已经达到设置上限,请删\n除后再进行添加!");
+										    TEXT_SetText(dlgTextContent, "已经达到设置上限,请删\n除后再进行添加!");
 									     WM_HideWin(buttons[0]);
 									     WM_HideWin(buttons[1]);
 									     WM_ShowWin(buttons[2]);
 									     UserData = MONITMMSI_FULL;
 									     WM_SetUserData(pMsg->hWin,&UserData,4);
 									     break;
-									
+									case MONITMMSI_NINE:
+              TEXT_SetText(dlgTextContent, "你输入的九位码不足九位, \n是否继续修改？");
+              break;
+         case MONITMMSI_FIRST:
+              TEXT_SetText(dlgTextContent, "你输入的九位码不足九位, \n亲继续输入！");
+              WM_HideWin(buttons[0]);
+									     WM_HideWin(buttons[1]);
+									     WM_ShowWin(buttons[2]);
+              UserData = MONITMMSI_FIRST;
+									     WM_SetUserData(pMsg->hWin,&UserData,4);
+              break;
          default:       
               break;
       }

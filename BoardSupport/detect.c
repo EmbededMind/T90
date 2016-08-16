@@ -84,20 +84,20 @@ printf("PloPoint begin\n");
          if(Mem_isEqual(&stubs[i].tang1.point,&pmin->point,sizeof(Point)))
             goto jmptang1;
          if (((pmin->point.x - pmax->point.x)*stubs[i].tang1.point.y + (pmax->point.y - pmin->point.y)*stubs[i].tang1.point.y
-				+ pmin->point.y*pmax->point.x - pmax->point.y*pmin->point.x)*(pmin->point.x - pmax->point.x) > 0)
+				         + pmin->point.y*pmax->point.x - pmax->point.y*pmin->point.x)*(pmin->point.x - pmax->point.x) > 0)
          {
             index = pmax;
             do
             {
                if (stubs[i].tang1.point.x <= index->point.x && stubs[i].tang1.point.x >= index->next->point.x)
-					{
-						ptmp = malloc(sizeof(PloPoint));
-						ptmp->next = index->next;
-						index->next = ptmp;
-						ptmp->point.x = stubs[i].tang1.point.x;
-						ptmp->point.y = stubs[i].tang1.point.y;
-						break;
-					}
+               {
+                   ptmp = malloc(sizeof(PloPoint));
+                   ptmp->next = index->next;
+                   index->next = ptmp;
+                   ptmp->point.x = stubs[i].tang1.point.x;
+                   ptmp->point.y = stubs[i].tang1.point.y;
+                   break;
+               }
                index = index->next;
             }while(index != pmin);
          }
@@ -107,14 +107,14 @@ printf("PloPoint begin\n");
             do
             {
                if (stubs[i].tang1.point.x >= index->point.x && stubs[i].tang1.point.x <= index->next->point.x)
-					{
-						ptmp = malloc(sizeof(PloPoint));
-						ptmp->next = index->next;
-						index->next = ptmp;
-						ptmp->point.x = stubs[i].tang1.point.x;
-						ptmp->point.y = stubs[i].tang1.point.y;
-						break;
-					}
+                  {
+                   ptmp = malloc(sizeof(PloPoint));
+                   ptmp->next = index->next;
+                   index->next = ptmp;
+                   ptmp->point.x = stubs[i].tang1.point.x;
+                   ptmp->point.y = stubs[i].tang1.point.y;
+                   break;
+                  }
                index = index->next;
             }while(index != pmax);
          }
@@ -128,20 +128,20 @@ jmptang1:
          if(Mem_isEqual(&stubs[i].tang2.point,&pmin->point,sizeof(Point)))
             goto jmptang2;
          if (((pmin->point.x - pmax->point.x)*stubs[i].tang2.point.y + (pmax->point.y - pmin->point.y)*stubs[i].tang2.point.y
-				+ pmin->point.y*pmax->point.x - pmax->point.y*pmin->point.x)*(pmin->point.x - pmax->point.x) > 0)
+				        + pmin->point.y*pmax->point.x - pmax->point.y*pmin->point.x)*(pmin->point.x - pmax->point.x) > 0)
          {
             index = pmax;
             do
             {
-               if (stubs[i].tang2.point.x <= index->point.x && stubs[i].tang2.point.x >= index->next->point.x)
-					{
-						ptmp = malloc(sizeof(PloPoint));
-						ptmp->next = index->next;
-						index->next = ptmp;
-						ptmp->point.x = stubs[i].tang2.point.x;
-						ptmp->point.y = stubs[i].tang2.point.y;
-						break;
-					}
+                         if (stubs[i].tang2.point.x <= index->point.x && stubs[i].tang2.point.x >= index->next->point.x)
+               {
+                ptmp = malloc(sizeof(PloPoint));
+                ptmp->next = index->next;
+                index->next = ptmp;
+                ptmp->point.x = stubs[i].tang2.point.x;
+                ptmp->point.y = stubs[i].tang2.point.y;
+                break;
+               }
                index = index->next;
             }while(index != pmin);
          }
@@ -151,14 +151,14 @@ jmptang1:
             do
             {
                if (stubs[i].tang2.point.x >= index->point.x && stubs[i].tang2.point.x <= index->next->point.x)
-					{
-						ptmp = malloc(sizeof(PloPoint));
-						ptmp->next = index->next;
-						index->next = ptmp;
-						ptmp->point.x = stubs[i].tang2.point.x;
-						ptmp->point.y = stubs[i].tang2.point.y;
-						break;
-					}
+                  {
+                   ptmp = malloc(sizeof(PloPoint));
+                   ptmp->next = index->next;
+                   index->next = ptmp;
+                   ptmp->point.x = stubs[i].tang2.point.x;
+                   ptmp->point.y = stubs[i].tang2.point.y;
+                   break;
+                  }
                index = index->next;
             }while(index != pmax);
          }

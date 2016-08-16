@@ -36,6 +36,8 @@
 #define MONITMMSI_ADD   9
 #define MONITMMSI_DEL   10
 #define MONITMMSI_FULL  11
+#define MONITMMSI_NINE  12
+#define MONITMMSI_FIRST 13
 
 #define GUI_KEY_RELEASE           4
 #define GUI_KEY_MENU              5

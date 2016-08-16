@@ -228,11 +228,15 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
    if((t90_set.alarm.on_off & (0x01<<3))&& pBerth->Boat.category == 0  &&  p_msg->SOG >= highspeed)
 
    {
-      unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
-//		  nation = 0x10;//////////////////////////////////////////////////////////////////////////
-      pBerth->Boat.category  = nation | TYPE_BULLY;   
-      BULY_add(pBerth);
-		llToxy(pBerth);
+      pBerth->Boat.highspeedflag++;
+      if(pBerth->Boat.highspeedflag >= 3)
+      {
+         unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
+         pBerth->Boat.category  = nation | TYPE_BULLY;   
+         BULY_add(pBerth);
+         llToxy(pBerth);
+         pBerth->Boat.highspeedflag = 0;
+      }
    }
 
    
@@ -435,11 +439,15 @@ int add_18(struct message_18 * p_msg)
    if((t90_set.alarm.on_off & (0x01<<3))&& buf->Boat.category == 0  &&  p_msg->SOG >= highspeed)
 
    {
-      unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
-//      nation = 0x10;/////////////////////////////////////////////////////////////////////////////////////
-		  buf->Boat.category  = nation |  TYPE_BULLY;
-        BULY_add(buf); 
-		  llToxy(buf);
+      buf->Boat.highspeedflag++;
+      if(buf->Boat.highspeedflag >= 3)
+      {
+         unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
+         buf->Boat.category  = nation |  TYPE_BULLY;
+         BULY_add(buf); 
+         llToxy(buf);
+         buf->Boat.highspeedflag = 0;
+      }
    }
 
 //printf("alloc:%d--%09ld\n",buf-Berthes,buf->Boat.user_id);   

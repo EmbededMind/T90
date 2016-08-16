@@ -55,7 +55,7 @@ static void _Paint(HSD_DIMENSION_EX_Obj* pObj, HSD_DIMENSION_EX_Handle hObj)
    
    GUI_SetColor(arrowLineColor);
    GUI_SetLineStyle(GUI_LS_SOLID);
-   GUI_SetPenSize(1);
+   GUI_SetPenSize(2);
 
    GUI_FillPolygon(pObj->arrows, 3, 0, 0);
    

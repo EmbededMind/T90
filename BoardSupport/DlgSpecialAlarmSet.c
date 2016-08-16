@@ -53,7 +53,9 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 //                           WM_SendMessage(myMsg.hWin, &myMsg);
 //                        }                           
 //                        break;
-              
+              case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  break;
               case GUI_KEY_MORIGHT:
 //                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
 //                        {

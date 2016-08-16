@@ -20,7 +20,7 @@
 #include "layout_system_set.h"
 
 
-#define SLD_NUM  8
+#define SLD_NUM  7
 
 WM_HWIN systemSetDlg;
 
@@ -34,7 +34,7 @@ static const SetDlgColor *pColors = setDlgColors;
 static const SetWinColor *pColors_win =  setWinColors;
 
 static void _OnWorkModeChanged(WM_MESSAGE * pMsg,int val);
-static void _OnLaunchChanged(WM_MESSAGE * pMsg,int val);
+//static void _OnLaunchChanged(WM_MESSAGE * pMsg,int val);
 static void _OnNightModeChanged(WM_MESSAGE * pMsg,int val);
 static void _OnVolumChanged(WM_MESSAGE * pMsg,int val);
 static void _OnBrightChanged(WM_MESSAGE * pMsg,int val);
@@ -46,38 +46,35 @@ static void _OnCOGAverageChanged(WM_MESSAGE * pMsg,int val);
 static System_Set agentsys_set;
 
 
-static  void (* const ProcChanging[10-1])(WM_MESSAGE *, int)  = {
-	  _OnWorkModeChanged,
-	  _OnLaunchChanged,
+static  void (* const ProcChanging[SLD_NUM-1])(WM_MESSAGE *, int)  = {
+   _OnWorkModeChanged,
+//   _OnLaunchChanged,
    _OnNightModeChanged,
    _OnVolumChanged,
    _OnBrightChanged,
-   _OnSOGAverageChanged,
-   _OnCOGAverageChanged,
+//   _OnSOGAverageChanged,
+//   _OnCOGAverageChanged,
    _OnUnitChanged,
-	  _OnUpdateChanged
+   _OnUpdateChanged
 };
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = 
 { 
- { WINDOW_CreateIndirect,  "Window",  ID_WINDOW_0, 0,                 0,                                                                   SYSTEM_SET_WIDTH,    SYSTEM_SET_HEIGHT,        0, 0, 0},
+   { WINDOW_CreateIndirect,  "Window",  ID_WINDOW_0, 0,                 0,                                                                   SYSTEM_SET_WIDTH,    SYSTEM_SET_HEIGHT,        0, 0, 0},
 
- { HSD_SLIDER_CreateIndirect, "sld0", ID_SLIDER_0, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y,                                                   SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
- { HSD_SLIDER_CreateIndirect, "sld1", ID_SLIDER_1, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+ SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN,    SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
- { HSD_SLIDER_CreateIndirect, "sld2", ID_SLIDER_2, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*2, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
- { HSD_SLIDER_CreateIndirect, "sld3", ID_SLIDER_3, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*3, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
- { HSD_SLIDER_CreateIndirect, "sld4", ID_SLIDER_4, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*4, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
- { HSD_SLIDER_CreateIndirect, "sld5", ID_SLIDER_5, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
- { HSD_SLIDER_CreateIndirect, "sld6", ID_SLIDER_6, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*6, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
- { HSD_SLIDER_CreateIndirect, "sld7", ID_SLIDER_7, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*7, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
- { HSD_SLIDER_CreateIndirect, "sld8", ID_SLIDER_8, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*8, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
- { HSD_SLIDER_CreateIndirect, "sld9", ID_SLIDER_9, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*9, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0}
+   { HSD_SLIDER_CreateIndirect, "sld0", ID_SLIDER_0, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y,                                                   SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
+   { HSD_SLIDER_CreateIndirect, "sld1", ID_SLIDER_1, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+ SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN,    SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
+   { HSD_SLIDER_CreateIndirect, "sld2", ID_SLIDER_2, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*2, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
+   { HSD_SLIDER_CreateIndirect, "sld3", ID_SLIDER_3, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*3, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
+   { HSD_SLIDER_CreateIndirect, "sld6", ID_SLIDER_4, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*6, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
+   { HSD_SLIDER_CreateIndirect, "sld7", ID_SLIDER_5, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*7, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
+   { HSD_SLIDER_CreateIndirect, "sld8", ID_SLIDER_6, SYSTEM_SET_ITEM_X, SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*8, SYSTEM_SET_ITEM_WIDTH, SYSTEM_SET_ITEM_HEIGHT, 0, 0, 0},
 };
 
 
-static WM_HWIN slideres[11];
-static WM_HWIN buttons[4];
-static WM_HWIN text[2];
+static WM_HWIN slideres[SLD_NUM];
+static WM_HWIN buttons[2];
+//static WM_HWIN text[2];
 static void  _cbDialog(WM_MESSAGE * pMsg)
 {
    WM_MESSAGE myMsg;
@@ -99,7 +96,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                  for(i = 0; i < 3; i++)
                  {
                      if(portStatus[i].port)
-                        Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
                  }
               }
               else
@@ -107,15 +104,15 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                  for(i = 0; i < 3; i++)
                  {
                      if(portStatus[i].port)
-                        Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M, abs(stubs[i+1].basePoint.y*MILLINM_TO_M),t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                        Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M, abs(stubs[i+1].basePoint.y*MILLINM_TO_M),t90_set.sys.SOG, t90_set.sys.COG);
                  }                         
               }
            }
            break;
       
       case USER_MSG_DIM:   
-           HSD_SLIDER_Loop(slideres[4]);
-           t90_set.sys.bright = HSD_SLIDER_GetValue(slideres[4]);
+           HSD_SLIDER_Loop(slideres[3]);
+           t90_set.sys.bright = HSD_SLIDER_GetValue(slideres[3]);
            T90_Store();
            memcpy(&agentsys_set, &t90_set.sys, sizeof(t90_set.sys));
            StubRefresh();
@@ -126,7 +123,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            pColors_win = &(setWinColors[pMsg->Data.v]); 
       
            WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);
-           for(i = 0; i < 10; i++)
+           for(i = 0; i < SLD_NUM; i++)
            {	
               HSD_SLIDER_SetBkColor(slideres[i], pColors->bkColor);
               HSD_SLIDER_SetFocusBkColor(slideres[i], pColors->bkColor);
@@ -135,125 +132,77 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
               HSD_SLIDER_SetFocusSliderColor(slideres[i], pColors->focusSliderColor);
               HSD_SLIDER_SetFocusSlotColor(slideres[i],pColors->focusSlotColor);
            }
-           for(i = 0; i < 4; i++)
+           for(i = 0; i < 2; i++)
            {
               HSD_BUTTON_SetBkColor(buttons[i], pColors_win->bkColor);
-			     HSD_BUTTON_SetTextFocusColor(buttons[i], pColors_win->focusTextColor);
+			           HSD_BUTTON_SetTextFocusColor(buttons[i], pColors_win->focusTextColor);
               HSD_BUTTON_SetFocusBkColor(buttons[i],pColors_win->focusBkColor);
            }
-           HSD_BUTTON_SetBkColor(text[0], pColors_win->bkColor);
-           HSD_BUTTON_SetBkColor(text[1], pColors_win->bkColor);
-           if(agentsys_set.COG.on_off)
-           {
-              for(i = 0; i < 2; i++)
-              {
-                 HSD_BUTTON_SetTextColor(buttons[i], pColors_win->textColor);
-                 
-              }
-              HSD_BUTTON_SetTextColor(text[0], pColors_win->textColor);
-              
-           }
-           else
-           {
-              for(i = 0; i < 2; i++)
-              {
-                 HSD_BUTTON_SetTextColor(buttons[i], pColors_win->bkColor);
-              }
-              HSD_BUTTON_SetTextColor(text[0], pColors_win->bkColor);
-              
-           }
-           
-           if(agentsys_set.SOG.on_off)
-           {
-              for(i = 2; i < 4; i++)
-              {
-                 HSD_BUTTON_SetTextColor(buttons[i], pColors_win->textColor);
-              }
-              HSD_BUTTON_SetTextColor(text[1], pColors_win->textColor);
-           }
-           else
-           {
-              for(i = 2; i < 4; i++)
-              {
-                 HSD_BUTTON_SetTextColor(buttons[i], pColors_win->bkColor);
-              }
-              HSD_BUTTON_SetTextColor(text[1], pColors_win->bkColor);
-           }
+
+
+           HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);                         
+
+           HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
+
            break;
            
       case WM_INIT_DIALOG:  
            agentsys_set.workmode  =  t90_set.sys.workmode;
-           agentsys_set.launch    =  t90_set.sys.launch;
            agentsys_set.nightmode =  t90_set.sys.nightmode;
            agentsys_set.volum     =  t90_set.sys.volum;
            agentsys_set.bright    =  t90_set.sys.bright;
            agentsys_set.unit      =  t90_set.sys.unit;
            agentsys_set.update    =  t90_set.sys.update;
            agentsys_set.reset     =  t90_set.sys.reset;
-           agentsys_set.COG.on_off = t90_set.sys.COG.on_off;
-           agentsys_set.COG.averageNum = t90_set.sys.COG.averageNum;
-    
-           agentsys_set.SOG.on_off = t90_set.sys.SOG.on_off;
-           agentsys_set.SOG.averageNum = t90_set.sys.SOG.averageNum;
-//           memcpy(&agentsys_set,&t90_set.sys,sizeof(t90_set.sys));      
+
+           agentsys_set.COG = t90_set.sys.COG;    
+           agentsys_set.SOG = t90_set.sys.SOG;
+   
            pColors  = &(setDlgColors[t90_set.sys.nightmode]);
-		     pColors_win = &(setWinColors[t90_set.sys.nightmode]);     
+		         pColors_win = &(setWinColors[t90_set.sys.nightmode]);     
       
            slideres[0]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_0);
            WM_SetCallback(slideres[0], &sldListener);
            HSD_SLIDER_SetRange(slideres[0], 0, 1); 
            HSD_SLIDER_SetValue(slideres[0], t90_set.sys.workmode);
            
+           
            slideres[1]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_1);
            WM_SetCallback(slideres[1], &sldListener);
            HSD_SLIDER_SetRange(slideres[1], 0, 1);
-           HSD_SLIDER_SetValue(slideres[1], t90_set.sys.launch);
+           HSD_SLIDER_SetValue(slideres[1], t90_set.sys.nightmode);
            
            slideres[2]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_2);
            WM_SetCallback(slideres[2], &sldListener);
-           HSD_SLIDER_SetRange(slideres[2], 0, 1);
-           HSD_SLIDER_SetValue(slideres[2], t90_set.sys.nightmode);
+			        HSD_SLIDER_SetNumTicks(slideres[2], 6);
+           HSD_SLIDER_SetRange(slideres[2], 1, 6);
+           HSD_SLIDER_SetValue(slideres[2], t90_set.sys.volum);
            
            slideres[3]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_3);
            WM_SetCallback(slideres[3], &sldListener);
-			  HSD_SLIDER_SetNumTicks(slideres[3], 6);
+           HSD_SLIDER_SetNumTicks(slideres[3], 6);
            HSD_SLIDER_SetRange(slideres[3], 1, 6);
-           HSD_SLIDER_SetValue(slideres[3], t90_set.sys.volum);
+           HSD_SLIDER_SetValue(slideres[3], t90_set.sys.bright);
            
            slideres[4]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_4);
            WM_SetCallback(slideres[4], &sldListener);
-           HSD_SLIDER_SetNumTicks(slideres[4], 6);
-           HSD_SLIDER_SetRange(slideres[4], 1, 6);
-           HSD_SLIDER_SetValue(slideres[4], t90_set.sys.bright);
-           
-           slideres[7]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_7);
-           WM_SetCallback(slideres[7], &sldListener);
-           HSD_SLIDER_SetRange(slideres[7], 0, 1);
-           HSD_SLIDER_SetValue(slideres[7], t90_set.sys.unit);
+           HSD_SLIDER_SetRange(slideres[4], 0, 1);
+           HSD_SLIDER_SetValue(slideres[4], t90_set.sys.unit);
 					 
-			  slideres[8]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_8);
-           WM_SetCallback(slideres[8], &sldListener);
-           HSD_SLIDER_SetRange(slideres[8], 0, 1); 
-           HSD_SLIDER_SetValue(slideres[8], t90_set.sys.update);
-					 
-			  slideres[9]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_9);
-           WM_SetCallback(slideres[9], &sldResetCallback);
-           HSD_SLIDER_SetRange(slideres[9], 0, 8); 
-           HSD_SLIDER_SetValue(slideres[9], t90_set.sys.reset);
-           
-           slideres[5]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_5);
+			        slideres[5]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_5);
            WM_SetCallback(slideres[5], &sldListener);
-           HSD_SLIDER_SetRange(slideres[5],0,1);
-           HSD_SLIDER_SetValue(slideres[5],agentsys_set.SOG.on_off);
+           HSD_SLIDER_SetRange(slideres[5], 0, 1); 
+           HSD_SLIDER_SetValue(slideres[5], t90_set.sys.update);
+					 
+			        slideres[6]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_6);
+           WM_SetCallback(slideres[6], &sldResetCallback);
+           HSD_SLIDER_SetRange(slideres[6], 0, 8); 
+           HSD_SLIDER_SetValue(slideres[6], t90_set.sys.reset);
            
-           slideres[6]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_6);
-           WM_SetCallback(slideres[6], &sldListener);
-           HSD_SLIDER_SetRange(slideres[6],0,1);
-           HSD_SLIDER_SetValue(slideres[6],agentsys_set.COG.on_off);
            
            WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);
            
-           for(i = 0; i < 10; i++)
+           for(i = 0; i < SLD_NUM; i++)
            {	
                HSD_SLIDER_SetBkColor(slideres[i], pColors->bkColor);
                HSD_SLIDER_SetFocusBkColor(slideres[i], pColors->bkColor);
@@ -262,71 +211,33 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                HSD_SLIDER_SetFocusSliderColor(slideres[i], pColors->focusSliderColor);
                HSD_SLIDER_SetFocusSlotColor(slideres[i],pColors->focusSlotColor);
            }
-           buttons[0]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*5+6+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
-                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5 - 5, 
-                                   15, 
+           buttons[0]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_RIGHT_CHOICE/2+SYSTEM_SET_ITEM_WIDTH, 
+                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*4 - 5, 
+                                   25, 
                                    GUI_GetFontSizeY(), 
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
            WM_SetCallback(buttons[0], &myButtonCallback); 
-			  HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_24);
+			        HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_24);
            HSD_BUTTON_SetBkColor(buttons[0], pColors_win->bkColor);
-			  HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
-			  HSD_BUTTON_SetTextFocusColor(buttons[0], pColors_win->focusTextColor);
+			        HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
+			        HSD_BUTTON_SetTextFocusColor(buttons[0], pColors_win->focusTextColor);
            HSD_BUTTON_SetFocusBkColor(buttons[0],pColors_win->focusBkColor);
            
-           buttons[1]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
+
+           
+           buttons[1]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_RIGHT_CHOICE/2+SYSTEM_SET_ITEM_WIDTH, 
                                    SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5 - 5, 
-                                   15, 
+                                   25, 
                                    GUI_GetFontSizeY(), 
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON1);   
            WM_SetCallback(buttons[1], &myButtonCallback); 
-			  HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_24);
+			        HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_24);
            HSD_BUTTON_SetBkColor(buttons[1], pColors_win->bkColor);
-			  HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
-			  HSD_BUTTON_SetTextFocusColor(buttons[1], pColors_win->focusTextColor);
+           HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
+           HSD_BUTTON_SetTextFocusColor(buttons[1], pColors_win->focusTextColor);
            HSD_BUTTON_SetFocusBkColor(buttons[1],pColors_win->focusBkColor);
            
-           buttons[2]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*5+6+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
-                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*6 - 5, 
-                                   15, 
-                                   GUI_GetFontSizeY(), 
-                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON2);   
-           WM_SetCallback(buttons[2], &myButtonCallback); 
-			  HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_24);
-           HSD_BUTTON_SetBkColor(buttons[2], pColors_win->bkColor);
-			  HSD_BUTTON_SetTextColor(buttons[2], pColors_win->textColor);
-			  HSD_BUTTON_SetTextFocusColor(buttons[2], pColors_win->focusTextColor);
-           HSD_BUTTON_SetFocusBkColor(buttons[2],pColors_win->focusBkColor);
-           
-           buttons[3]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
-                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*6 - 5, 
-                                   15, 
-                                   GUI_GetFontSizeY(), 
-                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON3);   
-           WM_SetCallback(buttons[3], &myButtonCallback); 
-			  HSD_BUTTON_SetTxFont(buttons[3], &GUI_Font_T90_24);
-           HSD_BUTTON_SetBkColor(buttons[3], pColors_win->bkColor);
-			  HSD_BUTTON_SetTextColor(buttons[3], pColors_win->textColor);
-			  HSD_BUTTON_SetTextFocusColor(buttons[3], pColors_win->focusTextColor);
-           HSD_BUTTON_SetFocusBkColor(buttons[3],pColors_win->focusBkColor);
-           
-           text[0] =  HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*7+15+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
-                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5 -5 , 
-                                   15, 
-                                   GUI_GetFontSizeY(), 
-                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON1); 
-           HSD_BUTTON_SetTxFont(text[0], &GUI_Font_T90_24);
-           HSD_BUTTON_SetBkColor(text[0], pColors_win->bkColor);
-			  HSD_BUTTON_SetTextColor(text[0], pColors_win->textColor);
-           
-           text[1] = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*7+15+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH, 
-                                   SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*6 - 5, 
-                                   15, 
-                                   GUI_GetFontSizeY(), 
-                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON2);
-           HSD_BUTTON_SetTxFont(text[1], &GUI_Font_T90_24);
-           HSD_BUTTON_SetBkColor(text[1], pColors_win->bkColor);
-			  HSD_BUTTON_SetTextColor(text[1], pColors_win->textColor);                                   
+                                
            break;
            
            
@@ -348,7 +259,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                }
                if(t90_set.sys.workmode != agentsys_set.workmode)
                {
-                  t90_set.sys.workmode = agentsys_set.workmode;                  
+                  t90_set.sys.workmode = agentsys_set.workmode;                                 
                   StubRefresh();
                   if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
                   {
@@ -356,7 +267,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                      {
                         if(stubs[i].isValid)
                         {
-                           Comm_addFrame(i, stubs[i].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                           Comm_addFrame(i, stubs[i].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG, t90_set.sys.COG);
                         }
                      }
                   }
@@ -366,15 +277,14 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                      {
                         if(stubs[i].isValid)
                         {
-                           Comm_addFrame(i, stubs[i].basePoint.x - stubs[4].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                           Comm_addFrame(i, stubs[i].basePoint.x - stubs[4].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG, t90_set.sys.COG);
                         }
                      }
                   }
                }
-               if(t90_set.sys.SOG.on_off != agentsys_set.SOG.on_off || t90_set.sys.SOG.averageNum != agentsys_set.SOG.averageNum)
+               if(t90_set.sys.SOG != agentsys_set.SOG)
                {
-                  t90_set.sys.SOG.on_off = agentsys_set.SOG.on_off;
-                  t90_set.sys.SOG.averageNum = agentsys_set.SOG.averageNum;
+                  t90_set.sys.SOG = agentsys_set.SOG;
                   StubRefresh();
                   
                   if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
@@ -383,7 +293,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                      {
                         if(stubs[i].isValid)
                         {
-                           Comm_addFrame(i, stubs[i].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                           Comm_addFrame(i, stubs[i].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG, t90_set.sys.COG);
                         }
                      }
                   }
@@ -393,15 +303,14 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                      {
                         if(stubs[i].isValid)
                         {
-                           Comm_addFrame(i, stubs[i].basePoint.x - stubs[4].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                           Comm_addFrame(i, stubs[i].basePoint.x - stubs[4].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG, t90_set.sys.COG);
                         }
                      }
                   }                  
                }
-               if(t90_set.sys.COG.on_off != agentsys_set.COG.on_off || t90_set.sys.COG.averageNum != agentsys_set.COG.averageNum)
+               if(t90_set.sys.COG != agentsys_set.COG)
                {
-                  t90_set.sys.COG.on_off = agentsys_set.COG.on_off;
-                  t90_set.sys.COG.averageNum = agentsys_set.COG.averageNum;
+                  t90_set.sys.COG = agentsys_set.COG;
                   
                   StubRefresh();
                   if(t90_set.sys.workmode == SINGLE_MODE || (t90_set.sys.workmode == DOUBLE_MODE && t90_set.sys.motherpos == DEFAULT_LEFT))
@@ -410,7 +319,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                      {
                         if(stubs[i].isValid)
                         {
-                           Comm_addFrame(i, stubs[i].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                           Comm_addFrame(i, stubs[i].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG, t90_set.sys.COG);
                         }
                      }
                   }
@@ -420,7 +329,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                      {
                         if(stubs[i].isValid)
                         {
-                           Comm_addFrame(i, stubs[i].basePoint.x - stubs[4].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG.averageNum, t90_set.sys.COG.averageNum);
+                           Comm_addFrame(i, stubs[i].basePoint.x - stubs[4].basePoint.x, abs(stubs[i].basePoint.y), t90_set.sys.SOG, t90_set.sys.COG);
                         }
                      }
                   }                  
@@ -431,16 +340,13 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
             else 
             {
                HSD_SLIDER_SetValue(slideres[0], t90_set.sys.workmode);
-               HSD_SLIDER_SetValue(slideres[1], t90_set.sys.launch);
-               HSD_SLIDER_SetValue(slideres[2], t90_set.sys.nightmode);
-               HSD_SLIDER_SetValue(slideres[3], t90_set.sys.volum);
-					HSD_SLIDER_SetValue(slideres[4], t90_set.sys.bright);
-               HSD_SLIDER_SetValue(slideres[5], t90_set.sys.SOG.on_off);
-					HSD_SLIDER_SetValue(slideres[6], t90_set.sys.COG.on_off);
-					HSD_SLIDER_SetValue(slideres[7], t90_set.sys.unit);
-					HSD_SLIDER_SetValue(slideres[8], t90_set.sys.update);
-               agentsys_set.SOG.averageNum = t90_set.sys.SOG.averageNum;
-               agentsys_set.COG.averageNum = t90_set.sys.COG.averageNum;
+               HSD_SLIDER_SetValue(slideres[1], t90_set.sys.nightmode);
+               HSD_SLIDER_SetValue(slideres[2], t90_set.sys.volum);
+					          HSD_SLIDER_SetValue(slideres[3], t90_set.sys.bright);
+               HSD_SLIDER_SetValue(slideres[4], t90_set.sys.unit);
+               HSD_SLIDER_SetValue(slideres[5], t90_set.sys.update);
+               agentsys_set.SOG = t90_set.sys.SOG;
+               agentsys_set.COG = t90_set.sys.COG;
             }
             
             WM_SetFocus(slideres[0]);
@@ -453,7 +359,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
             {
                case WM_NOTIFICATION_VALUE_CHANGED:
                     sldId  = WM_GetId(pMsg->hWinSrc) - ID_SLIDER_0;
-                    if(sldId >=0  &&  sldId < 9)
+                    if(sldId >=0  &&  sldId < 8)
                     {                  
                        val  = HSD_SLIDER_GetValue(slideres[sldId]);                     
                        ProcChanging[sldId](pMsg, val);
@@ -463,101 +369,77 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
             break;
           
        case WM_PAINT:
-						GUI_SetFont(&GUI_Font_T90_30);
-						GUI_SetColor(pColors->textColor);
-						GUI_DispStringAt("系统设置：",SYSTEM_SET_ITEM_X,SYSTEM_SET_Y+15);
-                  GUI_SetFont(&GUI_Font_T90_24);
-						GUI_DispStringAt("作业方式：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y);
-			         GUI_DispStringAt("单拖",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y);
-						GUI_DispStringAt("双拖",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y);
-       
-			         GUI_DispStringAt("发射功能：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
-						GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
-						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
-       
-						GUI_DispStringAt("夜间模式：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_ITEM_HEIGHT*2);
-						GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_ITEM_HEIGHT*2);
-						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_ITEM_HEIGHT*2);
-       
-						GUI_DispStringAt("音量设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*3+SYSTEM_SET_ITEM_HEIGHT*3);
-						GUI_DispStringAt("减少",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*3+SYSTEM_SET_ITEM_HEIGHT*3);
-						GUI_DispStringAt("增加",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*3+SYSTEM_SET_ITEM_HEIGHT*3);
-       
-						GUI_DispStringAt("亮度设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_ITEM_HEIGHT*4);
-						GUI_DispStringAt("减少",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_ITEM_HEIGHT*4);
-						GUI_DispStringAt("增加",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_ITEM_HEIGHT*4);
-                  
-                  GUI_DispStringAt("航速平均化：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_ITEM_HEIGHT*5);
-                  GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_ITEM_HEIGHT*5);
-						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_ITEM_HEIGHT*5);
-                  
-                  
-                  GUI_DispStringAt("航向平均化：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);
-                  GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);
-						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);
-                  
-                  
-						GUI_DispStringAt("单位设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
-						GUI_DispStringAt("千米",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
-						GUI_DispStringAt("海里",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
-                  
-						GUI_DispStringAt("软件更新：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
-						GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
-						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
-                  
-						GUI_DispStringAt("恢复出厂设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*9+SYSTEM_SET_ITEM_HEIGHT*9);
-						GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*9+SYSTEM_SET_ITEM_HEIGHT*9);
-						GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*9+SYSTEM_SET_ITEM_HEIGHT*9);
-                  
-						GUI_DispStringAt("软件版本 V1.0.0",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH+80,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);            
+            GUI_SetFont(&GUI_Font_T90_30);
+            GUI_SetColor(pColors->textColor);
+            GUI_DispStringAt("系统设置：",SYSTEM_SET_ITEM_X,SYSTEM_SET_Y+15);
+            GUI_DispStringAt("作业方式：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5);
+            GUI_DispStringAt("单拖",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5);
+            GUI_DispStringAt("双拖",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5);
+             
+             
+            GUI_DispStringAt("夜间模式：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
+            GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
+            GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN+SYSTEM_SET_ITEM_HEIGHT);
+             
+            GUI_DispStringAt("音量设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_ITEM_HEIGHT*2);
+            GUI_DispStringAt("减少",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_ITEM_HEIGHT*2);
+            GUI_DispStringAt("增加",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_ITEM_HEIGHT*2);
+             
+            GUI_DispStringAt("亮度设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*3+SYSTEM_SET_ITEM_HEIGHT*3);
+            GUI_DispStringAt("减少",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*3+SYSTEM_SET_ITEM_HEIGHT*3);
+            GUI_DispStringAt("增加",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*3+SYSTEM_SET_ITEM_HEIGHT*3);
+                        
+            GUI_DispStringAt("航速平均化：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_ITEM_HEIGHT*4);
+            GUI_DispStringAt("减少",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_ITEM_HEIGHT*4);
+            GUI_DispStringAt("增加",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_ITEM_HEIGHT*4);
+                        
+                        
+            GUI_DispStringAt("航向平均化：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_ITEM_HEIGHT*5);
+            GUI_DispStringAt("减少",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_ITEM_HEIGHT*5);
+            GUI_DispStringAt("增加",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*5+SYSTEM_SET_ITEM_HEIGHT*5);
+                        
+                        
+            GUI_DispStringAt("单位设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);
+            GUI_DispStringAt("千米",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);
+            GUI_DispStringAt("海里",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*6+SYSTEM_SET_ITEM_HEIGHT*6);
+                        
+            GUI_DispStringAt("软件更新：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
+            GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
+            GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
+                        
+            GUI_DispStringAt("恢复出厂设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
+            GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
+            GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
+                        
+            GUI_DispStringAt("软件版本 V1.0.0",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH+80,SYSTEM_SET_ITEM_Y+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);            
 
-						GUI_SetFont(&GUI_Font_T90_24);
-                  GUI_DispStringAt("使用",100, 400);
-                  GUI_SetColor(pColors->focusSliderColor);
-                  GUI_DispString("  卞  ");
-                  GUI_SetColor(pColors->textColor);
-                  GUI_DispString("选择选项，使用");
-                  GUI_SetColor(pColors->focusSliderColor);
-                  GUI_DispString(" 咗祐 ");
-                  GUI_SetColor(pColors->textColor);
-                  GUI_DispString("切换开启关闭或者更改参数。");
-                  
-                  if(agentsys_set.SOG.on_off)
-                  {
-                     HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
-                     HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
-                     HSD_BUTTON_SetTextColor(text[0], pColors_win->textColor);                                         
-                  }
-                  else
-                  {
-                     HSD_BUTTON_SetTextColor(buttons[0], pColors_win->bkColor);
-                     HSD_BUTTON_SetTextColor(buttons[1], pColors_win->bkColor);
-                     HSD_BUTTON_SetTextColor(text[0], pColors_win->bkColor);                    
-                  }
-                  sprintf(pStrBuf,"%d",agentsys_set.SOG.averageNum/10);
-                  HSD_BUTTON_SetText(buttons[0],pStrBuf);
-                  sprintf(pStrBuf, "%d", agentsys_set.SOG.averageNum%10);
-                  HSD_BUTTON_SetText(buttons[1],pStrBuf);
-                  HSD_BUTTON_SetText(text[0],"s");
-   
-                  if(agentsys_set.COG.on_off)
-                  {
-                     HSD_BUTTON_SetTextColor(buttons[2], pColors_win->textColor);
-                     HSD_BUTTON_SetTextColor(buttons[3], pColors_win->textColor);
-                     HSD_BUTTON_SetTextColor(text[1], pColors_win->textColor);                  
-                  }
-                  else
-                  {
-                     HSD_BUTTON_SetTextColor(buttons[2], pColors_win->bkColor);
-                     HSD_BUTTON_SetTextColor(buttons[3], pColors_win->bkColor); 
-                     HSD_BUTTON_SetTextColor(text[1], pColors_win->bkColor);                     
-                  }
-                  sprintf(pStrBuf,"%d",agentsys_set.COG.averageNum/10);
-                  HSD_BUTTON_SetText(buttons[2],pStrBuf);
-                  sprintf(pStrBuf, "%d", agentsys_set.COG.averageNum%10);
-                  HSD_BUTTON_SetText(buttons[3],pStrBuf);
-                  HSD_BUTTON_SetText(text[1],"s");
-           break;
+            GUI_SetFont(&GUI_Font_T90_24);
+            GUI_DispStringAt("使用",100, 400);
+            GUI_SetColor(pColors->focusSliderColor);
+            GUI_DispString("  卞  ");
+            GUI_SetColor(pColors->textColor);
+            GUI_DispString("选择选项，使用");
+            GUI_SetColor(pColors->focusSliderColor);
+            GUI_DispString(" 咗祐 ");
+            GUI_SetColor(pColors->textColor);
+            GUI_DispString("切换开启关闭或者更改参数。");
+            
+
+            {
+               HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
+               HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
+                                       
+            }
+            
+
+            sprintf(pStrBuf,"%d",agentsys_set.SOG);
+            HSD_BUTTON_SetText(buttons[0],pStrBuf);
+
+
+
+            sprintf(pStrBuf,"%d",agentsys_set.COG);
+            HSD_BUTTON_SetText(buttons[1],pStrBuf);
+
        default:
            WM_DefaultProc(pMsg);
            break;
@@ -575,6 +457,7 @@ WM_HWIN DLG_SystemSetCreate()
 static void myButtonCallback(WM_MESSAGE * pMsg)
 {
    int id = 0;
+   WM_MESSAGE myMsg; 
    switch(pMsg->MsgId)
    {
       case WM_SET_FOCUS:
@@ -591,106 +474,89 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
          id = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
          switch(((WM_KEY_INFO*)pMsg->Data.p)->Key)
          {
-            
+            case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  break;
             case GUI_KEY_LEFT:
-               if(id == 0 || id == 1)
+               if(id == 0)
                {
-                  WM_SetFocus(buttons[0]);
+                  agentsys_set.SOG -= 1;
+                  if(agentsys_set.SOG < 1)
+                     agentsys_set.SOG = 1;
+                  sprintf(pStrBuf,"%d",agentsys_set.SOG);
+                  HSD_BUTTON_SetText(buttons[0],pStrBuf);
                }
-               if(id == 2 || id == 3)
+               
+               if(id == 1)
                {
-                  WM_SetFocus(buttons[2]);
+                  agentsys_set.COG -= 1;
+                  if(agentsys_set.COG < 1)
+                     agentsys_set.COG = 1;
+                  sprintf(pStrBuf, "%d", agentsys_set.COG);
+                  HSD_BUTTON_SetText(buttons[1], pStrBuf);
                }
                break;
             case GUI_KEY_RIGHT:
-               if(id == 0 || id == 1)
+               if(id == 0)
                {
-                  WM_SetFocus(buttons[1]);
+                  agentsys_set.SOG += 1;
+                  if(agentsys_set.SOG > 60)
+                     agentsys_set.SOG = 60;
+                  sprintf(pStrBuf,"%d",agentsys_set.SOG);
+                  HSD_BUTTON_SetText(buttons[0],pStrBuf);
                }
-               if(id == 2 || id == 3)
+               
+               if(id == 1)
                {
-                  WM_SetFocus(buttons[3]);
+                  agentsys_set.COG += 1;
+                  if(agentsys_set.COG > 60)
+                     agentsys_set.COG = 60;
+                  sprintf(pStrBuf, "%d", agentsys_set.COG);
+                  HSD_BUTTON_SetText(buttons[1], pStrBuf);
                }
                break;
             case GUI_KEY_UP:
                if(id == 0)
                {
-                  agentsys_set.SOG.averageNum += 10;
-                  if(agentsys_set.SOG.averageNum > 99)
-                     agentsys_set.SOG.averageNum = 99;
+                  WM_SetFocus(slideres[3]);
                }
-               else if(id == 1)
-               {
-                  agentsys_set.SOG.averageNum += 1;
-                  if(agentsys_set.SOG.averageNum > 99)
-                     agentsys_set.SOG.averageNum = 99;
-               }
-               else if(id == 2)
-               {
-                  agentsys_set.COG.averageNum += 10;
-                  if(agentsys_set.COG.averageNum > 99)
-                     agentsys_set.COG.averageNum = 99;
-               }
-               else if(id == 3)
-               {
-                  agentsys_set.COG.averageNum += 1;
-                  if(agentsys_set.COG.averageNum > 99)
-                     agentsys_set.COG.averageNum = 99;
-               }
-               sprintf(pStrBuf,"%d",agentsys_set.SOG.averageNum/10);
-               HSD_BUTTON_SetText(buttons[0],pStrBuf);
-               sprintf(pStrBuf, "%d", agentsys_set.SOG.averageNum%10);
-               HSD_BUTTON_SetText(buttons[1],pStrBuf);
                
-               sprintf(pStrBuf,"%d",agentsys_set.COG.averageNum/10);
-               HSD_BUTTON_SetText(buttons[2],pStrBuf);
-               sprintf(pStrBuf, "%d", agentsys_set.COG.averageNum%10);
-               HSD_BUTTON_SetText(buttons[3],pStrBuf);
+               if(id == 1)
+               {
+                  WM_SetFocus(buttons[0]);
+               }
                break;
+               
             case GUI_KEY_DOWN:
                if(id == 0)
                {
-                  agentsys_set.SOG.averageNum -= 10;
-                  if(agentsys_set.SOG.averageNum < 1)
-                     agentsys_set.SOG.averageNum = 1;
+                  WM_SetFocus(buttons[1]);
                }
+               
                if(id == 1)
                {
-                  agentsys_set.SOG.averageNum -= 1;
-                  if(agentsys_set.SOG.averageNum < 1)
-                     agentsys_set.SOG.averageNum = 1;
+                  WM_SetFocus(slideres[4]);
                }
-               if(id == 2)
-               {
-                  agentsys_set.COG.averageNum -= 10;
-                  if(agentsys_set.COG.averageNum < 1)
-                     agentsys_set.COG.averageNum = 1;
-               }
-               if(id == 3)
-               {
-                  agentsys_set.COG.averageNum -= 1;
-                  if(agentsys_set.COG.averageNum < 1)
-                     agentsys_set.COG.averageNum = 1;
-               }
-               sprintf(pStrBuf,"%d",agentsys_set.SOG.averageNum/10);
-               HSD_BUTTON_SetText(buttons[0],pStrBuf);
-               sprintf(pStrBuf, "%d", agentsys_set.SOG.averageNum%10);
-               HSD_BUTTON_SetText(buttons[1],pStrBuf);
-               
-               sprintf(pStrBuf,"%d",agentsys_set.COG.averageNum/10);
-               HSD_BUTTON_SetText(buttons[2],pStrBuf);
-               sprintf(pStrBuf, "%d", agentsys_set.COG.averageNum%10);
-               HSD_BUTTON_SetText(buttons[3],pStrBuf);
                break;
+
             case GUI_KEY_BACKSPACE:
-               if(id == 0 || id == 1)
-               {
-                  WM_SetFocus(slideres[5]);
-               }
-               if(id == 2 || id == 3)
-               {
-                  WM_SetFocus(slideres[6]);
-               }
+              if(Mem_isEqual(&t90_set.sys, &agentsys_set, sizeof(t90_set.sys)) )
+              {
+                 WM_SetFocus(slideres[0]);
+                 WM_SetFocus(mainMenuDlg);                      
+              }
+              else
+              {
+                 myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                 myMsg.hWinSrc  = systemSetDlg;
+                 myMsg.MsgId  = USER_MSG_CHOOSE;
+                 myMsg.Data.v  = SYS_SETTING;
+                 WM_SendMessage(myMsg.hWin, &myMsg);
+                 
+                 WM_BringToTop(confirmWin);
+                 WM_SetFocus(confirmWin);                    
+              }
+               
                break;
             default:
                break;
@@ -717,62 +583,27 @@ static void sldListener(WM_MESSAGE * pMsg)
            {  
                              
               case GUI_KEY_UP:
-                 if(id == 0)
+                 if(id == 4)
                  {
-                    WM_SetFocus(slideres[9]);
+                    WM_SetFocus(buttons[1]);
                     break;
                  }
-                 HSD_SLIDER_Callback(pMsg);
-                 break;
-                 
-              case GUI_KEY_RIGHT:
-                 
-                 if(id == 5)
+                 if(id == 0)
                  {
-                    if(agentsys_set.SOG.on_off == 1)
-                    {
-                       WM_SetFocus(buttons[0]);                     
-                       break;
-                    }
-                    else
-                    {
-                       HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
-                       HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
-                       HSD_BUTTON_SetTextColor(text[0], pColors_win->textColor);
-                    }                  
-                 }               
-                 if(id == 6)
-                 {
-                    if(agentsys_set.COG.on_off == 1)
-                    {
-                       WM_SetFocus(buttons[2]);                    
-                       break;
-                    }
-                    else
-                    {
-                       HSD_BUTTON_SetTextColor(buttons[2], pColors_win->textColor);
-                       HSD_BUTTON_SetTextColor(buttons[3], pColors_win->textColor);
-                       HSD_BUTTON_SetTextColor(text[1], pColors_win->textColor);
-                    }
+                    WM_SetFocus(slideres[6]);
+                    break;                  
                  }
                  HSD_SLIDER_Callback(pMsg);
                  break;
-              case GUI_KEY_LEFT:
-                 HSD_SLIDER_Callback(pMsg);   
-                 if(id == 5)
+              case GUI_KEY_DOWN:
+                 if(id == 3)
                  {
-                    
-                    HSD_BUTTON_SetTextColor(buttons[0], pColors_win->bkColor);
-                    HSD_BUTTON_SetTextColor(buttons[1], pColors_win->bkColor);
-                    HSD_BUTTON_SetTextColor(text[0], pColors_win->bkColor);
+                     WM_SetFocus(buttons[0]);
+                     break;
                  }
-                 if(id == 6)
-                 {
-                    HSD_BUTTON_SetTextColor(buttons[2], pColors_win->bkColor);
-                    HSD_BUTTON_SetTextColor(buttons[3], pColors_win->bkColor);
-                    HSD_BUTTON_SetTextColor(text[1], pColors_win->bkColor);
-                 }
-                 break;                 
+                 HSD_SLIDER_Callback(pMsg);
+                 break;
+               
               case GUI_KEY_MORIGHT:
                   myMsg.hWin = systemSetDlg;
                   myMsg.hWinSrc = pMsg->hWin;
@@ -823,10 +654,6 @@ static void _OnWorkModeChanged(WM_MESSAGE * pMsg, int val)
          
 }
 
-static void _OnLaunchChanged(WM_MESSAGE * pMsg, int val)
-{
-   agentsys_set.launch = val;
-}
 
 static void _OnNightModeChanged(WM_MESSAGE * pMsg, int val)
 {
@@ -937,7 +764,6 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
            break;
            
       case USER_MSG_REPLY:
-           WM_SetFocus(slideres[9]);
            WM_BringToTop(systemSetDlg);
            if(pMsg->Data.v == REPLY_OK )
            {
@@ -950,44 +776,6 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
               }
               
               T90_Reset();
-              
-				  HSD_SLIDER_SetValue(slideres[0], t90_set.sys.workmode);
-              HSD_SLIDER_SetValue(slideres[9], 0);
-				  GUI_Delay(1000);
-							
-				  HSD_SLIDER_SetValue(slideres[1], t90_set.sys.launch);
-              HSD_SLIDER_SetValue(slideres[9], 1);
-				  GUI_Delay(1000);
-							
-              HSD_SLIDER_SetValue(slideres[2], t90_set.sys.nightmode);
-              HSD_SLIDER_SetValue(slideres[9], 2);
-              GUI_Delay(1000);
-							
-              HSD_SLIDER_SetValue(slideres[3], t90_set.sys.volum);
-              HSD_SLIDER_SetValue(slideres[9], 3);
-              GUI_Delay(1000);
-              
-              HSD_SLIDER_SetValue(slideres[4], t90_set.sys.bright);
-              HSD_SLIDER_SetValue(slideres[9], 4);
-              GUI_Delay(1000);
-              
-              HSD_SLIDER_SetValue(slideres[5], t90_set.sys.SOG.on_off);
-               HSD_SLIDER_SetValue(slideres[9], 5);
-              GUI_Delay(1000);
-              
-              HSD_SLIDER_SetValue(slideres[6], t90_set.sys.COG.on_off);
-              HSD_SLIDER_SetValue(slideres[9], 6);
-              GUI_Delay(1000);
-              
-              HSD_SLIDER_SetValue(slideres[7], t90_set.sys.unit);
-              HSD_SLIDER_SetValue(slideres[9], 7);
-              GUI_Delay(1000);
-							
-				  HSD_SLIDER_SetValue(slideres[8], t90_set.sys.update);
-              HSD_SLIDER_SetValue(slideres[9], 8);
-              GUI_Delay(1000);
-              
-              HSD_SLIDER_SetValue(slideres[9], 0);
               
               NVIC_SystemReset();
               
@@ -1006,14 +794,8 @@ static void sldResetCallback(WM_MESSAGE* pMsg)
    }
 }
 
-static void _OnSOGAverageChanged(WM_MESSAGE * pMsg,int val)
-{
-   agentsys_set.SOG.on_off = val;
-}
-static void _OnCOGAverageChanged(WM_MESSAGE * pMsg,int val)
-{
-   agentsys_set.COG.on_off = val;
-}
+
+
 
 
 

@@ -54,12 +54,13 @@ static void _Paint(HSD_DIMENSION_Obj* pObj, HSD_DIMENSION_Handle hObj){
    
    GUI_SetColor(arrowLineColor);
    GUI_SetLineStyle(GUI_LS_SOLID);
-   GUI_SetPenSize(1);  
+   GUI_SetPenSize(2);
 //INFO("pObj->flags:%d", pObj->flags);  
  
    if(pObj->flags == HSD_DIMENSION_CF_HORIZONTAL){    
-//INFO("horizontal");   
-      GUI_DrawHLine( (r.y0+r.y1) /2, r.x0+7, r.x1-7);
+//INFO("horizontal");
+printf("pensize = %d\n",      GUI_GetPenSize());    
+      GUI_DrawLine(r.x0+7, (r.y0+r.y1) /2,  r.x1-7,(r.y0+r.y1) /2);
       arrow[0].x  = 0;
       arrow[0].y  = 0;
       arrow[1].x  = 6;
@@ -107,8 +108,8 @@ static void _Paint(HSD_DIMENSION_Obj* pObj, HSD_DIMENSION_Handle hObj){
          GUI_DispString(sUnit);
       }        
    }
-   else{
-      GUI_DrawVLine( (r.x0+r.x1) /2, r.y0+7, r.y1-7);
+   else{  
+      GUI_DrawLine( (r.x0+r.x1) /2, r.y0+7, (r.x0+r.x1) /2, r.y1-7);
       arrow[0].x  = 0;
       arrow[0].y  = 0;
       arrow[1].x  = 3;

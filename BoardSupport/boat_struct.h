@@ -39,8 +39,8 @@ struct _boat
   short true_heading;
   short time_cnt; 
 
-	int dist;
-  
+	 int dist;
+  char highspeedflag;
   char category;
 };
 

@@ -37,18 +37,19 @@ static int listviewfocus=0;
 
 /** @brief  MMSIListRect */
 static GUI_RECT MMSIList[5] = {
-	{50,215,300,245},
-	{50,250,300,280},
-	{50,285,300,315},
-	{50,320,300,350},
-	{50,355,300,385}
+   {50,215,300,245},
+   {50,250,300,280},
+   {50,285,300,315},
+   {50,320,300,350},
+   {50,355,300,385}
 };
 
 static GUI_RECT titlebk = {5,180,45,385};
 static GUI_RECT title = {16,190,34,385};
 static GUI_RECT Head = {50,180,300,210};
 static GUI_RECT Operat = {305,180,402,210};
-static GUI_RECT note = {407,180,620,385};// to change
+static GUI_RECT note = {407,180,610,385};// to change
+static GUI_RECT wnote = {417,215,605,350};
 
 /** @brief skin config */
 static const MenuColor *pColor = subMenuColors;
@@ -59,6 +60,15 @@ static int myMsgId;//发送出去的消息ID，等待响应
 static int delMMSI;//选择删除的MMSI
 
 static GUI_RECT pRect = {100, 400, 600, 450};
+
+
+int flag = 0;
+
+
+int getflag()
+{
+   return flag;
+}
 /** @brief 删除船只按键窗口回调
  *
  *    @param [in] pMsg  消息指针
@@ -82,6 +92,9 @@ static void delBtCallback(WM_MESSAGE* pMsg){
 							
 		case WM_KEY:
 			    switch(((WM_KEY_INFO*)pMsg->Data.p)->Key ){
+        case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  break;
 								case GUI_KEY_UP:
 										WM_SetFocusOnPrevChild(FleetWin);
 									    break;
@@ -142,19 +155,11 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 	int xSize,ySize;
 	GUI_RECT RECT[1];
 	switch(pMsg->MsgId){
-//		case WM_SET_FOCUS:
-//							if(pMsg->Data.v==1)
-//							{
-//								BUTTON_SetBkColor(addbutton,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btFocusBkColor);//pColor->btFocusBkColor
-//							}
-//							else
-//							{
-//								BUTTON_SetBkColor(addbutton,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
-//							}
-////							BUTTON_Callback(pMsg);
-//                     WM_InvalidateRect(FleetWin, &pRect);
-//			    break;
-		
+
+	 case 	WM_SET_FOCUS:
+           WM_InvalidateRect(FleetWin,&pRect);
+           BUTTON_Callback(pMsg);
+        break;
 		case WM_PAINT:
 		     xSize = WM_GetWindowSizeX(pMsg->hWin);
 		     ySize = WM_GetWindowSizeY(pMsg->hWin);
@@ -173,9 +178,9 @@ static void addBtCallback(WM_MESSAGE* pMsg){
                GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btBkColor);
                BUTTON_SetTextColor(addbutton, BUTTON_BI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btTextColor); 
             }
-	        GUI_FillRoundedRect(0,0,xSize-1,ySize-1,5);
+	      GUI_FillRoundedRect(0,0,xSize-1,ySize-1,2);
 							GUI_SetFont(&GUI_Font_T90_30);
-							GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btTextColor);
+							GUI_SetColor(subMenuColors[t90_set.sys.nightmode].headTextColor);
 							GUI_SetTextMode(GUI_TEXTMODE_TRANS);
 							GUI_DispStringInRect("添加船队船只",RECT,GUI_TA_VCENTER|GUI_TA_HCENTER);
                      
@@ -183,7 +188,11 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 								
 		case WM_KEY:
 							switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
+        case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  break;
 								case GUI_KEY_ENTER:
+             flag = 0;
              WM_InvalidateRect(FleetWin, &pRect);
 									    if(MonitShipNum<5)
              {
@@ -208,7 +217,8 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 									    break;
 								
 								case GUI_KEY_UP:
-									    WM_SetFocus(edit);
+             if(t90_set.sys.workmode == DOUBLE_MODE)
+									       WM_SetFocus(edit);
 									    break;
 								
 								case GUI_KEY_DOWN:
@@ -260,7 +270,11 @@ static void myEditCallback(WM_MESSAGE* pMsg){
 								
 			case WM_KEY:
 								switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){	
+         case GUI_KEY_SOUNDOFF:
+                  monitorState = monitorState == ON? OFF: ON;
+                  break;
 									case GUI_KEY_ENTER:
+              flag = 1;
 														myMsg.hWin = MMSISetWin;
 									     myMsg.hWinSrc = FleetWin;
 									     myMsg.MsgId = USER_MSG_MMSISET;
@@ -275,7 +289,7 @@ static void myEditCallback(WM_MESSAGE* pMsg){
 														WM_SetFocus(addbutton);
 									     break;
                            
-                           case GUI_KEY_BACKSPACE: 
+         case GUI_KEY_BACKSPACE: 
 										  WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
 										  break;
 									
@@ -328,33 +342,35 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 			    //pColor = &subMenuColors[t90_set.sys.nightmode];
 			    //pSkin = btSkin[t90_set.sys.nightmode];
 		
-			  edit = EDIT_CreateEx(281,50,191,38,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_EDIT0,9);
-		     EDIT_EnableBlink(edit,0,0);
-           EDIT_SetFont(edit,&GUI_Font_T90_30);
+			    edit = EDIT_CreateEx(281,60,191,30,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_EDIT0,9);
+		     EDIT_EnableBlink(edit,1000,1);
+       
+       EDIT_SetFont(edit,&GUI_Font_T90_30);
+       EDIT_SetTextAlign(edit,GUI_TA_HCENTER|GUI_TA_VCENTER);
 		     WM_SetCallback(edit,&myEditCallback);
-           MonitShipNum = t90_set.shipout.numShip;
-           for(i=0;i<5;i++)
-            monitMMSI[i]=t90_set.shipout.MMSI[i];
-           MMSI=t90_set.as_MMSI.MMSI;
-
-           for(i=0;i<9;i++) 
-		   {
-			   editText[i] = ((MMSI%bits)/(bits/10))+48; 
-			   bits /=10; 
-		   }
-
-           EDIT_SetText(edit,editText);
-           
-			  addbutton = BUTTON_CreateEx(103,116,159,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON0);
+       MonitShipNum = t90_set.shipout.numShip;
+       
+       for(i=0;i<5;i++)
+          monitMMSI[i]=t90_set.shipout.MMSI[i];
+       
+       MMSI=t90_set.as_MMSI.MMSI;
+       if(t90_set.as_MMSI.port)
+       {
+          for(i=0;i<9;i++) 
+          {
+             editText[i] = ((MMSI%bits)/(bits/10))+48; 
+             bits /=10; 
+          }
+          EDIT_SetText(edit,editText);
+       }
+       else
+       {
+          EDIT_SetText(edit,"");
+       }
+                   
+			    addbutton = BUTTON_CreateEx(190,116,240,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON0);
 		     WM_SetHasTrans(addbutton);
-		     //WM_HideWin(addbutton);
-//		     BUTTON_SetSkinFlexProps(btSkin[t90_set.sys.nightmode],BUTTON_SKINFLEX_PI_ENABLED);
-//							BUTTON_SetSkinFlexProps(btSkin[t90_set.sys.nightmode]+1,BUTTON_SKINFLEX_PI_FOCUSSED);
-							//BUTTON_SetSkin(addbutton,BUTTON_DrawSkinFlex);
-		     //BUTTON_SetFocusColor(addbutton,subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
-		     //BUTTON_SetBkColor(addbutton,BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
-		     //BUTTON_SetFont(addbutton,&GUI_Font_T90_30);
-       //BUTTON_SetText(addbutton,"添加船队船只");
+
 		     WM_SetCallback(addbutton,&addBtCallback);
 		
 							delButton[0] = BUTTON_CreateEx(305,215,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON1);
@@ -364,7 +380,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     BUTTON_SetFocusColor(delButton[0],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 		     WIDGET_SetEffect(delButton[0],&WIDGET_Effect_None);
 		     WM_SetCallback(delButton[0],&delBtCallback);
-           BUTTON_SetFocusColor(delButton[0], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+       BUTTON_SetFocusColor(delButton[0], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
            
 							delButton[1] = BUTTON_CreateEx(305,250,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON2);
 		     BUTTON_SetFont(delButton[1],&GUI_Font_T90_24);
@@ -406,13 +422,24 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		case WM_PAINT:
 			  GUI_SetBkColor(subMenuColors[t90_set.sys.nightmode].bkColor);
 			  GUI_Clear();
-      
-		  
-		     GUI_SetTextMode(GUI_TEXTMODE_TRANS);
+     GUI_SetTextMode(GUI_TEXTMODE_TRANS); 
+		   if(t90_set.sys.workmode == DOUBLE_MODE)
+     {
+		     
 		     GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btTextColor);
 		     GUI_SetFont(&GUI_Font_T90_30);
-							GUI_DispStringAt("辅船作业船九位码",40,56);
-		
+							GUI_DispStringAt("辅船九位码",130,56);
+       if(WM_HasFocus(edit))
+          EDIT_SetBkColor(edit,EDIT_CI_ENABLED,subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+       else
+          EDIT_SetBkColor(edit,EDIT_CI_ENABLED,GUI_WHITE);
+       EDIT_SetTextColor(edit,EDIT_CI_ENABLED, GUI_DARKGRAY);
+     }
+     else
+     {
+       EDIT_SetBkColor(edit,EDIT_CI_ENABLED,subMenuColors[t90_set.sys.nightmode].bkColor);
+       EDIT_SetTextColor(edit,EDIT_CI_ENABLED, subMenuColors[t90_set.sys.nightmode].bkColor);
+     }      
 		     GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btBkColor);
 		     GUI_FillRectEx(&titlebk);
 		     GUI_FillRectEx(&Head);
@@ -426,16 +453,18 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     GUI_DispStringInRectWrap("已屏蔽船只列表",&title,GUI_TA_VCENTER|GUI_TA_HCENTER,GUI_WRAPMODE_WORD);
 		     GUI_DispStringInRect("九位码",&Head,GUI_TA_VCENTER|GUI_TA_HCENTER);
 		     GUI_DispStringInRect("操作",&Operat,GUI_TA_VCENTER|GUI_TA_HCENTER);
-							GUI_DispStringInRectWrap("船只添加到“我的船队”后,不触发闯入报警.",&note,GUI_TA_VCENTER,GUI_WRAPMODE_WORD);
+       GUI_SetFont(&GUI_Font_T90_20);
+							GUI_DispStringInRectWrap("船只添加到“我的船队”后,不触发闯入报警。",&wnote,0,GUI_WRAPMODE_WORD);
+       GUI_DispStringInRectWrap("双拖船务必将辅船上的距离安全标的九位码添加至“我的船队”。",&wnote,GUI_TA_BOTTOM,GUI_WRAPMODE_WORD);
 		
-//		     GUI_SetFont(&GUI_Font_T90_30);
+		     GUI_SetFont(&GUI_Font_T90_30);
            
 		     for(i=0;i<MonitShipNum;i++)
 		     {
               GUI_DispDecAt(monitMMSI[i],MMSIList[i].x0+50,MMSIList[i].y0+3,9);
               BUTTON_SetText(WM_GetDialogItem(pMsg->hWin,GUI_ID_BUTTON1+i),"删除");
            }
-			  if(WM_HasFocus(edit) || WM_HasFocus(addbutton))
+			        if(WM_HasFocus(edit) || WM_HasFocus(addbutton))
            {
                GUI_SetFont(&GUI_Font_T90_24);
                GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
@@ -472,29 +501,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
               }
            }           
 			  break;
-							
-//		case WM_KEY:
-//			    switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){	
-//								case GUI_KEY_BACKSPACE:
-//									    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
-//									    break;
-//								case GUI_KEY_MENU:
-//									    WM_BringToTop(mainShipWin);
-//									    WM_SetFocus(mainShipWin);
-//									    break;
-//								//
-//								// add key response
-//								//
-//								case GUI_KEY_SOUNDOFF:
-//									    break;
-//								
-//								case GUI_KEY_PWM_INC:
-//									    break;
-//								
-//								case GUI_KEY_MORIGHT:
-//									    break;
-//							}
-		
+									
 		case USER_MSG_SKIN:
 			    pColor = &subMenuColors[pMsg->Data.v];
        for(i=0;i<5;i++)
@@ -508,7 +515,10 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		case WM_SET_FOCUS:
 			    if(pMsg->Data.v==1)
 							{
-								WM_SetFocus(edit);
+          if(t90_set.sys.workmode == DOUBLE_MODE)
+								     WM_SetFocus(edit);
+          else
+             WM_SetFocus(addbutton);
 							}
 				 		break;
 							
@@ -582,13 +592,13 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 														{
 															WM_SetFocus(addbutton);
 														}
-                                          t90_set.shipout.numShip = 0;
-                                          for(i = 0; i < MonitShipNum; i++)
-                                          {
-                                             t90_set.shipout.MMSI[i] = monitMMSI[i];
-                                          }
-                                          t90_set.shipout.numShip = MonitShipNum;
-                                          T90_Store();                                          
+              t90_set.shipout.numShip = 0;
+              for(i = 0; i < MonitShipNum; i++)
+              {
+                 t90_set.shipout.MMSI[i] = monitMMSI[i];
+              }
+              t90_set.shipout.numShip = MonitShipNum;
+              T90_Store();                                          
 													}
 													else if(pMsg->Data.v==REPLY_CANCEL)
 													{
