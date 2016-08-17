@@ -32,8 +32,8 @@ static WM_HWIN delButton[5];
 
 /** @brief  lsitview */
 static WM_HWIN listview;
-static int listviewfocus=0;
 
+static WM_HWIN focus;
 
 /** @brief  MMSIListRect */
 static GUI_RECT MMSIList[5] = {
@@ -127,6 +127,7 @@ static void delBtCallback(WM_MESSAGE* pMsg){
 									    BUTTON_Callback(pMsg);
 									    break;
                           case GUI_KEY_BACKSPACE:
+                           focus = 0;
 									    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
 									    break;
                           
@@ -192,6 +193,7 @@ static void addBtCallback(WM_MESSAGE* pMsg){
                   monitorState = monitorState == ON? OFF: ON;
                   break;
 								case GUI_KEY_ENTER:
+             focus = addbutton;
              flag = 0;
              WM_InvalidateRect(FleetWin, &pRect);
 									    if(MonitShipNum<5)
@@ -226,6 +228,7 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 										 WM_SetFocus(delButton[0]);
 									    break;
         case GUI_KEY_BACKSPACE:
+         focus = 0;
 							 		    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
 									    break;
                           
@@ -275,6 +278,7 @@ static void myEditCallback(WM_MESSAGE* pMsg){
                   break;
 									case GUI_KEY_ENTER:
               flag = 1;
+              focus = edit;
 														myMsg.hWin = MMSISetWin;
 									     myMsg.hWinSrc = FleetWin;
 									     myMsg.MsgId = USER_MSG_MMSISET;
@@ -289,7 +293,8 @@ static void myEditCallback(WM_MESSAGE* pMsg){
 														WM_SetFocus(addbutton);
 									     break;
                            
-         case GUI_KEY_BACKSPACE: 
+         case GUI_KEY_BACKSPACE:
+            focus = 0;          
 										  WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
 										  break;
 									
@@ -515,10 +520,17 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		case WM_SET_FOCUS:
 			    if(pMsg->Data.v==1)
 							{
-          if(t90_set.sys.workmode == DOUBLE_MODE)
-								     WM_SetFocus(edit);
+          if(!focus)
+          {
+             if(t90_set.sys.workmode == DOUBLE_MODE)
+                WM_SetFocus(edit);
+             else
+                WM_SetFocus(addbutton);
+          }
           else
-             WM_SetFocus(addbutton);
+          {
+             WM_SetFocus(focus);
+          }
 							}
 				 		break;
 							
