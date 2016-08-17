@@ -13,13 +13,13 @@
 #define ID_TEXT_CONTENT  (GUI_ID_USER + 0x01)
 
 WM_HWIN confirmWin;
-
+long getMMSItmp();
 static WM_HWIN dlgTextContent;
-static char pstring[30];
+static char pstring[50];
 static int Option  = 0;
 static WM_MESSAGE myMsg;
 static WM_HWIN buttons[3];
-
+long MMSI;
 static void myButton(WM_MESSAGE * pMsg);
 
 static const ConfirmWinColor *pColors;
@@ -34,15 +34,14 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 	
 	int xSize;
 	int ySize;  
-  long MMSI = 123456789;
-	char UserData;
+	static int UserData;
 	
   switch (pMsg->MsgId) {
 			  
 	case WM_SET_FOCUS:
 			 if(pMsg->Data.v)
 			 {
-					WM_GetUserData(pMsg->hWin,&UserData,4);
+//					WM_GetUserData(pMsg->hWin,&UserData,4);
 					if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
 					{
 						WM_SetFocus(buttons[2]);
@@ -216,12 +215,10 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 
   case USER_MSG_CHOOSE:
       Option  = pMsg->Data.v;
-printf("pMsg->Data.v = %p\n",&(pMsg->Data.v));
-printf("pMsg->Data.p = %p\n",&(pMsg->Data.p));
+
       myMsg.hWinSrc  = pMsg->hWinSrc;
       myMsg.Data.v   = Option;
-printf("USER_MSG_CHOOSE\n");
-printf("Option = %d\n",Option);  
+ 
       switch(Option)   
       {
          case CANCEL_MONITED:         
@@ -234,29 +231,32 @@ printf("Option = %d\n",Option);
               TEXT_SetText(dlgTextContent, "????????????");
               break;
          case SYS_SETTING:
-printf("SYS_SETTING\n");
+
               TEXT_SetText(dlgTextContent, "是否更改设置内容？");
 									     UserData = SYS_SETTING;
-									     WM_SetUserData(pMsg->hWin,&UserData,4);
+//									     WM_SetUserData(pMsg->hWin,&UserData,4);
 						       	break;
          case SYS_RESET:
               TEXT_SetText(dlgTextContent, "是否恢复出厂设置？");
 									     UserData = SYS_RESET;
-									     WM_SetUserData(pMsg->hWin,&UserData,4);
+//									     WM_SetUserData(pMsg->hWin,&UserData,4);
               break;
 									
 									case MONITMMSI_SET:
-										    TEXT_SetText(dlgTextContent, "是否修改辅船九位码为?");
-printf("MONITMMSI_SET\n");
+              MMSI = getMMSItmp();
+              sprintf(pstring,"您输入的辅船九位码为： \n%09ld,是否确定?",MMSI);
+										    TEXT_SetText(dlgTextContent, pstring);
 									     UserData = MONITMMSI_SET;
-									     WM_SetUserData(pMsg->hWin,&UserData,4);
+//									     WM_SetUserData(pMsg->hWin,&UserData,4);
               break;
 									
 									case MONITMMSI_ADD:
-										    TEXT_SetText(dlgTextContent, "是否添加屏蔽报警船只?");
+              MMSI = getMMSItmp(); 
+              sprintf(pstring, "确定将船只 %09ld \n加入船队？",MMSI);
+										    TEXT_SetText(dlgTextContent, pstring);
 									     
 									     UserData = MONITMMSI_ADD;
-									     WM_SetUserData(pMsg->hWin,&UserData,4);
+//									     WM_SetUserData(pMsg->hWin,&UserData,4);
 									     break;
 									
 									case MONITMMSI_DEL:
@@ -271,18 +271,18 @@ printf("MONITMMSI_SET\n");
 									     WM_HideWin(buttons[1]);
 									     WM_ShowWin(buttons[2]);
 									     UserData = MONITMMSI_FULL;
-									     WM_SetUserData(pMsg->hWin,&UserData,4);
+//									     WM_SetUserData(pMsg->hWin,&UserData,4);
 									     break;
 									case MONITMMSI_NINE:
               TEXT_SetText(dlgTextContent, "你输入的九位码不足九位, \n是否继续修改？");
               break;
          case MONITMMSI_FIRST:
-              TEXT_SetText(dlgTextContent, "你输入的九位码不足九位, \n亲继续输入！");
+              TEXT_SetText(dlgTextContent, "你输入的九位码不足九位, \n请继续输入!");
               WM_HideWin(buttons[0]);
 									     WM_HideWin(buttons[1]);
 									     WM_ShowWin(buttons[2]);
               UserData = MONITMMSI_FIRST;
-									     WM_SetUserData(pMsg->hWin,&UserData,4);
+//									     WM_SetUserData(pMsg->hWin,&UserData,4);
               break;
          default:       
               break;

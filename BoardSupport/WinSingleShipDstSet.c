@@ -17,7 +17,7 @@
 
 
 
-
+extern char comflg;
 WM_HWIN singleShipDstSetWin;
 
 static const GUI_RECT drawArea  = {50, 50, DST_SET_WIDTH-50, DST_SET_HEIGHT-50};
@@ -411,14 +411,17 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 				{                
        if(whichFig == 0)
        {
+          comflg = 2;
           Comm_addFrame(whichFig+1, -agentdst_set.dst2, agentdst_set.dst1, t90_set.sys.SOG, t90_set.sys.COG);
        }
        else if(whichFig == 1)
        {
+          comflg = 2;
           Comm_addFrame(whichFig+1, 0, agentdst_set.dst3, t90_set.sys.SOG, t90_set.sys.COG);               
        }
        else if(whichFig == 2)
        {
+          comflg = 2;
           Comm_addFrame(whichFig+1, agentdst_set.dst4, agentdst_set.dst5, t90_set.sys.SOG, t90_set.sys.COG);
        }
 

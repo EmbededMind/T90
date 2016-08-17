@@ -18,6 +18,7 @@
 
 Bool toast_flg = FALSE;
 extern uint8_t ipcMsg;
+extern char comflg;
 //extern OS_EVENT* pMSBOX; 
 
 WM_HWIN handle;
@@ -94,7 +95,7 @@ printf("maintask\n");
 		systemSetDlg = DLG_SystemSetCreate();
 		
 		singleShipDstSetWin = WIN_SingleShipDstSetCreate();
-      doubleShipDstSetWin  = WIN_doubleShipDstSetCreate();
+  doubleShipDstSetWin  = WIN_doubleShipDstSetCreate();
 		
 		invdAlarmSetWin = WIN_InvdAlarmSetCreate();
 		spdingAlarmSetWin = WIN_SpdingAlarmSetCreate();
@@ -195,7 +196,16 @@ printf("maintask\n");
          /// Data ack ok
          if(ipcMsg & 0x20){           
             ipcMsg &= (~0x20);   //数据应答
-//            ToastCreate("数据写入成功! ", &GUI_Font_T90_30, NULL, 2000);
+            if(comflg == 1)
+            {
+               ToastCreate("两船位置切换成功!", &GUI_Font_T90_30, NULL, 2000);
+               comflg = 0;
+            }
+            else if(comflg == 2)
+            {
+               ToastCreate("距离设置修改成功!", &GUI_Font_T90_30, NULL, 2000);
+               comflg = 0;
+            }
             if(t90_set.sys.workmode == SINGLE_MODE)
             {
                pMsg.hWin = singleShipDstSetWin;
@@ -215,7 +225,17 @@ printf("maintask\n");
          else if(ipcMsg & 0x10){
            
             ipcMsg  &= (~0x10);  //数据超时
-//            ToastCreate("数据写入失败! ", &GUI_Font_T90_30, NULL, 2000);
+            if(comflg == 1)
+            {
+               ToastCreate("两船位置切换失败，请重试!", &GUI_Font_T90_30, NULL, 2000);
+               t90_set.sys.motherpos = !t90_set.sys.motherpos;
+               comflg = 0;
+            }
+            else if(comflg == 2)
+            {
+               ToastCreate("距离设置修改失败，请重试!", &GUI_Font_T90_30, NULL, 2000);
+               comflg = 0;
+            }
             if(t90_set.sys.workmode == SINGLE_MODE)
             {
                pMsg.hWin = singleShipDstSetWin;

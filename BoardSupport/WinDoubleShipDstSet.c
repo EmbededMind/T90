@@ -25,6 +25,7 @@
 #define MAXMOTOSTUB       3000
 #define MAXSTUBTOSTUB     3000
 
+extern char comflg;
 WM_HWIN doubleShipDstSetWin;
 void _paint(WM_HWIN pMsg);
 int pointyPretreatment();
@@ -393,13 +394,19 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
               {
                  if(t90_set.sys.motherpos == DEFAULT_LEFT)
                  {   
-                    if(stubs[i+1].isValid)                    
+                    if(stubs[i+1].isValid)
+                    {
+                       comflg = 2;                      
                        Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG, t90_set.sys.COG);
+                    }
                  }
                  else
                  {
                     if(stubs[i+1].isValid)
+                    {
+                       comflg = 2;
                        Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[i+1].basePoint.y*MILLINM_TO_M), t90_set.sys.SOG, t90_set.sys.COG);
+                    }
                  }
               }
 

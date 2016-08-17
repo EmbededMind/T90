@@ -2,7 +2,7 @@
 int getflag();
 
 /** @brief MMSI */ //for Liyi
-long MMSI=0;
+long MMSI_tmp=0;
 
 /*********************************************************************
 *
@@ -51,13 +51,16 @@ BUTTON_SKINFLEX_PROPS inputBtSkin[2][2] = //FOR_LIYI
  *
  *    @param [in] pMsg  消息指针
  */
+long getMMSItmp()
+{
+   return MMSI_tmp;
+}
 static void InputBtCallback(WM_MESSAGE* pMsg){
  WM_MESSAGE myMsg;
  int item_id;	
 	char pBuf[2];
 	char HintText[20];
 	int key;
- long MMSI_tmp;
  char edittext[10];
  int i;
 	switch(pMsg->MsgId){
@@ -150,7 +153,7 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
                     {
                        MMSI_tmp = MMSI_tmp*10+(edittext[i]-48); 
                     }
-                    if(MMSI_tmp == t90_set.as_MMSI.MMSI && t90_set.as_MMSI.port)
+                    if(MMSI_tmp == t90_set.as_MMSI.MMSI && t90_set.as_MMSI.port && getflag())
                     {
                        WM_SetFocus(FleetWin);
                        WM_BringToTop(FleetWin);
@@ -162,7 +165,6 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
                     myMsg.hWinSrc = MMSISetWin;
                     myMsg.MsgId = USER_MSG_CHOOSE;
                     myMsg.Data.v = MONITMMSI_SET;
-//                    myMsg.Data.p = &MMSI_tmp;
                     WM_SendMessage(myMsg.hWin,&myMsg);
                     WM_BringToTop(confirmWin);
                     WM_SetFocus(confirmWin);
@@ -314,7 +316,6 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 	int NCode, Id;
 	int xSize;
 	int ySize;
-   long MMSI_tmp = 0;
 
 	switch(pMsg->MsgId){
 		case WM_SET_FOCUS:
@@ -338,15 +339,15 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
                WM_BringToTop(mainShipWin);
                WM_SetFocus(mainShipWin);
               }
-                                          MMSI  = 0;
+              MMSI_tmp  = 0;
 														EDIT_GetText(edit,edittext,10);
               for(i=0;i<MMSI_LENGTH;i++)
               {
-               MMSI = MMSI*10+(edittext[i]-48); 
+               MMSI_tmp = MMSI_tmp*10+(edittext[i]-48); 
               }
 														hWin = WM_GetDialogItem(FleetWin,GUI_ID_EDIT0);
 														EDIT_SetText(hWin,edittext);
-              t90_set.as_MMSI.MMSI = MMSI;
+              t90_set.as_MMSI.MMSI = MMSI_tmp;
               t90_set.as_MMSI.port = 1;
               T90_Store();
 														
@@ -450,7 +451,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
         EDIT_SetBkColor(edit,EDIT_CI_ENABELD,GUI_WHITE);
         EDIT_EnableBlink(edit,0,0);
         EDIT_SetFont(edit,&GUI_Font_T90_30);
-        MMSI = t90_set.as_MMSI.MMSI;
+        MMSI_tmp = t90_set.as_MMSI.MMSI;
   
         break;
 								

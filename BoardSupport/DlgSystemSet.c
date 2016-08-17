@@ -24,7 +24,8 @@
 
 WM_HWIN systemSetDlg;
 
-
+extern char comflg;
+char comflg = 0;
 static void myButtonCallback(WM_MESSAGE * pMsg);
 static void sldListener(WM_MESSAGE * pMsg);
 static void sldResetCallback(WM_MESSAGE* pMsg);
@@ -95,16 +96,23 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
               {
                  for(i = 0; i < 3; i++)
                  {
-                     if(portStatus[i].port)
+                     if(stubs[i+1].isValid)
+                     {
+                        comflg = 1;
                         Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
+                     }
                  }
               }
               else
               {                            
                  for(i = 0; i < 3; i++)
                  {
-                     if(portStatus[i].port)
+                     if(stubs[i+1].isValid)
+                     {
+                        comflg = 1;
+// 											 Comm_addFrame(i+1,stubs[i+1].basePoint.x*MILLINM_TO_M,abs(stubs[i+1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
                         Comm_addFrame(i+1,(stubs[i+1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M, abs(stubs[i+1].basePoint.y*MILLINM_TO_M),t90_set.sys.SOG, t90_set.sys.COG);
+                     }
                  }                         
               }
            }

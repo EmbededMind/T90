@@ -113,7 +113,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
          GUI_FillRoundedRect(BUTTON0_X,BUTTON0_Y,BUTTON0_X+BUTTON_WIDTH-1,BUTTON0_Y+BUTTON_HEIGHT-1,8);
 
          GUI_SetTextMode(GUI_TM_TRANS);
-         GUI_SetColor(pColor->bkColor);
+         GUI_SetColor(GUI_WHITE);
          GUI_SetFont(&GUI_Font_T90_30B);
          GUI_DispStringAt("单拖模式", BUTTON0_X+43,BUTTON0_Y+8);
          if(WM_HasFocus(buttons[1]))
@@ -125,7 +125,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
             GUI_SetColor(pColor->bbsTopColor);
          }
          GUI_FillRoundedRect(BUTTON1_X,BUTTON1_Y,BUTTON1_X+BUTTON_WIDTH-1,BUTTON1_Y+BUTTON_HEIGHT-1,8);
-         GUI_SetColor(pColor->bkColor);
+         GUI_SetColor(GUI_WHITE);
          GUI_DispStringAt("双拖模式", BUTTON1_X+43,BUTTON1_Y+8);
          break;		
 		case WM_SET_FOCUS:

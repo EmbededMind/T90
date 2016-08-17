@@ -6,14 +6,17 @@
 #include <lpc_types.h>
 #include "T90.h"
 #include "t90font.h"
-
+#include "TEXT.h"
 #define BTN_WIDTH   80
 #define BTN_HEIGHT  40
 
 #define BTN_MARGIN  10
 #define TEXT_MARGIN  5
+
+
 extern const ConfirmWinColor confirmWinColors[2];
 extern Bool toast_flg;
+GUI_RECT pRect = {0,0,400,200};
 
 typedef struct {
 
@@ -86,6 +89,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            else if(myToast.btnFlags == 0){
               myToastTimer  = WM_CreateTimer(pMsg->hWin, 0, myToast.liveTime, 0);
            }
+            
            break;
            
       case WM_TIMER:
@@ -102,12 +106,12 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
       case WM_PAINT: 
            xSize = WM_GetWindowSizeX(pMsg->hWin);
            ySize = WM_GetWindowSizeY(pMsg->hWin);
-           GUI_DrawGradientRoundedV(0, 0, xSize-1, ySize-1,10, confirmWinColors[t90_set.sys.nightmode].bkTopColor,confirmWinColors[t90_set.sys.nightmode].bkTopColor);
-           GUI_SetTextMode(GUI_TEXTMODE_TRANS);
-           WM_GetClientRect(&clientRect);
+           GUI_DrawGradientRoundedV(0, 0, xSize-1, ySize-1,10, confirmWinColors[t90_set.sys.nightmode].bkTopColor,confirmWinColors[t90_set.sys.nightmode].bkBottomColor);
+           GUI_SetFont(&GUI_Font_T90_30);
            GUI_SetColor(confirmWinColors[t90_set.sys.nightmode].textColor);
-           GUI_SetFont(myToast.pFont);
-           GUI_DispStringAt(myToast.text, clientRect.x0+TEXT_MARGIN, (clientRect.y0+clientRect.y1) /2 -GUI_GetFontDistY()/2);
+           GUI_SetTextMode(GUI_TEXTMODE_TRANS);
+           GUI_DispStringInRect(myToast.text,&pRect,GUI_TA_HCENTER | GUI_TA_VCENTER);
+
            
            break;
 //      case WM_SET_FOCUS:
@@ -137,30 +141,30 @@ void ToastCreate(const char* text, const GUI_FONT GUI_UNI_PTR* pFont ,uint8_t bt
        
 
     GUI_SetFont(pFont);   
-    if(btnFlags){
-       myToast.hWin = WM_GetFocussedWindow(); 
-       if(btnFlags & TOAST_OK){
-          winHeight = BTN_HEIGHT +BTN_MARGIN *2;
-       }
-       if(btnFlags & TOAST_CANCEL){
-          winHeight = BTN_HEIGHT*2 +BTN_MARGIN *3;
-       }
-       winWidth  = GUI_GetStringDistX(text) + TEXT_MARGIN + BTN_WIDTH +BTN_MARGIN *2;
-    }
-    else{
-       winHeight  = GUI_GetFontDistY() + TEXT_MARGIN *2;
-       winWidth   = GUI_GetStringDistX(text) +TEXT_MARGIN*2;
-    }
+//    if(btnFlags){
+//       myToast.hWin = WM_GetFocussedWindow(); 
+//       if(btnFlags & TOAST_OK){
+//          winHeight = BTN_HEIGHT +BTN_MARGIN *2;
+//       }
+//       if(btnFlags & TOAST_CANCEL){
+//          winHeight = BTN_HEIGHT*2 +BTN_MARGIN *3;
+//       }
+//       winWidth  = GUI_GetStringDistX(text) + TEXT_MARGIN + BTN_WIDTH +BTN_MARGIN *2;
+//    }
+//    else{
+//       winHeight  = GUI_GetFontDistY() + TEXT_MARGIN *2;
+//       winWidth   = GUI_GetStringDistX(text) +TEXT_MARGIN*2;
+//    }
     
     myToast.winRect.x0  = SCREEN_HCENTER - winWidth/2;
     myToast.winRect.y0  = SCREEN_VCENTER - winHeight/2  ;
     myToast.winRect.x1  = winWidth;
     myToast.winRect.y1  = winHeight;
     
-    myToast.hToast  = WM_CreateWindow(SCREEN_HCENTER - winWidth/2,
-                              SCREEN_VCENTER - winHeight/2,
-                              winWidth,
-                              winHeight,
+    myToast.hToast  = WM_CreateWindow(SCREEN_HCENTER - 200,
+                              SCREEN_VCENTER - 100,
+                              400,
+                              200,
                               WM_CF_SHOW,
                               &myWindowCallback, 
                               0);
