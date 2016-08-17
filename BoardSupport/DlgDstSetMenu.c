@@ -27,8 +27,8 @@ static  const MenuColor *pColors = subMenuColors;
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[]  = {
    {WINDOW_CreateIndirect,     "clientWin",     ID_WINDOW,      0, 0,                                            SUB_MENU_WIDTH,    SUB_MENU_HEIGHT,      0, 0, 0},
    
-   {HSD_BUTTON_CreateIndirect, "safety sign 0", GUI_ID_BUTTON0, 0, SUB_MENU_ITEM_HEIGHT+  SUB_MENU_ITEM_MARGIN*2, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
-   {HSD_BUTTON_CreateIndirect, "safety sign 1", GUI_ID_BUTTON1, 0, SUB_MENU_ITEM_HEIGHT*2+SUB_MENU_ITEM_MARGIN*3, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
+   {HSD_BUTTON_CreateIndirect, "safety sign 0", GUI_ID_BUTTON1, 0, SUB_MENU_ITEM_HEIGHT+  SUB_MENU_ITEM_MARGIN*2, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
+   {HSD_BUTTON_CreateIndirect, "safety sign 1", GUI_ID_BUTTON0, 0, SUB_MENU_ITEM_HEIGHT*2+SUB_MENU_ITEM_MARGIN*3, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0},
    {HSD_BUTTON_CreateIndirect, "safety sign 2", GUI_ID_BUTTON2, 0, SUB_MENU_ITEM_HEIGHT*3+SUB_MENU_ITEM_MARGIN*4, SUB_MENU_ITEM_WIDTH, SUB_MENU_ITEM_HEIGHT, 0, 0, 0}
 };
 
@@ -55,13 +55,8 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            } 
            myMsg.hWinSrc = pMsg->hWin;
            myMsg.MsgId = USER_MSG_DST_SET;
-           if(id == 0)
-              id = 1;
-           else if(id == 1)
-              id = 0;
            myMsg.Data.v = id;
            WM_SendMessage(myMsg.hWin, &myMsg);
-           
            for(i = 0; i < 3; i++)                   
            {
               HSD_BUTTON_SetBkColor(buttons[i], pColors->btBkColor);
@@ -75,6 +70,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            {
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btPrevFocusBkColor);
            }
+           
            
 
         }     
@@ -158,15 +154,11 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
             
              id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
              
-             if(portStatus[id].port){
+             if(portStatus[id].port == 1){
         
                 flag_prevfocus = 1;
                 if(t90_set.sys.workmode == SINGLE_MODE  )
-                {
-                   if(id == 0)
-                      id = 1;
-                   else if(id == 1)
-                      id = 0;                    
+                {                    
                    WM_SetFocus(WM_GetDialogItem(singleShipDstSetWin,ID_DMS_0+id*2));
                 }   
                 else if(t90_set.sys.workmode == DOUBLE_MODE ){
@@ -181,7 +173,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
              break;
       
         case GUI_KEY_BACKSPACE:
-             WM_SetFocus(buttons[0]);
+             WM_SetFocus(buttons[1]);
              WM_SetFocus(mainMenuDlg);
           
              
@@ -200,7 +192,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
              break;
         
         case GUI_KEY_MENU:
-             WM_SetFocus(buttons[0]);
+             WM_SetFocus(buttons[1]);
              WM_SetFocus(WM_GetDialogItem(mainMenuDlg, GUI_ID_BUTTON0));
           
              if(CHECK_GetAlarmState())
@@ -237,7 +229,6 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 static void myDialogCallback(WM_MESSAGE* pMsg)
 {
    switch(pMsg->MsgId){
-
       case USER_MSG_SKIN:
         pColors = &(subMenuColors[pMsg->Data.v]);	
       
@@ -270,14 +261,14 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
             HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_30);
             HSD_BUTTON_SetBkColor(buttons[0], pColors->btBkColor);
             WM_SetCallback(buttons[0], &myButtonCallback);
-            HSD_BUTTON_SetText(buttons[0], "网尾");
+            HSD_BUTTON_SetText(buttons[0], "左舷分水板");
             HSD_BUTTON_SetTextFocusColor(buttons[0], pColors->btFocusTextColor);
 
             buttons[1] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON1);
             HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_30);
             HSD_BUTTON_SetBkColor(buttons[1], pColors->btBkColor);
             WM_SetCallback(buttons[1],&myButtonCallback);
-            HSD_BUTTON_SetText(buttons[1], "左舷分水板");
+            HSD_BUTTON_SetText(buttons[1], "网尾");
             HSD_BUTTON_SetTextFocusColor(buttons[1], pColors->btFocusTextColor);
 
             buttons[2] = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON2);
@@ -301,14 +292,14 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         GUI_FillRect(0, SUB_MENU_ITEM_HEIGHT*4+SUB_MENU_ITEM_MARGIN*5, SUB_MENU_WIDTH-1, SUB_MENU_HEIGHT-1);
         if(t90_set.sys.workmode == SINGLE_MODE)
         {
-           HSD_BUTTON_SetText(buttons[0], "网尾");
-           HSD_BUTTON_SetText(buttons[1], "左舷分水板");
+           HSD_BUTTON_SetText(buttons[0], "左舷分水板");
+           HSD_BUTTON_SetText(buttons[1], "网尾");
            HSD_BUTTON_SetText(buttons[2], "右舷分水板");
         }
         else
         {
-           HSD_BUTTON_SetText(buttons[0], "网尾");
-           HSD_BUTTON_SetText(buttons[1], "网口左舷");
+           HSD_BUTTON_SetText(buttons[0], "网口左舷");
+           HSD_BUTTON_SetText(buttons[1], "网尾");
            HSD_BUTTON_SetText(buttons[2], "网口右舷");
         }
         break;	

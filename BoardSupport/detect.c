@@ -26,7 +26,7 @@ void adjustPlo()
    int i;
    int tmp;
    PloPoint *index, *ptmp;
-printf("PloPoint begin\n");   
+//printf("PloPoint begin\n");   
    if(pmin)
    {
 //      index = pmin->next;
@@ -167,7 +167,7 @@ jmptang1:
 jmptang2:
       NULL;
    }
-printf("PloPoint end\n");   
+//printf("PloPoint end\n");   
 }
 
 int addLeft(BERTH *pBerth, int x1, int y1, int x2, int y2)
@@ -395,7 +395,7 @@ void isInvader(BERTH  *pBerth)
 void detect()
 {
    int i = 0;
-printf("detec begin\n");
+//printf("detec begin\n");
 //   detectInit();
    adjustPlo();
    for(i = 0; i < N_boat; i++)          //clear
@@ -406,7 +406,7 @@ printf("detec begin\n");
       return;
    if(stubs[1].isValid || stubs[2].isValid || stubs[3].isValid)
    {
-printf("have a input\n");
+//printf("have a input\n");
       for(i = 0;i < N_boat;i++)
       {
          if(!(SimpBerthes[i].pBerth->Boat.category & TYPE_FAMILY))
@@ -423,7 +423,7 @@ printf("have a input\n");
          }            
       }
    }
-printf("detec end\n");
+//printf("detec end\n");
 }
 
 

@@ -387,7 +387,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
               
               sprintf(pStrBuf, "%d", preDouDstSet.safety3_to_mo);
               HSD_DIMENSION_EX_SetValText(hExDim[4], pStrBuf);
-						  memcpy(&t90_set.doubledst_set, &tempDouDstSet, sizeof(preDouDstSet));
+						        memcpy(&t90_set.doubledst_set, &tempDouDstSet, sizeof(preDouDstSet));
               StubRefresh();
               for(i = 0; i < 3; i++)
               {
@@ -577,7 +577,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
            HSD_DIMENSION_EX_SetUnitText(hExDim[3], "米");
            WM_SetHasTrans(hExDim[3]);   
 
-           hExDim[4]  = HSD_DIMENSION_EX_CreateEx(218, 106,75, 112, pMsg->hWin, WM_CF_SHOW, 0, ID_EX_DIM_4);         
+           hExDim[4]  = HSD_DIMENSION_EX_CreateEx(207, 102,75, 112, pMsg->hWin, WM_CF_SHOW, 0, ID_EX_DIM_4);         
            WM_SetCallback(hExDim[4], &myDimCallback);  
            HSD_DIMENSION_EX_SetBkColor(hExDim[4], HSD_DIMENSION_EX_CI_UNFOCUS,pColors->bkColor);
            HSD_DIMENSION_EX_SetBkColor(hExDim[4], HSD_DIMENSION_EX_CI_FOCUS,  pColors->bkColor);
@@ -659,6 +659,8 @@ void _paint(WM_HWIN pMsg)
     GUI_DrawHLine(yPos_A+60, xPos_A-15, xPos_A+15);
     GUI_DrawVLine(xPos_A-16, yPos_A+17, yPos_A+60);
     GUI_DrawLine(xPos_A-16, yPos_A+16, xPos_A, yPos_A);
+    GUI_DispStringAt("辅", xPos_A-8, yPos_A+12);
+    GUI_DispStringAt("船", xPos_A-8, yPos_A+10+GUI_GetFontSizeY());
     
     GUI_SetLineStyle(GUI_LS_DOT);           
     GUI_DrawLine(xPos_M, yPos_M+61, (xPos_M+xPos_A)/2, drawArea.y1-50);

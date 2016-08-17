@@ -59,7 +59,7 @@ static void _Paint(HSD_DIMENSION_Obj* pObj, HSD_DIMENSION_Handle hObj){
  
    if(pObj->flags == HSD_DIMENSION_CF_HORIZONTAL){    
 //INFO("horizontal");
-printf("pensize = %d\n",      GUI_GetPenSize());    
+//printf("pensize = %d\n",      GUI_GetPenSize());    
       GUI_DrawLine(r.x0+7, (r.y0+r.y1) /2,  r.x1-7,(r.y0+r.y1) /2);
       arrow[0].x  = 0;
       arrow[0].y  = 0;

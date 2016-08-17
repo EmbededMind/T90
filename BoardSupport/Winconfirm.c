@@ -15,7 +15,7 @@
 WM_HWIN confirmWin;
 
 static WM_HWIN dlgTextContent;
-
+static char pstring[30];
 static int Option  = 0;
 static WM_MESSAGE myMsg;
 static WM_HWIN buttons[3];
@@ -34,7 +34,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 	
 	int xSize;
 	int ySize;  
-
+  long MMSI = 123456789;
 	char UserData;
 	
   switch (pMsg->MsgId) {
@@ -150,7 +150,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
     case GUI_KEY_BACKSPACE:
 									{
 										WM_GetUserData(pMsg->hWin,&UserData,4);
-							   if(UserData==MONITMMSI_FULL)
+							   if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
 										{
 										}
 										else
@@ -216,10 +216,12 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 
   case USER_MSG_CHOOSE:
       Option  = pMsg->Data.v;
-      
+printf("pMsg->Data.v = %p\n",&(pMsg->Data.v));
+printf("pMsg->Data.p = %p\n",&(pMsg->Data.p));
       myMsg.hWinSrc  = pMsg->hWinSrc;
       myMsg.Data.v   = Option;
-      
+printf("USER_MSG_CHOOSE\n");
+printf("Option = %d\n",Option);  
       switch(Option)   
       {
          case CANCEL_MONITED:         
@@ -232,10 +234,11 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
               TEXT_SetText(dlgTextContent, "????????????");
               break;
          case SYS_SETTING:
+printf("SYS_SETTING\n");
               TEXT_SetText(dlgTextContent, "是否更改设置内容？");
 									     UserData = SYS_SETTING;
 									     WM_SetUserData(pMsg->hWin,&UserData,4);
-							break;
+						       	break;
          case SYS_RESET:
               TEXT_SetText(dlgTextContent, "是否恢复出厂设置？");
 									     UserData = SYS_RESET;
@@ -243,10 +246,10 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
               break;
 									
 									case MONITMMSI_SET:
-										    TEXT_SetText(dlgTextContent, "是否修改辅船九位码?");
+										    TEXT_SetText(dlgTextContent, "是否修改辅船九位码为?");
+printf("MONITMMSI_SET\n");
 									     UserData = MONITMMSI_SET;
 									     WM_SetUserData(pMsg->hWin,&UserData,4);
-										printf("confimwin1");
               break;
 									
 									case MONITMMSI_ADD:
@@ -257,7 +260,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 									     break;
 									
 									case MONITMMSI_DEL:
-										  TEXT_SetText(dlgTextContent, "删除后,对该船只报警功能\n恢复正常,是否确认删除?");								     
+										    TEXT_SetText(dlgTextContent, "删除后,对该船只报警功能\n恢复正常,是否确认删除?");								     
 									     UserData = MONITMMSI_DEL;
 									     WM_SetUserData(pMsg->hWin,&UserData,4);
 									     break;

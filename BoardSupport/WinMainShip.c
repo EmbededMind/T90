@@ -54,12 +54,15 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 			case WM_TIMER:
 					 if(CHECK_GetAlarmState())
 					 {
-                   if(toast_flg == FALSE)
-                   {
-                      WM_DeleteTimer(timer);
-                      WM_BringToTop(alarmMonitorWin);
-                      WM_SetFocus(alarmMonitorWin);
-                   }
+         if(toast_flg == FALSE)
+         {
+            if(!(t90_set.sys.workmode == DOUBLE_MODE && t90_set.as_MMSI.port == 0))
+            {
+               WM_DeleteTimer(timer);
+               WM_BringToTop(alarmMonitorWin);
+               WM_SetFocus(alarmMonitorWin);
+            }
+         }
 					 }					 
 					 timeCnt++;
 					 WM_Paint(mainShipWin);
