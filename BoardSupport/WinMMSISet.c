@@ -393,15 +393,15 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 															BUTTON_SetText(hWin,"删除");
 															WM_BringToTop(FleetWin);
 															WM_SetFocus(WM_GetDialogItem(FleetWin,GUI_ID_BUTTON0));
-                                             t90_set.shipout.MMSI[MonitShipNum-1] = MMSI_tmp;
-                                             t90_set.shipout.numShip = MonitShipNum;
-                                             
-                                             T90_Store();
+															t90_set.shipout.MMSI[MonitShipNum-1] = MMSI_tmp;
+															t90_set.shipout.numShip = MonitShipNum;
+															 
+															T90_Store();
                                             
 														}
 														else
 														{
-               GUI_SetColor(GUI_RED);
+                              GUI_SetColor(GUI_RED);
 															TEXT_SetText(Hint,"该船只已存在。");//don't forget
 															WM_ShowWin(SoftInputWin);
 															WM_SetFocus(SoftInputWin);
@@ -477,7 +477,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
          GUI_SetColor(GUI_WHITE);
          GUI_DispString("退出"); 
          GUI_SetFont(&GUI_Font_T90_30);
-         if(getflag())
+         if(getflag() || !t90_set.as_MMSI.port)
             GUI_DispStringAt("请输入辅船九位码",160,40);   
          else
             GUI_DispStringAt("请输入船队船只的九位码", 130, 40);

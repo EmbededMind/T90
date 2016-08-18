@@ -45,9 +45,10 @@ printf("maintask\n");
     GUI_Clear();
     
     GUI_SetFont(&GUI_Font_T90_60);
-    GUI_SetColor(0x00c3e0e9);
-    GUI_DispStringAt("拖网距离安全标终端",200,200);
-    
+    GUI_SetColor(GUI_WHITE);
+    GUI_DispStringAt("T90拖网距离安全标终端",150,200);
+    GUI_PNG_Draw (&aclogo_png,sizeof(aclogo_png),200,100);
+ 
 		GUI_MEMDEV_Select(0);
     GUI_MEMDEV_CopyToLCD(hMem0);
     GUI_MEMDEV_Delete(hMem0);
@@ -229,6 +230,8 @@ printf("maintask\n");
             {
                ToastCreate("两船位置切换失败，请重试!", &GUI_Font_T90_30, NULL, 2000);
                t90_set.sys.motherpos = !t90_set.sys.motherpos;
+               StubRefresh();
+               WM_InvalidateWindow(doubleShipDstSetWin);
                comflg = 0;
             }
             else if(comflg == 2)

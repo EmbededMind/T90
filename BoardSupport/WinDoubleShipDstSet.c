@@ -669,11 +669,11 @@ void _paint(WM_HWIN pMsg)
     GUI_DispStringAt("辅", xPos_A-8, yPos_A+12);
     GUI_DispStringAt("船", xPos_A-8, yPos_A+10+GUI_GetFontSizeY());
     
-    GUI_SetLineStyle(GUI_LS_DOT);           
+    GUI_SetLineStyle(GUI_LS_DASH);           
     GUI_DrawLine(xPos_M, yPos_M+61, (xPos_M+xPos_A)/2, drawArea.y1-50);
     
     GUI_DrawLine(xPos_A, yPos_A+61, (xPos_M+xPos_A)/2, drawArea.y1-50);
-    
+    GUI_SetLineStyle(GUI_LS_DOT);  
     GUI_DrawLine(297, 111, 336, 125);
     GUI_DrawLine(204, 372, 243, 386);
     

@@ -21,7 +21,7 @@ static WM_MESSAGE myMsg;
 static WM_HWIN buttons[3];
 long MMSI;
 static void myButton(WM_MESSAGE * pMsg);
-
+static int UserData;
 static const ConfirmWinColor *pColors;
 
 static void _cbWindow(WM_MESSAGE * pMsg) {
@@ -34,7 +34,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 	
 	int xSize;
 	int ySize;  
-	static int UserData;
+	
 	
   switch (pMsg->MsgId) {
 			  
@@ -48,6 +48,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 					}
 					else
 					{
+      UserData = 0;
 						WM_SetFocus(buttons[0]);
 					}
 			 }
@@ -110,6 +111,9 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        BUTTON_SetFont(buttons[2], &GUI_Font_T90_30);
 	      WM_SetCallback(buttons[2], &myButton);
 	      BUTTON_SetFocusColor(buttons[2],pColors->btFocusBkColor);
+				
+				BUTTON_SetBkColor(buttons[2],BUTTON_BI_UNPRESSED,pColors->btBkColor);
+       BUTTON_SetTextColor(buttons[2],BUTTON_BI_UNPRESSED,pColors->btTextColor);
        						
 		     TEXT_CreateEx (0,   35,  400, 80, thisFrame,WM_CF_SHOW,0,ID_TEXT_CONTENT,NULL);
        dlgTextContent = WM_GetDialogItem(pMsg->hWin, ID_TEXT_CONTENT);
@@ -128,7 +132,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 		 {
 		   	case GUI_KEY_LEFT:
 		   	case GUI_KEY_RIGHT: 
-							   WM_GetUserData(pMsg->hWin,&UserData,4);
+//							   WM_GetUserData(pMsg->hWin,&UserData,4);
 							   if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
 										{
 											WM_SetFocus(buttons[2]);
@@ -148,7 +152,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
        
     case GUI_KEY_BACKSPACE:
 									{
-										WM_GetUserData(pMsg->hWin,&UserData,4);
+//										WM_GetUserData(pMsg->hWin,&UserData,4);
 							   if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
 										{
 										}
@@ -307,7 +311,7 @@ WM_HWIN WIN_ConfirmCreate(void) {
 static void myButton (WM_MESSAGE *pMsg)
 {
  	int index = 0;
-
+  const WM_KEY_INFO* pInfo;
 
 
 	 switch(pMsg->MsgId)   
@@ -328,7 +332,20 @@ static void myButton (WM_MESSAGE *pMsg)
           
           BUTTON_Callback(pMsg);
           break;
-
+     case WM_KEY:
+   pInfo  = (WM_KEY_INFO*)pMsg->Data.p;
+	
+	  switch(pInfo->Key)
+		 {
+		   	case GUI_KEY_BACKSPACE:       
+       break;
+      case GUI_KEY_ENTER:
+       BUTTON_Callback(pMsg);
+       break;
+      default:
+       break;
+   }
+   break;
 			default:
 			    BUTTON_Callback(pMsg);
 			    break;

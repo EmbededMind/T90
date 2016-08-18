@@ -262,10 +262,12 @@ static void myEditCallback(WM_MESSAGE* pMsg){
 				    if(pMsg->Data.v==1)
 								{
 									EDIT_SetBkColor(edit,EDIT_CI_ENABLED,subMenuColors[t90_set.sys.nightmode].btFocusBkColor); //don't forget to change
+									EDIT_SetTextColor(edit,EDIT_CI_ENABLED,GUI_WHITE);
 								}
 								else
 								{
 									EDIT_SetBkColor(edit,EDIT_CI_ENABLED,GUI_WHITE);
+									EDIT_SetTextColor(edit,EDIT_CI_ENABLED,GUI_BLACK);
 								}
 								EDIT_Callback(pMsg);
                         WM_InvalidateRect(FleetWin,&pRect);
@@ -379,7 +381,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 		     WM_SetCallback(addbutton,&addBtCallback);
 		
 							delButton[0] = BUTTON_CreateEx(305,215,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON1);
-		     BUTTON_SetFont(delButton[0],&GUI_Font_T90_24);
+		     BUTTON_SetFont(delButton[0],&GUI_Font_T90_30);
 		     BUTTON_SetTextColor(delButton[0],BUTTON_CI_UNPRESSED,GUI_WHITE);
 		     BUTTON_SetBkColor(delButton[0],BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
 		     BUTTON_SetFocusColor(delButton[0],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
@@ -388,7 +390,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
        BUTTON_SetFocusColor(delButton[0], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
            
 							delButton[1] = BUTTON_CreateEx(305,250,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON2);
-		     BUTTON_SetFont(delButton[1],&GUI_Font_T90_24);
+		     BUTTON_SetFont(delButton[1],&GUI_Font_T90_30);
 		     BUTTON_SetTextColor(delButton[1],BUTTON_CI_UNPRESSED,GUI_WHITE);
 		     BUTTON_SetBkColor(delButton[1],BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
 		     BUTTON_SetFocusColor(delButton[1],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
@@ -397,7 +399,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
            BUTTON_SetFocusColor(delButton[1], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 							
 							delButton[2] = BUTTON_CreateEx(305,285,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON3);
-		     BUTTON_SetFont(delButton[2],&GUI_Font_T90_24);
+		     BUTTON_SetFont(delButton[2],&GUI_Font_T90_30);
 		     BUTTON_SetTextColor(delButton[2],BUTTON_CI_UNPRESSED,GUI_WHITE);
 		     BUTTON_SetBkColor(delButton[2],BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
 		     BUTTON_SetFocusColor(delButton[2],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
@@ -406,7 +408,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
            BUTTON_SetFocusColor(delButton[2], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 							
 							delButton[3] = BUTTON_CreateEx(305,320,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON4);
-		     BUTTON_SetFont(delButton[3],&GUI_Font_T90_24);
+		     BUTTON_SetFont(delButton[3],&GUI_Font_T90_30);
 		     BUTTON_SetTextColor(delButton[3],BUTTON_CI_UNPRESSED,GUI_WHITE);
 		     BUTTON_SetBkColor(delButton[3],BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
 		     BUTTON_SetFocusColor(delButton[3],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
@@ -415,7 +417,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
            BUTTON_SetFocusColor(delButton[3], subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
 							
 							delButton[4] = BUTTON_CreateEx(305,355,97,30,pMsg->hWin, WM_CF_SHOW,0,GUI_ID_BUTTON5);
-		     BUTTON_SetFont(delButton[4],&GUI_Font_T90_24);
+		     BUTTON_SetFont(delButton[4],&GUI_Font_T90_30);
 		     BUTTON_SetTextColor(delButton[4],BUTTON_CI_UNPRESSED,GUI_WHITE);
 		     BUTTON_SetBkColor(delButton[4],BUTTON_CI_UNPRESSED,subMenuColors[t90_set.sys.nightmode].btBkColor);
 		     BUTTON_SetFocusColor(delButton[4],subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
@@ -454,7 +456,7 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
 								GUI_FillRectEx(&MMSIList[i]);
 		
 		     GUI_SetColor(GUI_WHITE);
-		     GUI_SetFont(&GUI_Font_T90_24);
+		     GUI_SetFont(&GUI_Font_T90_30);
 		     GUI_DispStringInRectWrap("已屏蔽船只列表",&title,GUI_TA_VCENTER|GUI_TA_HCENTER,GUI_WRAPMODE_WORD);
 		     GUI_DispStringInRect("九位码",&Head,GUI_TA_VCENTER|GUI_TA_HCENTER);
 		     GUI_DispStringInRect("操作",&Operat,GUI_TA_VCENTER|GUI_TA_HCENTER);
