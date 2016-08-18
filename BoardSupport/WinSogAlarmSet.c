@@ -339,12 +339,16 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             if(WM_HasFocus(buttons[2]))
                GUI_DrawGradientRoundedH(ALARM_SET_WIDTH/2-100, ALARM_SET_HEIGHT/2-105,ALARM_SET_WIDTH/2+120, ALARM_SET_HEIGHT/2-75,5,pColors->focusBkColor,pColors->focusBkColor);
             else 
-               GUI_DrawGradientRoundedH(ALARM_SET_WIDTH/2-100, ALARM_SET_HEIGHT/2-105,ALARM_SET_WIDTH/2+120, ALARM_SET_HEIGHT/2-75,5,pColors->textColor,pColors->textColor);
+               GUI_DrawGradientRoundedH(ALARM_SET_WIDTH/2-100, ALARM_SET_HEIGHT/2-105,ALARM_SET_WIDTH/2+120, ALARM_SET_HEIGHT/2-75,5,pColors->textColor,subMenuColors[t90_set.sys.nightmode].btBkColor);
     
-            GUI_SetColor(pColors->bkColor);
+            
     
             GUI_SetFont(&GUI_Font_T90_30);
             GUI_SetTextMode(GUI_TM_TRANS);
+
+            GUI_SetColor(GUI_WHITE);
+
+
             GUI_DispStringAt("设置正常航速范围", ALARM_SET_WIDTH/2-75, ALARM_SET_HEIGHT/2-105);
             GUI_SetColor(pColors->textColor);
 

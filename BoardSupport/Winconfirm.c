@@ -150,23 +150,23 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 										}
 										break;	
        
-    case GUI_KEY_BACKSPACE:
-									{
-//										WM_GetUserData(pMsg->hWin,&UserData,4);
-							   if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
-										{
-										}
-										else
-										{
-											myMsg.hWin  = myMsg.hWinSrc;
-											myMsg.hWinSrc  = pMsg->hWin;
-											myMsg.MsgId    = USER_MSG_REPLY;
-											myMsg.Data.v   = REPLY_CANCEL;
-											WM_SendMessage(myMsg.hWin, &myMsg);  
-											WM_BringToBottom(confirmWin); 
-										} 
-									}
-									break;  
+//    case GUI_KEY_BACKSPACE:
+//									{
+////										WM_GetUserData(pMsg->hWin,&UserData,4);
+//							   if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
+//										{
+//										}
+//										else
+//										{
+//											myMsg.hWin  = myMsg.hWinSrc;
+//											myMsg.hWinSrc  = pMsg->hWin;
+//											myMsg.MsgId    = USER_MSG_REPLY;
+//											myMsg.Data.v   = REPLY_CANCEL;
+//											WM_SendMessage(myMsg.hWin, &myMsg);  
+//											WM_BringToBottom(confirmWin); 
+//										} 
+//									}
+//									break;  
            
 			   default:
 			       break;
@@ -337,11 +337,12 @@ static void myButton (WM_MESSAGE *pMsg)
 	
 	  switch(pInfo->Key)
 		 {
-		   	case GUI_KEY_BACKSPACE:       
-       break;
+
       case GUI_KEY_ENTER:
-       BUTTON_Callback(pMsg);
-       break;
+      case GUI_KEY_LEFT:
+      case GUI_KEY_RIGHT:
+          BUTTON_Callback(pMsg);
+          break;
       default:
        break;
    }

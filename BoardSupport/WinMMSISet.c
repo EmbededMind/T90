@@ -328,29 +328,50 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
              WM_Paint(MMSISetWin);
 								     if(pMsg->Data.v==REPLY_OK)
 													{
-              if(t90_set.as_MMSI.port)
-              {
-               WM_BringToTop(FleetWin);
-               WM_SetFocus(FleetWin);
-              
-              }
-              else
-              {
-               WM_BringToTop(mainShipWin);
-               WM_SetFocus(mainShipWin);
-              }
               MMSI_tmp  = 0;
 														EDIT_GetText(edit,edittext,10);
               for(i=0;i<MMSI_LENGTH;i++)
               {
                MMSI_tmp = MMSI_tmp*10+(edittext[i]-48); 
               }
-														hWin = WM_GetDialogItem(FleetWin,GUI_ID_EDIT0);
-														EDIT_SetText(hWin,edittext);
-              t90_set.as_MMSI.MMSI = MMSI_tmp;
-              t90_set.as_MMSI.port = 1;
-              T90_Store();
-														
+              comparflag=0;
+														for(i=0;i<MonitShipNum;i++)
+														{
+															if(monitMMSI[i]==MMSI_tmp)
+																comparflag = 1;
+														}
+              if(t90_set.as_MMSI.MMSI == MMSI_tmp)
+              {
+                 comparflag = 1;
+              }
+              
+              if(!comparflag)
+              {
+                 if(t90_set.as_MMSI.port)
+                 {
+                  WM_BringToTop(FleetWin);
+                  WM_SetFocus(FleetWin);
+                 
+                 }
+                 else
+                 {
+                  WM_BringToTop(mainShipWin);
+                  WM_SetFocus(mainShipWin);
+                 }
+                 
+                 hWin = WM_GetDialogItem(FleetWin,GUI_ID_BUTTON6);
+                 BUTTON_SetText(hWin,edittext);
+                 t90_set.as_MMSI.MMSI = MMSI_tmp;
+                 t90_set.as_MMSI.port = 1;
+                 T90_Store();
+              }
+              else
+              {
+                 TEXT_SetTextColor(Hint,GUI_RED);
+															  TEXT_SetText(Hint,"该船只已存在我的船队。");//don't forget
+															  WM_ShowWin(SoftInputWin);
+															  WM_SetFocus(SoftInputWin);
+              }
                                          
 													}
 													else if(pMsg->Data.v==REPLY_CANCEL)
@@ -385,6 +406,10 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 															if(monitMMSI[i]==MMSI_tmp)
 																comparflag = 1;
 														}
+              if(t90_set.as_MMSI.MMSI == MMSI_tmp)
+              {
+                 comparflag = 1;
+              }
 														if(comparflag==0)
 														{
 															monitMMSI[MonitShipNum] = MMSI_tmp;
@@ -401,8 +426,8 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 														}
 														else
 														{
-                              GUI_SetColor(GUI_RED);
-															TEXT_SetText(Hint,"该船只已存在。");//don't forget
+               TEXT_SetTextColor(Hint,GUI_RED);
+															TEXT_SetText(Hint,"该船只已存在我的船队。");//don't forget
 															WM_ShowWin(SoftInputWin);
 															WM_SetFocus(SoftInputWin);
 														}
@@ -433,7 +458,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 								myOperat = pMsg->Data.v;
 			               if(myOperat==MONITMMSI_SET)//MMSISet
 								{
-									EDIT_GetText(WM_GetDialogItem(pMsg->hWinSrc,GUI_ID_EDIT0),edittext,10);
+									BUTTON_GetText(WM_GetDialogItem(pMsg->hWinSrc,GUI_ID_BUTTON6),edittext,10);
 									EDIT_SetText(edit,edittext);
 								}
 								else if(myOperat==MONITMMSI_ADD)//MMSIAdd

@@ -28,7 +28,7 @@ void DrawStubs(int flag)														//flag=0??mainShipWin??????
    FigureScale(flag);
    DrawShipFamily(flag);
 
-   if(t90_set.alarm.on_off & 0x01)//如果闯入报警关了，就不画报警圈
+   if((t90_set.alarm.on_off & 0x01) && (stubs[1].isValid || stubs[2].isValid || stubs[3].isValid))//如果闯入报警关了，就不画报警圈
    {
       alarmLineZooma = flag? 1: (t90_set.alarm.invd_dst - 50)*208/195 + 120;
       alarmLineZoomb = flag? 1: scale;
