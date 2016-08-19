@@ -1,6 +1,6 @@
 #include "WinMMSISet.h"
 int getflag();
-
+static int btid;
 /** @brief MMSI */ //for Liyi
 long MMSI_tmp=0;
 
@@ -46,7 +46,7 @@ BUTTON_SKINFLEX_PROPS inputBtSkin[2][2] = //FOR_LIYI
 };	
 
 
-
+static GUI_RECT pRect = {155,75,200,30};
 /** @brief 输入法按键窗口回调
  *
  *    @param [in] pMsg  消息指针
@@ -67,12 +67,12 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
       case WM_SET_FOCUS:
 						     if(pMsg->Data.v)
 											{
-//												WM_SetFocus(buttons[1]);
+   											btid = WM_GetId(pMsg->hWin) - ID_BUTTON_MMSIOK;
 											}
 											else
 											{
 												
-												
+//												BUTTON_SetTextColor(pMsg->hWin,0 ,subMenuColors[t90_set.sys.nightmode].btTextColor);
 												//刷新MMSI输入错误提示
 												TEXT_GetText(Hint,HintText,20);
 												if(HintText[0]!=NULL)
@@ -115,6 +115,13 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 																		break;
 													
 													case GUI_KEY_ENTER:
+                  if(EDIT_GetNumChars(edit)==9)
+                  {
+                     TEXT_SetTextColor(Hint,GUI_RED);
+															      TEXT_SetText(Hint,"九位码以达到9位！");//don't forget
+                     WM_InvalidateArea(&pRect);
+                     break;
+                  }
 														    BUTTON_GetText(pMsg->hWin,pBuf,2);
                   item_id = WM_GetId(pMsg->hWin);
                   
@@ -134,7 +141,7 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 																		break;
 																		
 													 case GUI_KEY_BACKSPACE:
-                  if(!getflag() && t90_set.as_MMSI.port)
+                  if(!getflag())
                   {
                      if(EDIT_GetNumChars(edit)==0)
                      {
@@ -147,61 +154,62 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 																		{
 //																			WM_HideWindow(SoftInputWin);
 //																			WM_SetFocus(edit);
-                    EDIT_GetText(edit,edittext,10);
-                    MMSI_tmp = 0;	
-                    for(i=0;i<MMSI_LENGTH;i++)
-                    {
-                       MMSI_tmp = MMSI_tmp*10+(edittext[i]-48); 
-                    }
-                    if(MMSI_tmp == t90_set.as_MMSI.MMSI && t90_set.as_MMSI.port && getflag())
-                    {
-                       WM_SetFocus(FleetWin);
-                       WM_BringToTop(FleetWin);
-                       break;
-                    }
-                    if(myOperat==MONITMMSI_SET) //设置辅船MMSI
-                    {
-                    myMsg.hWin = confirmWin;
-                    myMsg.hWinSrc = MMSISetWin;
-                    myMsg.MsgId = USER_MSG_CHOOSE;
-                    myMsg.Data.v = MONITMMSI_SET;
-                    WM_SendMessage(myMsg.hWin,&myMsg);
-                    WM_BringToTop(confirmWin);
-                    WM_SetFocus(confirmWin);
-                   }
-                   else if(myOperat==MONITMMSI_ADD)//添加监控船舶
-                   {
-                    myMsg.hWin = confirmWin;
-                    myMsg.hWinSrc = MMSISetWin;
-                    myMsg.MsgId = USER_MSG_CHOOSE;
-                    myMsg.Data.v = MONITMMSI_ADD;
-                    WM_SendMessage(myMsg.hWin,&myMsg);
-                    WM_BringToTop(confirmWin);
-                    WM_SetFocus(confirmWin);
-                   }
+                      EDIT_GetText(edit,edittext,10);
+                      MMSI_tmp = 0;	
+                      for(i=0;i<MMSI_LENGTH;i++)
+                      {
+                         MMSI_tmp = MMSI_tmp*10+(edittext[i]-48); 
+                      }
+                      if(MMSI_tmp == t90_set.as_MMSI.MMSI && t90_set.as_MMSI.port && getflag())
+                      {
+                         WM_SetFocus(FleetWin);
+                         WM_BringToTop(FleetWin);
+                         break;
+                      }
+                      if(myOperat==MONITMMSI_SET) //设置辅船MMSI
+                      {
+                      myMsg.hWin = confirmWin;
+                      myMsg.hWinSrc = MMSISetWin;
+                      myMsg.MsgId = USER_MSG_CHOOSE;
+                      myMsg.Data.v = MONITMMSI_SET;
+                      WM_SendMessage(myMsg.hWin,&myMsg);
+                      WM_BringToTop(confirmWin);
+                      WM_SetFocus(confirmWin);
+                     }
+                     else if(myOperat==MONITMMSI_ADD)//添加监控船舶
+                     {
+                      myMsg.hWin = confirmWin;
+                      myMsg.hWinSrc = MMSISetWin;
+                      myMsg.MsgId = USER_MSG_CHOOSE;
+                      myMsg.Data.v = MONITMMSI_ADD;
+                      WM_SendMessage(myMsg.hWin,&myMsg);
+                      WM_BringToTop(confirmWin);
+                      WM_SetFocus(confirmWin);
+                     }
 																		}
 																		else
 																		{
-                   if(t90_set.as_MMSI.port)
-                   {
-                      myMsg.hWin = confirmWin;
-                      myMsg.hWinSrc = SoftInputWin;
-                      myMsg.MsgId = USER_MSG_CHOOSE;
-                      myMsg.Data.v = MONITMMSI_NINE;
-                      WM_SendMessage(myMsg.hWin,&myMsg);
-                      WM_BringToTop(confirmWin);
-                      WM_SetFocus(confirmWin);
-                   }
-                   else
-                   {
-                      myMsg.hWin = confirmWin;
-                      myMsg.hWinSrc = SoftInputWin;
-                      myMsg.MsgId = USER_MSG_CHOOSE;
-                      myMsg.Data.v = MONITMMSI_FIRST;
-                      WM_SendMessage(myMsg.hWin,&myMsg);
-                      WM_BringToTop(confirmWin);
-                      WM_SetFocus(confirmWin);
-                   }
+
+                     if(t90_set.sys.workmode == DOUBLE_MODE && !t90_set.as_MMSI.port)
+                     {
+                        myMsg.hWin = confirmWin;
+                        myMsg.hWinSrc = SoftInputWin;
+                        myMsg.MsgId = USER_MSG_CHOOSE;
+                        myMsg.Data.v = MONITMMSI_FIRST;
+                        WM_SendMessage(myMsg.hWin,&myMsg);
+                        WM_BringToTop(confirmWin);
+                        WM_SetFocus(confirmWin);
+                     }
+                     else
+                     {
+                        myMsg.hWin = confirmWin;
+                        myMsg.hWinSrc = SoftInputWin;
+                        myMsg.MsgId = USER_MSG_CHOOSE;
+                        myMsg.Data.v = MONITMMSI_NINE;
+                        WM_SendMessage(myMsg.hWin,&myMsg);
+                        WM_BringToTop(confirmWin);
+                        WM_SetFocus(confirmWin);
+                     }
 																		}
 														    break;
 												}
@@ -340,10 +348,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 															if(monitMMSI[i]==MMSI_tmp)
 																comparflag = 1;
 														}
-              if(t90_set.as_MMSI.MMSI == MMSI_tmp)
-              {
-                 comparflag = 1;
-              }
+
               
               if(!comparflag)
               {
@@ -355,6 +360,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
                  }
                  else
                  {
+                  WM_SetFocus(WM_GetDialogItem(mainMenuDlg, GUI_ID_BUTTON0));
                   WM_BringToTop(mainShipWin);
                   WM_SetFocus(mainShipWin);
                  }
@@ -368,9 +374,8 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
               else
               {
                  TEXT_SetTextColor(Hint,GUI_RED);
-															  TEXT_SetText(Hint,"该船只已存在我的船队。");//don't forget
-															  WM_ShowWin(SoftInputWin);
-															  WM_SetFocus(SoftInputWin);
+															  TEXT_SetText(Hint,"该船只已存在我的船队！");//don't forget
+															  WM_InvalidateArea(&pRect);
               }
                                          
 													}
@@ -406,7 +411,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 															if(monitMMSI[i]==MMSI_tmp)
 																comparflag = 1;
 														}
-              if(t90_set.as_MMSI.MMSI == MMSI_tmp)
+              if(t90_set.as_MMSI.MMSI == MMSI_tmp && t90_set.sys.workmode == DOUBLE_MODE)
               {
                  comparflag = 1;
               }
@@ -427,9 +432,8 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 														else
 														{
                TEXT_SetTextColor(Hint,GUI_RED);
-															TEXT_SetText(Hint,"该船只已存在我的船队。");//don't forget
-															WM_ShowWin(SoftInputWin);
-															WM_SetFocus(SoftInputWin);
+															TEXT_SetText(Hint,"该船只已存在我的船队！");//don't forget
+															WM_InvalidateArea(&pRect);
 														}
 													}
 													else if(pMsg->Data.v==REPLY_CANCEL)
@@ -456,7 +460,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 			     WM_ShowWin(SoftInputWin);
 								WM_SetFocus(SoftInputWin);
 								myOperat = pMsg->Data.v;
-			               if(myOperat==MONITMMSI_SET)//MMSISet
+			     if(myOperat==MONITMMSI_SET)//MMSISet
 								{
 									BUTTON_GetText(WM_GetDialogItem(pMsg->hWinSrc,GUI_ID_BUTTON6),edittext,10);
 									EDIT_SetText(edit,edittext);
@@ -468,7 +472,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 								break;
 			
 			case WM_CREATE:
-        Hint = TEXT_CreateEx(120,75,200,30,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_TEXT0,"");
+        Hint = TEXT_CreateEx(155,75,200,30,pMsg->hWin,WM_CF_SHOW,0,GUI_ID_TEXT0,"");
         TEXT_SetFont(Hint,&GUI_Font_T90_24);
         TEXT_SetTextColor(Hint,GUI_WHITE);
 
@@ -483,27 +487,38 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 			case WM_PAINT:
 				     xSize = WM_GetWindowSizeX(pMsg->hWin);
 			      ySize = WM_GetWindowSizeY(pMsg->hWin);
+
 			      GUI_DrawGradientRoundedV(0, 0, xSize - 1, ySize - 1, 20, homeColors[t90_set.sys.nightmode].bbsTopColor,homeColors[t90_set.sys.nightmode].bbsBottomColor);
+
 			
-			      GUI_SetTextMode(GUI_TEXTMODE_TRANS);
-			      GUI_SetColor(setWinColors[t90_set.sys.nightmode].textColor);
-                 
+			      GUI_SetTextMode(GUI_TEXTMODE_TRANS);                 
          GUI_SetFont(&GUI_Font_T90_24);
          GUI_SetColor(setWinColors[t90_set.sys.nightmode].focusBkColor);
-         GUI_DispStringAt("【确认】", 30, 260);
+         GUI_DispStringAt("【确认】", 30, 260);         
          GUI_SetColor(GUI_WHITE);
+         if(t90_set.sys.nightmode == DAY)
+            GUI_SetColor(GUI_BLACK);          
          GUI_DispString("确认选择，"); 
          GUI_SetColor(setWinColors[t90_set.sys.nightmode].focusBkColor);
          GUI_DispString(" 卞 咗祐 ");
          GUI_SetColor(GUI_WHITE);
+         if(t90_set.sys.nightmode == DAY)
+            GUI_SetColor(GUI_BLACK); 
          GUI_DispString("选择选项，");
          GUI_SetColor(setWinColors[t90_set.sys.nightmode].focusBkColor);
          GUI_DispString("【返回】");
          GUI_SetColor(GUI_WHITE);
+         if(t90_set.sys.nightmode == DAY)
+            GUI_SetColor(GUI_BLACK); 
          GUI_DispString("退出"); 
          GUI_SetFont(&GUI_Font_T90_30);
-         if(getflag() || !t90_set.as_MMSI.port)
-            GUI_DispStringAt("请输入辅船九位码",160,40);   
+         if(getflag())
+         {
+            if(!t90_set.as_MMSI.port)
+               GUI_DispStringAt("请输入辅船九位码",160,40);   
+            else
+               GUI_DispStringAt("修改辅船九位码",180,40); 
+         }
          else
             GUI_DispStringAt("请输入船队船只的九位码", 130, 40);
          
@@ -521,7 +536,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
  *    @param [in] pMsg  消息指针
  */
 static void InputWindowCallback(WM_MESSAGE* pMsg){
-	int NCode, Id;
+	int NCode, Id, i;
 	int xSize ,ySize;
 	GUI_AUTODEV AutoDev;
 	GUI_AUTODEV_INFO AutoDevInfo;
@@ -552,9 +567,17 @@ static void InputWindowCallback(WM_MESSAGE* pMsg){
 								break;
 			
 			case WM_PAINT:
+        
 			     GUI_SetColor(GUI_GRAY);
+        if(t90_set.sys.nightmode)
+           GUI_SetColor(GUI_DARKGRAY);
 			     GUI_FillRect(0,0,xSize,ySize);
-			     
+			    	for(i=1;i<13;i++)
+        {  
+           BUTTON_SetSkin(buttons[i],BUTTON_DrawSkinFlex); 
+           BUTTON_SetTextColor(buttons[i],0,subMenuColors[t90_set.sys.nightmode].btTextColor); 
+        }
+        BUTTON_SetTextColor(WM_GetFocussedWindow(), 0,GUI_WHITE);
 								break;
 			
 			case WM_SET_FOCUS:

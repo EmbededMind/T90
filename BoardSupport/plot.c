@@ -217,8 +217,13 @@ void DrawCursor(Point pixel, int flag)  //Д???????х?
       strTmp[3]  = 194;
       strTmp[4]  = 176;
       strTmp[5]  = '\0';
-      sprintf(pStrBuf, "%2d.%d kt      %s", pSnapLink->Boat.SOG/10, pSnapLink->Boat.SOG%10, strTmp);
+      sprintf(pStrBuf, "%2d.%01d", pSnapLink->Boat.SOG/10, pSnapLink->Boat.SOG%10);			
       GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY());
+			   GUI_SetFont(&GUI_Font_T90_24);
+      GUI_DispString(" 节");
+			   GUI_SetFont(GUI_FONT_24_1);
+			   sprintf(pStrBuf, "  %s", strTmp);
+			   GUI_DispString(pStrBuf);
       
       GUI_SetColor(homeColors[t90_set.sys.nightmode].numColor);
       point.x = pSnapLink->x_to_cross;

@@ -339,7 +339,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
             if(WM_HasFocus(buttons[2]))
                GUI_DrawGradientRoundedH(ALARM_SET_WIDTH/2-100, ALARM_SET_HEIGHT/2-105,ALARM_SET_WIDTH/2+120, ALARM_SET_HEIGHT/2-75,5,pColors->focusBkColor,pColors->focusBkColor);
             else 
-               GUI_DrawGradientRoundedH(ALARM_SET_WIDTH/2-100, ALARM_SET_HEIGHT/2-105,ALARM_SET_WIDTH/2+120, ALARM_SET_HEIGHT/2-75,5,pColors->textColor,subMenuColors[t90_set.sys.nightmode].btBkColor);
+               GUI_DrawGradientRoundedH(ALARM_SET_WIDTH/2-100, ALARM_SET_HEIGHT/2-105,ALARM_SET_WIDTH/2+120, ALARM_SET_HEIGHT/2-75,5,subMenuColors[t90_set.sys.nightmode].btBkColor,subMenuColors[t90_set.sys.nightmode].btBkColor);
     
             
     

@@ -82,6 +82,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
            {
               if(flag_prevfocus)																						//if previous focussed
               {
+                 
                  HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->btPrevFocusBkColor);   
                  HSD_BUTTON_SetTextColor(pMsg->hWin, pColors->btFocusTextColor);
               }

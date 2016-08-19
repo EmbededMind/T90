@@ -43,6 +43,15 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 		case WM_KEY:
 			switch(((WM_KEY_INFO*)(pMsg->Data.p))->Key)
 			{
+    case WM_SET_FOCUS:
+     if(pMsg->Data.v)
+     {
+        HSD_SLIDER_Callback(pMsg);
+     }
+     else
+     {
+        WM_SetFocus(slider[0]);
+     }
 //            case GUI_KEY_MOLEFT:
 //                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
 //                        {

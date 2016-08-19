@@ -47,7 +47,7 @@ printf("maintask\n");
     GUI_SetFont(&GUI_Font_T90_60);
     GUI_SetColor(GUI_WHITE);
     GUI_DispStringAt("T90拖网距离安全标终端",150,200);
-    GUI_PNG_Draw (&aclogo_png,sizeof(aclogo_png),200,100);
+    GUI_PNG_Draw(&aclogo_png,sizeof(aclogo_png),245,120);
  
 		GUI_MEMDEV_Select(0);
     GUI_MEMDEV_CopyToLCD(hMem0);
@@ -129,7 +129,7 @@ printf("maintask\n");
 
       if(!flag && t90_set.sys.workmode == DOUBLE_MODE && t90_set.as_MMSI.port == 0 )
       {
-          
+//         
          flag = 1;
          pMsg.hWin = MMSISetWin;
 									pMsg.hWinSrc = FleetWin;

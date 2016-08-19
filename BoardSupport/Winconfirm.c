@@ -149,25 +149,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 											}
 										}
 										break;	
-       
-//    case GUI_KEY_BACKSPACE:
-//									{
-////										WM_GetUserData(pMsg->hWin,&UserData,4);
-//							   if(UserData==MONITMMSI_FULL || UserData == MONITMMSI_FIRST)
-//										{
-//										}
-//										else
-//										{
-//											myMsg.hWin  = myMsg.hWinSrc;
-//											myMsg.hWinSrc  = pMsg->hWin;
-//											myMsg.MsgId    = USER_MSG_REPLY;
-//											myMsg.Data.v   = REPLY_CANCEL;
-//											WM_SendMessage(myMsg.hWin, &myMsg);  
-//											WM_BringToBottom(confirmWin); 
-//										} 
-//									}
-//									break;  
-           
+                 
 			   default:
 			       break;
 		}
@@ -278,7 +260,7 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
 //									     WM_SetUserData(pMsg->hWin,&UserData,4);
 									     break;
 									case MONITMMSI_NINE:
-              TEXT_SetText(dlgTextContent, "你输入的九位码不足九位, \n是否继续修改？");
+              TEXT_SetText(dlgTextContent, "你输入的九位码不足九位, \n确定继续修改？");
               break;
          case MONITMMSI_FIRST:
               TEXT_SetText(dlgTextContent, "你输入的九位码不足九位, \n请继续输入!");
