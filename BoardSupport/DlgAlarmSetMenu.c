@@ -97,7 +97,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 //                        }                           
 //                        break;
               case GUI_KEY_SOUNDOFF:
-                  monitorState = monitorState == ON? OFF: ON;
+                  monitorState = (monitorState == ON? OFF: ON);
                   break;
               case GUI_KEY_MORIGHT:
 //                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
@@ -220,7 +220,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
 						break;
    case WM_INIT_DIALOG:
 		 
-				pColors = &(subMenuColors[t90_set.sys.nightmode]);
+				    pColors = &(subMenuColors[t90_set.sys.nightmode]);
         WINDOW_SetBkColor(pMsg->hWin, pColors->bkColor);
         
         buttons[0]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON0);
@@ -250,7 +250,7 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
         HSD_BUTTON_SetTxFont(buttons[2], &GUI_Font_T90_30);
         HSD_BUTTON_SetText(buttons[2], "高速船报警");
 				
-				buttons[3]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON3);
+				    buttons[3]  = WM_GetDialogItem(pMsg->hWin, GUI_ID_BUTTON3);
         WM_SetCallback(buttons[3], &myButtonCallback);
         HSD_BUTTON_SetBkColor(buttons[3], pColors->btBkColor);
 //        HSD_BUTTON_SetFocusBkColor(handle, GUI_BLUE);

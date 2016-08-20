@@ -239,6 +239,7 @@ static void myDialogCallback(WM_MESSAGE*pMsg)
 						HSD_SLIDER_SetValue(slider[i], ((0x01<<i)&t90_set.alarm.nation)>>i);
 					}
 				}
+    WM_SetFocus(slider[0]);
 				WM_SetFocus(alarmSetMenuDlg);
 				break;
 			
