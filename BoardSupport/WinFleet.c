@@ -150,10 +150,10 @@ static void delBtCallback(WM_MESSAGE* pMsg){
 									    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
 									    break;
                           
-								  case GUI_KEY_MENU:
-             WM_BringToTop(mainShipWin);
-             WM_SetFocus(mainShipWin);
-             break;
+//								  case GUI_KEY_MENU:
+//             WM_BringToTop(mainShipWin);
+//             WM_SetFocus(mainShipWin);
+//             break;
 								default:
 													WM_DefaultProc(pMsg);
 													break;
@@ -257,10 +257,10 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 							 		    WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
 									    break;
                           
-								  case GUI_KEY_MENU:
-									    WM_BringToTop(mainShipWin);
-									    WM_SetFocus(mainShipWin);
-									    break;
+//								  case GUI_KEY_MENU:
+//									    WM_BringToTop(mainShipWin);
+//									    WM_SetFocus(mainShipWin);
+//									    break;
 //								default:
 //													WM_DefaultProc(pMsg);
 //													break;
@@ -333,10 +333,10 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
               WM_SetFocus(WM_GetDialogItem(mainMenuDlg,GUI_ID_BUTTON3));
               break;
 									
-									case GUI_KEY_MENU:
-              WM_BringToTop(mainShipWin);
-              WM_SetFocus(mainShipWin);
-              break;
+//									case GUI_KEY_MENU:
+//              WM_BringToTop(mainShipWin);
+//              WM_SetFocus(mainShipWin);
+//              break;
                            
 //									default:
 //														WM_DefaultProc(pMsg);

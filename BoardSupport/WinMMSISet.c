@@ -115,13 +115,7 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 																		break;
 													
 													case GUI_KEY_ENTER:
-                  if(EDIT_GetNumChars(edit)==9)
-                  {
-                     TEXT_SetTextColor(Hint,GUI_RED);
-															      TEXT_SetText(Hint,"九位码以达到9位！");//don't forget
-                     WM_InvalidateArea(&pRect);
-                     break;
-                  }
+                  
 														    BUTTON_GetText(pMsg->hWin,pBuf,2);
                   item_id = WM_GetId(pMsg->hWin);
                   
@@ -129,8 +123,15 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 																			EDIT_AddKey(edit,GUI_KEY_BACKSPACE); //回删
 																		else if(item_id == ID_BUTTON_EMPTY)
 																			EDIT_SetText(edit,"");               //清空
-																		else
-																			EDIT_AddKey(edit,pBuf[0]);
+															   else if(EDIT_GetNumChars(edit)==9)
+                  {
+                     TEXT_SetTextColor(Hint,GUI_RED);
+															      TEXT_SetText(Hint,"九位码以达到9位！");//don't forget
+                     WM_InvalidateArea(&pRect);
+                     break;
+                  }
+                  else
+																		EDIT_AddKey(edit,pBuf[0]);
 																		
 															 		//刷新MMSI输入错误提示
 																		TEXT_GetText(Hint,HintText,20);
@@ -376,6 +377,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
                  TEXT_SetTextColor(Hint,GUI_RED);
 															  TEXT_SetText(Hint,"该船只已存在我的船队！");//don't forget
 															  WM_InvalidateArea(&pRect);
+                 WM_SetFocus(MMSISetWin);
               }
                                          
 													}
@@ -434,6 +436,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
                TEXT_SetTextColor(Hint,GUI_RED);
 															TEXT_SetText(Hint,"该船只已存在我的船队！");//don't forget
 															WM_InvalidateArea(&pRect);
+               WM_SetFocus(MMSISetWin);
 														}
 													}
 													else if(pMsg->Data.v==REPLY_CANCEL)
