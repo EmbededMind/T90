@@ -205,7 +205,7 @@ void Insert_Task(void *p_arg)  //等待接收采集到的数据
   // USER_Init();
    while(1)
    {
-//printf("Insert while begin\n");      
+printf("Insert while begin\n");      
       s = OSQPend(QSem,0,&err);    
       tmp  = translate_(s,&text_out,&text_out_24A,&text_out_type_of_ship); 
       OSMutexPend(Refresher, 0, &myErr);        
@@ -224,7 +224,7 @@ void Insert_Task(void *p_arg)  //等待接收采集到的数据
          break;
       }
     OSMutexPost(Refresher);
-//printf("Insert while end\n");      
+printf("Insert while end\n");      
     OSTimeDly(20); 
 
    }
@@ -235,7 +235,7 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
 {
    while(1)
    {
-//printf("Refresh while begin\n");
+printf("Refresh while begin\n");
       OSMutexPend(Refresher, 0, &myErr);           
       updateTimeStamp();    
       check();
@@ -250,7 +250,7 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
          Stub_setValidity(3, portStatus[2].port == 1?1:0);
          StubRefresh();
       }   
-//printf("Refresh while end\n");
+printf("Refresh while end\n");
       OSTimeDlyHMSM(0,0,5,0);
 
    }
@@ -275,7 +275,7 @@ void _Play_Task(void* p_arg)
    ISD_PWRDn();      
    while(1)
    { 
-//printf("Play Task while begin\n");      
+printf("Play Task while begin\n");      
       if(monitorState == ON) // 轄酄?
       {        
          if(FetchSTime() == 0)
@@ -451,7 +451,7 @@ void _Play_Task(void* p_arg)
          MUSIC_RESET;                // 下标置0         
       } /// End. execute play 
       /// End . if(monitorState == FALSE) 
-//printf("Play task while end\n");      
+printf("Play task while end\n");      
       OSTimeDlyHMSM(0, 0, 3, 0);
 
    } /// 'End'. while(1).In fact this will not happen
@@ -471,7 +471,7 @@ void Comm_Task(void * p_arg)
    
    while(1)
    {
-//printf("Comm Task while begin\n");
+printf("Comm Task while begin\n");
       if(Comm_isflags())
       {
          pFrame  = Comm_fetchNextFrame();
@@ -631,7 +631,7 @@ LOL:
          }
       }
       
-//printf("Comm Task while end\n");
+printf("Comm Task while end\n");
       OSTimeDlyHMSM(0, 0, 1, 0);
 
    }

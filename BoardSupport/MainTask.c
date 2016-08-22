@@ -30,9 +30,9 @@ void MainTask(void)
 {
    WM_MESSAGE myMsg;
    GUI_MEMDEV_Handle hMem0;
-//INFO("MainTask Start");
+printf("MainTask Start\n");
 
-printf("maintask\n");
+//printf("maintask\n");
    GUI_Init();
 	//创建字体
    GUI_UC_SetEncodeUTF8();	
@@ -268,7 +268,7 @@ printf("maintask\n");
          
          
       }
-     
+printf("MainTask end\n");     
       GUI_Delay(200);
      
    }

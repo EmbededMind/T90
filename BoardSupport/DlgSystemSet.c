@@ -290,7 +290,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                         }
                      }                    
                   }
-                  if(t90_set.sys.workmode == DOUBLE_MODE)
+                  if(t90_set.sys.workmode == DOUBLE_MODE && t90_set.as_MMSI.port)
                   {
                     int flg = 0;
                     for(i = 0; i < 5; i++)

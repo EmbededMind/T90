@@ -334,9 +334,11 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
          
 			    switch(myOperat){
 								case MONITMMSI_SET:
-             WM_Paint(MMSISetWin);
+printf("MONITMMSI_SET\n");
+//             WM_Paint(MMSISetWin);
 								     if(pMsg->Data.v==REPLY_OK)
 													{
+printf("MONITMMSI_SET OK\n");
               MMSI_tmp  = 0;
 														EDIT_GetText(edit,edittext,10);
               for(i=0;i<MMSI_LENGTH;i++)
@@ -395,11 +397,14 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
                  WM_SetFocus(MMSISetWin);
               }
 													}
+printf("MONITMMSI_SET break\n");
 									    break;
 								
 								case MONITMMSI_ADD:
+printf("MONITMMSI_ADD\n");
 									    if(pMsg->Data.v==REPLY_OK)
 													{
+printf("MONITMMSI_ADD OK\n");
 														EDIT_GetText(edit,edittext,10);
 														MMSI_tmp = 0;	
 														for(i=0;i<MMSI_LENGTH;i++)
@@ -445,6 +450,7 @@ static void MMSIWindowCallback(WM_MESSAGE* pMsg){
 														WM_SetFocus(WM_GetDialogItem(FleetWin,GUI_ID_BUTTON0));
 													}
              WM_Paint(MMSISetWin);
+ printf("MONITMMSI_ADD break\n");
 												 break;
         
 							}

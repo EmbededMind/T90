@@ -249,25 +249,25 @@ static void _onPaint1(void)
 
    GUI_SetFont(GUI_FONT_D80);
 	 
-	 if(MS_isSpeeding)
-	 {
-		 if(timeCnt%2 == 0)
-		 {
-		   GUI_SetColor(pColor->numColor);
-             
-			 DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
-		 }
-	 }
-	 else if(MS_isMax_SOG || MS_isMin_SOG)
-	 {
-		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
-	 }
-	 else
-	 {
-		 GUI_SetColor(pColor->numColor);
-		 DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
-	 }
+   if(MS_isSpeeding)
+   {
+      if(timeCnt%2 == 0)
+      {
+         GUI_SetColor(pColor->numColor);
+                 
+         DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
+      }
+   }
+   else if(MS_isMax_SOG || MS_isMin_SOG)
+   {
+      GUI_SetColor(pColor->numColor);
+      DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
+   }
+   else
+   {
+      GUI_SetColor(pColor->numColor);
+      DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
+   }
 
 
    GUI_DrawGradientRoundedV( BBS1_BELOW_X,                         /// x0
@@ -288,22 +288,22 @@ static void _onPaint1(void)
    lltostr(mothership.longitude, pStrBuf);
    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+110, BBS1_BELOW_Y+60);
 	 
-	 GUI_SetColor(pColor->textColor);                             
-    GUI_SetFont(GUI_FONT_32_1);
-	 sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
-	 GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+60, BBS1_BELOW_Y+110); 
-	 sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
-    GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+240, BBS1_BELOW_Y+110);
+   GUI_SetColor(pColor->textColor);                             
+   GUI_SetFont(GUI_FONT_32_1);
+   sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
+   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+60, BBS1_BELOW_Y+110); 
+   sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);
+   GUI_DispStringAt(pStrBuf, BBS1_BELOW_X+240, BBS1_BELOW_Y+110);
 	 
 //	 sprintf(pStrBuf, "%d", timeCnt);
 //   GUI_DispStringAt(pStrBuf, 20, 20);
 	 
-	GUI_SetColor(pColor->textColor);
+	  GUI_SetColor(pColor->textColor);
 //	DrawStubs(0);
 //	DrawCursor(motherShipPixel, 0);
    DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);
    GUI_SetColor(GUI_BLACK);
-	GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
+  	GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);
    GUI_FillRect(0, SCREEN_HEIGHT, 799, 479);
 }
 
@@ -342,24 +342,24 @@ static void _onPaint2(void)
 
    GUI_SetFont(GUI_FONT_D48);
 	 
-	 if(MS_isSpeeding)
-	 {
-     if(timeCnt%2 == 0)
-     {
-        GUI_SetColor(pColor->numColor);
-        DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50,mothership.SOG, SMALL);
-     }
-	 }
-	 else if(MS_isMax_SOG || MS_isMin_SOG)
-	 {
-     GUI_SetColor(pColor->numColor);
-     DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
-	 }
-	 else
-	 {
-     GUI_SetColor(pColor->numColor);
-     DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
-	 }
+   if(MS_isSpeeding)
+   {
+      if(timeCnt%2 == 0)
+      {
+         GUI_SetColor(pColor->numColor);
+         DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50,mothership.SOG, SMALL);
+      }
+   }
+   else if(MS_isMax_SOG || MS_isMin_SOG)
+   {
+      GUI_SetColor(pColor->numColor);
+      DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
+   }
+   else
+   {
+      GUI_SetColor(pColor->numColor);
+      DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
+   }
 	 
    GUI_SetColor(pColor->textColor);                             
    GUI_SetFont(GUI_FONT_24B_1);
@@ -397,7 +397,14 @@ static void _onPaint2(void)
 	 
 	 GUI_DispStringAt("船名：",      BBS2_BELOW_X+30,  BBS2_BELOW_Y+35);
 	 GUI_DispStringAt("MMSI：",      BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40);
-	 GUI_DispStringAt("距离船尾：",  BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*2);
+  if(t90_set.sys.workmode==SINGLE_MODE)
+  {
+	    GUI_DispStringAt("距离船尾：",  BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*2);
+  }
+  else
+  {
+     
+  }
 	 GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+35+40*2);
 	 
   if(tmpCursor < 4)
@@ -533,7 +540,7 @@ static void _onPaint2(void)
            GUI_SetFont(GUI_FONT_24B_1);
            
            for(i=0; i<N_boat; i++){
-              if(portStatus[2].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
+              if(t90_set.as_MMSI.MMSI == SimpBerthes[i].pBerth->Boat.user_id){
                  pBerth  = SimpBerthes[i].pBerth;
                  break;
               }
