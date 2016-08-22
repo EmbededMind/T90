@@ -12,7 +12,7 @@
 #include "snap.h"
 #include "transform.h"
 
-#define STIME 60
+#define STIME 180
 
 /*----------------- Macro      defines --------------------------*/
 #define MYABS(x)   ((x)>0?(x):(-(x)))
@@ -130,7 +130,7 @@ delhighjmp:      pBerth = pNext;
 void CHECK_STRefresh()
 {
 //printf("CHECK_STRefresh begin\n");
-    if(mothership.SOG < 5)
+    if(mothership.SOG < 10)
     {
 	    if(STime)   STime--;     
     }

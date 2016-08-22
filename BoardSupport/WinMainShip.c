@@ -400,13 +400,11 @@ static void _onPaint2(void)
 	 GUI_DispStringAt("距离船尾：",  BBS2_BELOW_X+30,  BBS2_BELOW_Y+35+40*2);
 	 GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+35+40*2);
 	 
-    if(tmpCursor < 4)
+  if(tmpCursor < 4)
        DrawBlueTri(GetItemPixel(stubs[tmpCursor].basePoint));
     
 	 switch(tmpCursor)
 	 {
-       
-
 		 case 1:
            GUI_SetColor(pColor->numColor);
            GUI_SetFont(GUI_FONT_24B_1);
@@ -497,7 +495,7 @@ static void _onPaint2(void)
            GUI_SetColor(pColor->numColor);
            GUI_SetFont(GUI_FONT_24B_1);
            
-            for(i=0; i<N_boat; i++){
+           for(i=0; i<N_boat; i++){
               if(portStatus[2].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
                  pBerth  = SimpBerthes[i].pBerth;
                  break;
@@ -530,11 +528,11 @@ static void _onPaint2(void)
               GUI_DispStringAt("左舷偏移：",    BBS2_BELOW_X+30,  BBS2_BELOW_Y+40+40*3);
            GUI_DispStringAt("米",          BBS2_BELOW_X+210, BBS2_BELOW_Y+40+40*3);
                 break;
-       case 4:
+   case 4:
            GUI_SetColor(pColor->numColor);
            GUI_SetFont(GUI_FONT_24B_1);
            
-            for(i=0; i<N_boat; i++){
+           for(i=0; i<N_boat; i++){
               if(portStatus[2].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
                  pBerth  = SimpBerthes[i].pBerth;
                  break;
@@ -568,7 +566,7 @@ static void _onPaint2(void)
 	 GUI_SetColor(pColor->textColor);
 //	 DrawStubs(0);
 	 DrawCursor(GetItemPixel(stubs[cursorOnStub].basePoint), 0);
-    GUI_SetColor(GUI_BLACK);
+  GUI_SetColor(GUI_BLACK);
 	 GUI_FillRect(SCREEN_WIDTH, 0, 799, 479);    
 }
 

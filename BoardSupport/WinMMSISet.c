@@ -142,7 +142,7 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 																		break;
 																		
 													 case GUI_KEY_BACKSPACE:
-                  if(!getflag())
+                  if(!getflag() && t90_set.as_MMSI.port)
                   {
                      if(EDIT_GetNumChars(edit)==0)
                      {
