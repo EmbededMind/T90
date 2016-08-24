@@ -15,7 +15,7 @@
 #include "t90font.h"
 #include "stub.h"
 #include "comm.h"
-#include "HSD_BUTTON.h"
+//#include "HSD_BUTTON.h"
 #include "HSD_Toast.h"
 #include "layout_system_set.h"
 
@@ -142,16 +142,10 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            }
            for(i = 0; i < 2; i++)
            {
-              HSD_BUTTON_SetBkColor(buttons[i], pColors_win->bkColor);
-			           HSD_BUTTON_SetTextFocusColor(buttons[i], pColors_win->focusTextColor);
-              HSD_BUTTON_SetFocusBkColor(buttons[i],pColors_win->focusBkColor);
+              BUTTON_SetFocusColor(buttons[i],  pColors_win->focusBkColor);
+              BUTTON_SetBkColor(buttons[i],  BUTTON_CI_UNPRESSED, pColors_win->bkColor);
+              BUTTON_SetTextColor(buttons[i],  BUTTON_CI_UNPRESSED, pColors_win->textColor);
            }
-
-
-           HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);                         
-
-           HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
-
            break;
            
       case WM_INIT_DIALOG:  
@@ -197,10 +191,6 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
            HSD_SLIDER_SetRange(slideres[4], 0, 1);
            HSD_SLIDER_SetValue(slideres[4], t90_set.sys.unit);
 					 
-//			        slideres[5]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_5);
-//           WM_SetCallback(slideres[5], &sldListener);
-//           HSD_SLIDER_SetRange(slideres[5], 0, 1); 
-//           HSD_SLIDER_SetValue(slideres[5], t90_set.sys.update);
 					 
 			        slideres[5]  = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_5);
            WM_SetCallback(slideres[5], &sldResetCallback);
@@ -219,31 +209,33 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
                HSD_SLIDER_SetFocusSliderColor(slideres[i], pColors->focusSliderColor);
                HSD_SLIDER_SetFocusSlotColor(slideres[i],pColors->focusSlotColor);
            }
-           buttons[0]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_RIGHT_CHOICE/2+SYSTEM_SET_ITEM_WIDTH-1, 
+           GUI_SetFont(&GUI_Font_T90_24);
+
+           buttons[0] = BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_RIGHT_CHOICE/2+SYSTEM_SET_ITEM_WIDTH-1, 
                                    SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*4 - 6, 
                                    27, 
                                    GUI_GetFontSizeY()+5, 
-                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
+                                   pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);           
            WM_SetCallback(buttons[0], &myButtonCallback); 
-			        HSD_BUTTON_SetTxFont(buttons[0], &GUI_Font_T90_24);
-           HSD_BUTTON_SetBkColor(buttons[0], pColors_win->bkColor);
-			        HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
-			        HSD_BUTTON_SetTextFocusColor(buttons[0], pColors_win->focusTextColor);
-           HSD_BUTTON_SetFocusBkColor(buttons[0],pColors_win->focusBkColor);
+			        BUTTON_SetFont(buttons[0], &GUI_Font_T90_24);
+           BUTTON_SetBkColor(buttons[0], BUTTON_CI_UNPRESSED, pColors_win->bkColor);
+			        BUTTON_SetTextColor(buttons[0], BUTTON_CI_UNPRESSED, pColors_win->textColor);
+           BUTTON_SetFocusColor(buttons[0],  pColors_win->focusBkColor);
+
 
            
-           buttons[1]  = HSD_BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_RIGHT_CHOICE/2+SYSTEM_SET_ITEM_WIDTH-1, 
+           buttons[1]  = BUTTON_CreateEx(SYSTEM_SET_ITEM_MARGIN*4+SYSTEM_SET_RIGHT_CHOICE/2+SYSTEM_SET_ITEM_WIDTH-1, 
                                    SYSTEM_SET_ITEM_Y+(SYSTEM_SET_ITEM_HEIGHT+SYSTEM_SET_ITEM_MARGIN)*5 - 6, 
                                    27, 
                                    GUI_GetFontSizeY()+5, 
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON1);
                       
            WM_SetCallback(buttons[1], &myButtonCallback); 
-			        HSD_BUTTON_SetTxFont(buttons[1], &GUI_Font_T90_24);
-           HSD_BUTTON_SetBkColor(buttons[1], pColors_win->bkColor);
-           HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
-           HSD_BUTTON_SetTextFocusColor(buttons[1], pColors_win->focusTextColor);
-           HSD_BUTTON_SetFocusBkColor(buttons[1],pColors_win->focusBkColor);
+			        BUTTON_SetFont(buttons[1], &GUI_Font_T90_24);
+           BUTTON_SetBkColor(buttons[1], BUTTON_CI_UNPRESSED, pColors_win->bkColor);
+			        BUTTON_SetTextColor(buttons[1], BUTTON_CI_UNPRESSED, pColors_win->textColor);
+           BUTTON_SetFocusColor(buttons[1],  pColors_win->focusBkColor);
+
 
                                 
            break;
@@ -456,20 +448,18 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
             GUI_DispString("切换开启关闭或者更改参数。");
             
 
-//            {
-//               HSD_BUTTON_SetTextColor(buttons[0], pColors_win->textColor);
-//               HSD_BUTTON_SetTextColor(buttons[1], pColors_win->textColor);
-//                                       
-//            }
-//            
+            BUTTON_SetTextColor(buttons[0], BUTTON_CI_UNPRESSED, pColors_win->textColor);
+            BUTTON_SetTextColor(buttons[1], BUTTON_CI_UNPRESSED, pColors_win->textColor);
+
+            
 
             sprintf(pStrBuf,"%d",agentsys_set.SOG);
-            HSD_BUTTON_SetText(buttons[0],pStrBuf);
+            BUTTON_SetText(buttons[0],pStrBuf);
 
 
 
             sprintf(pStrBuf,"%d",agentsys_set.COG);
-            HSD_BUTTON_SetText(buttons[1],pStrBuf);
+            BUTTON_SetText(buttons[1],pStrBuf);
 
        default:
            WM_DefaultProc(pMsg);
@@ -493,12 +483,14 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
    {
       case WM_SET_FOCUS:
          if(pMsg->Data.v){
-            HSD_BUTTON_SetBkColor(pMsg->hWin, pColors_win->focusBkColor);
+            BUTTON_SetBkColor(pMsg->hWin,  BUTTON_CI_UNPRESSED, pColors_win->focusBkColor);
+            BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors_win->focusTextColor);
          }
          else{
-            HSD_BUTTON_SetBkColor(pMsg->hWin, pColors_win->bkColor);
+            BUTTON_SetBkColor(pMsg->hWin,  BUTTON_CI_UNPRESSED, pColors_win->bkColor);
+            BUTTON_SetTextColor(pMsg->hWin, BUTTON_CI_UNPRESSED, pColors_win->textColor);
          }
-            HSD_BUTTON_Callback(pMsg);
+            BUTTON_Callback(pMsg);
          break;
          
       case WM_KEY:
@@ -515,7 +507,7 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
                   if(agentsys_set.SOG < 1)
                      agentsys_set.SOG = 1;
                   sprintf(pStrBuf,"%d",agentsys_set.SOG);
-                  HSD_BUTTON_SetText(buttons[0],pStrBuf);
+                  BUTTON_SetText(buttons[0],pStrBuf);
                }
                
                if(id == 1)
@@ -524,7 +516,7 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
                   if(agentsys_set.COG < 1)
                      agentsys_set.COG = 1;
                   sprintf(pStrBuf, "%d", agentsys_set.COG);
-                  HSD_BUTTON_SetText(buttons[1], pStrBuf);
+                  BUTTON_SetText(buttons[1], pStrBuf);
                }
                break;
             case GUI_KEY_RIGHT:
@@ -534,7 +526,7 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
                   if(agentsys_set.SOG > 60)
                      agentsys_set.SOG = 60;
                   sprintf(pStrBuf,"%d",agentsys_set.SOG);
-                  HSD_BUTTON_SetText(buttons[0],pStrBuf);
+                  BUTTON_SetText(buttons[0],pStrBuf);
                }
                
                if(id == 1)
@@ -543,7 +535,7 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
                   if(agentsys_set.COG > 60)
                      agentsys_set.COG = 60;
                   sprintf(pStrBuf, "%d", agentsys_set.COG);
-                  HSD_BUTTON_SetText(buttons[1], pStrBuf);
+                  BUTTON_SetText(buttons[1], pStrBuf);
                }
                break;
             case GUI_KEY_UP:
@@ -594,7 +586,7 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
         }
         break;
      default:
-        HSD_BUTTON_Callback(pMsg);
+        BUTTON_Callback(pMsg);
    }
    
       
