@@ -253,14 +253,14 @@ static void _onPaint1(void)
    {
       if(timeCnt%2 == 0)
       {
-         GUI_SetColor(pColor->numColor);
+         GUI_SetColor(pColor->bullyColor);
                  
          DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
       }
    }
    else if(MS_isMax_SOG || MS_isMin_SOG)
    {
-      GUI_SetColor(pColor->numColor);
+      GUI_SetColor(pColor->bullyColor);
       DispSOGNums(BBS1_ABOVE_X+60, BBS1_ABOVE_Y+70, mothership.SOG, BIG);
    }
    else
@@ -346,13 +346,13 @@ static void _onPaint2(void)
    {
       if(timeCnt%2 == 0)
       {
-         GUI_SetColor(pColor->numColor);
+         GUI_SetColor(pColor->bullyColor);
          DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50,mothership.SOG, SMALL);
       }
    }
    else if(MS_isMax_SOG || MS_isMin_SOG)
    {
-      GUI_SetColor(pColor->numColor);
+      GUI_SetColor(pColor->bullyColor);
       DispSOGNums(BBS2_ABOVE_X+20, BBS2_ABOVE_Y+50, mothership.SOG, SMALL);
    }
    else

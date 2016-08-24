@@ -21,7 +21,7 @@
 extern BERTH Berthes[BOAT_NUM_MAX];
 extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 extern int N_boat;
-
+extern int Triggered_SOG;
 extern FunctionalState isMntEnable;
 
 /// Defined in app.c.If key pressed , isKeyTrigged will be TRUE. Your apps must set iskeyTrigged FALSe after using it.
@@ -33,7 +33,7 @@ static int hasAlarm = 0;
 static void CHECK_HasAlarm(void);
 static void CHECK_MaskAllBerth(void);
 
-
+int Triggered_SOG = 0;
 
 void CHECK_MS_Speed()
 {
@@ -46,6 +46,7 @@ void CHECK_MS_Speed()
 		    if(MS_isSpeeding != MNTState_Masked)
 		    {
 			      MS_isSpeeding = MNTState_Triggered;
+         Triggered_SOG = mothership.SOG;
 		    }
 	  }
 	  else
@@ -59,6 +60,7 @@ void CHECK_MS_Speed()
 		    if(MS_isMax_SOG != MNTState_Masked)
 						{
 									MS_isMax_SOG = MNTState_Triggered;
+         Triggered_SOG = mothership.SOG;
 						}
 	  }
 	  else if(mothership.SOG < t90_set.alarm.min_sog)
@@ -66,6 +68,7 @@ void CHECK_MS_Speed()
 		    if(MS_isMin_SOG != MNTState_Masked)
 		    {
 			      MS_isMin_SOG = MNTState_Triggered;
+         Triggered_SOG = mothership.SOG;
 		    }
 	  }
   	else

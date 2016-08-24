@@ -102,6 +102,8 @@ void mntSetting_init(void);
 /*----------------- Global   variables --------------------*/
 ///Insert , Refresh互斥信号量
 int isKeyTrigged  = 0;
+      
+extern int Triggered_SOG;
 ///                                  _   _
 /// 标记是否有新的插入事件(不要想歪  \ @ / )
 ///                                   ''' 
@@ -372,7 +374,7 @@ printf("Play Task while begin\n");
                }
                else if(MS_isMax_SOG == MNTState_Triggered)
                {
-                  SND_ParseNum(mothership.SOG*100,aNums);
+                  SND_ParseNum(Triggered_SOG*100,aNums);
                   MUSIC_ADD(SND_ID_SN);                                   
                   MUSIC_ADD_5NUMS;
                   MUSIC_ADD(SND_ID_KT);
@@ -381,7 +383,7 @@ printf("Play Task while begin\n");
                }
                else if(MS_isMin_SOG == MNTState_Triggered)
                {
-                  SND_ParseNum(mothership.SOG*100,aNums);
+                  SND_ParseNum(Triggered_SOG*100,aNums);
                   MUSIC_ADD(SND_ID_SN);                                  
                   MUSIC_ADD_5NUMS;
                   MUSIC_ADD(SND_ID_KT);
@@ -468,7 +470,6 @@ void Comm_Task(void * p_arg)
    uint8_t  dataNoAckCnt   = 0;
    
    long SOG, COG;
-   
    while(1)
    {
 printf("Comm Task while begin\n");
