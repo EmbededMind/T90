@@ -126,7 +126,7 @@ static void InputBtCallback(WM_MESSAGE* pMsg){
 															   else if(EDIT_GetNumChars(edit)==9)
                   {
                      TEXT_SetTextColor(Hint,GUI_RED);
-															      TEXT_SetText(Hint,"九位码以达到9位！");//don't forget
+															      TEXT_SetText(Hint,"九位码已达到9位！");//don't forget
                      WM_InvalidateArea(&pRect);
                      break;
                   }
@@ -521,7 +521,7 @@ printf("MONITMMSI_ADD OK\n");
             GUI_SetColor(GUI_BLACK); 
          GUI_DispString("退出"); 
          GUI_SetFont(&GUI_Font_T90_30);
-         if(getflag())
+         if((getflag() || !t90_set.as_MMSI.port) && t90_set.sys.workmode == DOUBLE_MODE )
          {
             if(!t90_set.as_MMSI.port)
                GUI_DispStringAt("请输入辅船九位码",160,40);   

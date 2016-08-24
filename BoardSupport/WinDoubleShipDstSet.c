@@ -60,60 +60,28 @@ static void myDimCallback(WM_MESSAGE* pMsg)
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key)
            {
-//              case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }                           
-//                        break;
               case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;
                   break;
               case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-							             WM_InvalidateWindow(doubleShipDstSetWin);
-//                        }   
-                        break;
+
+                  myMsg.hWin = systemSetDlg;
+                  myMsg.hWinSrc = pMsg->hWin;
+                  myMsg.MsgId = USER_MSG_MOTHERPOS;
+                  myMsg.Data.v = !t90_set.sys.motherpos;
+                  WM_SendMessage(myMsg.hWin, &myMsg);
+                  WM_InvalidateWindow(doubleShipDstSetWin);
+
+                  break;
                         
-//              case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }                        
-//                         break;
-//                         
-//              case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
+
                          
               case GUI_KEY_PWM_INC:       
-							  WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-                       break;
+							           WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                  break;
               
               case GUI_KEY_UP:
-								   memcpy(&preDouDstSet,&tempDouDstSet,sizeof(tempDouDstSet));
+								           memcpy(&preDouDstSet,&tempDouDstSet,sizeof(tempDouDstSet));
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
                       case 0:
@@ -270,7 +238,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
               
               case GUI_KEY_LEFT:
               case GUI_KEY_RIGHT:
-								   memcpy(&preDouDstSet,&t90_set.doubledst_set,sizeof(t90_set.doubledst_set));
+								           memcpy(&preDouDstSet,&t90_set.doubledst_set,sizeof(t90_set.doubledst_set));
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id)
                    {
@@ -302,8 +270,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       
                       case 4:
                            WM_SetFocus(hExDim[1]);
-                           break;
-                      
+                           break;                      
                    }
                    break;
               case GUI_KEY_BACKSPACE:
@@ -322,7 +289,6 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       WM_BringToTop(confirmWin);
                       WM_SetFocus(confirmWin);
                    }
-
                    break;
            }
            break;     
@@ -371,7 +337,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
       case USER_MSG_REPLY:
            if(pMsg->Data.v == REPLY_OK)
            {
-						  memcpy(&preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));
+						        memcpy(&preDouDstSet, &t90_set.doubledst_set, sizeof(preDouDstSet));
               
               sprintf(pStrBuf, "%d", preDouDstSet.mo_to_as);
               HSD_DIMENSION_EX_SetValText(hExDim[0], pStrBuf);
@@ -487,7 +453,7 @@ static void myWindowcallback(WM_MESSAGE * pMsg)
 
 
            memcpy(&tempDouDstSet,&t90_set.doubledst_set,sizeof(t90_set.doubledst_set));
-                 
+           memcpy(&preDouDstSet,&t90_set.doubledst_set,sizeof(t90_set.doubledst_set));      
       
            pColors  = &setWinColors[t90_set.sys.nightmode];
            
@@ -646,8 +612,8 @@ void _paint(WM_HWIN pMsg)
     yPos_A  = drawArea.y0;
     if(t90_set.sys.motherpos == DEFAULT_RIGHT)
     {
-       xPos_M  = drawArea.x1 - (drawArea.x1 - drawArea.x0)/5;               
-       xPos_A  = drawArea.x0 + (drawArea.x1 - drawArea.x0)/5;        
+       xPos_M  = drawArea.x1 - (drawArea.x1 - drawArea.x0)/5;
+       xPos_A  = drawArea.x0 + (drawArea.x1 - drawArea.x0)/5;
     }
     GUI_SetPenSize(2);
     GUI_DrawLine(xPos_M, yPos_M, xPos_M+16, yPos_M +16);
