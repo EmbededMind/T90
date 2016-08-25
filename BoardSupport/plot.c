@@ -398,8 +398,7 @@ void DrawAllOtherShips()    //?????
          point.y = SimpBerthes[i].pBerth->y_to_cross;
              
          if((SimpBerthes[i].pBerth->Boat.category & 0x0f) == TYPE_BULLY)
-         {
-            
+         {            
             DrawBullyShip(GetItemPixel(point), (SimpBerthes[i].pBerth->Boat.COG - mothership.COG)/10, BullyColor);
          }
          else

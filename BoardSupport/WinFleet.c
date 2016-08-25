@@ -529,9 +529,9 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
        GUI_SetFont(&GUI_Font_T90_30);
 		     GUI_DispStringInRect("九位码",&Head,GUI_TA_VCENTER|GUI_TA_HCENTER);
 		     GUI_DispStringInRect("操作",&Operat,GUI_TA_VCENTER|GUI_TA_HCENTER);
-       GUI_SetFont(&GUI_Font_T90_20);
-							GUI_DispStringInRectWrap("船只添加到“我的船队”后,不触发闯入报警。",&wnote,0,GUI_WRAPMODE_WORD);
-       GUI_DispStringInRectWrap("双拖船务必将辅船上的距离安全标的九位码添加至“我的船队”。",&wnote,GUI_TA_BOTTOM,GUI_WRAPMODE_WORD);
+       GUI_SetFont(&GUI_Font_T90_30);
+							GUI_DispStringInRectWrap("注意： 船只添加到“我的船队”后,不触发闯入报警!",&wnote,0,GUI_WRAPMODE_WORD);
+//       GUI_DispStringInRectWrap("双拖船务必将辅船上的距离安全标的九位码添加至“我的船队”。",&wnote,GUI_TA_BOTTOM,GUI_WRAPMODE_WORD);
 		
 		     GUI_SetFont(&GUI_Font_T90_30);
            
@@ -540,38 +540,36 @@ static void FleetWinCallback(WM_MESSAGE* pMsg){
            GUI_DispDecAt(monitMMSI[i],MMSIList[i].x0+65,MMSIList[i].y0+3,9);
            BUTTON_SetText(WM_GetDialogItem(pMsg->hWin,GUI_ID_BUTTON1+i),"删除");
        }
-       if(WM_HasFocus(MMSIdis_button) || WM_HasFocus(addbutton))
+       if(WM_HasFocus(delButton[0])||WM_HasFocus(delButton[1])||WM_HasFocus(delButton[2])||WM_HasFocus(delButton[3])||WM_HasFocus(delButton[4]))
        {
-           GUI_SetFont(&GUI_Font_T90_24);
-           GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
-           GUI_DispStringAt("【确认】",100, 400);
-           GUI_SetColor(setWinColors[t90_set.sys.nightmode].textColor);
-           GUI_DispString("键进入设置模式 ");
-           GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
-           GUI_DispString("  卞  ");
-           GUI_SetColor(setWinColors[t90_set.sys.nightmode].textColor);
-           GUI_DispString("选择选项。");
+          GUI_SetFont(&GUI_Font_T90_24);
+          GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+          GUI_DispStringAt("【确认】",100, 400);
+          GUI_SetColor(setDlgColors[t90_set.sys.nightmode].textColor);
+          GUI_DispString("键删除 ");
+          GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+          GUI_DispString("  卞  ");
+          GUI_SetColor(setDlgColors[t90_set.sys.nightmode].textColor);
+          GUI_DispString("选择选项。");
        }
-
+       else
+       {                  
+          GUI_SetFont(&GUI_Font_T90_24);
+          GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+          GUI_DispStringAt("【确认】",100, 400);
+          GUI_SetColor(setWinColors[t90_set.sys.nightmode].textColor);
+          GUI_DispString("键进入设置模式 ");
+          GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
+          GUI_DispString("  卞  ");
+          GUI_SetColor(setWinColors[t90_set.sys.nightmode].textColor);
+          GUI_DispString("选择选项。");
+       }
+       
+       if(t90_set.sys.workmode == DOUBLE_MODE)
        {
-          int flg = 1;
-        
-          if(WM_HasFocus(MMSIdis_button) || WM_HasFocus(addbutton))
-          {
-             flg = 0;
-          }
-          if(flg)
-          {
-             GUI_SetFont(&GUI_Font_T90_24);
-             GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
-             GUI_DispStringAt("【确认】",100, 400);
-             GUI_SetColor(setDlgColors[t90_set.sys.nightmode].textColor);
-             GUI_DispString("键删除 ");
-             GUI_SetColor(subMenuColors[t90_set.sys.nightmode].btFocusBkColor);
-             GUI_DispString("  卞  ");
-             GUI_SetColor(setDlgColors[t90_set.sys.nightmode].textColor);
-             GUI_DispString("选择选项。");
-          }
+          GUI_SetFont(&GUI_Font_T90_24);
+          GUI_SetColor(setDlgColors[t90_set.sys.nightmode].textColor);
+          GUI_DispStringAt("务必将辅船上的安全标添加至“我的船队”!",90,420);
        }
        BUTTON_SetFocusColor(MMSIdis_button,subMenuColors[t90_set.sys.nightmode].btFocusBkColor);           
 			    break;

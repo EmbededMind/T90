@@ -355,19 +355,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                
             GUI_SetFont(&GUI_Font_T90_24);
 //            GUI_SetTextAlign(GUI_TA_HCENTER);
-            if(WM_HasFocus(slider))
-            {
-               GUI_DispStringAt("使用",30, ALARM_SET_HEIGHT-30-32);
-               GUI_SetColor(pColors->focusBkColor);
-               GUI_DispString(" 咗祐 ");
-               GUI_SetColor(pColors->textColor);
-               GUI_DispString("选择开启/关闭，使用");
-               GUI_SetColor(pColors->focusBkColor);
-               GUI_DispString("  卞  ");
-               GUI_SetColor(pColors->textColor);
-               GUI_DispString("选择选项。");
-		          }
-            else if(WM_HasFocus(buttons[2]))
+            if(WM_HasFocus(buttons[2]))
             {
                GUI_DispStringAt("按下",20, ALARM_SET_HEIGHT-30-32);
                GUI_SetColor(pColors->focusBkColor);
@@ -397,6 +385,18 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                GUI_SetColor(pColors->textColor);
                GUI_DispString("调整数值。");
             }
+            else
+            {
+               GUI_DispStringAt("使用",30, ALARM_SET_HEIGHT-30-32);
+               GUI_SetColor(pColors->focusBkColor);
+               GUI_DispString(" 咗祐 ");
+               GUI_SetColor(pColors->textColor);
+               GUI_DispString("选择开启/关闭，使用");
+               GUI_SetColor(pColors->focusBkColor);
+               GUI_DispString("  卞  ");
+               GUI_SetColor(pColors->textColor);
+               GUI_DispString("选择选项。");
+		          }
             GUI_SetDrawMode(GUI_DM_NORMAL);
             GUI_SetColor(pColors->textColor);
 
