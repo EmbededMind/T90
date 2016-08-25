@@ -10,5 +10,6 @@ void ISD_Wait_PWRUp(void);
 void ISD_PWRDn(void);
 void ISD_Play(uint8_t addr);
 Bool ISD_IsBusy(void);
+void ISD_SetVolumnZero();
 #endif
 

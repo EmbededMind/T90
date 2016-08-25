@@ -9,7 +9,7 @@
 #include "t90font.h"
 #include "DispSOGNums.h"
 #include "snap.h"
-
+#include "xt_isd.h"
 extern boat mothership;
 extern Bool toast_flg;
 
@@ -127,6 +127,17 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						 
                case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;
+                  ISD_Wait_PWRUp();
+                  if(monitorState)
+                  {                     
+                     ISD_SetVolumn(t90_set.sys.volum);
+                  }
+                  else
+                  {
+                     ISD_SetVolumnZero();
+                  }
+//                  if(!ISD_IsBusy())
+//                     ISD_PWRDn();
                   WM_Paint(mainShipWin);
                   break;
 

@@ -11,7 +11,7 @@
 #include "stub.h"
 #include "lpc177x_8x_uart.h"
 #include "comm.h"
-
+#include "xt_isd.h"
 #define SF_NUM  3
 #define DMS_NUM 5
 
@@ -45,6 +45,17 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
 
               case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;
+                  ISD_Wait_PWRUp();
+                  if(monitorState)
+                  {                     
+                     ISD_SetVolumn(t90_set.sys.volum);
+                  }
+                  else
+                  {
+                     ISD_SetVolumnZero();
+                  }
+//                  if(!ISD_IsBusy())
+//                     ISD_PWRDn();
                   break;
               case GUI_KEY_MORIGHT:
 

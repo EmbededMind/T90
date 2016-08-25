@@ -10,7 +10,7 @@
 #include "t90font.h"
 
 #include "layout_main_menu.h"
-
+#include "xt_isd.h"
 #define ID_WINDOW            (GUI_ID_USER + 0x00)
 
 WM_HWIN mainMenuDlg;
@@ -111,6 +111,17 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 //                        break;
               case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;
+                  ISD_Wait_PWRUp();
+                  if(monitorState)
+                  {                     
+                     ISD_SetVolumn(t90_set.sys.volum);
+                  }
+                  else
+                  {
+                     ISD_SetVolumnZero();
+                  }
+//                  if(!ISD_IsBusy())
+//                     ISD_PWRDn();
                   break;
   
               case GUI_KEY_MORIGHT:

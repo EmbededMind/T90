@@ -10,6 +10,7 @@
 #include "plot.h"
 #include "Check.h"
 #include "t90font.h"
+#include "xt_isd.h"
 //#define MNT_LABEL_TIME   3
 
 /** @brief 单拖模式窗口的句柄 */
@@ -150,7 +151,17 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 						 
 						 case GUI_KEY_SOUNDOFF:
 							    monitorState = monitorState == ON? OFF: ON;
-//									mntLabelTimeCnt = MNT_LABEL_TIME;
+            ISD_Wait_PWRUp();
+            if(monitorState)
+            {                     
+               ISD_SetVolumn(t90_set.sys.volum);
+            }
+            else
+            {
+               ISD_SetVolumnZero();
+            }
+//            if(!ISD_IsBusy())
+//               ISD_PWRDn();
 									WM_Paint(alarmMonitorWin);							
 									break;
 						 

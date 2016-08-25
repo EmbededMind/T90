@@ -30,7 +30,7 @@ void MainTask(void)
 {
    WM_MESSAGE myMsg;
    GUI_MEMDEV_Handle hMem0;
-printf("MainTask Start\n");
+//printf("MainTask Start\n");
 
 //printf("maintask\n");
    GUI_Init();
@@ -268,7 +268,7 @@ printf("MainTask Start\n");
          
          
       }
-printf("MainTask end\n");     
+//printf("MainTask end\n");     
       GUI_Delay(200);
      
    }

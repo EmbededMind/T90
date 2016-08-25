@@ -9,7 +9,7 @@
 #include "HSD_SLIDER.h"
 
 #include "layout_alarm_set.h"
-
+#include "xt_isd.h"
 
 static const GUI_RECT drawArea = {30, 120, ALARM_SET_WIDTH-30, ALARM_SET_HEIGHT-30};
 
@@ -47,6 +47,17 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 //                        break;
               case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;
+                   ISD_Wait_PWRUp();
+                   if(monitorState)
+                   {                     
+                      ISD_SetVolumn(t90_set.sys.volum);
+                   }
+                   else
+                   {
+                      ISD_SetVolumnZero();
+                   }
+//                   if(!ISD_IsBusy())
+//                     ISD_PWRDn();
                   break;
               case GUI_KEY_MORIGHT:
 //                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
@@ -135,6 +146,17 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
               case GUI_KEY_SOUNDOFF:
                    monitorState = monitorState == ON? OFF: ON;
+                   ISD_Wait_PWRUp();
+                   if(monitorState)
+                   {                     
+                      ISD_SetVolumn(t90_set.sys.volum);
+                   }
+                   else
+                   {
+                      ISD_SetVolumnZero();
+                   }
+//                   if(!ISD_IsBusy())
+//                     ISD_PWRDn();
                    break;
               case GUI_KEY_MOLEFT:
                         if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)

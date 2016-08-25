@@ -11,6 +11,7 @@
 #include "lpc177x_8x_uart.h"
 #include "comm.h"
 #include "math.h"
+#include "xt_isd.h"
 
 #define ID_EX_DIM_0      (GUI_ID_USER + 0x10)
 #define ID_EX_DIM_1      (GUI_ID_USER + 0x11)
@@ -62,6 +63,17 @@ static void myDimCallback(WM_MESSAGE* pMsg)
            {
               case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;
+                  ISD_Wait_PWRUp();
+                  if(monitorState)
+                  {                     
+                     ISD_SetVolumn(t90_set.sys.volum);
+                  }
+                  else
+                  {
+                     ISD_SetVolumnZero();
+                  }
+//                  if(!ISD_IsBusy())
+//                     ISD_PWRDn();
                   break;
               case GUI_KEY_MORIGHT:
 

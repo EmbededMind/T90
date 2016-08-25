@@ -9,7 +9,7 @@
 #include "layout_sub_menu.h"
 #include "layout_dst_set.h"
 #include "HSD_BUTTON.h"
-
+#include "xt_isd.h"
 #define ID_WINDOW           (GUI_ID_USER + 0x00)
 
 #define ID_BUTTON_0         (GUI_ID_USER + 0x10)
@@ -108,6 +108,17 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
 //                        break;
               case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;
+                  ISD_Wait_PWRUp();
+                  if(monitorState)
+                  {                     
+                     ISD_SetVolumn(t90_set.sys.volum);
+                  }
+                  else
+                  {
+                     ISD_SetVolumnZero();
+                  }
+//                  if(!ISD_IsBusy())
+//                     ISD_PWRDn();
                   break;
   
               case GUI_KEY_MORIGHT:

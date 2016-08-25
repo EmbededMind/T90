@@ -97,3 +97,12 @@ Bool ISD_IsBusy(void)
       return FALSE;
 }
 
+
+void ISD_SetVolumnZero()
+{
+   ISD_buf[0]  = 0x03;
+   ISD_buf[1]  = 0xFF;
+ 
+   SPI1_SendData(0xb8, ISD_buf, 2);
+}
+

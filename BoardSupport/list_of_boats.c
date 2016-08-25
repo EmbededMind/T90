@@ -228,6 +228,7 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
    if((t90_set.alarm.on_off & (0x01<<3))&& pBerth->Boat.category == 0  &&  p_msg->SOG >= highspeed)
    {
       pBerth->Boat.highspeedflag++;
+printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
       if(pBerth->Boat.highspeedflag >= 3)
       {
          unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
@@ -235,12 +236,15 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
          BULY_add(pBerth);
          llToxy(pBerth);         
       }
+ 
    }
 	  else
    {
       if(pBerth->Boat.highspeedflag > 0)
       {
+
          pBerth->Boat.highspeedflag--;
+printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
       }
    }
 
@@ -445,6 +449,7 @@ int add_18(struct message_18 * p_msg)
 
    {
       buf->Boat.highspeedflag++;
+printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag); 
       if(buf->Boat.highspeedflag >= 3)
       {
          unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
@@ -454,13 +459,14 @@ int add_18(struct message_18 * p_msg)
          
       }
    }
-	 else
-	 {
-      if(buf->Boat.highspeedflag > 0)
-      {
-         buf->Boat.highspeedflag--;
-      }
-  }
+   else
+   {
+       if(buf->Boat.highspeedflag > 0)
+       {
+          buf->Boat.highspeedflag--;
+printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag);
+       }
+   }
 
 //printf("alloc:%d--%09ld\n",buf-Berthes,buf->Boat.user_id);   
    if(pHeader == NULL)
@@ -685,7 +691,7 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
          {
             pBerth->Boat.category  = nation | TYPE_BULLY;              
             BULY_add(pBerth);
-				llToxy(pBerth);          
+				        llToxy(pBerth);          
          }
          else
          {
@@ -816,7 +822,7 @@ void updateTimeStamp()
    
    while(pCur)
    {
-printf("updateTimeStamp begin\n");      
+//printf("updateTimeStamp begin\n");      
       if(pCur->Boat.time_cnt > 0)
       {      
          SimpBerthes[i].latitude   = pCur->Boat.latitude;
@@ -862,7 +868,7 @@ printf("updateTimeStamp begin\n");
          pCur  = tmp;
         
       }
-printf("updateTimeStamp end\n");
+//printf("updateTimeStamp end\n");
    }
    N_boat  = i;    
 

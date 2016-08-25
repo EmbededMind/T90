@@ -9,7 +9,7 @@
 #include "DispSOGNums.h" 
 
 #include "layout_alarm_set.h"
-
+#include "xt_isd.h"
 static const GUI_RECT drawArea = {30, 120, ALARM_SET_WIDTH-30, ALARM_SET_HEIGHT-30};
 
 WM_HWIN highspshipsetWin;

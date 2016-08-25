@@ -9,7 +9,7 @@
 #include "t90font.h"
 
 #include "layout_alarm_set.h"
-
+#include "xt_isd.h"
 #define GUI_ID_WINDOW0           (GUI_ID_USER + 0x00)
 
 WM_HWIN specialAlarmSetDlg;
@@ -64,6 +64,17 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 //                        break;
               case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;
+                  ISD_Wait_PWRUp();
+                  if(monitorState)
+                  {                     
+                     ISD_SetVolumn(t90_set.sys.volum);
+                  }
+                  else
+                  {
+                     ISD_SetVolumnZero();
+                  }
+//                  if(!ISD_IsBusy())
+//                     ISD_PWRDn();
                   break;
               case GUI_KEY_MORIGHT:
 //                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)

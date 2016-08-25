@@ -7,6 +7,7 @@
 #include "stub.h"
 #include "transform.h"
 #include "t90font.h"
+#include "xt_isd.h"
 
 Point motherShipPixel;
 
@@ -81,11 +82,11 @@ void DrawShipFamily(int flag)     //???в?????????lП
             pixelTmp1 = GetItemPixel(pIndex->pStub->basePoint);
             GUI_FillPolygon(shipe, 3, pixelTmp1.x, pixelTmp1.y);
             GUI_SetColor(pColor->textColor);
-            if(!flag)    //??
-            {
-               sprintf(pStrBuf, "%02d", pIndex->pStub->StubNum);
-               GUI_DispStringAt(pStrBuf, pixelTmp1.x - 6, pixelTmp1.y + 5);					
-            }
+//            if(!flag)    //??
+//            {
+//               sprintf(pStrBuf, "%02d", pIndex->pStub->StubNum);
+//               GUI_DispStringAt(pStrBuf, pixelTmp1.x - 6, pixelTmp1.y + 5);					
+//            }
          }
          else if(pIndex->pStub->type == aidedStub)   //??
          {
@@ -228,7 +229,7 @@ void DrawCursor(Point pixel, int flag)  //Д???????х?
       GUI_SetColor(homeColors[t90_set.sys.nightmode].numColor);
       point.x = pSnapLink->x_to_cross;
       point.y = pSnapLink->y_to_cross;
-      if((pSnapLink->Boat.category & 0x0f) == TYPE_BULLY)
+      if(pSnapLink->Boat.category & 0x02)
       {
          DrawBullyShip(GetItemPixel(point), (pSnapLink->Boat.COG - mothership.COG)/10, homeColors[t90_set.sys.nightmode].numColor);
       }

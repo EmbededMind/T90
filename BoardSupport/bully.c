@@ -150,10 +150,10 @@ void BULY_delete(BERTH* addr)
 }
 
 
-__INLINE BULY_BERTH* BULY_fetchPlayBerth(void)
-{
-   return pPlayBerth;
-}
+//__INLINE BULY_BERTH* BULY_fetchPlayBerth(void)
+//{
+//   return pPlayBerth;
+//}
 
 int BULY_getValidNumber(void)
 {
@@ -187,7 +187,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered )
          {
             pPlayBerth  = pIterator;
-					  SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
          else
@@ -207,7 +207,7 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered)
          {
             pPlayBerth  = pIterator;
-					  SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
          else
@@ -215,17 +215,17 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
             pIterator  = pIterator->pNext;
          }
       }
-			pIterator = pBulyHeader;
-			while(pIterator != pPlayBerth->pNext)
-			{
-				if(pIterator->pBoatLink->mntState == MNTState_Triggered)
-        {
-          pPlayBerth  = pIterator;
-					SNAP_SetSnapLink(pPlayBerth->pBoatLink);
-          return pPlayBerth;
-        }
-				pIterator = pIterator->pNext;
-			}
+      pIterator = pBulyHeader;
+      while(pIterator != pPlayBerth->pNext)
+      {
+         if(pIterator->pBoatLink->mntState == MNTState_Triggered)
+             {
+               pPlayBerth  = pIterator;
+               SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+               return pPlayBerth;
+             }
+         pIterator = pIterator->pNext;
+      }
       pPlayBerth  = NULL;
       return NULL;
    }

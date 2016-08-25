@@ -18,7 +18,7 @@
 //#include "HSD_BUTTON.h"
 #include "HSD_Toast.h"
 #include "layout_system_set.h"
-
+#include "xt_isd.h"
 
 #define SLD_NUM  6
 
@@ -499,6 +499,17 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
          {
             case GUI_KEY_SOUNDOFF:
                   monitorState = monitorState == ON? OFF: ON;
+                  ISD_Wait_PWRUp();
+                  if(monitorState)
+                  {                     
+                     ISD_SetVolumn(t90_set.sys.volum);
+                  }
+                  else
+                  {
+                     ISD_SetVolumnZero();
+                  }
+//                  if(!ISD_IsBusy())
+//                     ISD_PWRDn();
                   break;
             case GUI_KEY_LEFT:
                if(id == 0)
@@ -713,11 +724,13 @@ static void _OnVolumChanged(WM_MESSAGE * pMsg,int val)
    if(agentsys_set.volum != val)
    {
       agentsys_set.volum  = val;
-
-		  ISD_Wait_PWRUp();
-      ISD_SetVolumn(val);
-      ISD_Play(SND_ID_TEST);
-      ISD_PWRDn();
+      if(monitorState)
+      {
+         ISD_Wait_PWRUp();
+         ISD_SetVolumn(val);
+         ISD_Play(SND_ID_TEST);
+         ISD_PWRDn();
+      }
    }
 }
 

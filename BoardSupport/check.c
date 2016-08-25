@@ -100,12 +100,12 @@ void CHECK_DelHighSpeed()
    {
       while(pBerth)
       {
-				if((pBerth->pBoatLink->Boat.category & 0xf0) == 0)
-				{
-         pNext = pBerth->pNext;
-         pBerth->pBoatLink->Boat.category = 0;
-         BULY_delete(pBerth->pBoatLink);
-				}
+         if((pBerth->pBoatLink->Boat.category & 0xf0) == 0)
+         {
+              pNext = pBerth->pNext;
+              pBerth->pBoatLink->Boat.category = 0;
+              BULY_delete(pBerth->pBoatLink);
+         }
          pBerth = pNext;
       }       
       return;
@@ -114,7 +114,7 @@ void CHECK_DelHighSpeed()
    while(pBerth)
    {
       pNext = pBerth->pNext;
-      if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.SOG < t90_set.alarm.highspeed)
+      if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.highspeedflag < 3)
       {
          pBerth->pBoatLink->Boat.category = 0;
          BULY_delete(pBerth->pBoatLink);
