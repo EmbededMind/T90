@@ -17,7 +17,7 @@
 #define ID_BUTTON_2         (GUI_ID_USER + 0x12) 
 
 WM_HWIN dstSetMenuDlg;
-
+static GUI_RECT pRect = {0, 199, 249, 447};
 static WM_HWIN buttons[3]; 
 
 //static int plug;
@@ -302,6 +302,9 @@ static void myDialogCallback(WM_MESSAGE* pMsg)
            HSD_BUTTON_SetText(buttons[1], "网尾");
            HSD_BUTTON_SetText(buttons[2], "网口右舷");
         }
+        GUI_SetColor(pColors->btTextColor);
+        GUI_SetFont(&GUI_Font_T90_24);
+        GUI_DispStringInRect("灰色表示未接入安全标!", &pRect, GUI_TA_HCENTER | GUI_TA_BOTTOM);
         break;	
 				
 		 default:
