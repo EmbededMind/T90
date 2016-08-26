@@ -181,28 +181,28 @@ int GetDistance(Point point1, Point point2)   //两点间的距离
 	return (int)(sqrt(point.x*point.x + point.y*point.y)+0.5);
 }
 
-static void PrintStubInfo()
-{
-	int i = 0;	
-	StubNode *pIndex = pStubHead;
-	printf("\r\n");
-	printf("StubInfo:\r\n");
-	if(pIndex)
-	{
-		do
-		{
-			printf("stub[%d].basePoint:(%d, %d)\r\n", i, pIndex->pStub->basePoint.x, pIndex->pStub->basePoint.y);
-			printf("stub[%d].tang1.point:(%d, %d)\r\n", i, pIndex->pStub->tang1.point.x, pIndex->pStub->tang1.point.y);
-			printf("stub[%d].tang1.angle:%d\r\n", i, pIndex->pStub->tang1.angle);
-			printf("stub[%d].tang2.point:(%d, %d)\r\n", i, pIndex->pStub->tang2.point.x, pIndex->pStub->tang2.point.y);
-			printf("stub[%d].tang2.angle:%d\r\n", i, pIndex->pStub->tang2.angle);
-			i++;
-			pIndex = pIndex->pNext;
-		}
-		while(pIndex != pStubHead);
-	}
-	printf("\r\n");	
-}
+//static void PrintStubInfo()
+//{
+//	int i = 0;	
+//	StubNode *pIndex = pStubHead;
+//	printf("\r\n");
+//	printf("StubInfo:\r\n");
+//	if(pIndex)
+//	{
+//		do
+//		{
+//			printf("stub[%d].basePoint:(%d, %d)\r\n", i, pIndex->pStub->basePoint.x, pIndex->pStub->basePoint.y);
+//			printf("stub[%d].tang1.point:(%d, %d)\r\n", i, pIndex->pStub->tang1.point.x, pIndex->pStub->tang1.point.y);
+//			printf("stub[%d].tang1.angle:%d\r\n", i, pIndex->pStub->tang1.angle);
+//			printf("stub[%d].tang2.point:(%d, %d)\r\n", i, pIndex->pStub->tang2.point.x, pIndex->pStub->tang2.point.y);
+//			printf("stub[%d].tang2.angle:%d\r\n", i, pIndex->pStub->tang2.angle);
+//			i++;
+//			pIndex = pIndex->pNext;
+//		}
+//		while(pIndex != pStubHead);
+//	}
+//	printf("\r\n");	
+//}
 
 static void FillStubInfo(void)    //根据桩点坐标计算桩点两侧切点的信息
 {

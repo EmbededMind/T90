@@ -228,7 +228,7 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
    if((t90_set.alarm.on_off & (0x01<<3))&& pBerth->Boat.category == 0  &&  p_msg->SOG >= highspeed)
    {
       pBerth->Boat.highspeedflag++;
-printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
+//printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
       if(pBerth->Boat.highspeedflag >= 3)
       {
          unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
@@ -244,7 +244,7 @@ printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedfla
       {
 
          pBerth->Boat.highspeedflag--;
-printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
+//printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
       }
    }
 
@@ -449,7 +449,7 @@ int add_18(struct message_18 * p_msg)
 
    {
       buf->Boat.highspeedflag++;
-printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag); 
+//printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag); 
       if(buf->Boat.highspeedflag >= 3)
       {
          unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
@@ -464,7 +464,7 @@ printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag);
        if(buf->Boat.highspeedflag > 0)
        {
           buf->Boat.highspeedflag--;
-printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag);
+//printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag);
        }
    }
 

@@ -512,7 +512,7 @@ static void _onPaint2(void)
               break;
       
           default :
-            printf("tmpCursor error\n"); 
+//            printf("tmpCursor error\n"); 
              break;
      }
   }

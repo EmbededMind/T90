@@ -133,7 +133,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            }
            else{
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->bkColor);
-						  HSD_BUTTON_SetTextColor(pMsg->hWin,pColors->textColor);
+						        HSD_BUTTON_SetTextColor(pMsg->hWin,pColors->textColor);
            }
            HSD_BUTTON_Callback(pMsg);
            break;
@@ -241,13 +241,13 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
   switch(pMsg->MsgId){
 		
 		case USER_MSG_SKIN:
-			   pColors = &(setWinColors[pMsg->Data.v]);	
+			     pColors = &(setWinColors[pMsg->Data.v]);	
 		      pColors_Slider = &(setDlgColors[pMsg->Data.v]);
            
 //				 for(i = 0; i < 2; i++)
 //				 {
-						HSD_BUTTON_SetBkColor(buttons, pColors->bkColor);
-						HSD_BUTTON_SetTextColor(buttons, pColors->textColor);
+					   HSD_BUTTON_SetBkColor(buttons, pColors->bkColor);
+					  	HSD_BUTTON_SetTextColor(buttons, pColors->textColor);
 //				 }
              
              HSD_SLIDER_SetBkColor(slider, pColors->bkColor);
@@ -313,7 +313,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		
 //				 GUI_FillRect(ALARM_SET_WIDTH/2+35, ALARM_SET_HEIGHT/2-2, ALARM_SET_WIDTH/2+47, ALARM_SET_HEIGHT/2+10);
 				 
-				 GUI_SetFont(&GUI_Font_T90_30);
+				        GUI_SetFont(&GUI_Font_T90_30);
 				 GUI_DispStringAt("报警航速", 50, ALARM_SET_HEIGHT/2-10);
 				 GUI_DispStringAt("节", ALARM_SET_WIDTH-70, ALARM_SET_HEIGHT/2-10);
 		      GUI_DispStringAt("高速船报警：", drawArea.x0, drawArea.y0 - 60);
