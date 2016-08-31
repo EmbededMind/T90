@@ -45,7 +45,7 @@ int main(void)
 
 //初始化UART0 ，UART2，打开Timer2
 	USER_Init();
-//printf("-------\n");
+printf("-------\n");
 	lpc1788_Lcd_Init();	  /* 初始化LCD */	
 
 // lpc1788_SDRAM_Test();
@@ -56,10 +56,10 @@ int main(void)
 ////  //fs_test();
 ////  	exfuns_init();
 ////  	load_font(); //加载flash字库  7E 02 01 EF
-//   SCB->VTOR = 0x0000A000 & 0x1FFFFF80;
-  	App_TaskStart();
 
-	  while(1);
+	App_TaskStart();
+
+	while(1);
 }
 
 /************************************* End *************************************/

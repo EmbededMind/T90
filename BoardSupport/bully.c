@@ -258,20 +258,20 @@ unsigned char BULY_parseNation(long id)
 }
 
 
-//void BULY_dump(void)
-//{
-//   BULY_BERTH* pIterator  = pBulyHeader;
-//   while(pIterator)
-//   {
-////      printf("mmsi:%09ld--sog:%d--dist:%d--category:0x%x\n", pIterator->pBoatLink->Boat.user_id, pIterator->pBoatLink->Boat.SOG, pIterator->pBoatLink->Boat.dist, pIterator->pBoatLink->Boat.category);
-////     printf("mmsi:%09ld - mntstate:%d\r\n", pIterator->pBoatLink->Boat.user_id, pIterator->pBoatLink->mntState); 
-//		    pIterator  = pIterator->pNext;
-//   }
-//}
+void BULY_dump(void)
+{
+   BULY_BERTH* pIterator  = pBulyHeader;
+   while(pIterator)
+   {
+//      printf("mmsi:%09ld--sog:%d--dist:%d--category:0x%x\n", pIterator->pBoatLink->Boat.user_id, pIterator->pBoatLink->Boat.SOG, pIterator->pBoatLink->Boat.dist, pIterator->pBoatLink->Boat.category);
+     printf("mmsi:%09ld - mntstate:%d\r\n", pIterator->pBoatLink->Boat.user_id, pIterator->pBoatLink->mntState); 
+		 pIterator  = pIterator->pNext;
+   }
+}
 
 
-//void BULY_print(BULY_BERTH* pBulyBerth)
-//{
-//   printf("mmsi:%09ld--sog:%d--dist:%d\n", pBulyBerth->pBoatLink->Boat.user_id, pBulyBerth->pBoatLink->Boat.SOG, pBulyBerth->pBoatLink->Boat.dist );
-//}
+void BULY_print(BULY_BERTH* pBulyBerth)
+{
+   printf("mmsi:%09ld--sog:%d--dist:%d\n", pBulyBerth->pBoatLink->Boat.user_id, pBulyBerth->pBoatLink->Boat.SOG, pBulyBerth->pBoatLink->Boat.dist );
+}
 

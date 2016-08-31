@@ -128,26 +128,26 @@ int screen_vcenter;
 
 
 
-//void printT90_Set(T90_Set * p)
-//{
-//   printf("\r\n");
-//	
+void printT90_Set(T90_Set * p)
+{
+   printf("\r\n");
+	
 
 
-//   printf("Invd_dst        %d\r\n", p->alarm.invd_dst);
-//   printf("Danger_sog      %d\r\n", p->alarm.danger_sog);
-//   printf("Min_sog         %d\r\n", p->alarm.min_sog);
-//   printf("Max_sog         %d\r\n", p->alarm.max_sog);
-//   printf("Nation          %X\r\n", p->alarm.nation);
-//   
-//   printf("Workmode        %s-%d\r\n", p->sys.workmode?"double":"single", p->sys.workmode);
-//   printf("Nightmode       %s-%d\r\n", p->sys.nightmode?"Night":"Day",p->sys.nightmode);
-//   printf("Snd -- volum    %d\r\n",    p->sys.volum);
-//   printf("Brightness      %d\r\n",    p->sys.bright);
-//   printf("Unit            %s-%d\r\n", p->sys.unit?"nm":"km",p->sys.unit);
-//	
-//	printf("\r\n");
-//}
+   printf("Invd_dst        %d\r\n", p->alarm.invd_dst);
+   printf("Danger_sog      %d\r\n", p->alarm.danger_sog);
+   printf("Min_sog         %d\r\n", p->alarm.min_sog);
+   printf("Max_sog         %d\r\n", p->alarm.max_sog);
+   printf("Nation          %X\r\n", p->alarm.nation);
+   
+   printf("Workmode        %s-%d\r\n", p->sys.workmode?"double":"single", p->sys.workmode);
+   printf("Nightmode       %s-%d\r\n", p->sys.nightmode?"Night":"Day",p->sys.nightmode);
+   printf("Snd -- volum    %d\r\n",    p->sys.volum);
+   printf("Brightness      %d\r\n",    p->sys.bright);
+   printf("Unit            %s-%d\r\n", p->sys.unit?"nm":"km",p->sys.unit);
+	
+	printf("\r\n");
+}
 
 
 static Bool checkT90_Set()
@@ -157,26 +157,26 @@ static Bool checkT90_Set()
    if(t90_set.sys.nightmode != DAY  &&  t90_set.sys.nightmode != NIGHT) 
    {
       flag  = FALSE;
-//      printf("nightmode load error! load %d as nightmode\r\n",t90_set.sys.nightmode);
+      printf("nightmode load error! load %d as nightmode\r\n",t90_set.sys.nightmode);
       t90_set.sys.nightmode  = DAY;
    }
    if(t90_set.sys.bright < 1  ||  t90_set.sys.bright > 6)                     
    {
       flag  = FALSE;   
-//      printf("bright  load error! load %d as bright\r\n",t90_set.sys.bright);
+      printf("bright  load error! load %d as bright\r\n",t90_set.sys.bright);
       t90_set.sys.bright  = DEFAULT_BRIGHT;
    }
    if( t90_set.sys.volum > 6)            
    {
       flag  = FALSE;   
-//      printf("volum  load error! load %d as volum\r\n",t90_set.sys.volum);
+      printf("volum  load error! load %d as volum\r\n",t90_set.sys.volum);
       t90_set.sys.volum  = DEFAULT_VOLUM;
    }
 
    if(t90_set.sys.unit != KM  &&  t90_set.sys.unit != NM)     
    {
       flag  = FALSE;   
-//      printf("unit load error! load %d as unit\r\n",t90_set.sys.unit);
+      printf("unit load error! load %d as unit\r\n",t90_set.sys.unit);
       t90_set.sys.unit  = NM;
    }
    return flag;

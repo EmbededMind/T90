@@ -86,16 +86,16 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 
     case WM_CREATE:
 		
-			pColor = &homeColors[t90_set.sys.nightmode];
+			      pColor = &homeColors[t90_set.sys.nightmode];
 		
          buttons[0]  = BUTTON_CreateEx(0,0,1,1,pMsg->hWin, WM_CF_HIDE,  0,  GUI_ID_BUTTON0);   
          WM_SetCallback(buttons[0], &myButtonCallback);                                       
-		   WM_HideWindow(buttons[0]);
+		       WM_HideWindow(buttons[0]);
          
          buttons[1]  = BUTTON_CreateEx( 0,0,1,1,pMsg->hWin, WM_CF_HIDE,  0,  GUI_ID_BUTTON1);    
          WM_SetCallback(buttons[1], &myButtonCallback);                                       
 
-   		WM_HideWindow(buttons[0]);
+   		    WM_HideWindow(buttons[0]);
 				 
          break;
          

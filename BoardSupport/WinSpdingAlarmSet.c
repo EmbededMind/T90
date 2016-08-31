@@ -22,6 +22,7 @@ static int isSpON;
 
 static const SetWinColor *pColors = setWinColors;
 static const SetDlgColor *pColors_Slider = setDlgColors;
+static GUI_RECT Rect = {ALARM_SET_WIDTH/2-61,ALARM_SET_HEIGHT/2-47, ALARM_SET_WIDTH/2 + 128,ALARM_SET_HEIGHT/2+24};
 
 /**@brief 超速报警界面滑块的回调函数
  *  
@@ -95,10 +96,9 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 
                  
             case GUI_KEY_UP:
-//                  WM_SetFocus(buttons[1]);
-//               break;
             case GUI_KEY_DOWN:
                   WM_SetFocus(buttons);
+                 WM_InvalidateRect(spdingAlarmSetWin,&Rect);
                break;
 				case GUI_KEY_BACKSPACE:
                   isSpON = HSD_SLIDER_GetValue(slider);

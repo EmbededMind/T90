@@ -22,7 +22,7 @@ static int isHSOn;
 
 static const SetWinColor *pColors = setWinColors;
 static const SetDlgColor *pColors_Slider = setDlgColors;
-
+static GUI_RECT Rect = {ALARM_SET_WIDTH/2-61,ALARM_SET_HEIGHT/2-47, ALARM_SET_WIDTH/2 + 128,ALARM_SET_HEIGHT/2+24};
 /**@brief 高速船设置界面
  *  
  *   @param [in] pMsg 消息
@@ -35,84 +35,49 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 		case WM_KEY:
 			switch(((WM_KEY_INFO*)(pMsg->Data.p))->Key)
 			{
-//            case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }                           
-//                        break;
               
               case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }   
-                        break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-				case GUI_KEY_PWM_INC:       
-						 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-						 break;
+
+                   myMsg.hWin = systemSetDlg;
+                   myMsg.hWinSrc = pMsg->hWin;
+                   myMsg.MsgId = USER_MSG_MOTHERPOS;
+                   myMsg.Data.v = !t90_set.sys.motherpos;
+                   WM_SendMessage(myMsg.hWin, &myMsg); 
+                break; 
+                
+             case GUI_KEY_PWM_INC:       
+                WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                break;
 
                  
-            case GUI_KEY_UP:
-//                  WM_SetFocus(buttons[1]);
-//               break;
-            case GUI_KEY_DOWN:
-                  WM_SetFocus(buttons);
-               break;
-				case GUI_KEY_BACKSPACE:
-               isHSOn = HSD_SLIDER_GetValue(slider);
-					if(t90_set.alarm.highspeed == agentdst_set && (t90_set.alarm.on_off & (0x01<<3))>>3 == isHSOn)
-               {
-                  WM_SetFocus(alarmSetMenuDlg);
-               }
-               else
-               {
-                  myMsg.hWin  = WM_GetClientWindow(confirmWin);
-                  myMsg.hWinSrc  = highspshipsetWin;
-                  myMsg.MsgId  = USER_MSG_CHOOSE;
-                  myMsg.Data.v  = SYS_SETTING;
-                  WM_SendMessage(myMsg.hWin, &myMsg);
-//											
-                  WM_BringToTop(confirmWin);
-                  WM_SetFocus(confirmWin);
-               }
-				break;
+             case GUI_KEY_UP:
+             case GUI_KEY_DOWN:
+                   WM_SetFocus(buttons);
+                   WM_InvalidateRect(highspshipsetWin,&Rect);
+                break;
+             case GUI_KEY_BACKSPACE:
+                  isHSOn = HSD_SLIDER_GetValue(slider);
+                  if(t90_set.alarm.highspeed == agentdst_set && (t90_set.alarm.on_off & (0x01<<3))>>3 == isHSOn)
+                  {
+                     WM_SetFocus(alarmSetMenuDlg);
+                  }
+                  else
+                  {
+                     myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                     myMsg.hWinSrc  = highspshipsetWin;
+                     myMsg.MsgId  = USER_MSG_CHOOSE;
+                     myMsg.Data.v  = SYS_SETTING;
+                     WM_SendMessage(myMsg.hWin, &myMsg);										
+                     WM_BringToTop(confirmWin);
+                     WM_SetFocus(confirmWin);
+                  }
+                  break;
 
-				default:
-					HSD_SLIDER_Callback(pMsg);
+              default:
+               HSD_SLIDER_Callback(pMsg);
+                      break;
+             }
             break;
-			}
-		break;
 		default:
 			HSD_SLIDER_Callback(pMsg);
 	}
@@ -124,66 +89,23 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
  */
 static void myButtonCallback(WM_MESSAGE* pMsg)
 {
-	WM_MESSAGE myMsg;
-//   int id;	
+	  WM_MESSAGE myMsg;
    switch(pMsg->MsgId){
-      case WM_SET_FOCUS:
-           if(pMsg->Data.v){
-              HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->focusBkColor);						 
-           }
-           else{
-              HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->bkColor);
-						        HSD_BUTTON_SetTextColor(pMsg->hWin,pColors->textColor);
-           }
-           HSD_BUTTON_Callback(pMsg);
-           break;
+//      case WM_SET_FOCUS:
+////           WM_InvalidateWindow(highspshipsetWin);      
+//           break;
       
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
-//               case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }                           
-//                        break;
               
               case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
                            myMsg.hWin = systemSetDlg;
                            myMsg.hWinSrc = pMsg->hWin;
                            myMsg.MsgId = USER_MSG_MOTHERPOS;
                            myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }   
-                        break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;  
-							 case GUI_KEY_PWM_INC:       
+                           WM_SendMessage(myMsg.hWin, &myMsg); 
+                        break;   
+							        case GUI_KEY_PWM_INC:       
                     WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                     break;
                case GUI_KEY_BACKSPACE:
@@ -204,26 +126,24 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                         WM_SetFocus(confirmWin);
                      }
                     break;
-							 case GUI_KEY_UP:
-
-                      case GUI_KEY_DOWN:
-									   WM_SetFocus(slider);
-										break;
-							 case GUI_KEY_RIGHT:
-
-                              agentdst_set+=5;
-										if(agentdst_set>200) agentdst_set=200;										
-									
-                    break;
-							 case GUI_KEY_LEFT: 
-                              agentdst_set-=5;
-							         if(agentdst_set<80) agentdst_set=80;
-//							      
-            }
-            WM_Paint(highspshipsetWin);
+							         case GUI_KEY_UP:
+                case GUI_KEY_DOWN:
+                     WM_SetFocus(slider);
+                   break;
+							         case GUI_KEY_RIGHT:
+                     agentdst_set+=5;
+										           if(agentdst_set>200) agentdst_set=200;										
+                   break;
+							         case GUI_KEY_LEFT: 
+                     agentdst_set-=5;
+							              if(agentdst_set<80) agentdst_set=80;
+						      
+             }
+           WM_Paint(highspshipsetWin);
            break;
            
      default :
+           WM_Paint(highspshipsetWin);
            HSD_BUTTON_Callback(pMsg);
            break;
    }
@@ -241,14 +161,13 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
   switch(pMsg->MsgId){
 		
 		case USER_MSG_SKIN:
-			     pColors = &(setWinColors[pMsg->Data.v]);	
+			   pColors = &(setWinColors[pMsg->Data.v]);	
 		      pColors_Slider = &(setDlgColors[pMsg->Data.v]);
            
-//				 for(i = 0; i < 2; i++)
-//				 {
-					   HSD_BUTTON_SetBkColor(buttons, pColors->bkColor);
-					  	HSD_BUTTON_SetTextColor(buttons, pColors->textColor);
-//				 }
+
+						HSD_BUTTON_SetBkColor(buttons, pColors->bkColor);
+						HSD_BUTTON_SetTextColor(buttons, pColors->textColor);
+
              
              HSD_SLIDER_SetBkColor(slider, pColors->bkColor);
 				 HSD_SLIDER_SetFocusBkColor(slider, pColors->bkColor);
@@ -260,34 +179,31 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 		
     case WM_CREATE:		
 			
-				 agentdst_set = t90_set.alarm.highspeed;
+				     agentdst_set = t90_set.alarm.highspeed;
 		       isHSOn = (t90_set.alarm.on_off & (0x01<<3))>>3;        
      
-				 pColors = &setWinColors[t90_set.sys.nightmode];
+				     pColors = &setWinColors[t90_set.sys.nightmode];
 		       pColors_Slider = &setDlgColors[t90_set.sys.nightmode];
              buttons  = HSD_BUTTON_CreateEx(ALARM_SET_WIDTH/2-40,
                                    ALARM_SET_HEIGHT/2-70, 
-                                   70, 
-                                   94, 
+                                   0, 
+                                   0, 
                                    pMsg->hWin, WM_CF_SHOW,  0,  GUI_ID_BUTTON0);   
-             WM_SetCallback(buttons, &myButtonCallback); 
-				 WM_HideWindow(buttons);
-		
-				 
-             
-           slider = HSD_SLIDER_CreateEx(drawArea.x0 + 190, drawArea.y0 - 60,
+          WM_SetCallback(buttons, &myButtonCallback); 
+				      WM_HideWindow(buttons);
+    
+          slider = HSD_SLIDER_CreateEx(drawArea.x0 + 190, drawArea.y0 - 60,
                                SLIDER_WIDTH , SLIDER_HEIGHT ,
                                pMsg->hWin , WM_CF_SHOW, 0, GUI_ID_SLIDER0);    
-             HSD_SLIDER_SetRange(slider,0,1);
-             HSD_SLIDER_SetBkColor(slider, pColors_Slider->bkColor);
-				 HSD_SLIDER_SetFocusBkColor(slider, pColors_Slider->bkColor);
-				 HSD_SLIDER_SetSlotColor(slider, pColors_Slider->slotColor);
-				 HSD_SLIDER_SetSliderColor(slider,pColors_Slider->sliderColor);
-				 HSD_SLIDER_SetFocusSliderColor(slider, pColors_Slider->focusSliderColor);
-				 HSD_SLIDER_SetFocusSlotColor(slider,pColors_Slider->focusSlotColor);
-             WM_SetCallback(slider, &mySliderCallback);
-             HSD_SLIDER_SetValue(slider,(t90_set.alarm.on_off & (0x01<<3))>>3);              
-//				 WM_DefaultProc(pMsg);
+          HSD_SLIDER_SetRange(slider,0,1);
+          HSD_SLIDER_SetBkColor(slider, pColors_Slider->bkColor);
+          HSD_SLIDER_SetFocusBkColor(slider, pColors_Slider->bkColor);
+          HSD_SLIDER_SetSlotColor(slider, pColors_Slider->slotColor);
+          HSD_SLIDER_SetSliderColor(slider,pColors_Slider->sliderColor);
+          HSD_SLIDER_SetFocusSliderColor(slider, pColors_Slider->focusSliderColor);
+          HSD_SLIDER_SetFocusSlotColor(slider,pColors_Slider->focusSlotColor);
+          WM_SetCallback(slider, &mySliderCallback);
+          HSD_SLIDER_SetValue(slider,(t90_set.alarm.on_off & (0x01<<3))>>3);              
          break;
          
     case WM_PAINT:
@@ -296,8 +212,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
          WM_GetClientRectEx(pMsg->hWin, &clientRect);
          GUI_ClearRectEx(&clientRect);
          GUI_SetColor(pColors->textColor);
-				 GUI_SetFont(&GUI_Font_T90_24);
-//         GUI_DispStringAt("??   ????,??   ?????",50, ALARM_SET_HEIGHT-30-32);
+				     GUI_SetFont(&GUI_Font_T90_24);
          GUI_DispStringAt("使用",50, ALARM_SET_HEIGHT-30-32);
          GUI_SetColor(pColors->focusBkColor);
          GUI_DispString("  卞  ");
@@ -308,29 +223,29 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
          GUI_SetColor(pColors->textColor);
          GUI_DispString("选择数字。");
 
-				 GUI_SetDrawMode(GUI_DM_NORMAL);
-				 GUI_SetColor(pColors->textColor);
+				     GUI_SetDrawMode(GUI_DM_NORMAL);
+				     GUI_SetColor(pColors->textColor);
 		
-//				 GUI_FillRect(ALARM_SET_WIDTH/2+35, ALARM_SET_HEIGHT/2-2, ALARM_SET_WIDTH/2+47, ALARM_SET_HEIGHT/2+10);
+
 				 
-				        GUI_SetFont(&GUI_Font_T90_30);
-				 GUI_DispStringAt("报警航速", 50, ALARM_SET_HEIGHT/2-10);
-				 GUI_DispStringAt("节", ALARM_SET_WIDTH-70, ALARM_SET_HEIGHT/2-10);
-		      GUI_DispStringAt("高速船报警：", drawArea.x0, drawArea.y0 - 60);
-            GUI_DispStringAt("关闭", drawArea.x0+140, drawArea.y0 - 60);
-            GUI_DispStringAt("开启", drawArea.x0+140+SLIDER_WIDTH+50,drawArea.y0 - 60);
-            if(WM_HasFocus(buttons))
-            {
-               GUI_SetColor(pColors->focusBkColor);
-               GUI_FillRect(ALARM_SET_WIDTH/2-61,ALARM_SET_HEIGHT/2-47, ALARM_SET_WIDTH/2 + 128,ALARM_SET_HEIGHT/2+24);
-               GUI_SetColor(pColors->focusTextColor);
-               DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
-            }
-            else
-            {
-               GUI_SetColor(pColors->textColor);
-               DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
-            }
+         GUI_SetFont(&GUI_Font_T90_30);
+         GUI_DispStringAt("报警航速", 50, ALARM_SET_HEIGHT/2-10);
+         GUI_DispStringAt("节", ALARM_SET_WIDTH-70, ALARM_SET_HEIGHT/2-10);
+		       GUI_DispStringAt("高速船报警：", drawArea.x0, drawArea.y0 - 60);
+         GUI_DispStringAt("关闭", drawArea.x0+140, drawArea.y0 - 60);
+         GUI_DispStringAt("开启", drawArea.x0+140+SLIDER_WIDTH+50,drawArea.y0 - 60);
+         if(WM_HasFocus(buttons))
+         {
+            GUI_SetColor(pColors->focusBkColor);
+            GUI_FillRect(ALARM_SET_WIDTH/2-61,ALARM_SET_HEIGHT/2-47, ALARM_SET_WIDTH/2 + 128,ALARM_SET_HEIGHT/2+24);
+            GUI_SetColor(pColors->focusTextColor);
+            DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
+         }
+         else
+         {
+            GUI_SetColor(pColors->textColor);
+            DispSOGNums(ALARM_SET_WIDTH/2-58,ALARM_SET_HEIGHT/2-37,agentdst_set,3);
+         }
             
          break;
 		

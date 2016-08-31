@@ -208,7 +208,7 @@ void lpc1788_SDRAM_Test()
    uint32_t colCnt  = 0;
    uint32_t t  = 0;
   
-//printf("SDRAM TEST... \r\n");
+printf("SDRAM TEST... \r\n");
   
    ptr  = (uint16_t*)SDRAM_BASE_ADDR;
    for(i=0; i<SDRAM_SIZE; i++)
@@ -228,7 +228,7 @@ void lpc1788_SDRAM_Test()
       {
          cnt++;
          colCnt++;
-//         printf("%p:%x  ",ptr, *ptr);
+         printf("%p:%x  ",ptr, *ptr);
          if(colCnt == 5)
          {
             printf("\r\n");
@@ -246,7 +246,7 @@ void lpc1788_SDRAM_Test()
    
    
 
-//   printf("%u data error\r\n",cnt);
+   printf("%u data error\r\n",cnt);
 
 }
 

@@ -52,7 +52,7 @@ void MainTask(void)
 		GUI_MEMDEV_Select(0);
     GUI_MEMDEV_CopyToLCD(hMem0);
     GUI_MEMDEV_Delete(hMem0);
-    GUI_Delay(1000);
+    GUI_Delay(1800);
     
 
    //字体设置	//GUI_SetDefaultFont (&SIF_Font);

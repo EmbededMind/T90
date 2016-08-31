@@ -23,7 +23,7 @@ static int isSOGON;
 
 static const SetWinColor *pColors = setWinColors;
 static const SetDlgColor *pColors_Slider = setDlgColors;
-
+static GUI_RECT Rect = {ALARM_SET_WIDTH/2-100, ALARM_SET_HEIGHT/2-105,ALARM_SET_WIDTH/2+120, ALARM_SET_HEIGHT/2-75};
 /**@brief 速度报警界面滑块的回调函数
  *  
  *   @param [in] pMsg 消息指针
@@ -117,6 +117,7 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
            case GUI_KEY_UP:              
            case GUI_KEY_DOWN:
                WM_SetFocus(buttons[2]);
+               WM_InvalidateRect(sogAlarmSetWin,&Rect);
                break;
 				default:
 					HSD_SLIDER_Callback(pMsg);

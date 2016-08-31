@@ -194,20 +194,20 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                 {
                    cursorOnStub = 0;
                 }
-					 if(pMsg->Data.v)
-					 {                  
-//						 cursorOnStub = 0;
-//						 timeCnt = 0;
-						 GUI_CURSOR_Show();
-						 timer  = WM_CreateTimer(pMsg->hWin, 0, 500, 0);
-					 }
-					 else
-					 {
-						 GUI_CURSOR_Hide();
-//						 timeCnt = 0;
-					 }
-					 WM_DefaultProc(pMsg);
-					 break;
+                if(pMsg->Data.v)
+                {                  
+          //						 cursorOnStub = 0;
+          //						 timeCnt = 0;
+                 GUI_CURSOR_Show();
+                 timer  = WM_CreateTimer(pMsg->hWin, 0, 500, 0);
+                }
+                else
+                {
+                 GUI_CURSOR_Hide();
+          //						 timeCnt = 0;
+                }
+                WM_DefaultProc(pMsg);
+           break;
            
      default:
            WM_DefaultProc(pMsg);
@@ -512,7 +512,7 @@ static void _onPaint2(void)
               break;
       
           default :
-//            printf("tmpCursor error\n"); 
+            printf("tmpCursor error\n"); 
              break;
      }
   }
