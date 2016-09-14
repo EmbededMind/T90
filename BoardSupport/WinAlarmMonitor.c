@@ -223,8 +223,15 @@ static void _onPaint(void)
 	GUI_DrawGradientV(0, 0, SCREEN_WIDTH-1, 45-1, pColor->bbsTopColor, pColor->bbsBottomColor);
 	GUI_SetColor(pColor->textColor);                             
  GUI_SetFont(GUI_FONT_24B_1);
-	GUI_DispCharAt('N', 15, 10);
-	GUI_DispCharAt('E', 165, 10);
+ if(MS_EWNS & 0x01)
+	   GUI_DispCharAt('N', 15, 10);
+ else
+    GUI_DispCharAt('S', 15, 10);
+ 
+ if(MS_EWNS & 0x10)
+	   GUI_DispCharAt('E', 165, 10);
+ else
+    GUI_DispCharAt('W', 165, 10);
 	sprintf(pStrBuf, "20%02ld/%02ld/%02ld",SYS_Date%100,(SYS_Date%10000)/100,SYS_Date/10000);
 	GUI_DispStringAt(pStrBuf, 595, 10);
 	sprintf(pStrBuf, "%02ld:%02ld", SYS_Time/10000+8, SYS_Time%10000/100);

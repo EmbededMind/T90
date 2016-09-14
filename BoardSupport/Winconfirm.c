@@ -6,12 +6,14 @@
 #include "28.h"
 #include "T90.h"
 #include "t90font.h"
+//#include "lpc177x_8x_uart.h"
 
 #define ID_WINDOW_0      (GUI_ID_USER + 0x00)
 //#define ID_BUTTON_OK     (GUI_ID_USER + 0x01)
 //#define ID_BUTTON_CANCEL (GUI_ID_USER + 0x02)
 #define ID_TEXT_CONTENT  (GUI_ID_USER + 0x01)
 
+//static uint8_t updata[18] = {0x24, 0x5B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 WM_HWIN confirmWin;
 long getMMSItmp();
 static WM_HWIN dlgTextContent;
@@ -163,7 +165,17 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
           case WM_NOTIFICATION_RELEASED:      // React only if released
                switch (Id) 
                {
-                  case GUI_ID_BUTTON0:                   
+                  case GUI_ID_BUTTON0:
+//                       if(myMsg.Data.v == UPDATA)
+//                       {
+//                          updata[2] = 0x01;
+//                          if(UART_Send(UART_1, updata, 18, BLOCKING) == 18)
+//                          {
+//                             GUI_Delay(100);
+//                             NVIC_SystemReset();
+//                          }
+//                          break;
+//                       }                        
                        myMsg.hWin     = myMsg.hWinSrc;
                        myMsg.hWinSrc  = pMsg->hWin;
                        myMsg.MsgId    = USER_MSG_REPLY;
@@ -172,6 +184,12 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
                        break;
                        
                   case GUI_ID_BUTTON1:
+//                       if(myMsg.Data.v == UPDATA) 
+//                       {
+//                          UART_Send(UART_1, updata, 18, BLOCKING);
+//                          WM_SetFocus(myMsg.hWinSrc);
+//                          break;
+//                       }
                        WM_SetFocusOnPrevChild(confirmWin);
                        
                        myMsg.hWin     = myMsg.hWinSrc;
@@ -270,6 +288,8 @@ static void _cbWindow(WM_MESSAGE * pMsg) {
               UserData = MONITMMSI_FIRST;
 //									     WM_SetUserData(pMsg->hWin,&UserData,4);
               break;
+//         case UPDATA:
+//              TEXT_SetText(dlgTextContent,"是否进行更新？");
          default:       
               break;
       }

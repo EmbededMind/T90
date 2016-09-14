@@ -19,6 +19,7 @@
 Bool toast_flg = FALSE;
 extern uint8_t ipcMsg;
 extern char comflg;
+extern OS_EVENT * updataMBox;
 //extern OS_EVENT* pMSBOX; 
 
 WM_HWIN handle;
@@ -124,6 +125,8 @@ void MainTask(void)
 			
    while(1)
    {
+      INT8U err;
+      OS_MBOX_DATA * updataMSdata;
       static int flag = 0;
       WM_MESSAGE pMsg;
 
@@ -244,16 +247,14 @@ void MainTask(void)
                pMsg.hWin = singleShipDstSetWin;
                pMsg.MsgId = USER_MSG_DATA_ACK_RESULT;
                pMsg.Data.v = DATA_ACK_TIME_OUT;               
-               WM_SendMessage(pMsg.hWin, &pMsg);
-               
+               WM_SendMessage(pMsg.hWin, &pMsg);              
             }
             else if(t90_set.sys.workmode == DOUBLE_MODE)
             {
                pMsg.hWin = doubleShipDstSetWin;
                pMsg.MsgId = USER_MSG_DATA_ACK_RESULT;
-               pMsg.Data.v = DATA_ACK_TIME_OUT;               
+               pMsg.Data.v = DATA_ACK_TIME_OUT;
                WM_SendMessage(pMsg.hWin, &pMsg);
-               
             }
          }
          
@@ -267,6 +268,20 @@ void MainTask(void)
          }
          
          
+      }
+      
+      if(OSMboxPend(updataMBox, 1, &err))
+      {
+          
+//          myMsg.hWin  = WM_GetClientWindow(confirmWin);
+//          myMsg.hWinSrc  = WM_GetFocussedWindow();
+//          myMsg.MsgId  = USER_MSG_CHOOSE;
+//          myMsg.Data.v  = UPDATA;
+//          WM_SendMessage(myMsg.hWin, &myMsg);
+//            
+//          WM_BringToTop(confirmWin);
+//          WM_SetFocus(confirmWin);
+         NVIC_SystemReset();
       }
 //printf("MainTask end\n");     
       GUI_Delay(200);

@@ -74,7 +74,7 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_OFF        0
 #define DEFAULT_ON         1
 #define DEFAULT_SOG_TIME   15
-#define DEFAULT_COG_TIME   50
+#define DEFAULT_COG_TIME   20
 
 /* button skin */
 extern const BUTTON_SKINFLEX_PROPS btSkin[2][2];
@@ -165,6 +165,7 @@ extern boat mothership;
 extern int MS_isSpeeding;
 extern int MS_isMin_SOG;
 extern int MS_isMax_SOG;
+extern char MS_EWNS;
 extern PortStatus portStatus[3];
 
 

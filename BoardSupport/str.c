@@ -69,7 +69,7 @@ void lltostr(long l_o_l,char *str)
     str[8] = '?';
     str[9] = '?';
     str[10] = '?';
-	  str[11] = '\'';
+	   str[11] = '\'';
     str[12] = '\0';
  }
  else

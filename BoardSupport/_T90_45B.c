@@ -20,7 +20,7 @@
 *                                                                    *
 * Initial font height: 45                                            *
 * Range disabled: 0000 - FFFF                                        *
-* Read pattern file: C:\Users\LIYI\Desktop\字体\T9045B.txt           *
+* Read pattern file: E:\备份\备份\字体\字体\T9045B.txt               *
 * Character enabled:   0x27 (39)                                     *
 * Character enabled:   0xB0 (176)                                    *
 *                                                                    *
@@ -650,6 +650,53 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_0039[135] = { /* code 0039, D
   ________,________,________,
   ________,________,________};
 
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_003F[ 90] = { /* code 003F, QUESTION MARK */
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ___XXXXX,XX______,
+  _XXXXXXX,XXXX____,
+  _XXXXXXX,XXXXX___,
+  _XXXXXXX,XXXXX___,
+  _XXX____,XXXXXX__,
+  _X______,_XXXXX__,
+  ________,_XXXXX__,
+  ________,_XXXXX__,
+  ________,_XXXXX__,
+  ________,XXXXX___,
+  _______X,XXXXX___,
+  ______XX,XXXX____,
+  _____XXX,XXX_____,
+  _____XXX,XX______,
+  ____XXXX,X_______,
+  ____XXXX,________,
+  ____XXXX,________,
+  ____XXXX,________,
+  ____XXXX,________,
+  ____XXXX,________,
+  ________,________,
+  ________,________,
+  _____XXX,X_______,
+  ____XXXX,XX______,
+  ____XXXX,XX______,
+  _____XXX,X_______,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________,
+  ________,________};
+
 GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_0045[135] = { /* code 0045, LATIN CAPITAL LETTER E */
   ________,________,________,
   ________,________,________,
@@ -744,6 +791,100 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_004E[180] = { /* code 004E, L
   ________,________,________,________,
   ________,________,________,________};
 
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_0053[135] = { /* code 0053, LATIN CAPITAL LETTER S */
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,XXXXXXXX,X_______,
+  _____XXX,XXXXXXXX,XX______,
+  ____XXXX,XXXXXXXX,XX______,
+  ___XXXXX,XXXXXXXX,XX______,
+  ___XXXXX,XX_____X,XX______,
+  __XXXXXX,________,_X______,
+  __XXXXXX,________,________,
+  __XXXXXX,________,________,
+  __XXXXXX,X_______,________,
+  __XXXXXX,XX______,________,
+  ___XXXXX,XXXX____,________,
+  ___XXXXX,XXXXXX__,________,
+  ____XXXX,XXXXXXXX,________,
+  _____XXX,XXXXXXXX,X_______,
+  _______X,XXXXXXXX,XX______,
+  ________,_XXXXXXX,XX______,
+  ________,___XXXXX,XXX_____,
+  ________,____XXXX,XXX_____,
+  ________,_____XXX,XXX_____,
+  __X_____,_____XXX,XXX_____,
+  __XX____,_____XXX,XXX_____,
+  __XXXX__,___XXXXX,XX______,
+  __XXXXXX,XXXXXXXX,XX______,
+  __XXXXXX,XXXXXXXX,X_______,
+  __XXXXXX,XXXXXXXX,________,
+  _____XXX,XXXXX___,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________,
+  ________,________,________};
+
+GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_0057[225] = { /* code 0057, LATIN CAPITAL LETTER W */
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  XXXXXXX_,________,XXXXXX__,________,XXXXX___,
+  XXXXXXX_,________,XXXXXXX_,________,XXXXX___,
+  _XXXXXX_,________,XXXXXXX_,________,XXXXX___,
+  _XXXXXX_,_______X,XXXXXXX_,_______X,XXXX____,
+  _XXXXXXX,_______X,XXXXXXX_,_______X,XXXX____,
+  __XXXXXX,_______X,XXXXXXX_,_______X,XXXX____,
+  __XXXXXX,_______X,XXXXXXXX,_______X,XXX_____,
+  __XXXXXX,______XX,XXXXXXXX,______XX,XXX_____,
+  __XXXXXX,______XX,XXXXXXXX,______XX,XXX_____,
+  ___XXXXX,X_____XX,XX__XXXX,______XX,XXX_____,
+  ___XXXXX,X____XXX,XX__XXXX,X____XXX,XX______,
+  ___XXXXX,X____XXX,XX__XXXX,X____XXX,XX______,
+  ___XXXXX,X____XXX,X___XXXX,X____XXX,XX______,
+  ____XXXX,XX___XXX,X____XXX,X____XXX,XX______,
+  ____XXXX,XX__XXXX,X____XXX,XX__XXXX,X_______,
+  ____XXXX,XX__XXXX,X____XXX,XX__XXXX,X_______,
+  _____XXX,XX__XXXX,_____XXX,XX__XXXX,X_______,
+  _____XXX,XXX_XXXX,______XX,XX__XXXX,X_______,
+  _____XXX,XXXXXXXX,______XX,XXXXXXXX,________,
+  _____XXX,XXXXXXXX,______XX,XXXXXXXX,________,
+  ______XX,XXXXXXX_,______XX,XXXXXXXX,________,
+  ______XX,XXXXXXX_,_______X,XXXXXXX_,________,
+  ______XX,XXXXXXX_,_______X,XXXXXXX_,________,
+  ______XX,XXXXXX__,_______X,XXXXXXX_,________,
+  _______X,XXXXXX__,________,XXXXXXX_,________,
+  _______X,XXXXXX__,________,XXXXXX__,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________,
+  ________,________,________,________,________};
+
 /* Start of unicode area <Latin-1 Supplement> */
 GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_00B0[ 90] = { /* code 00B0, DEGREE SIGN */
   ________,________,
@@ -792,7 +933,7 @@ GUI_CONST_STORAGE unsigned char acGUI_Font_T90_45B_00B0[ 90] = { /* code 00B0, D
   ________,________,
   ________,________};
 
-GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_45B_CharInfo[16] = {
+GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_45B_CharInfo[19] = {
    {  10,  10,  2, acGUI_Font_T90_45B_0020 } /* code 0020 */
   ,{  10,  10,  2, acGUI_Font_T90_45B_0027 } /* code 0027 */
   ,{  10,  10,  2, acGUI_Font_T90_45B_002E } /* code 002E */
@@ -806,28 +947,52 @@ GUI_CONST_STORAGE GUI_CHARINFO GUI_Font_T90_45B_CharInfo[16] = {
   ,{  21,  21,  3, acGUI_Font_T90_45B_0037 } /* code 0037 */
   ,{  21,  21,  3, acGUI_Font_T90_45B_0038 } /* code 0038 */
   ,{  21,  21,  3, acGUI_Font_T90_45B_0039 } /* code 0039 */
+  ,{  16,  16,  2, acGUI_Font_T90_45B_003F } /* code 003F */
   ,{  19,  19,  3, acGUI_Font_T90_45B_0045 } /* code 0045 */
   ,{  29,  29,  4, acGUI_Font_T90_45B_004E } /* code 004E */
+  ,{  20,  20,  3, acGUI_Font_T90_45B_0053 } /* code 0053 */
+  ,{  37,  37,  5, acGUI_Font_T90_45B_0057 } /* code 0057 */
   ,{  14,  14,  2, acGUI_Font_T90_45B_00B0 } /* code 00B0 */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop7 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop10 = {
    0x00B0 /* first character */
   ,0x00B0 /* last character  */
-  ,&GUI_Font_T90_45B_CharInfo[ 15] /* address of first character */
+  ,&GUI_Font_T90_45B_CharInfo[ 18] /* address of first character */
   ,(GUI_CONST_STORAGE GUI_FONT_PROP *)0 /* pointer to next GUI_FONT_PROP */
 };
 
-GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop6 = {
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop9 = {
+   0x0057 /* first character */
+  ,0x0057 /* last character  */
+  ,&GUI_Font_T90_45B_CharInfo[ 17] /* address of first character */
+  ,&GUI_Font_T90_45B_Prop10 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop8 = {
+   0x0053 /* first character */
+  ,0x0053 /* last character  */
+  ,&GUI_Font_T90_45B_CharInfo[ 16] /* address of first character */
+  ,&GUI_Font_T90_45B_Prop9 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop7 = {
    0x004E /* first character */
   ,0x004E /* last character  */
+  ,&GUI_Font_T90_45B_CharInfo[ 15] /* address of first character */
+  ,&GUI_Font_T90_45B_Prop8 /* pointer to next GUI_FONT_PROP */
+};
+
+GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop6 = {
+   0x0045 /* first character */
+  ,0x0045 /* last character  */
   ,&GUI_Font_T90_45B_CharInfo[ 14] /* address of first character */
   ,&GUI_Font_T90_45B_Prop7 /* pointer to next GUI_FONT_PROP */
 };
 
 GUI_CONST_STORAGE GUI_FONT_PROP GUI_Font_T90_45B_Prop5 = {
-   0x0045 /* first character */
-  ,0x0045 /* last character  */
+   0x003F /* first character */
+  ,0x003F /* last character  */
   ,&GUI_Font_T90_45B_CharInfo[ 13] /* address of first character */
   ,&GUI_Font_T90_45B_Prop6 /* pointer to next GUI_FONT_PROP */
 };

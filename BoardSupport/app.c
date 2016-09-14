@@ -61,6 +61,7 @@ static   OS_STK Comm_Task_Stack[COMM_TASK_STACK_SIZE];
 
 static uint8_t isNeedstubRefresh = 0;
 OS_EVENT *  CommMBox;
+OS_EVENT *  updataMBox;
 
 //static  OS_STK_DATA UI_Task_Stack_Use;
 //static  OS_STK_DATA Insert_Task_Stack_Use;
@@ -506,115 +507,167 @@ LOL:
          if(err == OS_ERR_NONE){
             /** 判断ACK类型，取得三个端口的状态 */
             if(pFrame[1] == 0x51){   /// 判断是否是来自于T81的消息
-               
-               long recMMSI  = 0;
-               char recPort = 0;
-               pulseNoAckCnt  = 0;
-               
-             
-               recPort  = (pFrame[14]>>6)&0x03;
-
-               /// Port 1 changed!
-               recMMSI  = pFrame[2];
-               recMMSI  = recMMSI<<8|pFrame[3];
-               recMMSI  = recMMSI<<8|pFrame[4];
-               recMMSI  = recMMSI<<8|pFrame[5];
-               recPort  = (pFrame[14]>>6)&0x03;
-             
-               if(recMMSI != portStatus[0].MMSI)
+               if(pFrame[2] == 1)
                {
-                  portStatus[0].MMSI  = recMMSI;
-               }
-                            
-               if(recPort != portStatus[0].port ){
-                  isNeedstubRefresh = 1;
-                  portStatus[0].port  = recPort;
+                  long shiftReg = 0;
+                  char recPort = 0;
+                  pulseNoAckCnt  = 0;
+
+                  /// Port 1 changed!
+                  shiftReg  = pFrame[3];
+                  shiftReg  = shiftReg<<8|pFrame[4];
+                  shiftReg  = shiftReg<<8|pFrame[5];
+                  shiftReg  = shiftReg<<8|pFrame[6];
+                  recPort  = (pFrame[15]>>6)&0x03;
+                
+                  if(shiftReg != portStatus[0].MMSI)
+                  {
+                     portStatus[0].MMSI  = shiftReg;
+                  }
+                               
+                  if(recPort != portStatus[0].port ){
+                     isNeedstubRefresh = 1;
+                     portStatus[0].port  = recPort;
+                     
+                     if(recPort == 1)
+                     {
+                        StubRefresh();                     
+                        if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+                        {
+                           Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
+                        }
+                        else
+                        {
+                           Comm_addFrame(1,(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
+                        }
+                     }
+                     ipcMsg  |= 0x01;               
+                  }
+
+      //printf("stubs[1].isValid %d\n",stubs[1].isValid);
+                  /// Port 2 changed!
+                  shiftReg  = pFrame[7];  
+                  shiftReg  = shiftReg<<8|pFrame[8]; 
+                  shiftReg  = shiftReg<<8|pFrame[9];
+                  shiftReg  = shiftReg<<8|pFrame[10];
+                  recPort  = (pFrame[15]>>4)&0x03;
                   
-                  if(recPort == 1)
+                  if(shiftReg != portStatus[1].MMSI)
                   {
-                     StubRefresh();                     
-                     if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
-                     {
-                        Comm_addFrame(1,stubs[1].basePoint.x*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
-                     }
-                     else
-                     {
-                        Comm_addFrame(1,(stubs[1].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[1].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
-                     }
+                     portStatus[1].MMSI = shiftReg;
                   }
-                  ipcMsg  |= 0x01;               
-               }
+                  
+                  if(recPort != portStatus[1].port ){
+                     isNeedstubRefresh = 1;
+                     portStatus[1].port  = recPort;
+                     if(recPort == 1)
+                     {
+                        StubRefresh();                  
+                        if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+                        {
+                           Comm_addFrame(2,stubs[2].basePoint.x*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
+                        }
+                        else
+                        {
+                           Comm_addFrame(2,(stubs[2].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
+                        }
+                     }
+                     ipcMsg  |= 0x02; 
+                  }
 
-   //printf("stubs[1].isValid %d\n",stubs[1].isValid);
-               /// Port 2 changed!
-               recMMSI  = pFrame[6];  
-               recMMSI  = recMMSI<<8|pFrame[7]; 
-               recMMSI  = recMMSI<<8|pFrame[8];
-               recMMSI  = recMMSI<<8|pFrame[9];
-               recPort  = (pFrame[14]>>4)&0x03;
-               
-               if(recMMSI != portStatus[1].MMSI)
-               {
-                  portStatus[1].MMSI = recMMSI;
-               }
-               
-               if(recPort != portStatus[1].port ){
-                  isNeedstubRefresh = 1;
-                  portStatus[1].port  = recPort;
-                  if(recPort == 1)
+                  /// Port 3 changed!
+                  shiftReg  = pFrame[11];  
+                  shiftReg  = shiftReg<<8|pFrame[12]; 
+                  shiftReg  = shiftReg<<8|pFrame[13];
+                  shiftReg  = shiftReg<<8|pFrame[14];
+                  recPort  = (pFrame[15]>>2)&0x03;
+                  
+                  if(shiftReg != portStatus[2].MMSI)
                   {
-                     StubRefresh();                  
-                     if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
-                     {
-                        Comm_addFrame(2,stubs[2].basePoint.x*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
-                     }
-                     else
-                     {
-                        Comm_addFrame(2,(stubs[2].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[2].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
-                     }
+                     portStatus[2].MMSI = shiftReg;
                   }
-                  ipcMsg  |= 0x02; 
-               }
-
-               /// Port 3 changed!
-               recMMSI  = pFrame[10];  
-               recMMSI  = recMMSI<<8|pFrame[11]; 
-               recMMSI  = recMMSI<<8|pFrame[12];
-               recMMSI  = recMMSI<<8|pFrame[13];
-               recPort  = (pFrame[14]>>2)&0x03;
-               
-               if(recMMSI != portStatus[2].MMSI)
-               {
-                  portStatus[2].MMSI = recMMSI;
-               }
-               
-               if(recPort != portStatus[2].port ){
-                  isNeedstubRefresh = 1;
-                  portStatus[2].port  = recPort;
-                  if(recPort == 1)
-                  {
-                     StubRefresh();
-                     if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+                  
+                  if(recPort != portStatus[2].port ){
+                     isNeedstubRefresh = 1;
+                     portStatus[2].port  = recPort;
+                     if(recPort == 1)
                      {
-                        Comm_addFrame(3,stubs[3].basePoint.x*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
+                        StubRefresh();
+                        if(t90_set.sys.workmode == SINGLE_MODE || t90_set.sys.motherpos == DEFAULT_LEFT)
+                        {
+                           Comm_addFrame(3,stubs[3].basePoint.x*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
+                        }
+                        else
+                        {
+                           Comm_addFrame(3,(stubs[3].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
+                        }
                      }
-                     else
-                     {
-                        Comm_addFrame(3,(stubs[3].basePoint.x - stubs[4].basePoint.x)*MILLINM_TO_M,abs(stubs[3].basePoint.y)*MILLINM_TO_M, t90_set.sys.SOG, t90_set.sys.COG);
-                     }
+                     ipcMsg  |= 0x04; 
                   }
-                  ipcMsg  |= 0x04; 
-               }
 
-               SOG = pFrame[15];
-               SOG = SOG<<8 | pFrame[16];
-               mothership.SOG = SOG;
+                  SOG = pFrame[16];
+                  SOG = SOG<<8 | pFrame[17];
+                  mothership.SOG = SOG;
 
-               COG = pFrame[17];
-               COG = COG<<8 | pFrame[18];
-               mothership.COG = COG;
+                  COG = pFrame[18];
+                  COG = COG<<8 | pFrame[19];
+                  mothership.COG = COG;
               
-               
+               }
+               else if(pFrame[2] == 2)
+               {
+                  long shiftReg;
+                  long tmplo = 1,tmpla = 1;  
+                
+                  if(pFrame[3] == 'E')
+                  {
+                     MS_EWNS |= 0x10;
+                  }
+                  else if(pFrame[3] == 'W')
+                  {
+                     MS_EWNS &= 0x01;
+                  }                   
+                 
+                  shiftReg = pFrame[4];
+                  shiftReg = (shiftReg << 8)|pFrame[5];
+                  shiftReg = (shiftReg << 8)|pFrame[6];
+                  shiftReg = (shiftReg << 8)|pFrame[7];
+                  if(shiftReg != 0)
+                     mothership.longitude = shiftReg/10;
+                  tmplo = shiftReg;
+                  
+                  if(pFrame[8] == 'N')
+                  {
+                     MS_EWNS |= 0x01;
+                  }
+                  else if(pFrame[8] == 'S')
+                  {
+                     MS_EWNS &= 0x10;
+                  }   
+                  
+                  shiftReg = pFrame[9];
+                  shiftReg = (shiftReg << 8)|pFrame[10];
+                  shiftReg = (shiftReg << 8)|pFrame[11];
+                  shiftReg = (shiftReg << 8)|pFrame[12];
+                  if(shiftReg != 0)
+                     mothership.latitude = shiftReg/10;
+                  tmpla = shiftReg;
+                  
+                  if(tmpla || tmplo)
+                  {                   
+                     shiftReg = pFrame[13];
+                     shiftReg = (shiftReg << 8)|pFrame[14];
+                     shiftReg = (shiftReg << 8)|pFrame[15];
+                     shiftReg = (shiftReg << 8)|pFrame[16];
+                     SYS_Time = shiftReg;
+                     
+                     shiftReg = pFrame[17];
+                     shiftReg = (shiftReg << 8)|pFrame[18];
+                     shiftReg = (shiftReg << 8)|pFrame[19];
+                     shiftReg = (shiftReg << 8)|pFrame[20];
+                     SYS_Date = shiftReg;
+                  }
+               }                
             }
          }
          else{
@@ -670,7 +723,7 @@ void App_TaskStart(void)//初始化UCOS，初始化SysTick节拍，并创建三个任务
 
    //  ComQSem  = OSQCreate(&ComQeueTab[0], 5);
    CommMBox = OSMboxCreate(0);
-
+   updataMBox = OSMboxCreate(0);
 
    PartitionPt=OSMemCreate(Partition,MSG_QUEUE_TABNUM,100,&err);
 
@@ -735,6 +788,11 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
   
   if((text[0]!='!')&&(text[0]!='$'))
      return 0;
+//  printf("%c",text[0]);
+//  printf("%c",text[1]);
+//  printf("%c",text[2]);
+//  printf("%c",text[3]);
+//  printf("%c\n",text[4]);
   if((text[1]=='A')&&(text[2]=='I')&&(text[3]=='V')&&(text[4]=='D')&&(text[5]=='M'))
   { 
      for(i=6; i<20; i++)
@@ -779,50 +837,49 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
       }
    }
 
-	else if((text[4]=='M')&&(text[5]=='C')) //GPS GPRMC
-	{ 
-      shiftReg   = text[6];
-      shiftReg   = (shiftReg << 8) | text[7];
-      shiftReg   = (shiftReg << 8) | text[8];
-      shiftReg   = (shiftReg << 8) | text[9];
-      if(shiftReg )
-         mothership.latitude  = shiftReg / 10;
+//	else if((text[4]=='M')&&(text[5]=='C')) //GPS GPRMC
+//	{ 
+//      printf("RMC OK\n");
+//      shiftReg   = text[6];
+//      shiftReg   = (shiftReg << 8) | text[7];
+//      shiftReg   = (shiftReg << 8) | text[8];
+//      shiftReg   = (shiftReg << 8) | text[9];
+//      if(shiftReg )
+//         mothership.latitude  = shiftReg / 10;
 
-      shiftReg   = text[10];
-      shiftReg   = (shiftReg << 8) | text[11];
-      shiftReg   = (shiftReg << 8) | text[12];
-      shiftReg   = (shiftReg << 8) | text[13];
-      if(shiftReg)
-         mothership.longitude  = shiftReg / 10;
-      
-//      if(!t90_set.sys.SOG.on_off)
-//      {
+//      shiftReg   = text[10];
+//      shiftReg   = (shiftReg << 8) | text[11];
+//      shiftReg   = (shiftReg << 8) | text[12];
+//      shiftReg   = (shiftReg << 8) | text[13];
+//      if(shiftReg)
+//         mothership.longitude  = shiftReg / 10;
+
+
 //         shiftReg   = text[14];
 //         shiftReg   = (shiftReg << 8) | text[15];
 //         mothership.SOG = shiftReg;
-//      }
 
-//      if(!t90_set.sys.COG.on_off)
-//      {
+
+
 //         shiftReg   = text[16];
 //         shiftReg   = (shiftReg << 8) | text[17];
 //         mothership.COG = shiftReg /10;
-//      }
 
 
-      shiftReg   = text[18];
-      shiftReg   = (shiftReg << 8) | text[19];
-      shiftReg   = (shiftReg << 8) | text[20];
-      shiftReg   = (shiftReg << 8) | text[21];
-      SYS_Date   = shiftReg;
+
+//      shiftReg   = text[18];
+//      shiftReg   = (shiftReg << 8) | text[19];
+//      shiftReg   = (shiftReg << 8) | text[20];
+//      shiftReg   = (shiftReg << 8) | text[21];
+//      SYS_Date   = shiftReg;
 
 
-      shiftReg   = text[22];
-      shiftReg   = (shiftReg << 8) | text[23];
-      shiftReg   = (shiftReg << 8) | text[24];
-      shiftReg   = (shiftReg << 8) | text[25];
-      SYS_Time   = shiftReg;
-	}
+//      shiftReg   = text[22];
+//      shiftReg   = (shiftReg << 8) | text[23];
+//      shiftReg   = (shiftReg << 8) | text[24];
+//      shiftReg   = (shiftReg << 8) | text[25];
+//      SYS_Time   = shiftReg;
+//	}
 
    return 0;
 }

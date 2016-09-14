@@ -207,11 +207,17 @@ void DrawCursor(Point pixel, int flag)  //Д???????х?
       }
       
       lltostr(pSnapLink->Boat.latitude, strTmp);
-      sprintf(pStrBuf, " N  %s", strTmp);
+      if(MS_EWNS & 0x01)
+         sprintf(pStrBuf, " N  %s", strTmp);
+      else
+         sprintf(pStrBuf, " S  %s", strTmp);
       GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY());
       
       lltostr(pSnapLink->Boat.longitude, strTmp);
-      sprintf(pStrBuf, " E  %s", strTmp);
+      if(MS_EWNS & 0x10)
+         sprintf(pStrBuf, " E  %s", strTmp);
+      else
+         sprintf(pStrBuf, " W  %s", strTmp);
       GUI_DispStringAt(pStrBuf, start_x, start_y+=GUI_GetFontSizeY());
       
       sprintf(strTmp, "%3d", pSnapLink->Boat.COG/10);

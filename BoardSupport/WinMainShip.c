@@ -289,9 +289,14 @@ static void _onPaint1(void)
                              
    GUI_SetColor(pColor->textColor);                             
    GUI_SetFont(&GUI_Font_T90_45B);
-   
-   GUI_DispCharAt('N', BBS1_BELOW_X+60, BBS1_BELOW_Y+20);
-   GUI_DispCharAt('E', BBS1_BELOW_X+60, BBS1_BELOW_Y+60);  
+   if(MS_EWNS & 0x01)
+      GUI_DispCharAt('N', BBS1_BELOW_X+60, BBS1_BELOW_Y+20);
+   else
+      GUI_DispCharAt('S', BBS1_BELOW_X+60, BBS1_BELOW_Y+20);
+   if(MS_EWNS & 0x10)
+      GUI_DispCharAt('E', BBS1_BELOW_X+60, BBS1_BELOW_Y+60);
+   else   
+      GUI_DispCharAt('W', BBS1_BELOW_X+60, BBS1_BELOW_Y+60);
    
    GUI_SetColor(pColor->numColor);  
    lltostr(mothership.latitude, pStrBuf);
@@ -435,14 +440,14 @@ static void _onPaint2(void)
               GUI_SetFont(GUI_FONT_24B_1);
               for(i=0; i<N_boat; i++){
                  if(portStatus[0].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
-                    pBerth  = SimpBerthes[i].pBerth;
+                    GUI_DispStringAt(SimpBerthes[i].pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
                     break;
                  }
               }
-              
-              if(pBerth){
-                 GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-                 sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+
+              if(portStatus[0].port)
+              {
+                 sprintf(pStrBuf, "%09ld", portStatus[0].MMSI);
                  GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
               }
               sprintf(pStrBuf, "%4d", t90_set.singledst_set.dst1);
@@ -462,17 +467,16 @@ static void _onPaint2(void)
               
               for(i=0; i<N_boat; i++){
                  if(portStatus[1].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
-                    pBerth  = SimpBerthes[i].pBerth;
+                    GUI_DispStringAt(SimpBerthes[i].pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
                     break;
                  }
               }
-              
-              if(pBerth){
-                 GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-                 sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+               
+              if(portStatus[1].port)
+              {
+                 sprintf(pStrBuf, "%09ld", portStatus[1].MMSI);
                  GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
-              }   
-
+              }
               sprintf(pStrBuf, "%4d", t90_set.singledst_set.dst3);
               GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
               sprintf(pStrBuf, "%4d", 0);
@@ -489,14 +493,14 @@ static void _onPaint2(void)
               
               for(i=0; i<N_boat; i++){
                  if(portStatus[2].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
-                    pBerth  = SimpBerthes[i].pBerth;
+                    GUI_DispStringAt(SimpBerthes[i].pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
                     break;
                  }
               }
-              
-              if(pBerth){
-                 GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+40);
-                 sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+
+              if(portStatus[2].port)
+              {
+                 sprintf(pStrBuf, "%09ld", portStatus[2].MMSI);
                  GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
               }
               sprintf(pStrBuf, "%4d", t90_set.singledst_set.dst5);
@@ -524,16 +528,16 @@ static void _onPaint2(void)
           GUI_SetFont(GUI_FONT_24B_1);
           for(i=0; i<N_boat; i++){
              if(portStatus[0].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
-                pBerth  = SimpBerthes[i].pBerth;
+                GUI_DispStringAt(SimpBerthes[i].pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+30); 
                 break;
              }
           }
-          
-          if(pBerth){
-             GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+30);
-             sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+          if(portStatus[0].port)
+          {
+             sprintf(pStrBuf, "%09ld", portStatus[0].MMSI);
              GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+30+38);
           }
+          
           sprintf(pStrBuf, "%4d", t90_set.doubledst_set.mo_to_as);
           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+30+38*2);
           sprintf(pStrBuf, "%4d", t90_set.doubledst_set.safety1_to_mo);
@@ -555,13 +559,13 @@ static void _onPaint2(void)
           GUI_SetFont(GUI_FONT_24B_1);                         
           for(i=0; i<N_boat; i++){
              if(portStatus[1].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
-                pBerth  = SimpBerthes[i].pBerth;
+                GUI_DispStringAt(SimpBerthes[i].pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+30);
                 break;
              }
-          }          
-          if(pBerth){
-             GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+30);
-             sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+          }
+          if(portStatus[1].port)
+          {
+             sprintf(pStrBuf, "%09ld", portStatus[1].MMSI);
              GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+30+38);
           }
           sprintf(pStrBuf, "%4d", t90_set.doubledst_set.mo_to_as);
@@ -581,13 +585,14 @@ static void _onPaint2(void)
           GUI_SetFont(GUI_FONT_24B_1);              
           for(i=0; i<N_boat; i++){
              if(portStatus[2].MMSI == SimpBerthes[i].pBerth->Boat.user_id){
-                pBerth  = SimpBerthes[i].pBerth;
+                GUI_DispStringAt(SimpBerthes[i].pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+30); 
                 break;
              }
           }          
-          if(pBerth){
-             GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+30);
-             sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
+
+          if(portStatus[2].port)
+          {
+             sprintf(pStrBuf, "%09ld", portStatus[2].MMSI);
              GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+30+38);
           }
           sprintf(pStrBuf, "%4d", t90_set.doubledst_set.mo_to_as);
@@ -611,15 +616,12 @@ static void _onPaint2(void)
           GUI_SetFont(GUI_FONT_24B_1);          
           for(i=0; i<N_boat; i++){
              if(t90_set.as_MMSI.MMSI == SimpBerthes[i].pBerth->Boat.user_id){
-                pBerth  = SimpBerthes[i].pBerth;
+                GUI_DispStringAt(SimpBerthes[i].pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+30);
                 break;
              }
           }             
-          if(pBerth){
-             GUI_DispStringAt(pBerth->Boat.name, BBS2_BELOW_X+110, BBS2_BELOW_Y+30);
-             sprintf(pStrBuf, "%09ld", pBerth->Boat.user_id);
-             GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+30+38);
-          }
+          sprintf(pStrBuf, "%09ld", t90_set.as_MMSI.MMSI);
+          GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+30+38);
           sprintf(pStrBuf, "%4d", t90_set.doubledst_set.mo_to_as);
           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+30+38*2);
           

@@ -72,14 +72,9 @@ int insert_18(struct message_18 * p_msg)
 {
    int i  = 0; 
    
-   /// Give up berthes out of range .
-//   if( (p_msg->longitude < mothership.longitude-30000)  ||  (p_msg->longitude > mothership.longitude+30000) ) 
-//        return 0;
-//   if( (p_msg->latitude < mothership.latitude-30000)  ||  (p_msg->latitude > mothership.latitude+30000) )
-//        return 0; 
    /// Update existent berth
-   if(p_msg->longitude == 0  ||  p_msg->longitude  > 10800000  ||  p_msg->latitude == 5400000  ||  p_msg->longitude > 10800000)
-      return 0;
+//   if(p_msg->longitude == 0  ||  p_msg->longitude  > 10800000  ||  p_msg->latitude == 5400000  ||  p_msg->longitude > 10800000)
+//      return 0;
    
    for(i=0;i<BOAT_NUM_MAX;i++)
    {
@@ -224,19 +219,23 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
       }
    }
 
-
-   if((t90_set.alarm.on_off & (0x01<<3))&& pBerth->Boat.category == 0  &&  p_msg->SOG >= highspeed)
+//   if(pBerth->Boat.user_id == 1)
+//   {
+//      printf("find 000000001\n");
+//      printf("v = %d", pBerth->Boat.SOG);
+//   }
+   if((t90_set.alarm.on_off & (0x01<<3))&& (pBerth->Boat.category & 0xfe) == 0  &&  p_msg->SOG >= highspeed)
    {
+      
+//printf("MMSI = %9ld, flag = %d\n", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
       pBerth->Boat.highspeedflag++;
-printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
       if(pBerth->Boat.highspeedflag >= 3)
       {
          unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
          pBerth->Boat.category  = nation | TYPE_BULLY;   
          BULY_add(pBerth);
          llToxy(pBerth);         
-      }
- 
+      }     
    }
 	  else
    {
@@ -244,7 +243,7 @@ printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedfla
       {
 
          pBerth->Boat.highspeedflag--;
-printf("MMSI = %9ld, flag = %d", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
+//printf("MMSI = %9ld, flag = %d\n", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
       }
    }
 
@@ -444,12 +443,17 @@ int add_18(struct message_18 * p_msg)
       }
    }
 
-
-   if((t90_set.alarm.on_off & (0x01<<3))&& buf->Boat.category == 0  &&  p_msg->SOG >= highspeed)
+//   if(buf->Boat.user_id == 1)
+//   {
+//      printf("find 000000001\n");
+//      printf("v = %d\n", buf->Boat.SOG);
+//   }
+   if((t90_set.alarm.on_off & (0x01<<3))&& (buf->Boat.category & 0xfe) == 0  &&  p_msg->SOG >= highspeed)
 
    {
+      
+//printf("MMSI = %9ld, flag = %d\n", buf->Boat.user_id, buf->Boat.highspeedflag); 
       buf->Boat.highspeedflag++;
-printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag); 
       if(buf->Boat.highspeedflag >= 3)
       {
          unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
@@ -464,7 +468,7 @@ printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag);
        if(buf->Boat.highspeedflag > 0)
        {
           buf->Boat.highspeedflag--;
-printf("MMSI = %9ld, flag = %d", buf->Boat.user_id, buf->Boat.highspeedflag);
+//printf("MMSI = %9ld, flag = %d\n", buf->Boat.user_id, buf->Boat.highspeedflag);
        }
    }
 

@@ -18,6 +18,9 @@
 #define DST_X_BYTE   5 
 #define DST_Y_BYTE   2
 #define CMD_BYTE     1
+#define VERSION1     1
+#define VERSION2     0
+#define VERSION3     2
 
 extern unsigned char isDstSetChanged;            
 
@@ -28,15 +31,18 @@ extern uint8_t SND[4][6];
 extern int isKeyTrigged;
 
 extern OS_EVENT * CommMBox;
-
+extern OS_EVENT * updataMBox;
 
 
 volatile Bool Doubleclick  = FALSE;
 volatile Bool isReleasedDet  = FALSE;
 
-uint8_t recBuf[21]  = {0};
-uint8_t* pRecBuf  = recBuf;
+uint8_t recBuf[31]  = {0};
+uint8_t updata_r[18]  = {0};
+uint8_t updata_s[18]  = {0};
 
+uint8_t* pRecBuf  = recBuf;
+uint8_t* pUpData  = updata_r;
 void xl_UART_Config(unsigned char port)
 {
    UART_CFG_Type      UARTConfigStruct;
@@ -63,7 +69,21 @@ void xl_UART_Config(unsigned char port)
 	          NVIC_EnableIRQ(UART0_IRQn);          
 
            break;
+      case 1:
+				       PINSEL_ConfigPin(3,16,3);
+			        PINSEL_ConfigPin(3,17,3);
+			        UARTConfigStruct.Baud_rate = 115200;
+			
+			        UART_Init( (UART_ID_Type)port, &UARTConfigStruct );
+           UART_FIFOConfig( (UART_ID_Type)port, &UARTFIFOConfigStruct );
+           UART_TxCmd( (UART_ID_Type)port, ENABLE );
+                     
+           UART_IntConfig(UART_1, UART_INTCFG_RBR, ENABLE);
+           UART_IntConfig(UART_1, UART_INTCFG_RLS, ENABLE); 
            
+           NVIC_SetPriority(UART1_IRQn, ((0x02<<2)|0x02));
+	         	NVIC_EnableIRQ(UART1_IRQn);
+           break;     
       case 2:      
            PINSEL_ConfigPin(0,10,1);
            PINSEL_ConfigPin(0,11,1);
@@ -102,6 +122,7 @@ void USER_Init(void)
 {	
  xl_UART_Config(2);
  xl_UART_Config(0);
+ xl_UART_Config(1);
 }
 
 
@@ -144,10 +165,66 @@ void UART0_IRQHandler(void)
    }
 }
 
-
+void UART1_IRQHandler(void)
+{
+//   uint16_t crcVal = 0;
+   uint8_t tmpc = 0;
+   uint32_t tmp, tmp1;
+   tmp = ((LPC_UART1->IIR) & UART_IIR_BITMASK) & UART_IIR_INTID_MASK;
+   if (tmp == UART_IIR_INTID_RLS)	// Receive Line Status
+   {
+      tmp1 = UART_GetLineStatus(UART_1);// Check line status
+      tmp1 &= (UART_LSR_OE | UART_LSR_PE | UART_LSR_FE | UART_LSR_BI | UART_LSR_RXFE);// Mask out the Receive Ready and Transmit Holding empty status
+   }
+   if ((tmp == UART_IIR_INTID_RDA) || (tmp == UART_IIR_INTID_CTI))	// Receive Data Available or Character time-out
+   {	
+      UART_Receive(UART_1, pUpData++, 1, NONE_BLOCKING);
+      if(updata_r[0] == 0x24)
+      {
+         if(pUpData - updata_r >= 18)
+         {
+            if(updata_r[1] == 0x5A)
+            {
+//               crcVal = updata_r[16];
+//               crcVal = (crcVal << 8) | updata_r[17];
+//               if(crcVal == Comm_getCRC(updata_r, 16))
+//               {
+                  updata_s[0] = 0x24;
+                  updata_s[1] = 0x5A;
+                  updata_s[2] = VERSION1;
+                  updata_s[3] = VERSION2;
+                  updata_s[4] = VERSION3;
+//                  crcVal = Comm_getCRC(updata_s, 16);
+//                  updata_s[16] = crcVal >> 8;
+//                  updata_s[17] = crcVal & 0xff;
+                  UART_Send(UART_1, updata_s, 18, BLOCKING);
+                  memset(updata_s, 0, sizeof(uint8_t)*18);
+//               }
+               pUpData = updata_r;
+               memset(updata_r, 0, sizeof(uint8_t)*18);
+            }
+            if(updata_r[1] == 0x5B)
+            {
+//               crcVal = updata_r[16];
+//               crcVal = (crcVal << 8) | updata_r[17];
+//               if(crcVal == Comm_getCRC(updata_r, 16))
+//               {
+                  OSMboxPost(updataMBox, (void*)updata_r);
+//               }
+               pUpData = updata_r;
+               memset(updata_r, 0, sizeof(uint8_t)*18);
+            }
+         }
+      }
+      else
+      {
+         pUpData = updata_r;   
+      }
+               
+   }
+}
 void UART2_IRQHandler(void)
 {
-   uint8_t tmpc;
    uint16_t crcVal  = 0;
    uint32_t  tmp, tmp1;
    tmp = ((LPC_UART2->IIR) & UART_IIR_BITMASK) & UART_IIR_INTID_MASK;
@@ -166,8 +243,7 @@ void UART2_IRQHandler(void)
              {
                 crcVal  = recBuf[16] ;
                 crcVal  = (crcVal << 8) | recBuf[17];
-                
-                
+              
                 if(crcVal == Comm_getCRC(recBuf, 16)){
                    OSMboxPost(CommMBox, (void*)recBuf);
                 }
@@ -175,13 +251,12 @@ void UART2_IRQHandler(void)
              }
              else if(recBuf[1] == 0x51)
              {
-                if(pRecBuf - recBuf >= 21)
+                if(pRecBuf - recBuf >= 31)
                 {
-
-                   crcVal  = recBuf[19];
-                   crcVal  = (crcVal << 8) | recBuf[20];
+                   crcVal  = recBuf[29];
+                   crcVal  = (crcVal << 8) | recBuf[30];
                    
-                   if(crcVal == Comm_getCRC(recBuf, 19))
+                   if(crcVal == Comm_getCRC(recBuf, 29))
                    {
                       OSMboxPost(CommMBox, (void*)recBuf);
                    }

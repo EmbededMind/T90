@@ -428,7 +428,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
             GUI_DispStringAt("软件更新：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
 //            GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
 //            GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
-            GUI_DispStringAt("软件版本 V1.0.0",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);            
+            GUI_DispStringAt("软件版本 V1.0.2",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);            
             
             GUI_DispStringAt("恢复出厂设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
             GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
@@ -588,7 +588,7 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
                  WM_SendMessage(myMsg.hWin, &myMsg);
                  
                  WM_BringToTop(confirmWin);
-                 WM_SetFocus(confirmWin);                    
+                 WM_SetFocus(confirmWin); 
               }
                
                break;
@@ -695,8 +695,8 @@ static void _OnNightModeChanged(WM_MESSAGE * pMsg, int val)
    if(agentsys_set.nightmode  != val)
    {	 
       agentsys_set.nightmode  = val;
-          
-	    myMsg.hWin = mainMenuDlg;
+           
+      myMsg.hWin = mainMenuDlg;
       myMsg.Data.v = val;
       myMsg.MsgId = USER_MSG_SKIN;
       WM_SendMessage(myMsg.hWin, &myMsg);
@@ -704,8 +704,8 @@ static void _OnNightModeChanged(WM_MESSAGE * pMsg, int val)
       myMsg.hWin  = confirmWin;
       WM_SendMessage(myMsg.hWin, &myMsg);
 			
-			myMsg.hWin = systemSetDlg;
-			WM_SendMessage(myMsg.hWin, &myMsg);
+			   myMsg.hWin = systemSetDlg;
+			   WM_SendMessage(myMsg.hWin, &myMsg);
    }
 }
 

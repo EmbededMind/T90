@@ -14,7 +14,7 @@
 #include "lpc177x_8x_uart.h"
 #include "sdram.h"
 
-
+static uint8_t start[18] = {0x24, 0xAA,};
 extern volatile int TimeMS;  // Defined in GUI_X.c
 
 void SysTick_Handler (void);
@@ -44,9 +44,10 @@ int main(void)
 
 
 //初始化UART0 ，UART2，打开Timer2
-	USER_Init();
+	  USER_Init();
 printf("-------\n");
-	lpc1788_Lcd_Init();	  /* 初始化LCD */	
+UART_Send(UART_1, start, 18, BLOCKING);
+	  lpc1788_Lcd_Init();	  /* 初始化LCD */	
 
 // lpc1788_SDRAM_Test();
    lpc1788_PWM_Init();
@@ -56,8 +57,8 @@ printf("-------\n");
 ////  //fs_test();
 ////  	exfuns_init();
 ////  	load_font(); //加载flash字库  7E 02 01 EF
-
-	App_TaskStart();
+//   SCB->VTOR = 0x0000A000 & 0x1FFFFF80;
+   App_TaskStart();
 
 	while(1);
 }

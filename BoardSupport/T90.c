@@ -121,7 +121,7 @@ T90_Set reset_t90_set = {
 int MS_isSpeeding = 0;      //MS:mothership 
 int MS_isMin_SOG = 0;
 int MS_isMax_SOG = 0;
-
+char MS_EWNS = 0x11;         //母船的经纬度方位
 
 int screen_hcenter;
 int screen_vcenter;
