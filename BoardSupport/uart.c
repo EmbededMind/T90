@@ -189,6 +189,7 @@ void UART1_IRQHandler(void)
 //               crcVal = (crcVal << 8) | updata_r[17];
 //               if(crcVal == Comm_getCRC(updata_r, 16))
 //               {
+                  memset(updata_s,0,sizeof(uint8_t)*18);
                   updata_s[0] = 0x24;
                   updata_s[1] = 0x5A;
                   updata_s[2] = VERSION1;
@@ -198,12 +199,10 @@ void UART1_IRQHandler(void)
 //                  updata_s[16] = crcVal >> 8;
 //                  updata_s[17] = crcVal & 0xff;
                   UART_Send(UART_1, updata_s, 18, BLOCKING);
-                  memset(updata_s, 0, sizeof(uint8_t)*18);
 //               }
-               pUpData = updata_r;
-               memset(updata_r, 0, sizeof(uint8_t)*18);
+                  pUpData = updata_r;
             }
-            if(updata_r[1] == 0x5B)
+            else if(updata_r[1] == 0x5B)
             {
 //               crcVal = updata_r[16];
 //               crcVal = (crcVal << 8) | updata_r[17];
@@ -213,6 +212,14 @@ void UART1_IRQHandler(void)
 //               }
                pUpData = updata_r;
                memset(updata_r, 0, sizeof(uint8_t)*18);
+            }
+            else if(updata_r[1] == 0x5c)
+            {
+               memset(updata_s,0,sizeof(uint8_t)*18);
+               updata_s[0] = 0x24;
+               updata_s[1] = 0x5C;
+               UART_Send(UART_1, updata_s, 18, BLOCKING);
+               pUpData = updata_r;
             }
          }
       }

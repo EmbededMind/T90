@@ -73,7 +73,7 @@ extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];
 #define DEFAULT_BRIGHT     5
 #define DEFAULT_OFF        0
 #define DEFAULT_ON         1
-#define DEFAULT_SOG_TIME   15
+#define DEFAULT_SOG_TIME   50
 #define DEFAULT_COG_TIME   20
 
 /* button skin */

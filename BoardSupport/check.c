@@ -37,9 +37,6 @@ int Triggered_SOG = 0;
 
 void CHECK_MS_Speed()
 {
-//	MS_isSpeeding = 0;   //clear
-//	MS_isMax_SOG = 0;
-//	MS_isMin_SOG = 0;
 //printf("CHECK_MS_Speed begin\n");	
 	  if( (t90_set.alarm.on_off & (0x01<<1)) && mothership.SOG > t90_set.alarm.danger_sog)
 	  {		
@@ -59,6 +56,7 @@ void CHECK_MS_Speed()
 	  {
 		    if(MS_isMax_SOG != MNTState_Masked)
 						{
+         MS_isMin_SOG = 0;
 									MS_isMax_SOG = MNTState_Triggered;
          Triggered_SOG = mothership.SOG;
 						}
@@ -67,6 +65,7 @@ void CHECK_MS_Speed()
 	  {
 		    if(MS_isMin_SOG != MNTState_Masked)
 		    {
+         MS_isMax_SOG = 0;
 			      MS_isMin_SOG = MNTState_Triggered;
          Triggered_SOG = mothership.SOG;
 		    }
@@ -114,15 +113,16 @@ void CHECK_DelHighSpeed()
    while(pBerth)
    {
       pNext = pBerth->pNext;
-      if((pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.highspeedflag < 3)
+      if((pBerth && (pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.highspeedflag < 3))
       {
-         pBerth->pBoatLink->Boat.category = 0;
+         pBerth->pBoatLink->Boat.category &= ~(TYPE_BULLY);
          BULY_delete(pBerth->pBoatLink);
          goto delhighjmp;// pBerth已经是一个空指针不能访问了
       }
-      if((pBerth->pBoatLink->Boat.category & TYPE_FAMILY) == TYPE_FAMILY)
+      if(pBerth && (pBerth->pBoatLink->Boat.category & TYPE_FAMILY) == TYPE_FAMILY)
       {
-         pBerth->pBoatLink->Boat.category = 0;
+         pBerth->pBoatLink->Boat.category &= ~(TYPE_BULLY);
+         pBerth->pBoatLink->Boat.highspeedflag = 0;
          BULY_delete(pBerth->pBoatLink);
       }
 delhighjmp:      pBerth = pNext;

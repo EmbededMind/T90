@@ -198,7 +198,13 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
    pBerth->Boat.dist  = Dist;
    
    pBerth->Boat.time_cnt  = TIMESTAMP;
-     
+   
+   if(pBerth->Boat.user_id == portStatus[0].MMSI || pBerth->Boat.user_id == portStatus[1].MMSI || pBerth->Boat.user_id == portStatus[2].MMSI){
+      pBerth->Boat.category  |= TYPE_SAFETY;
+      pBerth->isInvader  = 0; 
+      pBerth->Boat.category  &= TYPE_SAFETY;    
+   }
+   
    for(i = 0; i < t90_set.shipout.numShip; i++)
    {
       if(pBerth->Boat.user_id == t90_set.shipout.MMSI[i])
@@ -224,18 +230,22 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
 //      printf("find 000000001\n");
 //      printf("v = %d", pBerth->Boat.SOG);
 //   }
-   if((t90_set.alarm.on_off & (0x01<<3))&& (pBerth->Boat.category & 0xfe) == 0  &&  p_msg->SOG >= highspeed)
+   if((t90_set.alarm.on_off & (0x01<<3))&& (pBerth->Boat.category & 0x0c) == 0  &&  p_msg->SOG >= highspeed)
    {
       
 //printf("MMSI = %9ld, flag = %d\n", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
-      pBerth->Boat.highspeedflag++;
+      
       if(pBerth->Boat.highspeedflag >= 3)
       {
          unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
          pBerth->Boat.category  = nation | TYPE_BULLY;   
          BULY_add(pBerth);
          llToxy(pBerth);         
-      }     
+      }
+      else
+      {
+         pBerth->Boat.highspeedflag++;
+      }       
    }
 	  else
    {
@@ -246,11 +256,6 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
 //printf("MMSI = %9ld, flag = %d\n", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
       }
    }
-
-   
-  
-
-   
    tmp  = pBerth;
 
    /// Distance did not change ,we don't need to do anything. 
@@ -419,7 +424,8 @@ int add_18(struct message_18 * p_msg)
    
    if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
-      buf->isInvader  = 0;    
+      buf->isInvader  = 0; 
+      buf->Boat.category  &= TYPE_SAFETY;    
    }
    
    
@@ -448,19 +454,20 @@ int add_18(struct message_18 * p_msg)
 //      printf("find 000000001\n");
 //      printf("v = %d\n", buf->Boat.SOG);
 //   }
-   if((t90_set.alarm.on_off & (0x01<<3))&& (buf->Boat.category & 0xfe) == 0  &&  p_msg->SOG >= highspeed)
-
-   {
-      
+   if((t90_set.alarm.on_off & (0x01<<3)) && (buf->Boat.category & 0x0c) == 0  &&  p_msg->SOG >= highspeed)
+   {      
 //printf("MMSI = %9ld, flag = %d\n", buf->Boat.user_id, buf->Boat.highspeedflag); 
-      buf->Boat.highspeedflag++;
+      
       if(buf->Boat.highspeedflag >= 3)
       {
          unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
          buf->Boat.category  = nation |  TYPE_BULLY;
          BULY_add(buf); 
-         llToxy(buf);
-         
+         llToxy(buf);        
+      }
+      else
+      {
+         buf->Boat.highspeedflag++;
       }
    }
    else
@@ -543,6 +550,12 @@ int update_24A(BERTH * pBerth, struct message_24_partA * p_msg)
    int i  = 0; 
 
    pBerth->Boat.time_cnt  = TIMESTAMP; 
+   
+   if(pBerth->Boat.user_id == portStatus[0].MMSI || pBerth->Boat.user_id == portStatus[1].MMSI || pBerth->Boat.user_id == portStatus[2].MMSI){
+      pBerth->Boat.category  |= TYPE_SAFETY;
+      pBerth->isInvader  = 0; 
+      pBerth->Boat.category  &= TYPE_SAFETY;    
+   }
    
    for(i = 0; i < t90_set.shipout.numShip; i++)
    {
@@ -630,7 +643,7 @@ int add_24A(struct message_24_partA * p_msg)
    if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
       buf->isInvader  = 0;
-     
+      buf->Boat.category  &= TYPE_SAFETY;    
    }
    
    for(i=0;i<20;i++)
@@ -716,6 +729,12 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
                 pBerth->isInvader = 0;
                 pBerth->Boat.category &= TYPE_FAMILY;
             }
+               
+            if(pBerth->Boat.user_id == portStatus[0].MMSI || pBerth->Boat.user_id == portStatus[1].MMSI || pBerth->Boat.user_id == portStatus[2].MMSI){
+               pBerth->Boat.category  |= TYPE_SAFETY;
+               pBerth->isInvader  = 0; 
+               pBerth->Boat.category  &= TYPE_SAFETY;    
+            }
             
          }         
          return 1;
@@ -766,7 +785,8 @@ int add_24B(type_of_ship * p_msg)
    
    if(buf->Boat.user_id == portStatus[0].MMSI || buf->Boat.user_id == portStatus[1].MMSI || buf->Boat.user_id == portStatus[2].MMSI){
       buf->Boat.category  |= TYPE_SAFETY;
-      
+      buf->isInvader = 0;
+      buf->Boat.category  &= TYPE_SAFETY;
    }
  
    if(    p_msg->vender_id[0] == 8

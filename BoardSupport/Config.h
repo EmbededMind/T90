@@ -113,7 +113,7 @@
  *
  *               Boat type config.
  */
- #define TYPE_HSD     0x01
+ #define TYPE_HSD     0x01  
  #define TYPE_BULLY   0x02
  #define TYPE_SAFETY  0x04
  #define TYPE_FAMILY  0x08

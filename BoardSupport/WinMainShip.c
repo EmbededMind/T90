@@ -448,7 +448,7 @@ static void _onPaint2(void)
               if(portStatus[0].port)
               {
                  sprintf(pStrBuf, "%09ld", portStatus[0].MMSI);
-                 GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
+                 GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+115, BBS2_BELOW_Y+35+45);
               }
               sprintf(pStrBuf, "%4d", t90_set.singledst_set.dst1);
               GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
@@ -475,7 +475,7 @@ static void _onPaint2(void)
               if(portStatus[1].port)
               {
                  sprintf(pStrBuf, "%09ld", portStatus[1].MMSI);
-                 GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
+                 GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+115, BBS2_BELOW_Y+35+45);
               }
               sprintf(pStrBuf, "%4d", t90_set.singledst_set.dst3);
               GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
@@ -501,7 +501,7 @@ static void _onPaint2(void)
               if(portStatus[2].port)
               {
                  sprintf(pStrBuf, "%09ld", portStatus[2].MMSI);
-                 GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+35+40);
+                 GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+115, BBS2_BELOW_Y+35+45);
               }
               sprintf(pStrBuf, "%4d", t90_set.singledst_set.dst5);
               GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+40+40*2);
@@ -535,7 +535,7 @@ static void _onPaint2(void)
           if(portStatus[0].port)
           {
              sprintf(pStrBuf, "%09ld", portStatus[0].MMSI);
-             GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+30+38);
+             GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+115, BBS2_BELOW_Y+30+38);
           }
           
           sprintf(pStrBuf, "%4d", t90_set.doubledst_set.mo_to_as);
@@ -566,7 +566,7 @@ static void _onPaint2(void)
           if(portStatus[1].port)
           {
              sprintf(pStrBuf, "%09ld", portStatus[1].MMSI);
-             GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+30+38);
+             GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+115, BBS2_BELOW_Y+30+38);
           }
           sprintf(pStrBuf, "%4d", t90_set.doubledst_set.mo_to_as);
           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+30+38*2);
@@ -593,7 +593,7 @@ static void _onPaint2(void)
           if(portStatus[2].port)
           {
              sprintf(pStrBuf, "%09ld", portStatus[2].MMSI);
-             GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+30+38);
+             GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+115, BBS2_BELOW_Y+30+38);
           }
           sprintf(pStrBuf, "%4d", t90_set.doubledst_set.mo_to_as);
           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+30+38*2);
@@ -621,7 +621,7 @@ static void _onPaint2(void)
              }
           }             
           sprintf(pStrBuf, "%09ld", t90_set.as_MMSI.MMSI);
-          GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+110, BBS2_BELOW_Y+30+38);
+          GUI_DispStringAt(pStrBuf,  BBS2_BELOW_X+115, BBS2_BELOW_Y+30+38);
           sprintf(pStrBuf, "%4d", t90_set.doubledst_set.mo_to_as);
           GUI_DispStringAt(pStrBuf, BBS2_BELOW_X+140, BBS2_BELOW_Y+30+38*2);
           

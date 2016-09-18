@@ -41,7 +41,7 @@ void SysTick_Init(void)//SysTick_Init
 int main(void)
 {	
    CLKPWR_ConfigPPWR(CLKPWR_PCONP_PCGPIO, ENABLE);/* 打开GPIO外设电源，上电后GPIO电源默认是打开的，此行可去掉 */
-
+   
 
 //初始化UART0 ，UART2，打开Timer2
 	  USER_Init();
@@ -57,7 +57,7 @@ UART_Send(UART_1, start, 18, BLOCKING);
 ////  //fs_test();
 ////  	exfuns_init();
 ////  	load_font(); //加载flash字库  7E 02 01 EF
-//   SCB->VTOR = 0x0000A000 & 0x1FFFFF80;
+   SCB->VTOR = 0x0000A000 & 0x1FFFFF80;
    App_TaskStart();
 
 	while(1);
