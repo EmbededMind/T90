@@ -230,22 +230,21 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
 //      printf("find 000000001\n");
 //      printf("v = %d", pBerth->Boat.SOG);
 //   }
-   if((t90_set.alarm.on_off & (0x01<<3))&& (pBerth->Boat.category & 0x0c) == 0  &&  p_msg->SOG >= highspeed)
+   if((t90_set.alarm.on_off & (0x01<<3))&& (pBerth->Boat.category & 0x0e) == 0  &&  p_msg->SOG >= highspeed)
    {
       
 //printf("MMSI = %9ld, flag = %d\n", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
-      
+      if(pBerth->Boat.highspeedflag < 3)
+      {
+         pBerth->Boat.highspeedflag++;
+      } 
       if(pBerth->Boat.highspeedflag >= 3)
       {
          unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
          pBerth->Boat.category  = nation | TYPE_BULLY;   
          BULY_add(pBerth);
          llToxy(pBerth);         
-      }
-      else
-      {
-         pBerth->Boat.highspeedflag++;
-      }       
+      }      
    }
 	  else
    {
@@ -454,20 +453,19 @@ int add_18(struct message_18 * p_msg)
 //      printf("find 000000001\n");
 //      printf("v = %d\n", buf->Boat.SOG);
 //   }
-   if((t90_set.alarm.on_off & (0x01<<3)) && (buf->Boat.category & 0x0c) == 0  &&  p_msg->SOG >= highspeed)
+   if((t90_set.alarm.on_off & (0x01<<3)) && (buf->Boat.category & 0x0e) == 0  &&  p_msg->SOG >= highspeed)
    {      
 //printf("MMSI = %9ld, flag = %d\n", buf->Boat.user_id, buf->Boat.highspeedflag); 
-      
-      if(buf->Boat.highspeedflag >= 3)
-      {
-         unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
-         buf->Boat.category  = nation |  TYPE_BULLY;
-         BULY_add(buf); 
-         llToxy(buf);        
-      }
-      else
+      if(buf->Boat.highspeedflag < 3)
       {
          buf->Boat.highspeedflag++;
+      }
+      if(buf->Boat.highspeedflag >= 3)
+      {
+            unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
+            buf->Boat.category  = nation |  TYPE_BULLY;
+            BULY_add(buf); 
+            llToxy(buf);        
       }
    }
    else

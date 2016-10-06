@@ -20,7 +20,7 @@
 #define CMD_BYTE     1
 #define VERSION1     1
 #define VERSION2     0
-#define VERSION3     2
+#define VERSION3     3
 
 extern unsigned char isDstSetChanged;            
 

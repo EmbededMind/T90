@@ -15,8 +15,6 @@
 #define SF_NUM  3
 #define DMS_NUM 5
 
-
-
 extern char comflg;
 WM_HWIN singleShipDstSetWin;
 
@@ -54,24 +52,21 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                   {
                      ISD_SetVolumnZero();
                   }
-//                  if(!ISD_IsBusy())
-//                     ISD_PWRDn();
                   break;
               case GUI_KEY_MORIGHT:
 
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg); 
-                        break; 
+                  myMsg.hWin = systemSetDlg;
+                  myMsg.hWinSrc = pMsg->hWin;
+                  myMsg.MsgId = USER_MSG_MOTHERPOS;
+                  myMsg.Data.v = !t90_set.sys.motherpos;
+                  WM_SendMessage(myMsg.hWin, &myMsg); 
+                  break; 
 
 				         case GUI_KEY_PWM_INC:       
 							            WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
                        break;
-                 case GUI_KEY_UP:
-                   id  = WM_GetId(pMsg->hWin) - ID_DMS_0;
-                   
+             case GUI_KEY_UP:
+                   id  = WM_GetId(pMsg->hWin) - ID_DMS_0;                  
                    switch(id){
                       case 0:
                            if(agentdst_set.dst1 < 3000){
@@ -214,8 +209,8 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                    }      
 					      break;
 								
-					 case GUI_KEY_LEFT:
-					 case GUI_KEY_RIGHT:
+           case GUI_KEY_LEFT:
+           case GUI_KEY_RIGHT:
                      id  = WM_GetId(pMsg->hWin) - ID_DMS_0;
                      switch(id)
                      {
@@ -270,71 +265,63 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
 static void myWindowCallback(WM_MESSAGE* pMsg)
 {
    GUI_RECT clientRect;
-	 int i;
+	  int i;
    
    switch(pMsg->MsgId){
 	 
     case USER_MSG_DATA_ACK_RESULT:
-           if(pMsg->Data.v)
-           {
-             
-               sprintf(pStrBuf,"%d",agentdst_set.dst1);
-               HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
-               sprintf(pStrBuf,"%d",agentdst_set.dst2);
-               HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
-               sprintf(pStrBuf,"%d",agentdst_set.dst3);
-               HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
-               sprintf(pStrBuf,"%d",agentdst_set.dst4);
-               HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
-               sprintf(pStrBuf,"%d",agentdst_set.dst5);
-               HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
-               memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
-				       T90_Store(); 
-               StubRefresh();
-           }
-           else 
-           {
-             
-              memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(agentdst_set));
-           }
-            
-        break;           
-	 case USER_MSG_DST_SET:
-      
-       for(i = 0; i < SF_NUM; i++)  //clear
-       {
-          HSD_STICKFIGURE_SetPenColor(hStickFigures[i], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
-       }
-       if(pMsg->Data.v != -1)
-       {
-          HSD_STICKFIGURE_SetPenColor(hStickFigures[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor);
-          whichFig = pMsg->Data.v;          
-       }
-       break;
-
-	 case USER_MSG_SKIN:
-         pColors = &(setWinColors[pMsg->Data.v]);	
+         if(pMsg->Data.v)
+         {
+           
+            sprintf(pStrBuf,"%d",agentdst_set.dst1);
+            HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
+            sprintf(pStrBuf,"%d",agentdst_set.dst2);
+            HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
+            sprintf(pStrBuf,"%d",agentdst_set.dst3);
+            HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
+            sprintf(pStrBuf,"%d",agentdst_set.dst4);
+            HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
+            sprintf(pStrBuf,"%d",agentdst_set.dst5);
+            HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
+            memcpy(&t90_set.singledst_set,&agentdst_set,sizeof(agentdst_set));
+            T90_Store(); 
+            StubRefresh();
+         }
+         else 
+         {            
+            memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(agentdst_set));
+         }
+          
+         break;           
+   case USER_MSG_DST_SET:
        
-          for(i = 0; i < DMS_NUM; i++)
-          {
-             HSD_DIMENSION_SetBkColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->bkColor);
-             HSD_DIMENSION_SetBkColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->bkColor);
-             
-             HSD_DIMENSION_SetValColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
-             HSD_DIMENSION_SetValColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
-             
-             HSD_DIMENSION_SetArrowLineColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
-             HSD_DIMENSION_SetArrowLineColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
-          }
-          break;  
+        for(i = 0; i < SF_NUM; i++)  //clear
+        {
+           HSD_STICKFIGURE_SetPenColor(hStickFigures[i], HSD_STICKFIGURE_CI_UNFOCUS, pColors->arrowLineColor);
+        }
+        if(pMsg->Data.v != -1)
+        {
+           HSD_STICKFIGURE_SetPenColor(hStickFigures[pMsg->Data.v], HSD_STICKFIGURE_CI_UNFOCUS, pColors->focusBkColor);
+           whichFig = pMsg->Data.v;          
+        }
+        break;
 
-  /**@brief 安全标连接状态改变，更新距离设置窗口
-   *  
-   * @author: SealedGhost  2016/6.7
-   * 
-   */
-
-    
+   case USER_MSG_SKIN:
+        pColors = &(setWinColors[pMsg->Data.v]);	
+      
+        for(i = 0; i < DMS_NUM; i++)
+        {
+           HSD_DIMENSION_SetBkColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->bkColor);
+           HSD_DIMENSION_SetBkColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->bkColor);
+           
+           HSD_DIMENSION_SetValColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->focusBkColor);
+           HSD_DIMENSION_SetValColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
+           
+           HSD_DIMENSION_SetArrowLineColor(hDimensions[i], HSD_DIMENSION_CI_FOCUS, pColors->focusArrowLineColor);
+           HSD_DIMENSION_SetArrowLineColor(hDimensions[i], HSD_DIMENSION_CI_UNFOCUS, pColors->arrowLineColor);
+        }
+        break;  
+        
    case WM_CREATE:
    
 
@@ -416,54 +403,54 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
         WM_SetCallback(hDimensions[2], &dimensionCallback);
         break;
 				
-	 case USER_MSG_REPLY:
-//             StubRefresh();
-				if(pMsg->Data.v == REPLY_OK)
-				{                
-       if(whichFig == 0)
-       {
-          comflg = 2;
-          Comm_addFrame(whichFig+1, -agentdst_set.dst2, agentdst_set.dst1, t90_set.sys.SOG, t90_set.sys.COG);
-       }
-       else if(whichFig == 1)
-       {
-          comflg = 2;
-          Comm_addFrame(whichFig+1, 0, agentdst_set.dst3, t90_set.sys.SOG, t90_set.sys.COG);               
-       }
-       else if(whichFig == 2)
-       {
-          comflg = 2;
-          Comm_addFrame(whichFig+1, agentdst_set.dst4, agentdst_set.dst5, t90_set.sys.SOG, t90_set.sys.COG);
-       }
+	  case USER_MSG_REPLY:
+        if(pMsg->Data.v == REPLY_OK)
+        {                
+           if(whichFig == 0)
+           {
+              comflg = 2;
+              Comm_addFrame(whichFig+1, -agentdst_set.dst2, agentdst_set.dst1, t90_set.sys.SOG, t90_set.sys.COG);
+           }
+           else if(whichFig == 1)
+           {
+              comflg = 2;
+              Comm_addFrame(whichFig+1, 0, agentdst_set.dst3, t90_set.sys.SOG, t90_set.sys.COG);               
+           }
+           else if(whichFig == 2)
+           {
+              comflg = 2;
+              Comm_addFrame(whichFig+1, agentdst_set.dst4, agentdst_set.dst5, t90_set.sys.SOG, t90_set.sys.COG);
+           }
 
-       sprintf(pStrBuf,"%d",t90_set.singledst_set.dst1);
-					  HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
-			 		 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst2);
-				 	 HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
-			 		 sprintf(pStrBuf,"%d",t90_set.singledst_set.dst3);
-					  HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
-					  sprintf(pStrBuf,"%d",t90_set.singledst_set.dst4);
-					  HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
-					  sprintf(pStrBuf,"%d",t90_set.singledst_set.dst5);
-					                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);                
-				}
-				else
-				{
-       memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(t90_set.singledst_set));
-       sprintf(pStrBuf,"%d",agentdst_set.dst1);
-       HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
-       sprintf(pStrBuf,"%d",agentdst_set.dst2);
-       HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
-       sprintf(pStrBuf,"%d",agentdst_set.dst3);
-       HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
-       sprintf(pStrBuf,"%d",agentdst_set.dst4);
-       HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
-       sprintf(pStrBuf,"%d",agentdst_set.dst5);
-       HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
-               
-				}
-				WM_SetFocus(dstSetMenuDlg);
-				break;
+           sprintf(pStrBuf,"%d",t90_set.singledst_set.dst1);
+           HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
+           sprintf(pStrBuf,"%d",t90_set.singledst_set.dst2);
+           HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
+           sprintf(pStrBuf,"%d",t90_set.singledst_set.dst3);
+           HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
+           sprintf(pStrBuf,"%d",t90_set.singledst_set.dst4);
+           HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
+           sprintf(pStrBuf,"%d",t90_set.singledst_set.dst5);
+           HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);                
+        }
+        else
+        {
+           memcpy(&agentdst_set,&t90_set.singledst_set,sizeof(t90_set.singledst_set));
+           sprintf(pStrBuf,"%d",agentdst_set.dst1);
+           HSD_DIMENSION_SetValText(hDimensions[0], pStrBuf);
+           sprintf(pStrBuf,"%d",agentdst_set.dst2);
+           HSD_DIMENSION_SetValText(hDimensions[1], pStrBuf);
+           sprintf(pStrBuf,"%d",agentdst_set.dst3);
+           HSD_DIMENSION_SetValText(hDimensions[2], pStrBuf);
+           sprintf(pStrBuf,"%d",agentdst_set.dst4);
+           HSD_DIMENSION_SetValText(hDimensions[3], pStrBuf);
+           sprintf(pStrBuf,"%d",agentdst_set.dst5);
+           HSD_DIMENSION_SetValText(hDimensions[4], pStrBuf);
+                   
+        }
+        WM_SetFocus(dstSetMenuDlg);
+        break;
         
    case WM_PAINT:
         GUI_SetBkColor(pColors->bkColor);
@@ -496,9 +483,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            GUI_DrawVLine(orgX-16, orgY+17, orgY+60);         
                    
            GUI_DrawLine(orgX-16, orgY +16, orgX , orgY);         //母船
-					
-		   
-           
+          
            GUI_SetLineStyle(GUI_LS_DOT);
            GUI_SetColor(pColors->textColor);
            GUI_DispStringAt("本", orgX-8, orgY+12);
@@ -508,12 +493,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
            
            GUI_DrawLine(orgX-16, orgY+60, orgX-100, orgY+240);
            GUI_DrawLine(orgX+16, orgY+60, orgX+100, orgY+240);
-        }
-        
-        
+        }                
         break;
-        
-        
+           
    default:
         WM_DefaultProc(pMsg);
         break;
