@@ -70,8 +70,6 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                    switch(id){
                       case 0:
                            if(agentdst_set.dst1 < 3000){
-                              if(agentdst_set.dst3 - agentdst_set.dst1 <= 20)
-                                 break;
                               agentdst_set.dst1  += 20;
                               agentdst_set.dst1  -= (agentdst_set.dst1 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst1);
@@ -120,8 +118,6 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                            break;
                       case 4:
                            if(agentdst_set.dst5 < 3000){
-                              if(agentdst_set.dst3 - agentdst_set.dst5 <= 20)
-                                 break;
                               agentdst_set.dst5  += 20;
                               agentdst_set.dst5  -= (agentdst_set.dst5 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst5);
@@ -163,15 +159,7 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                            }
                            break;
                       case 2:
-                           if(agentdst_set.dst3  > 39){
-                              if(stubs[1].isValid && agentdst_set.dst3 - agentdst_set.dst1 <= 20)
-                              {
-                                 break;
-                              }
-                              if(stubs[2].isValid && agentdst_set.dst3 - agentdst_set.dst5 <= 20)
-                              {
-                                 break;
-                              }                               
+                           if(agentdst_set.dst3  > 39){                              
                               agentdst_set.dst3  -= 20;
                               agentdst_set.dst3  -= (agentdst_set.dst3 %20);
                               sprintf(pStrBuf, "%d", agentdst_set.dst3);

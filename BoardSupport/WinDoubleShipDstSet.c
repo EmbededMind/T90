@@ -29,7 +29,6 @@
 extern char comflg;
 WM_HWIN doubleShipDstSetWin;
 void _paint(WM_HWIN pMsg);
-int pointyPretreatment();
 static const GUI_RECT drawArea  = {50, 50, DST_SET_WIDTH-50, DST_SET_HEIGHT-50};
 static const GUI_RECT tipStrArea = {50, DST_SET_HEIGHT-50 +2 , DST_SET_WIDTH -50, DST_SET_HEIGHT -50 +32};
  
@@ -97,9 +96,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
                       case 0:
-                          preDouDstSet.mo_to_as += 50;
-                          if(pointyPretreatment())
-                             break;                             
+                          preDouDstSet.mo_to_as += 50;                            
                           if(tempDouDstSet.mo_to_as < MAXMOTOAS){
                              tempDouDstSet.mo_to_as += 50;
                              tempDouDstSet.mo_to_as -= (tempDouDstSet.mo_to_as %50);
@@ -116,8 +113,6 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                            
                       case 1:
                            preDouDstSet.net_port += 50;
-                           if(pointyPretreatment())
-                             break;
                            if(tempDouDstSet.net_port < MAXSTUBTOSTUB){
                               tempDouDstSet.net_port += 50;
                               tempDouDstSet.net_port -= (tempDouDstSet.net_port %50);
@@ -133,8 +128,6 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                            
                       case 2:
                             preDouDstSet.safety1_to_mo += 50;
-                            if(pointyPretreatment())
-                               break;
                             if(tempDouDstSet.safety1_to_mo < MAXMOTOSTUB){
                               tempDouDstSet.safety1_to_mo  += 50;
                               tempDouDstSet.safety1_to_mo  -= (tempDouDstSet.safety1_to_mo %50);
@@ -150,8 +143,6 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                             
                       case 3:
                              preDouDstSet.safety2_to_mo += 50;
-                             if(pointyPretreatment())
-                                 break;
                              if(tempDouDstSet.safety2_to_mo < MAXMOTOSTUB){
                                 tempDouDstSet.safety2_to_mo += 50;
                                 tempDouDstSet.safety2_to_mo -= (tempDouDstSet.safety2_to_mo % 50);
@@ -167,8 +158,6 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                              
                       case 4:
                              preDouDstSet.safety3_to_mo += 50;
-                             if(pointyPretreatment())
-                                break;
                              if(tempDouDstSet.safety3_to_mo < MAXMOTOSTUB){
                                 tempDouDstSet.safety3_to_mo += 50;
                                 tempDouDstSet.safety3_to_mo -= (tempDouDstSet.safety3_to_mo % 50);
@@ -189,9 +178,7 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
                       case 0:
-                          preDouDstSet.mo_to_as -= 50;
-                          if(pointyPretreatment())
-                              break;                         
+                          preDouDstSet.mo_to_as -= 50;                       
                           if(tempDouDstSet.mo_to_as > 50){
                               tempDouDstSet.mo_to_as  -= 50;
                               tempDouDstSet.mo_to_as  -= (tempDouDstSet.mo_to_as %50);
@@ -201,8 +188,6 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       break;
                       case 1:
                            preDouDstSet.net_port -= 50;
-                           if(pointyPretreatment())
-                              break;
                            if(tempDouDstSet.net_port > 50){
                               tempDouDstSet.net_port -= 50;
                               tempDouDstSet.net_port -= (tempDouDstSet.net_port %50);
@@ -212,8 +197,6 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       break;
                       case 2:
                             preDouDstSet.safety1_to_mo -= 50;
-                            if(pointyPretreatment())
-                               break;
                             if(tempDouDstSet.safety1_to_mo > 50){
                                tempDouDstSet.safety1_to_mo  -= 50;
                                tempDouDstSet.safety1_to_mo  -= (tempDouDstSet.net_port %50);
@@ -223,8 +206,6 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       break;
                       case 3:
                              preDouDstSet.safety2_to_mo -= 50;
-                             if(pointyPretreatment())
-                                break;
                              if(tempDouDstSet.safety2_to_mo  > 50){
                                 tmpsafety2_to_Mo = t90_set.doubledst_set.safety2_to_mo;
                                 
@@ -236,8 +217,6 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       break;
                       case 4:
                              preDouDstSet.safety3_to_mo -= 50;
-                             if(pointyPretreatment())
-                                break;
                              if(tempDouDstSet.safety3_to_mo > 50){
                                 tempDouDstSet.safety3_to_mo -= 50;
                                 tempDouDstSet.safety3_to_mo -= (tempDouDstSet.safety3_to_mo % 50);
@@ -674,23 +653,5 @@ void _paint(WM_HWIN pMsg)
 
 }
 
-int pointyPretreatment()
-{
-   int pointy[3];
-   pointy[0] = -sqrt(-(preDouDstSet.net_port - preDouDstSet.mo_to_as) * (preDouDstSet.net_port - preDouDstSet.mo_to_as) * M_TO_MILLINM * M_TO_MILLINM / 4 + 
-                         preDouDstSet.safety1_to_mo * preDouDstSet.safety1_to_mo*M_TO_MILLINM*M_TO_MILLINM);
-   
-   pointy[1] = -sqrt(preDouDstSet.safety2_to_mo * preDouDstSet.safety2_to_mo*M_TO_MILLINM*M_TO_MILLINM 
-                             - preDouDstSet.mo_to_as * preDouDstSet.mo_to_as * M_TO_MILLINM * M_TO_MILLINM / 4);
-
-   pointy[2] = -sqrt(preDouDstSet.safety3_to_mo * preDouDstSet.safety3_to_mo 
-        - (preDouDstSet.net_port - preDouDstSet.mo_to_as) * 
-        (preDouDstSet.net_port - preDouDstSet.mo_to_as) / 4)*M_TO_MILLINM;
-   if(pointy[1] >= pointy[2] || pointy[1] >= pointy[0])
-      return 1;
-   return 0;
-
-   
-}
  
 

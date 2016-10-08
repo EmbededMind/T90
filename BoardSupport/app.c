@@ -390,8 +390,7 @@ void _Play_Task(void* p_arg)
                   MUSIC_ADD(SND_ID_KT);
                   MUSIC_ADD(SND_ID_LOW);
                   MUSIC_ADD(SND_ID_SNOR);                                     
-               }
-               
+               }              
                else
                {
                   thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
@@ -450,8 +449,8 @@ void _Play_Task(void* p_arg)
                OSTimeDlyHMSM(0, 0, 0, 200);
             }
          }
-         ISD_PWRDn();            
-         MUSIC_RESET;                // 下标置0         
+         ISD_PWRDn();
+         MUSIC_RESET;             // 下标置0         
       } /// End. execute play 
       /// End . if(monitorState == FALSE) 
 //printf("Play task while end\n");      
