@@ -28,7 +28,7 @@ const NATION_MAP_ITEM NationMap[NATION_NUM] = {
 
 
 BULY_BERTH* pBulyHeader  = NULL;
-BULY_BERTH* pPlayBerth  = NULL;
+
 int  validCnt  = 0;
 
 BULY_BERTH BULY_Berth[BULY_NUM_MAX];
@@ -175,8 +175,9 @@ void BULY_maskAllBerth(void )
 }
 
 
-BULY_BERTH* BULY_fetchNextPlayBerth(void)
+BULY_BERTH* BULY_gov_fetchNextPlayBerth(void)
 {
+   static BULY_BERTH* pPlayBerth  = NULL;
    BULY_BERTH* pIterator;
    
    if(pPlayBerth == NULL)
@@ -184,16 +185,13 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
       pIterator  = pBulyHeader;
       while(pIterator)
       {
-         if(pIterator->pBoatLink->mntState == MNTState_Triggered )
+         if(pIterator->pBoatLink->mntState == MNTState_Triggered && (pIterator->pBoatLink->Boat.category & 0xf0))
          {
             pPlayBerth  = pIterator;
 					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
-         else
-         {
-            pIterator  = pIterator->pNext;
-         }
+         pIterator  = pIterator->pNext;
       }
       pPlayBerth  = NULL;
       return NULL;
@@ -204,26 +202,23 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
       
       while(pIterator)
       {
-         if(pIterator->pBoatLink->mntState == MNTState_Triggered)
+         if(pIterator->pBoatLink->mntState == MNTState_Triggered && (pIterator->pBoatLink->Boat.category & 0xf0))
          {
             pPlayBerth  = pIterator;
 					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
-         else
-         {
-            pIterator  = pIterator->pNext;
-         }
+         pIterator  = pIterator->pNext;
       }
       pIterator = pBulyHeader;
       while(pIterator != pPlayBerth->pNext)
       {
-         if(pIterator->pBoatLink->mntState == MNTState_Triggered)
-             {
-               pPlayBerth  = pIterator;
-               SNAP_SetSnapLink(pPlayBerth->pBoatLink);
-               return pPlayBerth;
-             }
+         if(pIterator->pBoatLink->mntState == MNTState_Triggered && (pIterator->pBoatLink->Boat.category & 0xf0))
+         {
+           pPlayBerth  = pIterator;
+           SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+           return pPlayBerth;
+         }
          pIterator = pIterator->pNext;
       }
       pPlayBerth  = NULL;
@@ -231,7 +226,56 @@ BULY_BERTH* BULY_fetchNextPlayBerth(void)
    }
 }
 
-
+BULY_BERTH* BULY_highSpeed_fetchNextPlayBerth(void)
+{
+   static BULY_BERTH* pPlayBerth  = NULL;
+   BULY_BERTH* pIterator;
+   
+   if(pPlayBerth == NULL)
+   {
+      pIterator  = pBulyHeader;
+      while(pIterator)
+      {
+         if(pIterator->pBoatLink->mntState == MNTState_Triggered && !(pIterator->pBoatLink->Boat.category & 0xf0))
+         {
+            pPlayBerth  = pIterator;
+					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+            return pPlayBerth;
+         }
+         pIterator  = pIterator->pNext;
+      }
+      pPlayBerth  = NULL;
+      return NULL;
+   }
+   else
+   {
+      pIterator  = pPlayBerth->pNext;
+      
+      while(pIterator)
+      {
+         if(pIterator->pBoatLink->mntState == MNTState_Triggered && !(pIterator->pBoatLink->Boat.category & 0xf0))
+         {
+            pPlayBerth  = pIterator;
+					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+            return pPlayBerth;
+         }
+         pIterator  = pIterator->pNext;
+      }
+      pIterator = pBulyHeader;
+      while(pIterator != pPlayBerth->pNext)
+      {
+         if(pIterator->pBoatLink->mntState == MNTState_Triggered && !(pIterator->pBoatLink->Boat.category & 0xf0))
+         {
+           pPlayBerth  = pIterator;
+           SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+           return pPlayBerth;
+         }
+         pIterator = pIterator->pNext;
+      }
+      pPlayBerth  = NULL;
+      return NULL;
+   }
+}
 
 unsigned char BULY_parseNation(long id)
 {

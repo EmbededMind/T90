@@ -96,10 +96,10 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
                       case 0:
-                          preDouDstSet.mo_to_as += 50;                            
+                          preDouDstSet.mo_to_as += 20;                            
                           if(tempDouDstSet.mo_to_as < MAXMOTOAS){
-                             tempDouDstSet.mo_to_as += 50;
-                             tempDouDstSet.mo_to_as -= (tempDouDstSet.mo_to_as %50);
+                             tempDouDstSet.mo_to_as += 20;
+                             tempDouDstSet.mo_to_as -= (tempDouDstSet.mo_to_as %20);
                              sprintf(pStrBuf, "%d", tempDouDstSet.mo_to_as);
                              HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                               }
@@ -112,10 +112,10 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       break;
                            
                       case 1:
-                           preDouDstSet.net_port += 50;
+                           preDouDstSet.net_port += 5;
                            if(tempDouDstSet.net_port < MAXSTUBTOSTUB){
-                              tempDouDstSet.net_port += 50;
-                              tempDouDstSet.net_port -= (tempDouDstSet.net_port %50);
+                              tempDouDstSet.net_port += 5;
+                              tempDouDstSet.net_port -= (tempDouDstSet.net_port %5);
                               sprintf(pStrBuf, "%d", tempDouDstSet.net_port);
                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                               }
@@ -127,10 +127,10 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       break;
                            
                       case 2:
-                            preDouDstSet.safety1_to_mo += 50;
+                            preDouDstSet.safety1_to_mo += 20;
                             if(tempDouDstSet.safety1_to_mo < MAXMOTOSTUB){
-                              tempDouDstSet.safety1_to_mo  += 50;
-                              tempDouDstSet.safety1_to_mo  -= (tempDouDstSet.safety1_to_mo %50);
+                              tempDouDstSet.safety1_to_mo  += 20;
+                              tempDouDstSet.safety1_to_mo  -= (tempDouDstSet.safety1_to_mo %20);
                               sprintf(pStrBuf, "%d", tempDouDstSet.safety1_to_mo);
                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                             }
@@ -142,10 +142,10 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       break;
                             
                       case 3:
-                             preDouDstSet.safety2_to_mo += 50;
+                             preDouDstSet.safety2_to_mo += 20;
                              if(tempDouDstSet.safety2_to_mo < MAXMOTOSTUB){
-                                tempDouDstSet.safety2_to_mo += 50;
-                                tempDouDstSet.safety2_to_mo -= (tempDouDstSet.safety2_to_mo % 50);
+                                tempDouDstSet.safety2_to_mo += 20;
+                                tempDouDstSet.safety2_to_mo -= (tempDouDstSet.safety2_to_mo % 20);
                                 sprintf(pStrBuf, "%d", tempDouDstSet.safety2_to_mo);
                                 HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                              }
@@ -157,10 +157,10 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                       break;
                              
                       case 4:
-                             preDouDstSet.safety3_to_mo += 50;
+                             preDouDstSet.safety3_to_mo += 20;
                              if(tempDouDstSet.safety3_to_mo < MAXMOTOSTUB){
-                                tempDouDstSet.safety3_to_mo += 50;
-                                tempDouDstSet.safety3_to_mo -= (tempDouDstSet.safety3_to_mo % 50);
+                                tempDouDstSet.safety3_to_mo += 20;
+                                tempDouDstSet.safety3_to_mo -= (tempDouDstSet.safety3_to_mo % 20);
                                 sprintf(pStrBuf, "%d", tempDouDstSet.safety3_to_mo);
                                 HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                              }
@@ -178,48 +178,48 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                    id  = WM_GetId(pMsg->hWin) - ID_EX_DIM_0;
                    switch(id){
                       case 0:
-                          preDouDstSet.mo_to_as -= 50;                       
-                          if(tempDouDstSet.mo_to_as > 50){
-                              tempDouDstSet.mo_to_as  -= 50;
-                              tempDouDstSet.mo_to_as  -= (tempDouDstSet.mo_to_as %50);
+                          preDouDstSet.mo_to_as -= 20;                       
+                          if(tempDouDstSet.mo_to_as > 20){
+                              tempDouDstSet.mo_to_as  -= 20;
+                              tempDouDstSet.mo_to_as  -= (tempDouDstSet.mo_to_as %20);
                               sprintf(pStrBuf, "%d", tempDouDstSet.mo_to_as);
                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                               }
                       break;
                       case 1:
-                           preDouDstSet.net_port -= 50;
-                           if(tempDouDstSet.net_port > 50){
-                              tempDouDstSet.net_port -= 50;
-                              tempDouDstSet.net_port -= (tempDouDstSet.net_port %50);
+                           preDouDstSet.net_port -= 5;
+                           if(tempDouDstSet.net_port > 5){
+                              tempDouDstSet.net_port -= 5;
+                              tempDouDstSet.net_port -= (tempDouDstSet.net_port %5);
                               sprintf(pStrBuf, "%d", tempDouDstSet.net_port);
                               HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                               }
                       break;
                       case 2:
-                            preDouDstSet.safety1_to_mo -= 50;
-                            if(tempDouDstSet.safety1_to_mo > 50){
-                               tempDouDstSet.safety1_to_mo  -= 50;
-                               tempDouDstSet.safety1_to_mo  -= (tempDouDstSet.net_port %50);
+                            preDouDstSet.safety1_to_mo -= 20;
+                            if(tempDouDstSet.safety1_to_mo > 20){
+                               tempDouDstSet.safety1_to_mo  -= 20;
+                               tempDouDstSet.safety1_to_mo  -= (tempDouDstSet.net_port %20);
                                sprintf(pStrBuf, "%d", tempDouDstSet.safety1_to_mo);
                                HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);                         
                             }
                       break;
                       case 3:
-                             preDouDstSet.safety2_to_mo -= 50;
-                             if(tempDouDstSet.safety2_to_mo  > 50){
+                             preDouDstSet.safety2_to_mo -= 20;
+                             if(tempDouDstSet.safety2_to_mo  > 20){
                                 tmpsafety2_to_Mo = t90_set.doubledst_set.safety2_to_mo;
                                 
-                                tempDouDstSet.safety2_to_mo  -= 50;
-                                tempDouDstSet.safety2_to_mo  -= (tempDouDstSet.safety2_to_mo  % 50);
+                                tempDouDstSet.safety2_to_mo  -= 20;
+                                tempDouDstSet.safety2_to_mo  -= (tempDouDstSet.safety2_to_mo  % 20);
                                 sprintf(pStrBuf, "%d", tempDouDstSet.safety2_to_mo );
                                 HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                              }
                       break;
                       case 4:
-                             preDouDstSet.safety3_to_mo -= 50;
-                             if(tempDouDstSet.safety3_to_mo > 50){
-                                tempDouDstSet.safety3_to_mo -= 50;
-                                tempDouDstSet.safety3_to_mo -= (tempDouDstSet.safety3_to_mo % 50);
+                             preDouDstSet.safety3_to_mo -= 20;
+                             if(tempDouDstSet.safety3_to_mo > 20){
+                                tempDouDstSet.safety3_to_mo -= 20;
+                                tempDouDstSet.safety3_to_mo -= (tempDouDstSet.safety3_to_mo % 20);
                                 sprintf(pStrBuf, "%d", tempDouDstSet.safety3_to_mo);
                                 HSD_DIMENSION_EX_SetValText(hExDim[id], pStrBuf);
                              }

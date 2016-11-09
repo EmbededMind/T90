@@ -136,7 +136,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                    break;
 							         case GUI_KEY_LEFT: 
                      agentdst_set-=5;
-							              if(agentdst_set<80) agentdst_set=80;
+							              if(agentdst_set<10) agentdst_set=10;
 						      
              }
            WM_Paint(highspshipsetWin);
@@ -169,9 +169,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 						HSD_BUTTON_SetTextColor(buttons, pColors->textColor);
 
              
-             HSD_SLIDER_SetBkColor(slider, pColors->bkColor);
+     HSD_SLIDER_SetBkColor(slider, pColors->bkColor);
 				 HSD_SLIDER_SetFocusBkColor(slider, pColors->bkColor);
-             HSD_SLIDER_SetSlotColor(slider, pColors_Slider->slotColor);
+     HSD_SLIDER_SetSlotColor(slider, pColors_Slider->slotColor);
 				 HSD_SLIDER_SetSliderColor(slider,pColors_Slider->sliderColor);
 				 HSD_SLIDER_SetFocusSliderColor(slider, pColors_Slider->focusSliderColor);
 				 HSD_SLIDER_SetFocusSlotColor(slider,pColors_Slider->focusSlotColor);

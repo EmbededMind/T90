@@ -72,11 +72,8 @@ struct type_of_ship{
   
 //	int repeat_indicator;
 	 unsigned long user_id;
-  unsigned char vender_id[7];
-  
-    #ifdef P_AM128A
-     unsigned char type_of_ship_and_cargo_type;
-  #endif
+  unsigned char vender_id[7]; 
+  unsigned char type_of_ship_and_cargo_type;
 //int part_number;
 
 

@@ -683,9 +683,7 @@ int update_24B(BERTH * pBerth, type_of_ship * p_msg)
 {
    int i;
    pBerth->Boat.time_cnt  = TIMESTAMP;
-   
-
-
+ 
    if(    p_msg->vender_id[0] == 8
        && p_msg->vender_id[1] == 19
        && p_msg->vender_id[2] == 4)

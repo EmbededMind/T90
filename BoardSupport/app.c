@@ -6,26 +6,15 @@
 #include "lpc177x_8x_uart.h"
 #include "lpc177x_8x_timer.h"
 #include "Config.h"
-//#include "Setting.h"
 #include "DMA.h"
-#include "Check.h"
 #include "uart.h"
 #include "SPI2.h"
 #include "SPI1.h"
 #include "GUI.h"
 #include "dlg.h"
-#include "sound.h"
-#include "bully.h"
-#include "xt_isd.h"
-#include "T90.h"
 #include "snap.h"
-#include "transform.h"
-#include "stub.h"
 #include "comm.h"
-
-//#ifndef test_test
-//	#define test_test
-//#endif
+#include "play_speech.h"
 
 /*-------------------- Macro defines ---------------------*/
 /* 定义任务优先级 */
@@ -68,43 +57,12 @@ OS_EVENT *  updataMBox;
 //static  OS_STK_DATA Refresh_Task_Stack_Use;
 
 
-#define MUSIC_ADD(x)  if(x==0) \
-                         musics[musicCursor]  = SND_ID_ZRO; \
-                      else \
-                         musics[musicCursor]  = x; \
-                      musicCursor++
-                      
-#define MUSIC_RESET   musicCursor  = 0
-
-#define MUSIC_ADD_5NUMS if(aNums[0]) \
-                        { \
-							  MUSIC_ADD(aNums[0]); \
-						} \
-                        if(aNums[1]) \
-						{ \
-                            MUSIC_ADD(aNums[1]); \
-						} \
-                        if(aNums[2]) \
-						{ \
-                            MUSIC_ADD(aNums[2]); \
-						} \
-                        if(aNums[3]) \
-						{ \
-                            MUSIC_ADD(aNums[3]); \
-						} \
-                        if(aNums[4]) \
-						{ \
-                            MUSIC_ADD(aNums[4]); \
-						} 													
-
 /*----------------- external function -------------------*/
 void mntSetting_init(void);
 
 /*----------------- Global   variables --------------------*/
 ///Insert , Refresh互斥信号量
-int isKeyTrigged  = 0;
       
-extern int Triggered_SOG;
 ///                                  _   _
 /// 标记是否有新的插入事件(不要想歪  \ @ / )
 ///                                   ''' 
@@ -263,201 +221,7 @@ void Refresh_Task(void *p_arg)//任务Refresh_Task
    
 void _Play_Task(void* p_arg)
 {
-   uint8_t  musics[30];
-   uint8_t  musicCursor  = 0; 
-   uint8_t  Nums[3];
-   uint8_t  aNums[5];	
-   int angle;   
-   uint8_t playList  = 1;  
-   BULY_BERTH* thisBulyBerth  = NULL;
-   BERTH * thisinvdBerth = NULL;   
-   ISD_Wait_PWRUp();  
-   ISD_SetVolumn(t90_set.sys.volum);
-   MUSIC_RESET;
-   ISD_Play(SND_ID_WLCM);
-   ISD_PWRDn();      
-   while(1)
-   { 
-//printf("Play Task while begin\n");      
-      if(monitorState == ON) // 轄酄?
-      {        
-         if(FetchSTime() == 0)
-         {
-            MUSIC_ADD(SND_ID_STOF);
-         }
-         else
-         {
-            thisBulyBerth  = BULY_fetchNextPlayBerth();
-            if(thisBulyBerth)
-            {            
-               if((thisBulyBerth->pBoatLink->Boat.category & 0xf0) > 0)
-               {    //渔政船
-                  switch(thisBulyBerth->pBoatLink->Boat.category & 0xf0){
-                     case NATION_CTB:
-                        MUSIC_ADD(SND_ID_CTB);
-                     break;
-                     case NATION_JPN:
-                        MUSIC_ADD(SND_ID_JPN);
-                     break;
-                     case NATION_KOR:
-                        MUSIC_ADD(SND_ID_KOR);                  
-                     break;
-                     case NATION_PRK:
-                        MUSIC_ADD(SND_ID_PRK);
-                     break;
-                     case NATION_INA:
-                        MUSIC_ADD(SND_ID_INA);
-                     break;
-                     case NATION_VIE:
-                        MUSIC_ADD(SND_ID_VIE);
-                     break;
-                     }                                  
-                  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
-
-                  if(angle>=0 && angle<360)
-                  {
-                     SND_ParseNum(angle*1000,aNums);
-                     MUSIC_ADD(SND_ID_ANG);                                   
-                     MUSIC_ADD_5NUMS;
-                     MUSIC_ADD(SND_ID_DEG);
-                  }                                                    
-                  if(thisBulyBerth->pBoatLink->Boat.dist < 99999)
-                  {
-                     SND_ParseNum((t90_set.sys.unit == NM)? thisBulyBerth->pBoatLink->Boat.dist/100*100 : thisBulyBerth->pBoatLink->Boat.dist * 37/20/100*100, aNums);
-                     MUSIC_ADD(SND_ID_DST);      
-                     MUSIC_ADD_5NUMS;                                   
-                     if(t90_set.sys.unit == NM)
-                     {   
-                        MUSIC_ADD(SND_ID_NM);
-                     }
-                     else
-                     {
-                        MUSIC_ADD(SND_ID_KM);
-                     }
-                     MUSIC_ADD(SND_ID_SIS);                                  
-                     SND_ParseNum(thisBulyBerth->pBoatLink->Boat.SOG *100, aNums);
-                     MUSIC_ADD_5NUMS;
-                     MUSIC_ADD(SND_ID_KT);
-                  }
-               }
-               else
-               {                                      // 高速船
-                  MUSIC_ADD(SND_ID_HSB);
-                  angle = getAngleOfShip(thisBulyBerth->pBoatLink);
-                  if(angle>=0 && angle<360)
-                  {
-                     SND_ParseNum(angle*1000,aNums);
-                     MUSIC_ADD(SND_ID_ANG);                              
-                     MUSIC_ADD_5NUMS;
-                     MUSIC_ADD(SND_ID_DEG);
-                  }                                                 
-                  MUSIC_ADD(SND_ID_DST);     
-                  SND_ParseNum((t90_set.sys.unit == NM)? thisBulyBerth->pBoatLink->Boat.dist/100*100 : thisBulyBerth->pBoatLink->Boat.dist * 37/20/100*100, aNums);
-                  MUSIC_ADD_5NUMS;
-                  if(t90_set.sys.unit == NM)
-                  {   
-                     MUSIC_ADD(SND_ID_NM);
-                  }
-                  else
-                  {
-                     MUSIC_ADD(SND_ID_KM);
-               }
-               }
-            }
-            else 
-            {
-               if(MS_isSpeeding == MNTState_Triggered)
-               {                                     
-                  SND_ParseNum(t90_set.alarm.danger_sog*100,aNums);
-                  MUSIC_ADD(SND_ID_MHS);
-                  MUSIC_ADD_5NUMS;
-                  MUSIC_ADD(SND_ID_KT);                 
-               }
-               else if(MS_isMax_SOG == MNTState_Triggered)
-               {
-                  SND_ParseNum(Triggered_SOG*100,aNums);
-                  MUSIC_ADD(SND_ID_SN);                                   
-                  MUSIC_ADD_5NUMS;
-                  MUSIC_ADD(SND_ID_KT);
-                  MUSIC_ADD(SND_ID_HIGH);
-                  MUSIC_ADD(SND_ID_SNOR);
-               }
-               else if(MS_isMin_SOG == MNTState_Triggered)
-               {
-                  SND_ParseNum(Triggered_SOG*100,aNums);
-                  MUSIC_ADD(SND_ID_SN);                                  
-                  MUSIC_ADD_5NUMS;
-                  MUSIC_ADD(SND_ID_KT);
-                  MUSIC_ADD(SND_ID_LOW);
-                  MUSIC_ADD(SND_ID_SNOR);                                     
-               }              
-               else
-               {
-                  thisinvdBerth = SIMP_BERTH_fetchNextPlayBerth();
-                  if(thisinvdBerth)
-                  {
-                     MUSIC_ADD(SND_ID_INVD);
-                     if(thisinvdBerth->y_to_cross > FetchMidStub())
-                     {
-                        MUSIC_ADD(SND_ID_MS);
-                     }
-                     else
-                     {
-                        MUSIC_ADD(SND_ID_NET);
-                     }                                    
-                     angle = getAngleOfShip(thisinvdBerth);                                           
-                     if(angle>=0 && angle<360)
-                     {
-                        SND_ParseNum(angle*1000,aNums);
-                        MUSIC_ADD(SND_ID_ANG);                                        
-                        MUSIC_ADD_5NUMS;
-                        MUSIC_ADD(SND_ID_DEG);
-                     }                                         
-                     MUSIC_ADD(SND_ID_DST);
-                     SND_ParseNum((t90_set.sys.unit == NM)? thisinvdBerth->Boat.dist/100*100 : thisinvdBerth->Boat.dist * 37/20/100*100, aNums);																	 
-                     MUSIC_ADD_5NUMS;
-                     if(t90_set.sys.unit == NM)
-                     {   
-                        MUSIC_ADD(SND_ID_NM);
-                     }
-                     else
-                     {
-                        MUSIC_ADD(SND_ID_KM);
-                     }
-                  }
-               
-               }
-               OSTimeDlyHMSM(0, 0, 2, 0);                              
-            }
-         }
-      }
-      if(musicCursor){
-         int i  = 0;
-
-         ISD_Wait_PWRUp();             
-         for(i=0; i< musicCursor; i++)
-         {
-            int timeOutCnt  = 0;
-
-            ISD_Play(musics[i]);
-            while(ISD_IsBusy()){
-               if(timeOutCnt > 15){
-                  timeOutCnt  = 0;
-                  break;
-               }
-               timeOutCnt ++;
-               OSTimeDlyHMSM(0, 0, 0, 200);
-            }
-         }
-         ISD_PWRDn();
-         MUSIC_RESET;             // 下标置0         
-      } /// End. execute play 
-      /// End . if(monitorState == FALSE) 
-//printf("Play task while end\n");      
-      OSTimeDlyHMSM(0, 0, 3, 0);
-
-   } /// 'End'. while(1).In fact this will not happen
-
+   play_speech();
 }
  
 
@@ -787,11 +551,6 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
   
   if((text[0]!='!')&&(text[0]!='$'))
      return 0;
-//  printf("%c",text[0]);
-//  printf("%c",text[1]);
-//  printf("%c",text[2]);
-//  printf("%c",text[3]);
-//  printf("%c\n",text[4]);
   if((text[1]=='A')&&(text[2]=='I')&&(text[3]=='V')&&(text[4]=='D')&&(text[5]=='M'))
   { 
      for(i=6; i<20; i++)
@@ -835,51 +594,6 @@ int translate_(unsigned char *text,message_18 *text_out,message_24_partA *text_o
          return 0;
       }
    }
-
-//	else if((text[4]=='M')&&(text[5]=='C')) //GPS GPRMC
-//	{ 
-//      printf("RMC OK\n");
-//      shiftReg   = text[6];
-//      shiftReg   = (shiftReg << 8) | text[7];
-//      shiftReg   = (shiftReg << 8) | text[8];
-//      shiftReg   = (shiftReg << 8) | text[9];
-//      if(shiftReg )
-//         mothership.latitude  = shiftReg / 10;
-
-//      shiftReg   = text[10];
-//      shiftReg   = (shiftReg << 8) | text[11];
-//      shiftReg   = (shiftReg << 8) | text[12];
-//      shiftReg   = (shiftReg << 8) | text[13];
-//      if(shiftReg)
-//         mothership.longitude  = shiftReg / 10;
-
-
-//         shiftReg   = text[14];
-//         shiftReg   = (shiftReg << 8) | text[15];
-//         mothership.SOG = shiftReg;
-
-
-
-//         shiftReg   = text[16];
-//         shiftReg   = (shiftReg << 8) | text[17];
-//         mothership.COG = shiftReg /10;
-
-
-
-//      shiftReg   = text[18];
-//      shiftReg   = (shiftReg << 8) | text[19];
-//      shiftReg   = (shiftReg << 8) | text[20];
-//      shiftReg   = (shiftReg << 8) | text[21];
-//      SYS_Date   = shiftReg;
-
-
-//      shiftReg   = text[22];
-//      shiftReg   = (shiftReg << 8) | text[23];
-//      shiftReg   = (shiftReg << 8) | text[24];
-//      shiftReg   = (shiftReg << 8) | text[25];
-//      SYS_Time   = shiftReg;
-//	}
-
    return 0;
 }
 

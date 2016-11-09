@@ -1,4 +1,3 @@
-
 #include "Check.h"
 #include <math.h>
 #include "sound.h"

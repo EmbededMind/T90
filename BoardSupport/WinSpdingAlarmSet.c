@@ -36,87 +36,49 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 		case WM_KEY:
 			switch(((WM_KEY_INFO*)(pMsg->Data.p))->Key)
 			{
-//            case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }                           
-//                        break;
-              case GUI_KEY_SOUNDOFF:                  
-                  monitorState = monitorState == ON? OFF: ON;
-                  ISD_Wait_PWRUp();
-                  if(monitorState)
-                  {                     
-                     ISD_SetVolumn(t90_set.sys.volum);
-                  }
-                  else
-                  {
-                     ISD_SetVolumnZero();
-                  }
-//                  ISD_PWRDn();
-              case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }   
-                        break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
+    case GUI_KEY_SOUNDOFF:                  
+        monitorState = monitorState == ON? OFF: ON;
+        ISD_Wait_PWRUp();
+        if(monitorState)
+        {                     
+           ISD_SetVolumn(t90_set.sys.volum);
+        }
+        else
+        {
+           ISD_SetVolumnZero();
+        }
+    case GUI_KEY_MORIGHT:
+         myMsg.hWin = systemSetDlg;
+         myMsg.hWinSrc = pMsg->hWin;
+         myMsg.MsgId = USER_MSG_MOTHERPOS;
+         myMsg.Data.v = !t90_set.sys.motherpos;
+         WM_SendMessage(myMsg.hWin, &myMsg);  
+      break; 
 				case GUI_KEY_PWM_INC:       
 						 WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-						 break;
-
-                 
-            case GUI_KEY_UP:
-            case GUI_KEY_DOWN:
-                  WM_SetFocus(buttons);
-                 WM_InvalidateRect(spdingAlarmSetWin,&Rect);
-               break;
+						 break;        
+    case GUI_KEY_UP:
+    case GUI_KEY_DOWN:
+          WM_SetFocus(buttons);
+         WM_InvalidateRect(spdingAlarmSetWin,&Rect);
+       break;
 				case GUI_KEY_BACKSPACE:
-                  isSpON = HSD_SLIDER_GetValue(slider);
-                  if(t90_set.alarm.danger_sog == agentdst_set && (t90_set.alarm.on_off & (0x01<<1))>>1 == isSpON)
-                  {
-                     WM_SetFocus(alarmSetMenuDlg);
-                  }
-                  else
-                  {
-                     myMsg.hWin  = WM_GetClientWindow(confirmWin);
-                     myMsg.hWinSrc  = spdingAlarmSetWin;
-                     myMsg.MsgId  = USER_MSG_CHOOSE;
-                     myMsg.Data.v  = SYS_SETTING;
-                     WM_SendMessage(myMsg.hWin, &myMsg);
-                     
-                     WM_BringToTop(confirmWin);
-                     WM_SetFocus(confirmWin);
-                  }
+         isSpON = HSD_SLIDER_GetValue(slider);
+         if(t90_set.alarm.danger_sog == agentdst_set && (t90_set.alarm.on_off & (0x01<<1))>>1 == isSpON)
+         {
+            WM_SetFocus(alarmSetMenuDlg);
+         }
+         else
+         {
+            myMsg.hWin  = WM_GetClientWindow(confirmWin);
+            myMsg.hWinSrc  = spdingAlarmSetWin;
+            myMsg.MsgId  = USER_MSG_CHOOSE;
+            myMsg.Data.v  = SYS_SETTING;
+            WM_SendMessage(myMsg.hWin, &myMsg);
+            
+            WM_BringToTop(confirmWin);
+            WM_SetFocus(confirmWin);
+         }
 				break;
 
 				default:
@@ -144,7 +106,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            }
            else{
               HSD_BUTTON_SetBkColor(pMsg->hWin, pColors->bkColor);
-				  HSD_BUTTON_SetTextColor(pMsg->hWin,pColors->textColor);
+				          HSD_BUTTON_SetTextColor(pMsg->hWin,pColors->textColor);
            }
            HSD_BUTTON_Callback(pMsg);
            break;
@@ -162,98 +124,56 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                   {
                      ISD_SetVolumnZero();
                   }
-//                  ISD_PWRDn();
                   break;
-//               case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }                           
-//                        break;
-              
               case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }   
-                        break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-                         
-                         break;  
-							 case GUI_KEY_PWM_INC:       
-                    WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-                    break;
-               case GUI_KEY_BACKSPACE:
-                              isSpON = HSD_SLIDER_GetValue(slider);
-										if(t90_set.alarm.danger_sog == agentdst_set && (t90_set.alarm.on_off & (0x01<<1))>>1 == isSpON)
-										{
-											WM_SetFocus(alarmSetMenuDlg);
-										}
-										else
-										{
-											myMsg.hWin  = WM_GetClientWindow(confirmWin);
-											myMsg.hWinSrc  = spdingAlarmSetWin;
-											myMsg.MsgId  = USER_MSG_CHOOSE;
-											myMsg.Data.v  = SYS_SETTING;
-											WM_SendMessage(myMsg.hWin, &myMsg);
-											
-											WM_BringToTop(confirmWin);
-											WM_SetFocus(confirmWin);
-										}
-                    break;
-							 case GUI_KEY_UP:
-                      case GUI_KEY_DOWN:
-											WM_SetFocus(slider);
-										break;
-							 case GUI_KEY_RIGHT:
-
-                                 agentdst_set+=5;
-										if(agentdst_set>200) agentdst_set=200;
-                      
-									
-                    break;
-							 case GUI_KEY_LEFT:
-
-                                 agentdst_set-=5;
-                              if(agentdst_set<80) agentdst_set=80;
-                               break;                      
-            }
-            WM_Paint(spdingAlarmSetWin);
-           break;
-           
-     default :
-           HSD_BUTTON_Callback(pMsg);
-           break;
-   }
+                   myMsg.hWin = systemSetDlg;
+                   myMsg.hWinSrc = pMsg->hWin;
+                   myMsg.MsgId = USER_MSG_MOTHERPOS;
+                   myMsg.Data.v = !t90_set.sys.motherpos;
+                   WM_SendMessage(myMsg.hWin, &myMsg);
+                break; 
+              case GUI_KEY_PWM_INC:       
+                   WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                   break;
+              case GUI_KEY_BACKSPACE:
+                   isSpON = HSD_SLIDER_GetValue(slider);
+                   if(t90_set.alarm.danger_sog == agentdst_set && (t90_set.alarm.on_off & (0x01<<1))>>1 == isSpON)
+                   {
+                    WM_SetFocus(alarmSetMenuDlg);
+                   }
+                   else
+                   {
+                    myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                    myMsg.hWinSrc  = spdingAlarmSetWin;
+                    myMsg.MsgId  = USER_MSG_CHOOSE;
+                    myMsg.Data.v  = SYS_SETTING;
+                    WM_SendMessage(myMsg.hWin, &myMsg);
+                    
+                    WM_BringToTop(confirmWin);
+                    WM_SetFocus(confirmWin);
+                   }
+                   break;
+              case GUI_KEY_UP:
+              case GUI_KEY_DOWN:
+                   WM_SetFocus(slider);
+                   break;
+              case GUI_KEY_RIGHT:
+                   agentdst_set+=5;
+                   if(agentdst_set>200) agentdst_set=200;
+                   break;
+              case GUI_KEY_LEFT:
+                   agentdst_set-=5;
+                   if(agentdst_set<40) agentdst_set=40;
+                    break;                      
+              }
+              WM_Paint(spdingAlarmSetWin);
+              break;
+                 
+           default :
+                 HSD_BUTTON_Callback(pMsg);
+                 break;
+       }
 }
-
 
 /**@brief 超速报警界面窗口的回调函数
  *  
