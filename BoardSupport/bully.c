@@ -1,7 +1,7 @@
 #include "T90.h"
 #include "bully.h"
 #include "string.h"
-#include "snap.h"
+//#include "snap.h"
 
 
 
@@ -188,7 +188,7 @@ BULY_BERTH* BULY_gov_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered && (pIterator->pBoatLink->Boat.category & 0xf0))
          {
             pPlayBerth  = pIterator;
-					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+//					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
          pIterator  = pIterator->pNext;
@@ -205,7 +205,7 @@ BULY_BERTH* BULY_gov_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered && (pIterator->pBoatLink->Boat.category & 0xf0))
          {
             pPlayBerth  = pIterator;
-					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+//					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
          pIterator  = pIterator->pNext;
@@ -216,7 +216,7 @@ BULY_BERTH* BULY_gov_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered && (pIterator->pBoatLink->Boat.category & 0xf0))
          {
            pPlayBerth  = pIterator;
-           SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+//           SNAP_SetSnapLink(pPlayBerth->pBoatLink);
            return pPlayBerth;
          }
          pIterator = pIterator->pNext;
@@ -239,7 +239,7 @@ BULY_BERTH* BULY_highSpeed_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered && !(pIterator->pBoatLink->Boat.category & 0xf0))
          {
             pPlayBerth  = pIterator;
-					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+//					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
          pIterator  = pIterator->pNext;
@@ -256,7 +256,7 @@ BULY_BERTH* BULY_highSpeed_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered && !(pIterator->pBoatLink->Boat.category & 0xf0))
          {
             pPlayBerth  = pIterator;
-					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+//					       SNAP_SetSnapLink(pPlayBerth->pBoatLink);
             return pPlayBerth;
          }
          pIterator  = pIterator->pNext;
@@ -267,7 +267,7 @@ BULY_BERTH* BULY_highSpeed_fetchNextPlayBerth(void)
          if(pIterator->pBoatLink->mntState == MNTState_Triggered && !(pIterator->pBoatLink->Boat.category & 0xf0))
          {
            pPlayBerth  = pIterator;
-           SNAP_SetSnapLink(pPlayBerth->pBoatLink);
+//           SNAP_SetSnapLink(pPlayBerth->pBoatLink);
            return pPlayBerth;
          }
          pIterator = pIterator->pNext;

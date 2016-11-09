@@ -1,4 +1,5 @@
 #include "play_speech.h"
+#include "snap.h"
 
 int isKeyTrigged  = 0;
 
@@ -36,6 +37,7 @@ void play_speech()
                   thisBulyBerth_gov  = BULY_gov_fetchNextPlayBerth();
                   if(thisBulyBerth_gov)
                   {
+                     SNAP_SetSnapLink(thisBulyBerth_gov->pBoatLink);
                      findASpeech = TRUE;
                      switch(thisBulyBerth_gov->pBoatLink->Boat.category & 0xf0){
                         case NATION_CTB:
@@ -94,7 +96,8 @@ void play_speech()
                   if(thisBulyBerth_highSpeed)
                   {
                      if(findASpeech)   break;
-                     findASpeech = TRUE;   
+                     findASpeech = TRUE;
+                     SNAP_SetSnapLink(thisBulyBerth_highSpeed->pBoatLink);                   
                      MUSIC_ADD(SND_ID_HSB);
                      angle = getAngleOfShip(thisBulyBerth_highSpeed->pBoatLink);
                      if(angle>=0 && angle<360)

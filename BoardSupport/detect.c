@@ -71,7 +71,7 @@ void adjustPlo()
             pmin->point.x = stubs[i].tang2.point.x;
             pmin->point.y = stubs[i].tang2.point.y;
          }
-      }       
+      }
    }
 
    for(i = 0; i < STUB_NUM_MAX_D; i++)
