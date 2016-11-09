@@ -136,7 +136,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                    break;
 							         case GUI_KEY_LEFT: 
                      agentdst_set-=5;
-							              if(agentdst_set<10) agentdst_set=10;
+							              if(agentdst_set<80) agentdst_set=80;
 						      
              }
            WM_Paint(highspshipsetWin);
