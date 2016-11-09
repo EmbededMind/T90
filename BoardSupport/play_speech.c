@@ -9,13 +9,13 @@ void play_speech()
    static uint8_t pri = 1;
    uint8_t  musics[30];
    uint8_t  musicCursor  = 0; 
-   uint8_t  Nums[3];
-   uint8_t  aNums[5];	
+   uint8_t  aNums[8];	
    int angle;   
    uint8_t playList  = 1;  
    BULY_BERTH* thisBulyBerth_gov  = NULL;
    BULY_BERTH* thisBulyBerth_highSpeed  = NULL;
    BERTH * thisinvdBerth = NULL;   
+ 
    ISD_Wait_PWRUp();  
    ISD_SetVolumn(t90_set.sys.volum);
    MUSIC_RESET;
