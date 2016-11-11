@@ -179,7 +179,7 @@ void Insert_Task(void *p_arg)  //等待接收采集到的数据
             insert_24A(&text_out_24A);
          break;
          case 241:            
-            insert_24B(&text_out_type_of_ship);       
+            insert_24B(&text_out_type_of_ship);
          break;
          default:
          break;

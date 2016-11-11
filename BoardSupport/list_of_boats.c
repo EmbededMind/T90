@@ -20,7 +20,6 @@
 
 #define PI 3.14
 
-
 /*----------------------- external variables ---------------------*/
 extern int N_boat;
 extern int list_endIndex;
@@ -234,16 +233,16 @@ int update_18(BERTH * pBerth, struct message_18 * p_msg)
    {
       
 //printf("MMSI = %9ld, flag = %d\n", pBerth->Boat.user_id, pBerth->Boat.highspeedflag);
-      if(pBerth->Boat.highspeedflag < 3)
+      if(pBerth->Boat.highspeedflag < HIGHTIMES)
       {
          pBerth->Boat.highspeedflag++;
       } 
-      if(pBerth->Boat.highspeedflag >= 3)
+      if(pBerth->Boat.highspeedflag >= HIGHTIMES)
       {
          unsigned char nation  = BULY_parseNation(pBerth->Boat.user_id);
          pBerth->Boat.category  = nation | TYPE_BULLY;   
          BULY_add(pBerth);
-         llToxy(pBerth);         
+         llToxy(pBerth); 
       }      
    }
 	  else
@@ -456,11 +455,11 @@ int add_18(struct message_18 * p_msg)
    if((t90_set.alarm.on_off & (0x01<<3)) && (buf->Boat.category & 0x0e) == 0  &&  p_msg->SOG >= highspeed)
    {      
 //printf("MMSI = %9ld, flag = %d\n", buf->Boat.user_id, buf->Boat.highspeedflag); 
-      if(buf->Boat.highspeedflag < 3)
+      if(buf->Boat.highspeedflag < HIGHTIMES)
       {
          buf->Boat.highspeedflag++;
       }
-      if(buf->Boat.highspeedflag >= 3)
+      if(buf->Boat.highspeedflag >= HIGHTIMES)
       {
             unsigned char nation  = BULY_parseNation(buf->Boat.user_id);
             buf->Boat.category  = nation |  TYPE_BULLY;
@@ -770,7 +769,7 @@ int add_24B(type_of_ship * p_msg)
          buf->isInvader = 0;
          buf->Boat.category &= TYPE_FAMILY;
          break;
-      }            
+      }
    }
    if(t90_set.as_MMSI.MMSI == buf->Boat.user_id)
    {
@@ -789,11 +788,8 @@ int add_24B(type_of_ship * p_msg)
        && p_msg->vender_id[1] == 19
        && p_msg->vender_id[2] == 4)
    {
-      buf->Boat.category   |= TYPE_HSD;
-//INFO("find hsd:%09ld", buf->Boat.user_id);      
+       buf->Boat.category   |= TYPE_HSD;
    }
-   
-
    else 
    {
       if(p_msg->type_of_ship_and_cargo_type == 55)
@@ -804,7 +800,7 @@ int add_24B(type_of_ship * p_msg)
          {
             buf->Boat.category  = nation | TYPE_BULLY;
             BULY_add(buf);
-					  llToxy(buf);          
+					       llToxy(buf);
          }
          else
          {

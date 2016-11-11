@@ -98,6 +98,11 @@ void CHECK_DelHighSpeed()
    {
       while(pBerth)
       {
+         if(pBerth->pBoatLink->Boat.category & 0xf0)
+         {
+            pBerth = pBerth->pNext;
+            continue;
+         }
          if((pBerth->pBoatLink->Boat.category & 0xf0) == 0)
          {
               pNext = pBerth->pNext;
@@ -111,8 +116,13 @@ void CHECK_DelHighSpeed()
     
    while(pBerth)
    {
+      if(pBerth->pBoatLink->Boat.category & 0xf0)
+      {
+         pBerth = pBerth->pNext;
+         continue;
+      }
       pNext = pBerth->pNext;
-      if((pBerth && (pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.highspeedflag < 3))
+      if(pBerth && (pBerth->pBoatLink->Boat.category & 0xf0) == 0 && pBerth->pBoatLink->Boat.highspeedflag < HIGHTIMES)
       {
          pBerth->pBoatLink->Boat.category &= ~(TYPE_BULLY);
          BULY_delete(pBerth->pBoatLink);

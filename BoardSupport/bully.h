@@ -7,7 +7,7 @@
 #include "lpc_types.h"
 #include "boat_struct.h"
 
-
+#define HIGHTIMES 2
 
 typedef struct _BULY_BERTH BULY_BERTH;
 struct _BULY_BERTH

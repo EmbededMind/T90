@@ -309,7 +309,7 @@ void BULY_dump(void)
    {
 //      printf("mmsi:%09ld--sog:%d--dist:%d--category:0x%x\n", pIterator->pBoatLink->Boat.user_id, pIterator->pBoatLink->Boat.SOG, pIterator->pBoatLink->Boat.dist, pIterator->pBoatLink->Boat.category);
      printf("mmsi:%09ld - mntstate:%d\r\n", pIterator->pBoatLink->Boat.user_id, pIterator->pBoatLink->mntState); 
-		 pIterator  = pIterator->pNext;
+		   pIterator  = pIterator->pNext;
    }
 }
 
