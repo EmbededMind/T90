@@ -94,22 +94,10 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
            
    case WM_KEY:
         switch( ((WM_KEY_INFO*)(pMsg->Data.p))->Key){
-//           case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                           WM_InvalidateWindow(doubleShipDstSetWin);
-//                           
-//                        }                           
-//                        break;
               case GUI_KEY_SOUNDOFF:
-                  monitorState = monitorState == ON? OFF: ON;
+                  sound = sound == ON? OFF: ON;
                   ISD_Wait_PWRUp();
-                  if(monitorState)
+                  if(sound)
                   {                     
                      ISD_SetVolumn(t90_set.sys.volum);
                   }
@@ -117,69 +105,40 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                   {
                      ISD_SetVolumnZero();
                   }
-//                  if(!ISD_IsBusy())
-//                     ISD_PWRDn();
                   break;
-  
+              case GUI_KEY_F2:
+                  Silence = !Silence;
+                  break;
               case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-                           WM_InvalidateWindow(doubleShipDstSetWin);
-//                        }   
-                        break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                            WM_BringToTop(singleShipDstSetWin);
-//                            WM_InvalidateWindow(dstSetMenuDlg);
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                            WM_BringToTop(doubleShipDstSetWin);
-//                            WM_InvalidateWindow(dstSetMenuDlg);
-//                         }
-//                         
-//                         break;
-        case GUI_KEY_PWM_INC:       
-             WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-             break;
-        case GUI_KEY_RIGHT:
-            
-             id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
-             
-             if(portStatus[id].port == 1){
-        
-                flag_prevfocus = 1;
-                if(t90_set.sys.workmode == SINGLE_MODE  )
-                {                    
-                   WM_SetFocus(WM_GetDialogItem(singleShipDstSetWin,ID_DMS_0+id*2));
-                }   
-                else if(t90_set.sys.workmode == DOUBLE_MODE ){
-                   WM_MESSAGE myMsg;
-                   myMsg.hWin  = doubleShipDstSetWin;
-                   myMsg.Data.v  = id;
-                   myMsg.MsgId  = USER_MSG_FOCUS;
+                   myMsg.hWin = systemSetDlg;
+                   myMsg.hWinSrc = pMsg->hWin;
+                   myMsg.MsgId = USER_MSG_MOTHERPOS;
+                   myMsg.Data.v = !t90_set.sys.motherpos;
                    WM_SendMessage(myMsg.hWin, &myMsg);
-                }
-             }   
+                   WM_InvalidateWindow(doubleShipDstSetWin);
+                   break; 
+              case GUI_KEY_PWM_INC:       
+                   WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                   break;
+              case GUI_KEY_RIGHT:
+                  
+                   id  = WM_GetId(pMsg->hWin) - GUI_ID_BUTTON0;
+             
+                   if(portStatus[id].port == 1){
+              
+                      flag_prevfocus = 1;
+                      if(t90_set.sys.workmode == SINGLE_MODE  )
+                      {                    
+                         WM_SetFocus(WM_GetDialogItem(singleShipDstSetWin,ID_DMS_0+id*2));
+                      }   
+                      else if(t90_set.sys.workmode == DOUBLE_MODE ){
+                         WM_MESSAGE myMsg;
+                         myMsg.hWin  = doubleShipDstSetWin;
+                         myMsg.Data.v  = id;
+                         myMsg.MsgId  = USER_MSG_FOCUS;
+                         WM_SendMessage(myMsg.hWin, &myMsg);
+                      }
+                }   
               
              break;
       

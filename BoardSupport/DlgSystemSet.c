@@ -428,7 +428,7 @@ static void  _cbDialog(WM_MESSAGE * pMsg)
             GUI_DispStringAt("软件更新：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
 //            GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
 //            GUI_DispStringAt("开启",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_RIGHT_CHOICE+SYSTEM_SET_ITEM_WIDTH,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);
-            GUI_DispStringAt("软件版本 V1.0.5",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);            
+            GUI_DispStringAt("软件版本 V1.0.6",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*7+SYSTEM_SET_ITEM_HEIGHT*7);            
             
             GUI_DispStringAt("恢复出厂设置：",SYSTEM_SET_ITEM_MARGIN*2,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
             GUI_DispStringAt("关闭",SYSTEM_SET_ITEM_MARGIN*2+SYSTEM_SET_LEFT_CHOICE,SYSTEM_SET_ITEM_Y - 5+SYSTEM_SET_ITEM_MARGIN*8+SYSTEM_SET_ITEM_HEIGHT*8);
@@ -498,9 +498,9 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
          switch(((WM_KEY_INFO*)pMsg->Data.p)->Key)
          {
             case GUI_KEY_SOUNDOFF:
-                  monitorState = monitorState == ON? OFF: ON;
+                  sound = sound == ON? OFF: ON;
                   ISD_Wait_PWRUp();
-                  if(monitorState)
+                  if(sound)
                   {                     
                      ISD_SetVolumn(t90_set.sys.volum);
                   }
@@ -508,8 +508,9 @@ static void myButtonCallback(WM_MESSAGE * pMsg)
                   {
                      ISD_SetVolumnZero();
                   }
-//                  if(!ISD_IsBusy())
-//                     ISD_PWRDn();
+                  break;
+            case GUI_KEY_F2:
+                  Silence = !Silence;
                   break;
             case GUI_KEY_LEFT:
                if(id == 0)
@@ -724,7 +725,7 @@ static void _OnVolumChanged(WM_MESSAGE * pMsg,int val)
    if(agentsys_set.volum != val)
    {
       agentsys_set.volum  = val;
-      if(monitorState)
+      if(sound)
       {
          ISD_Wait_PWRUp();
          ISD_SetVolumn(val);

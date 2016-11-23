@@ -19,7 +19,7 @@ WM_HWIN mainShipWin;
 static WM_HTIMER timer;
 
 const HomeColor *pColor = homeColors;
-
+const StatusBarButtonColor *pStatusBarColor = &statusBarButtonColor;
 
 
 static void _onPaint1(void);
@@ -70,7 +70,8 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 					 break;
 		 
       case WM_CREATE:
-           pColor = &homeColors[t90_set.sys.nightmode];           
+           pColor = &homeColors[t90_set.sys.nightmode];
+           pStatusBarColor = &statusBarButtonColor;
            _onPaint1();
            break;
 			
@@ -126,9 +127,9 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
 
 						 
                case GUI_KEY_SOUNDOFF:
-                  monitorState = monitorState == ON? OFF: ON;
+                  sound = sound == ON? OFF: ON;
                   ISD_Wait_PWRUp();
-                  if(monitorState)
+                  if(sound)
                   {                     
                      ISD_SetVolumn(t90_set.sys.volum);
                   }
@@ -136,53 +137,70 @@ static void myWindowCallback(WM_MESSAGE* pMsg)
                   {
                      ISD_SetVolumnZero();
                   }
-//                  if(!ISD_IsBusy())
-//                     ISD_PWRDn();
                   WM_Paint(mainShipWin);
                   break;
-
+               case GUI_KEY_F2:
+                  Silence = !Silence;
+                  break;
                default:
                   WM_DefaultProc(pMsg);
            }
            break;
            
       case WM_PAINT:
+           GUI_SetBkColor(pColor->bkColor);
+           WM_GetClientRect(&r);
+           GUI_ClearRectEx(&r);
+           tmpCursor = cursorOnStub;
+           if(t90_set.sys.workmode == DOUBLE_MODE)
+           {
+              if(cursorOnStub == 0 || cursorOnStub == 4)
+              {
+                 if(t90_set.sys.motherpos == DEFAULT_LEFT)
+                 {
+                    tmpCursor = cursorOnStub;
+                 }
+                 else
+                 {
+                    tmpCursor = cursorOnStub == 4? 0:4;
+                 }
+              }
+           }
+           if(tmpCursor == 0 )
+           {
+              _onPaint1();
+           }
+           else
+           {
+              _onPaint2();
+           }
 
-					 GUI_SetBkColor(pColor->bkColor);
-				   WM_GetClientRect(&r);
-					 GUI_ClearRectEx(&r);
-                 tmpCursor = cursorOnStub;
-                if(t90_set.sys.workmode == DOUBLE_MODE)
-                {
-                   if(cursorOnStub == 0 || cursorOnStub == 4)
-                   {
-                      if(t90_set.sys.motherpos == DEFAULT_LEFT)
-                      {
-                         tmpCursor = cursorOnStub;
-                      }
-                      else
-                      {
-                         tmpCursor = cursorOnStub == 4? 0:4;
-                      }
-                   }
-                }
-					 if(tmpCursor == 0 )
-					 {
-					    _onPaint1();
-					 }
-					 else
-					 {
-						 _onPaint2();
-					 }
-
-					 if(monitorState == OFF)
-					 { 
-						 GUI_SetColor(GUI_RED);
-						 GUI_FillRoundedRect(20, 15, 100, 50, 6);
-						 GUI_SetColor(pColor->bkColor);
-						 GUI_SetFont(&GUI_Font_T90_30);
-						 GUI_DispStringAt("静音", 38, 15);
-					 }
+           if(AISOnLine)
+           { 
+            GUI_SetColor(pStatusBarColor->bkAISColor);
+            GUI_FillRoundedRect(20, 15, 100, 50, 6);
+            GUI_SetColor(pColor->bkColor);
+            GUI_SetFont(&GUI_Font_T90_30);
+            GUI_DispStringAt("AIS", 42, 18);
+           }
+           
+           if(sound == OFF)
+           { 
+            GUI_SetColor(pStatusBarColor->bkSoundColor);
+            GUI_FillRoundedRect(120, 15, 200, 50, 6);
+            GUI_SetColor(pColor->bkColor);
+            GUI_SetFont(&GUI_Font_T90_30);
+            GUI_DispStringAt("静音", 138, 17);
+           }
+           
+           if(Silence == ON)
+           { 
+            GUI_SetColor(pStatusBarColor->bkSeawayColor);
+            GUI_FillRoundedRect(220, 15, 300, 50, 6);
+            GUI_SetColor(pColor->bkColor);
+            GUI_SetFont(&GUI_Font_T90_30);
+            GUI_DispStringAt("收网", 238, 17);
+           }
            break;
 			
 			case WM_SET_FOCUS:

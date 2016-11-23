@@ -25,7 +25,7 @@ void play_speech()
    while(1)
    { 
 //printf("Play Task while begin\n");      
-      if(monitorState == ON) 
+      if(sound == ON)
       {
          findASpeech = FALSE;
          pri = 1;
@@ -198,17 +198,6 @@ void play_speech()
                      flag_isPlayed &= ~(0x01<<3);
                   }
                }
-            case 5:
-               if(flag_isPlayed & (0x01<<4))
-               {
-                  if(FetchSTime() == 0)
-                  {
-                     if(findASpeech)   break;
-                     findASpeech = TRUE;   
-                     MUSIC_ADD(SND_ID_STOF);
-                     flag_isPlayed &= ~(0x01<<4);
-                  }
-               }
             default:
                flag_isPlayed = ~0x00;
                break;
@@ -236,10 +225,9 @@ void play_speech()
             }
          }
          ISD_PWRDn();            
-         MUSIC_RESET;                // ÏÂ±êÖÃ0
-      } /// End. execute play 
-      /// End . if(monitorState == FALSE) 
-//printf("Play task while end\n");      
+         MUSIC_RESET;
+      } /// End. execute play
+//printf("Play task while end\n");
       OSTimeDlyHMSM(0, 0, 3, 0);
 
    } /// 'End'. while(1).In fact this will not happen

@@ -24,8 +24,9 @@
 extern unsigned long SYS_Date;
 extern unsigned long SYS_Time;
 
-extern int monitorState;
-
+extern int sound;
+extern int AISOnLine;
+extern int Silence;
 
 extern int N_boat;
 extern SIMP_BERTH SimpBerthes[BOAT_NUM_MAX];

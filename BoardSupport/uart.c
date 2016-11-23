@@ -20,7 +20,7 @@
 #define CMD_BYTE     1
 #define VERSION1     1
 #define VERSION2     0
-#define VERSION3     5
+#define VERSION3     6
 
 extern unsigned char isDstSetChanged;            
 
@@ -139,21 +139,23 @@ void UART0_IRQHandler(void)
    if ((tmp == UART_IIR_INTID_RDA) || (tmp == UART_IIR_INTID_CTI))	// Receive Data Available or Character time-out
    {	
        UART_Receive(UART_0, &tmpc, 1, NONE_BLOCKING);
-      if(tmpc >= GUI_KEY_MENU  &&  tmpc <= GUI_KEY_PGDOWN)   
+      if(tmpc >= GUI_KEY_MENU  &&  tmpc <= GUI_KEY_PGDOWN)
       {        
-               isKeyTrigged  = 1;
-               switch(tmpc)
-               {                
-                 case GUI_KEY_TRACE_ENABLE:
-                   break;
-                 case GUI_KEY_TRACE_DISABLE:
-                   break;
-                 default:
-                    GUI_StoreKeyMsg(tmpc, 1);
-                   break;
-               }
-//printf("%d\n",tmpc);               
-      }   
+          switch(tmpc)
+          {
+             case GUI_KEY_TRACE_ENABLE:
+               break;
+             case GUI_KEY_TRACE_DISABLE:
+               break;
+             case GUI_KEY_F1:
+                 isKeyTrigged  = 1;
+               break;
+             default:
+                GUI_StoreKeyMsg(tmpc, 1);
+               break;
+          }
+//printf("key  %d\n",tmpc);
+      }
       else if(tmpc >= 0x80  &&  tmpc <(0x80+21))
       {
          GUI_StoreKeyMsg(GUI_KEY_RELEASE, 1);

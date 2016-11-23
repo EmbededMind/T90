@@ -24,7 +24,7 @@ static int timeCnt = 0;
 
 static void _onPaint(void);
 static const HomeColor *pColor = homeColors;
-
+static const StatusBarButtonColor *pStatusBarColor = &statusBarButtonColor;
 
 /**@brief 单拖模式下的主界面
  *
@@ -55,6 +55,7 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 		 
       case WM_CREATE:
 					 pColor = &homeColors[t90_set.sys.nightmode];
+      pStatusBarColor = &statusBarButtonColor;
            break;     
 			
 			case WM_SET_FOCUS:	
@@ -73,98 +74,65 @@ static void myWindowCallback(WM_MESSAGE* pMsg){
 			
       case WM_KEY:
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
-//             case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }                           
-//                        break;
               
               case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT)
-//                        {
                            myMsg.hWin = systemSetDlg;
                            myMsg.hWinSrc = pMsg->hWin;
                            myMsg.MsgId = USER_MSG_MOTHERPOS;
                            myMsg.Data.v = !t90_set.sys.motherpos;
                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }   
                         break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-						 case GUI_KEY_PWM_INC:       
-                   WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-                   break;
-						 
-						 case GUI_KEY_LEFT:
-									SNAP_searchNearestObj(-1, 0);
-									WM_Paint(alarmMonitorWin);
-									break;
-						 
-						 case GUI_KEY_RIGHT:
-									SNAP_searchNearestObj(1, 0);
-									WM_Paint(alarmMonitorWin);
-									break;
-						 
-						 case GUI_KEY_UP:
-									SNAP_searchNearestObj(0, 1);
-									WM_Paint(alarmMonitorWin);
-									break;
-						 
-						 case GUI_KEY_DOWN:
-									SNAP_searchNearestObj(0, -1);
-									WM_Paint(alarmMonitorWin);
-									break;
+              case GUI_KEY_PWM_INC:       
+                          WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                          break;
+              
+              case GUI_KEY_LEFT:
+                SNAP_searchNearestObj(-1, 0);
+                WM_Paint(alarmMonitorWin);
+                break;
+              
+              case GUI_KEY_RIGHT:
+                SNAP_searchNearestObj(1, 0);
+                WM_Paint(alarmMonitorWin);
+                break;
+              
+              case GUI_KEY_UP:
+                SNAP_searchNearestObj(0, 1);
+                WM_Paint(alarmMonitorWin);
+                break;
+              
+              case GUI_KEY_DOWN:
+                SNAP_searchNearestObj(0, -1);
+                WM_Paint(alarmMonitorWin);
+                break;
 
-						 case GUI_KEY_MENU:
-	
-						      WM_DeleteTimer(timer);
-						 
-									WM_BringToTop(mainMenuDlg);
-									WM_SetFocus(mainMenuDlg);
-									break;
-						 
-						 
-						 case GUI_KEY_SOUNDOFF:
-							    monitorState = monitorState == ON? OFF: ON;
-            ISD_Wait_PWRUp();
-            if(monitorState)
-            {                     
-               ISD_SetVolumn(t90_set.sys.volum);
-            }
-            else
-            {
-               ISD_SetVolumnZero();
-            }
-//            if(!ISD_IsBusy())
-//               ISD_PWRDn();
-									WM_Paint(alarmMonitorWin);							
-									break;
-						 
+              case GUI_KEY_MENU:
+        
+                   WM_DeleteTimer(timer);
+              
+                WM_BringToTop(mainMenuDlg);
+                WM_SetFocus(mainMenuDlg);
+                break;
+              
+              
+              case GUI_KEY_SOUNDOFF:
+                  sound = sound == ON? OFF: ON;
+                   ISD_Wait_PWRUp();
+                   if(sound)
+                   {                     
+                      ISD_SetVolumn(t90_set.sys.volum);
+                   }
+                   else
+                   {
+                      ISD_SetVolumnZero();
+                   }
+                   WM_Paint(alarmMonitorWin);							
+                   break;
+              case GUI_KEY_F2:
+                   Silence = !Silence;
+                   break;
+              default:
+                   break;
            }
            break;
            
@@ -247,17 +215,11 @@ static void _onPaint(void)
 	lltostr(mothership.longitude, pStrBuf);
 	GUI_DispStringAt(pStrBuf, 195, 10);
 	
-//	sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
-//	GUI_DispStringAt(pStrBuf, 390, 10);
 	sprintf(pStrBuf, "%3d", mothership.COG/10);
  pStrBuf[3]  = 194;
  pStrBuf[4]  = 176;
  pStrBuf[5]  = '\0';
 	GUI_DispStringAt(pStrBuf, 545, 10);
-//	sprintf(pStrBuf, "%d", timeCnt);
-//  GUI_DispStringAt(pStrBuf, 20, 60);
-	
-	
 	
 	if(MS_isSpeeding)
 	{
@@ -280,23 +242,31 @@ static void _onPaint(void)
 		sprintf(pStrBuf, "%2d.%d", mothership.SOG/10, mothership.SOG%10);
 		GUI_DispStringAt(pStrBuf, 395, 10);
 	}
-//	
-//	if(mntLabelTimeCnt)
-//	{
-//		mntLabelTimeCnt--;
-	if(monitorState == OFF)
+	if(AISOnLine)
 	{
-		GUI_SetColor(GUI_RED);
-		GUI_FillRoundedRect(20, 60, 100, 95, 8);
+		GUI_SetColor(pStatusBarColor->bkAISColor);
+		GUI_FillRoundedRect(10, 55, 90, 90, 8);
 		GUI_SetColor(pColor->bkColor);
-        GUI_SetFont(&GUI_Font_T90_30);
-		GUI_DispStringAt("静音", 38, 60);	
+  GUI_SetFont(&GUI_Font_T90_30);
+		GUI_DispStringAt("AIS", 32, 58);	
 	}
-//		else
-//		{
-//			GUI_DispStringAt("Monitor OFF", 30, 73);
-//		}
-//	}
+ if(sound == OFF)
+	{
+		GUI_SetColor(pStatusBarColor->bkSoundColor);
+		GUI_FillRoundedRect(10, 100, 90, 135, 8);
+		GUI_SetColor(pColor->bkColor);
+  GUI_SetFont(&GUI_Font_T90_30);
+		GUI_DispStringAt("静音", 28, 102);	
+	}
+ if(Silence == ON)
+	{
+		GUI_SetColor(pStatusBarColor->bkSeawayColor);
+		GUI_FillRoundedRect(10, 145, 90, 180, 8);
+		GUI_SetColor(pColor->bkColor);
+  GUI_SetFont(&GUI_Font_T90_30);
+		GUI_DispStringAt("收网", 28, 147);	
+	}
+ 
 }
 
 

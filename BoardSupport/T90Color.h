@@ -81,6 +81,12 @@ typedef struct MMSISetWinColor
 	GUI_COLOR bkInputColor;
 }MMSISetWinColor;
 
+typedef struct StatusBarButtonColor
+{
+ GUI_COLOR bkSoundColor;
+ GUI_COLOR bkAISColor;
+ GUI_COLOR bkSeawayColor;
+} StatusBarButtonColor;
 
 extern const HomeColor homeColors[2];
 
@@ -94,5 +100,6 @@ extern const ConfirmWinColor confirmWinColors[2];
 
 extern const MMSISetWinColor mmsiSetWinColor[2];
 
+extern const StatusBarButtonColor statusBarButtonColor;
 #endif
 

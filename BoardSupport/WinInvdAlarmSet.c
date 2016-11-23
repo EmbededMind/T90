@@ -46,9 +46,9 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
 //                        }                           
 //                        break;
               case GUI_KEY_SOUNDOFF:
-                  monitorState = monitorState == ON? OFF: ON;
+                  sound = sound == ON? OFF: ON;
                    ISD_Wait_PWRUp();
-                   if(monitorState)
+                   if(sound)
                    {                     
                       ISD_SetVolumn(t90_set.sys.volum);
                    }
@@ -56,8 +56,9 @@ static void mySliderCallback(WM_MESSAGE* pMsg)
                    {
                       ISD_SetVolumnZero();
                    }
-//                   if(!ISD_IsBusy())
-//                     ISD_PWRDn();
+                  break;
+              case GUI_KEY_F2:
+                  Silence = !Silence;
                   break;
               case GUI_KEY_MORIGHT:
 //                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
@@ -145,9 +146,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
       case WM_KEY:
             switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
               case GUI_KEY_SOUNDOFF:
-                   monitorState = monitorState == ON? OFF: ON;
+                   sound = sound == ON? OFF: ON;
                    ISD_Wait_PWRUp();
-                   if(monitorState)
+                   if(sound)
                    {                     
                       ISD_SetVolumn(t90_set.sys.volum);
                    }
@@ -155,127 +156,87 @@ static void myButtonCallback(WM_MESSAGE* pMsg)
                    {
                       ISD_SetVolumnZero();
                    }
-//                   if(!ISD_IsBusy())
-//                     ISD_PWRDn();
                    break;
-//              case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }                           
-//                        break;
-              
+              case GUI_KEY_F2:
+                  Silence = !Silence;
+                  break;
               case GUI_KEY_MORIGHT:
-//                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-                           myMsg.hWin = systemSetDlg;
-                           myMsg.hWinSrc = pMsg->hWin;
-                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-                           myMsg.Data.v = !t90_set.sys.motherpos;
-                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                        }   
-                        break; 
-//                  case GUI_KEY_SINGLE:
-//                         if(t90_set.sys.workmode == DOUBLE_MODE)
-//                         {                            
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = SINGLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break;
-//                  case GUI_KEY_DOUBLE:
-//                         if(t90_set.sys.workmode == SINGLE_MODE)
-//                         {
-//                            myMsg.hWin = systemSetDlg;
-//                            myMsg.hWinSrc = pMsg->hWin;
-//                            myMsg.MsgId = USER_MSG_WORKMODE;
-//                            myMsg.Data.v = DOUBLE_MODE;
-//                            WM_SendMessage(myMsg.hWin, &myMsg);
-//                         }
-//                         
-//                         break; 
-							case GUI_KEY_PWM_INC:       
-								   WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
-								   break;
-               case GUI_KEY_BACKSPACE:
-                              isInvadON = HSD_SLIDER_GetValue(slider);
-										if(t90_set.alarm.invd_dst == agentdst_set && (t90_set.alarm.on_off & 0x01) == isInvadON)
-										{
-											WM_SetFocus(alarmSetMenuDlg);
-										}
-										else
-										{
-											myMsg.hWin  = WM_GetClientWindow(confirmWin);
-											myMsg.hWinSrc  = invdAlarmSetWin;
-											myMsg.MsgId  = USER_MSG_CHOOSE;
-											myMsg.Data.v  = SYS_SETTING;
-											WM_SendMessage(myMsg.hWin, &myMsg);
-											
-											WM_BringToTop(confirmWin);
-											WM_SetFocus(confirmWin);
-										}
-//printf("isInvadON = %d\n",isInvadON);
-                    break;
-							 
+                  myMsg.hWin = systemSetDlg;
+                  myMsg.hWinSrc = pMsg->hWin;
+                  myMsg.MsgId = USER_MSG_MOTHERPOS;
+                  myMsg.Data.v = !t90_set.sys.motherpos;
+                  WM_SendMessage(myMsg.hWin, &myMsg); 
+                  break; 
+              case GUI_KEY_PWM_INC:       
+                  WM_SendMessageNoPara(systemSetDlg, USER_MSG_DIM);
+                  break;
+                      case GUI_KEY_BACKSPACE:
+                                     isInvadON = HSD_SLIDER_GetValue(slider);
+                 if(t90_set.alarm.invd_dst == agentdst_set && (t90_set.alarm.on_off & 0x01) == isInvadON)
+                 {
+                  WM_SetFocus(alarmSetMenuDlg);
+                 }
+                 else
+                 {
+                  myMsg.hWin  = WM_GetClientWindow(confirmWin);
+                  myMsg.hWinSrc  = invdAlarmSetWin;
+                  myMsg.MsgId  = USER_MSG_CHOOSE;
+                  myMsg.Data.v  = SYS_SETTING;
+                  WM_SendMessage(myMsg.hWin, &myMsg);
+                  
+                  WM_BringToTop(confirmWin);
+                  WM_SetFocus(confirmWin);
+                 }
+                 break;
+               
                case GUI_KEY_RIGHT:
-										if(t90_set.sys.unit == NM)
-										{
-                                 if(agentdst_set >= 100)
-                                 {
-											   agentdst_set+=100;
-                                 }
-                                 else
-                                 {
-                                    agentdst_set+=50;
-                                 }
-//											if(agentdst_set > 5000) agentdst_set = 5000;
-										}
-										else
-										{
-                               
-											agentdst_set+=54;
-                                
-//											if(agentdst_set > 5352) agentdst_set = 5352;
-										}
-										WM_Paint(invdAlarmSetWin);
-										break;
-							 
-							 case GUI_KEY_LEFT:
-										if(t90_set.sys.unit == NM)
-										{
-                                 if(agentdst_set > 100)
-                                 {
-											   agentdst_set-=100;
-                                 }
-                                 else
-                                 {
-                                    agentdst_set-=50;
-                                 }
-											if(agentdst_set < 50) agentdst_set = 50;
-										}
-										else
-										{
-                                
-											agentdst_set-=54;
-                                 
-											if(agentdst_set < 100) agentdst_set = 108;
-										}
-										WM_Paint(invdAlarmSetWin);
-										break;
-							 
-							 case GUI_KEY_UP:
-                      case GUI_KEY_DOWN:   
-                              WM_SetFocus(slider);
+                 if(t90_set.sys.unit == NM)
+                 {
+                   if(agentdst_set >= 100)
+                   {
+                     agentdst_set+=100;
+                   }
+                   else
+                   {
+                      agentdst_set+=50;
+                   }
+                 }
+                 else
+                 {                          
+                  agentdst_set+=54;
+                 }
+                 WM_Paint(invdAlarmSetWin);
+                 break;
+               
+               case GUI_KEY_LEFT:
+                 if(t90_set.sys.unit == NM)
+                 {
+                                        if(agentdst_set > 100)
+                                        {
+                     agentdst_set-=100;
+                                        }
+                                        else
+                                        {
+                                           agentdst_set-=50;
+                                        }
+                  if(agentdst_set < 50) agentdst_set = 50;
+                 }
+                 else
+                 {
+                                       
+                  agentdst_set-=54;
+                                        
+                  if(agentdst_set < 100) agentdst_set = 108;
+                 }
+                 WM_Paint(invdAlarmSetWin);
+                 break;
+               
+               case GUI_KEY_UP:
+                             case GUI_KEY_DOWN:   
+                                     WM_SetFocus(slider);
 
-                              break;
-                    break;
+                                     break;
+                           break;
             }
            break;
            

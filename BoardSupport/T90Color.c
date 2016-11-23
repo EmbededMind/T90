@@ -58,3 +58,7 @@ const BUTTON_SKINFLEX_PROPS btSkin[2][2] = {//for Liyi
             /* focus */       {{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},{FOCUS_COLOR_NIGHT,FOCUS_COLOR_NIGHT},5}}  
 };
 
+const StatusBarButtonColor statusBarButtonColor = {
+// bkSoundColor    bkAISColor         bkSeawayColor
+   0x000000ff,     FOCUS_COLOR_DAY,   0X0010b034
+};

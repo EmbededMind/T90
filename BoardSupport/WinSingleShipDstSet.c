@@ -42,9 +42,9 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
 			       	{
 
               case GUI_KEY_SOUNDOFF:
-                  monitorState = monitorState == ON? OFF: ON;
+                  sound = sound == ON? OFF: ON;
                   ISD_Wait_PWRUp();
-                  if(monitorState)
+                  if(sound)
                   {                     
                      ISD_SetVolumn(t90_set.sys.volum);
                   }
@@ -52,6 +52,9 @@ static void dimensionCallback(WM_MESSAGE* pMsg)
                   {
                      ISD_SetVolumnZero();
                   }
+                  break;
+              case GUI_KEY_F2:
+                  Silence = !Silence;
                   break;
               case GUI_KEY_MORIGHT:
 

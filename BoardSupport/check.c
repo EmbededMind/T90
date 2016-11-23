@@ -25,10 +25,7 @@ extern FunctionalState isMntEnable;
 
 /// Defined in app.c.If key pressed , isKeyTrigged will be TRUE. Your apps must set iskeyTrigged FALSe after using it.
 extern int isKeyTrigged;
-
-static int STime = STIME;
 static int hasAlarm = 0;
-
 static void CHECK_HasAlarm(void);
 static void CHECK_MaskAllBerth(void);
 
@@ -62,7 +59,11 @@ void CHECK_MS_Speed()
 	  }
 	  else if(mothership.SOG < t90_set.alarm.min_sog)
 	  {
-		    if(MS_isMin_SOG != MNTState_Masked)
+      if(Silence)
+      {
+         MS_isMin_SOG = 0;
+      }
+		    else if(MS_isMin_SOG != MNTState_Masked)
 		    {
          MS_isMax_SOG = 0;
 			      MS_isMin_SOG = MNTState_Triggered;
@@ -78,14 +79,12 @@ void CHECK_MS_Speed()
 
 //static void CHECK_MS_Speed_masked()
 //{
-//printf("CHECK_MS_Speed_masked begin\n");
 //	if(MS_isSpeeding ==MNTState_Triggered)
 //		MS_isSpeeding = MNTState_Masked;
 //	if(MS_isMax_SOG ==MNTState_Triggered)
 //		MS_isMax_SOG = MNTState_Masked;
 //	if(MS_isMin_SOG ==MNTState_Triggered)
 //		MS_isMin_SOG = MNTState_Masked;
-//printf("CHECK_MS_Speed_masked end\n");
 //}
 
 void CHECK_DelHighSpeed()
@@ -139,42 +138,22 @@ delhighjmp:      pBerth = pNext;
 //printf("CHECK_DelHighSpeed end\n");  
 }
 
-void CHECK_STRefresh()
-{
-//printf("CHECK_STRefresh begin\n");
-    if(mothership.SOG < 10)
-    {
-	    if(STime)   STime--;     
-    }
-    else
-    {
-       STime = STIME;
-    }
-//printf("CHECK_STRefresh end\n");
-}
-
-int FetchSTime()
-{
-   return STime;
-}
- 
-
 void check()
 {
-//printf("check begin\n");
+ if(AISOnLine)
+ {
+    AISOnLine--;
+ }
 	if(isKeyTrigged)
 	{
 		isKeyTrigged = 0;
 		CHECK_MaskAllBerth();
-//		CHECK_MS_Speed_masked();
 	}
 	
 	detect();
 	CHECK_DelHighSpeed();
 	CHECK_HasAlarm();
 	CHECK_MS_Speed();
-  CHECK_STRefresh();
-//printf("check end\n");
 }
 
 int CHECK_GetAlarmState(void)

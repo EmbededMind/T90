@@ -77,8 +77,6 @@ PortStatus portStatus[3];
 
 unsigned char isChecked  = 0;
 
-//Bool monitorState  = FALSE;
-
 int ReleasedDectSwitch  = 0;
 
 OS_EVENT * Refresher;
@@ -172,13 +170,16 @@ void Insert_Task(void *p_arg)  //等待接收采集到的数据
       OSMutexPend(Refresher, 0, &myErr);        
       switch(tmp)
       {
-         case 18:       
+         case 18:
+            AISOnLine = 2;
             insert_18(&text_out);
          break;
-         case 240:         
+         case 240:
+            AISOnLine = 2;          
             insert_24A(&text_out_24A);
          break;
          case 241:            
+            AISOnLine = 2;
             insert_24B(&text_out_type_of_ship);
          break;
          default:

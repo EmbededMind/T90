@@ -13,7 +13,9 @@
 //所有关于距离的变量，单位都是(1/1000nm)
 //  1 nm = 1.85 km = 37/20 km
 
-int monitorState  = ON;
+int sound  = ON;
+int AISOnLine = OFF;
+int Silence = OFF;
 
 unsigned long SYS_Date;
 unsigned long SYS_Time;

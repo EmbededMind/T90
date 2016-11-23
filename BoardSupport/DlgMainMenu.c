@@ -98,21 +98,10 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
            
       case WM_KEY:          
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key){
-//              case GUI_KEY_MOLEFT:
-//                        if(t90_set.sys.motherpos == DEFAULT_RIGHT && t90_set.sys.workmode == DOUBLE_MODE)
-//                        {
-//                           myMsg.hWin = systemSetDlg;
-//                           myMsg.hWinSrc = pMsg->hWin;
-//                           myMsg.MsgId = USER_MSG_MOTHERPOS;
-//                           myMsg.Data.v = DEFAULT_LEFT;
-//                           WM_SendMessage(myMsg.hWin, &myMsg);
-//                           WM_InvalidateWindow(doubleShipDstSetWin);
-//                        }                           
-//                        break;
               case GUI_KEY_SOUNDOFF:
-                  monitorState = monitorState == ON? OFF: ON;
+                  sound = sound == ON? OFF: ON;
                   ISD_Wait_PWRUp();
-                  if(monitorState)
+                  if(sound)
                   {                     
                      ISD_SetVolumn(t90_set.sys.volum);
                   }
@@ -120,10 +109,10 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                   {
                      ISD_SetVolumnZero();
                   }
-//                  if(!ISD_IsBusy())
-//                     ISD_PWRDn();
                   break;
-  
+              case GUI_KEY_F2:
+                  Silence = !Silence;
+                  break;
               case GUI_KEY_MORIGHT:
 //                        if(t90_set.sys.motherpos == DEFAULT_LEFT && t90_set.sys.workmode == DOUBLE_MODE)
 //                        {

@@ -111,7 +111,7 @@ void MainTask(void)
 
 		if(t90_set.sys.workmode == NONE_MODE)      //没有选择单双拖
 		{         
-			monitorState = OFF;
+			sound = OFF;
 			WM_BringToTop(workModeWin);
 			WM_SetFocus(workModeWin);
 		}

@@ -60,7 +60,7 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
                      WM_BringToTop(mainShipWin);
                      WM_SetFocus(mainShipWin);
                      T90_Store();
-                     monitorState = ON;
+                     sound = ON;
                      StubRefresh();
                      WM_SendMessageNoPara(systemSetDlg, WM_INIT_DIALOG);
                     break;

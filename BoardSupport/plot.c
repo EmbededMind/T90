@@ -326,8 +326,6 @@ static void FigureScale(int flag)                  // ???}?  flag=0??mainShipWin
             }
          }
       }
-    //		if(monitorState == ON)
-    //		{
       while(pBully)
       {
          if(pBully->pBoatLink->x_to_cross < x_min)
@@ -399,20 +397,13 @@ void DrawAllOtherShips()    //?????
       BullyColor = GUI_WHITE; 
    for(i = 0; i < N_boat; i++)
    {
-      if(SimpBerthes[i].pBerth->isInvader)
+      if(SimpBerthes[i].pBerth->isInvader && !((SimpBerthes[i].pBerth->Boat.category & 0x0f) == TYPE_BULLY))
       {
          point.x = SimpBerthes[i].pBerth->x_to_cross;
          point.y = SimpBerthes[i].pBerth->y_to_cross;
-             
-         if((SimpBerthes[i].pBerth->Boat.category & 0x0f) == TYPE_BULLY)
-         {            
-            DrawBullyShip(GetItemPixel(point), (SimpBerthes[i].pBerth->Boat.COG - mothership.COG)/10, BullyColor);
-         }
-         else
-         {
-            GUI_SetColor(GUI_RED); 
-            DrawInvdShip(GetItemPixel(point), (SimpBerthes[i].pBerth->Boat.COG - mothership.COG)/10);
-         }
+         
+         GUI_SetColor(GUI_RED); 
+         DrawInvdShip(GetItemPixel(point), (SimpBerthes[i].pBerth->Boat.COG - mothership.COG)/10);
       }
    }
 	

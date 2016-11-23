@@ -61,9 +61,9 @@ static void myDimCallback(WM_MESSAGE* pMsg)
            switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key)
            {
               case GUI_KEY_SOUNDOFF:
-                  monitorState = monitorState == ON? OFF: ON;
+                  sound = sound == ON? OFF: ON;
                   ISD_Wait_PWRUp();
-                  if(monitorState)
+                  if(sound)
                   {                     
                      ISD_SetVolumn(t90_set.sys.volum);
                   }
@@ -71,8 +71,9 @@ static void myDimCallback(WM_MESSAGE* pMsg)
                   {
                      ISD_SetVolumnZero();
                   }
-//                  if(!ISD_IsBusy())
-//                     ISD_PWRDn();
+                  break;
+              case GUI_KEY_F2:
+                  Silence = !Silence;
                   break;
               case GUI_KEY_MORIGHT:
 

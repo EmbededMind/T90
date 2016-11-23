@@ -98,9 +98,9 @@ static void delBtCallback(WM_MESSAGE* pMsg){
 		case WM_KEY:
 			    switch(((WM_KEY_INFO*)pMsg->Data.p)->Key ){
         case GUI_KEY_SOUNDOFF:
-             monitorState = monitorState == ON? OFF: ON;
+             sound = sound == ON? OFF: ON;
              ISD_Wait_PWRUp();
-             if(monitorState)
+             if(sound)
              {                     
                 ISD_SetVolumn(t90_set.sys.volum);
              }
@@ -108,8 +108,9 @@ static void delBtCallback(WM_MESSAGE* pMsg){
              {
                 ISD_SetVolumnZero();
              }
-//             if(!ISD_IsBusy())
-//                 ISD_PWRDn();
+             break;
+        case GUI_KEY_F2:
+             Silence = !Silence;
              break;
 								case GUI_KEY_UP:
 										WM_SetFocusOnPrevChild(FleetWin);
@@ -220,9 +221,9 @@ static void addBtCallback(WM_MESSAGE* pMsg){
 		case WM_KEY:
 							switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){
         case GUI_KEY_SOUNDOFF:
-           monitorState = monitorState == ON? OFF: ON;
+           sound = sound == ON? OFF: ON;
            ISD_Wait_PWRUp();
-           if(monitorState)
+           if(sound)
            {                     
               ISD_SetVolumn(t90_set.sys.volum);
            }
@@ -230,8 +231,9 @@ static void addBtCallback(WM_MESSAGE* pMsg){
            {
               ISD_SetVolumnZero();
            }
-//           if(!ISD_IsBusy())
-//              ISD_PWRDn();
+           break;
+        case GUI_KEY_F2:
+           Silence = !Silence;
            break;
 								case GUI_KEY_ENTER:
              focus = addbutton;
@@ -323,9 +325,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
 			case WM_KEY:
 								switch( ((WM_KEY_INFO*)pMsg->Data.p)->Key ){	
          case GUI_KEY_SOUNDOFF:
-              monitorState = monitorState == ON? OFF: ON;
+              sound = sound == ON? OFF: ON;
               ISD_Wait_PWRUp();
-              if(monitorState)
+              if(sound)
               {                     
                  ISD_SetVolumn(t90_set.sys.volum);
               }
@@ -333,8 +335,9 @@ static void myButtonCallback(WM_MESSAGE* pMsg){
               {
                  ISD_SetVolumnZero();
               }
-//              if(!ISD_IsBusy())
-//                 ISD_PWRDn();
+              break;
+         case GUI_KEY_F2:
+              Silence = !Silence;
               break;
 									case GUI_KEY_ENTER:
               flag = 1;
